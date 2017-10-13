@@ -34,6 +34,7 @@ export class UserProvider {
         .subscribe(userInfo => {
           this.currentUserInfo = userInfo;
         }, error => {
+          console.log("About to write error in user.ts updateUserInfo");
           console.error("In userProvider updatingUserINfo for uid: " + authUser.uid + ": " + error.message);
         })
     } else {
@@ -41,13 +42,31 @@ export class UserProvider {
     }
   }
 
-  public getUserInfo(uid) {
-
+  public getUserInfo() {
+    return this.currentUserInfo;
   }
+
+  
+  public isUserFavorite(type, id) {
+    let retVal = false;
+
+    if (this.currentUserInfo) {
+      if (this.currentUserInfo.favorites) {
+        let toTest = type == 'activities' ? (this.currentUserInfo.favorites.activities || {}) : (this.currentUserInfo.favorites.organizations || {});
+
+        retVal = toTest.hasOwnProperty(id) ? true : false;
+      }
+    }
+
+    return retVal;
+  }
+  
 
   public toggleAddToHome(orgId) {
 
-    var orgFavorites = this.currentUserInfo.organizationFavorites || {};
+    var favorites = this.currentUserInfo.favorites || {};
+
+    var orgFavorites = favorites.organizations || {};
 
     // toggle
     if (orgFavorites.hasOwnProperty(orgId))
@@ -55,7 +74,27 @@ export class UserProvider {
     else
       orgFavorites[orgId] = true;
 
-      this.currentUserInfo.organizationFavorites = orgFavorites;
+    this.currentUserInfo.favorites.organizations = orgFavorites;
+
+    this.db.updateDocument('users', this.currentAuthUser.uid, this.currentUserInfo)
+  }
+
+  public toggleFavoriteActivity(id) {
+
+    if (!this.currentUserInfo.favorites)
+      this.currentUserInfo.favorites = {};
+
+    var favorites = this.currentUserInfo.favorites || {};
+
+    var activityFavorites = favorites.activities || {};
+
+    // toggle
+    if (activityFavorites.hasOwnProperty(id))
+      delete activityFavorites[id];
+    else
+      activityFavorites[id] = true;
+
+    this.currentUserInfo.favorites.activities = activityFavorites;
 
     this.db.updateDocument('users', this.currentAuthUser.uid, this.currentUserInfo)
   }
@@ -63,10 +102,10 @@ export class UserProvider {
   public getFavoriteOrganizations(): Observable<any> {
     this.organizationLikes = [];   // reset before we work
 
-    if (this.currentUserInfo && this.currentUserInfo.organizationFavorites) {
+    if (this.currentUserInfo && this.currentUserInfo.favorites && this.currentUserInfo.favorites.organizations) {
       // or try .getOwnPropertyNames
 
-      Object.keys(this.currentUserInfo.organizationFavorites).forEach(orgLike => {
+      Object.keys(this.currentUserInfo.favorites.organizations).forEach(orgLike => {
         this.db.getDocument('organizations', orgLike)
           .subscribe(org => {
             this.organizationLikes.push(org);

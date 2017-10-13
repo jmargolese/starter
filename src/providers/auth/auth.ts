@@ -25,7 +25,7 @@ export class AuthProvider {
     this.user = afAuth.authState;
     this.user.subscribe((user: firebase.User) => {
 
-      console.log('user is: ' +  user && user.uid);
+      console.log('AuthProvider subscribe: user is: ' +  user && user.uid);
       this.currentUser = user;
      
       userProvider.updateUserInfo(this.currentUser);
@@ -45,6 +45,7 @@ export class AuthProvider {
       .then(user => {
         this.currentUser = user;
         console.log("Login successful with user: " + user.email);
+        this.userProvider.updateUserInfo(this.currentUser);
       })
       .catch(error => {
         console.error("Login failed for user: '" + email + "' with error: " + error.message);
@@ -53,6 +54,8 @@ export class AuthProvider {
 
   logout() {
     this.afAuth.auth.signOut();
+    this.currentUser = null;
+    this.userProvider.updateUserInfo(this.currentUser);
   }
   sayHello(message: string) {
     console.log("AuthProvider.sayHello called! " + message);

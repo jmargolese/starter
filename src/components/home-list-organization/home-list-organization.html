@@ -25,28 +25,7 @@
       </ion-col>
     </ion-row>
 
-    <ion-row no-padding>
-      <ion-col col-5>
-        <button ion-button (click)="toggleAddToHome(organization.id)" clear small color="secondary" icon-start style="padding-left: 0px">
-          <ion-icon name='home'></ion-icon>
-          Add to Home
-        </button>
-      </ion-col>
-      <ion-col>
-        <button ion-button clear small color="primary" icon-start>
-          <ion-icon name='cash'></ion-icon>
-          Donate
-        </button>
-      </ion-col>
-
-
-      <ion-col>
-        <button ion-button clear small color="primary" icon-start>
-          <ion-icon name='share'></ion-icon>
-          Share
-        </button>
-      </ion-col>
-    </ion-row>
+    <actions-bar [activity]="" [organization]="organization" [buttonsToDisplay]="buttonsToDisplay"></actions-bar>
   </ion-grid>
 
 

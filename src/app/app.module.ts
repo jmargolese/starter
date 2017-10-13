@@ -1,4 +1,7 @@
+import { ActionsBarComponent } from './../components/actions-bar/actions-bar';
+import { ActionButtonComponent } from './../components/action-button/action-button';
 import { OrgHomeItemComponent } from './../components/org-home-item/org-home-item';
+
 import { OrgHomePage } from './../pages/org-home/org-home';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -39,7 +42,9 @@ import { ActivitiesProvider } from '../providers/activities/activities';
 
     // components
     HomeListOrganizationComponent,
-    OrgHomeItemComponent
+    OrgHomeItemComponent,
+    ActionButtonComponent,
+    ActionsBarComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,20 @@
+<ion-grid>
+  <ion-row>
+    <ion-col col-3 id="actionBarFirst">
+      <action-button [buttonToDisplay]="buttonsToDisplay.first || ''" [organization]="organization" [activity]="activity"></action-button>
+    </ion-col>
+    <ion-col col-2>
+
+    </ion-col>
+
+    <ion-col col-3 id="actionBarSecond">
+      <action-button [buttonToDisplay]="buttonsToDisplay.second || ''" [organization]="organization" [activity]="activity"></action-button>
+    </ion-col>
+    <ion-col col-1>
+
+    </ion-col>
+    <ion-col col-2 id="actionBarThird">
+      <action-button [buttonToDisplay]="buttonsToDisplay.third || ''" [organization]="organization" [activity]="activity"></action-button>
+    </ion-col>
+  </ion-row>
+</ion-grid>

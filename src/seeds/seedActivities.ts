@@ -17,7 +17,6 @@ export const activitySeeds = [
             },
             "images": {
                 "image": null,
-                "image": null,
                 "logo": null
             },
             "messages": {
@@ -104,7 +103,6 @@ export const activitySeeds = [
                 "orgDescription": "Helping pets find a home"
             },
             "images": {
-                "image": null,
                 "image": null,
                 "logo": null
             },
@@ -277,7 +275,6 @@ export const activitySeeds = [
                 "orgDescription": "Promoting adult Literacy in DuPage county"
             },
             "images": {
-                "image": null,
                 "image": "https://firebasestorage.googleapis.com/v0/b/share-75e74.appspot.com/o/v1%2Fimages%2Factivity%2F15%2Fimage?alt=media&token=62b6289f-b566-404b-876e-e74a0ac8f6a7",
                 "logo": null
             },

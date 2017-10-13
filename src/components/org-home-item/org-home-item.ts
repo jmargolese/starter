@@ -15,11 +15,20 @@ export class OrgHomeItemComponent {
   @Input('organization') organization
   @Input('activity') activity
   
+  public  buttonsToDisplay = {
+    first : "donate",
+    second: "like",
+    third: "socialShare"
+  }
 
   constructor() {
-    console.log('Hello OrgHomeItemComponent Component');
-    console.log("In org-home-item activity: " + JSON.stringify(this.activity));
+    console.log('Hello OrgHomeItemComponent Component!');
+    console.log("In org-home-item organization: " + JSON.stringify(this.organization));
+   
     
   }
+
+
+ 
 
 }

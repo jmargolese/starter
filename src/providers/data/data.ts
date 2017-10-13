@@ -29,7 +29,17 @@ export class DataProvider {
    let itemCollection: AngularFirestoreCollection<any> = this.afs.collection(collection, 
       ref => ref.where('organization', '==', orgId).where('info.enabled', '==', true));
 
-    return itemCollection.valueChanges();
+    return itemCollection.snapshotChanges()
+     // returns observable of DocumentChangeAction[]
+     .map(actions => {
+      return actions.map(a => {
+        const data = a.payload.doc.data() as {};
+        const id = a.payload.doc.id;
+        //console.log("Here's the data: " + JSON.stringify(data));
+        //console.log("Here's the id: " + JSON.stringify(id));
+        return { id, ...data };
+      });
+    });
 
   }
 

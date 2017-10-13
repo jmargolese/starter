@@ -15,7 +15,9 @@
         <ion-row class="callToAction" >
             {{activity.messages.callToAction}}
         </ion-row>
+        <actions-bar [activity]="activity" [organization]="organization" [buttonsToDisplay]="buttonsToDisplay"></actions-bar>
       </ion-grid>
+      
     </ion-card-content>
   </ion-card>
 

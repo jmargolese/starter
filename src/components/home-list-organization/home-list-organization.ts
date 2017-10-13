@@ -1,6 +1,5 @@
 import { NavController } from 'ionic-angular';
 import { OrgHomePage } from './../../pages/org-home/org-home';
-import { UserProvider } from './../../providers/user/user';
 import { Component, Input } from '@angular/core';
 
 
@@ -18,15 +17,17 @@ export class HomeListOrganizationComponent {
 
   @Input('organization') organization
 
+  public  buttonsToDisplay = {
+    first : "addToHome",
+    second: "donate",
+    third: "socialShare"
+  }
 
-  constructor(public userProvider : UserProvider, public navCtrl : NavController) {
+  constructor( public navCtrl : NavController) {
     console.log('Hello HomeListOrganizationComponent Component');
   }
 
-  public toggleAddToHome(id) {
-    console.log("toggleAddToHome called with id: " + id);
-    this.userProvider.toggleAddToHome(id);
-  }
+  
 
   public goToOrg(organization) {
     this.navCtrl.push(OrgHomePage, { organization: organization})
