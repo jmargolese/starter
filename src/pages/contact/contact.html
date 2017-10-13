@@ -7,11 +7,26 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-list-header>Follow us on Twitter</ion-list-header>
-    <ion-item>
-      <ion-icon name="ionic" item-start></ion-icon>
-      @ionicframework
-    </ion-item>
-  </ion-list>
+  
+  <button ion-button clear (click)="seedOrgs()">
+    Seed Orgs
+</button>
+<button ion-button clear (click)="seedUserData()">
+    Seed UserData
+</button>
+<button ion-button clear (click)="seedActivities()">
+    Seed Activities
+</button>
+<br>
+<button ion-button clear (click)="login()">
+    Login
+</button>
+<br>
+<button ion-button clear (click)="logout()">
+    Logout
+</button>
+<br>
+<button ion-button clear (click)="checkAuth()">
+    CheckAuth
+</button>
 </ion-content>

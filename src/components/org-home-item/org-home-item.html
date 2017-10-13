@@ -1,0 +1,22 @@
+<!-- Generated template for the OrgHomeItemComponent component -->
+<div class="org-home-item-css" >
+
+  <ion-card >
+      <img  *ngIf="activity.images.image" class="mainImage" src="{{activity.images.image}}" />
+   
+    <ion-card-content>
+      <ion-grid no-padding>
+        <ion-row no-padding class="messageHeading">
+            {{activity.messages.heading}}
+        </ion-row>
+        <ion-row>
+            {{activity.messages.fullText}}
+        </ion-row>
+        <ion-row class="callToAction" >
+            {{activity.messages.callToAction}}
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+</div>

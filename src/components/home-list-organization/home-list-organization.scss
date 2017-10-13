@@ -1,0 +1,24 @@
+home-list-organization {
+    .home-list-organization-css {
+        white-space: normal;
+        
+        .orgTitle {
+            font-weight: bold;
+        }
+
+        .orgSubTitle {
+            font-size: 80%;
+        }
+
+        .mainText  {
+           padding: 0.2em 0 0 0px !important;
+           line-height: 1.03em;
+           font-size: 80%;
+           
+        }
+
+        .logoImage {
+            max-height: 75px;
+        }
+    }
+}

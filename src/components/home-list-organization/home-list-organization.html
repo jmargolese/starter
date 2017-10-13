@@ -1,0 +1,54 @@
+<!-- Generated template for the HomeListOrganizationComponent component -->
+
+<div class="home-list-organization-css">
+  <!-- <ion-card-header>
+    <div class="title" >{{organization.companyName}}</div>
+    
+    <div class="subTitle">{{organization && organization.info && organization.info.description}}</div>
+  </ion-card-header> -->
+
+  <ion-grid no-padding>
+    <ion-row (click)="goToOrg(organization)">
+      <ion-col>
+       <!--  Contains name and short message -->
+        <div style="padding-right: 6px">
+          <div class="orgTitle">
+            {{organization.companyName}}
+          </div>
+          <div class="mainText">
+            {{(organization?.featuredActivity && organization.featuredActivity.shortMessage) || (organization.info && organization.info.coreMessage)}}
+          </div>
+        </div>
+      </ion-col>
+      <ion-col col-4>
+        <img class="logoImage" src="{{organization.images.logo}}" />
+      </ion-col>
+    </ion-row>
+
+    <ion-row no-padding>
+      <ion-col col-5>
+        <button ion-button (click)="toggleAddToHome(organization.id)" clear small color="secondary" icon-start style="padding-left: 0px">
+          <ion-icon name='home'></ion-icon>
+          Add to Home
+        </button>
+      </ion-col>
+      <ion-col>
+        <button ion-button clear small color="primary" icon-start>
+          <ion-icon name='cash'></ion-icon>
+          Donate
+        </button>
+      </ion-col>
+
+
+      <ion-col>
+        <button ion-button clear small color="primary" icon-start>
+          <ion-icon name='share'></ion-icon>
+          Share
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+
+</div>

@@ -1,40 +1,72 @@
+import { OrgHomeItemComponent } from './../components/org-home-item/org-home-item';
+import { OrgHomePage } from './../pages/org-home/org-home';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
-import { MyApp } from './app.component';
+import { Share } from './app.component';
 
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
+import { BrowsePage } from '../pages/browse/browse';
 import { TabsPage } from '../pages/tabs/tabs';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+import { HomeListOrganizationComponent} from '../components/home-list-organization/home-list-organization';
+
+import { AngularFireModule } from 'angularfire2';
+import { environment } from '../environments/environment';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AuthProvider } from '../providers/auth/auth';
+import { DataProvider } from '../providers/data/data';
+import { OrganizationProvider } from '../providers/organization/organization';
+import { UserProvider } from '../providers/user/user';
+import { ActivitiesProvider } from '../providers/activities/activities';
+
+
 @NgModule({
   declarations: [
-    MyApp,
+    Share,
     AboutPage,
     ContactPage,
     HomePage,
-    TabsPage
+    TabsPage,
+    BrowsePage,
+    OrgHomePage,
+
+    // components
+    HomeListOrganizationComponent,
+    OrgHomeItemComponent
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule, // imports firebase/firestore, only needed for database features
+    AngularFireAuthModule, // imports firebase/auth, only needed for auth features
+    IonicModule.forRoot(Share)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp,
+    Share,
     AboutPage,
     ContactPage,
     HomePage,
-    TabsPage
+    TabsPage,
+    BrowsePage,
+    OrgHomePage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    AuthProvider,
+    DataProvider,
+    OrganizationProvider,
+    UserProvider,
+    ActivitiesProvider
   ]
 })
 export class AppModule {}
