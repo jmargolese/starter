@@ -45,7 +45,7 @@ export class UserProvider {
   public getUserInfo() {
     return this.currentUserInfo;
   }
-
+checkpoint
   
   public isUserFavorite(type, id) {
     let retVal = false;

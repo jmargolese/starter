@@ -10,7 +10,7 @@
     Donate
   </button>
 
-  <button *ngSwitchCase="'socialShare'" ion-button clear small color="primary" icon-start>
+  <button *ngSwitchCase="'socialShare'"  (click)="startSocialShare()" ion-button clear small color="primary" icon-start>
     <ion-icon name='share'></ion-icon>
     Share
   </button>

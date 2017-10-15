@@ -6,7 +6,7 @@ export const orgSeeds = [
             "ein": "36-3040480",
             "shareuid": "NAHS17",
             "images": {
-                "bannerImage": "https://firebasestorage.googleapis.com/v0/b/share-75e74.appspot.com/o/seed%2FADOPT%20Banner.png?alt=media&token=a8ce3be5-f16c-4f93-bdb0-4213ab4be12e",
+                "image": "https://firebasestorage.googleapis.com/v0/b/share-75e74.appspot.com/o/seed%2FADOPT%20Banner.png?alt=media&token=a8ce3be5-f16c-4f93-bdb0-4213ab4be12e",
                 "logo": "https://firebasestorage.googleapis.com/v0/b/share-75e74.appspot.com/o/seed%2Fkitten%20logo.png?alt=media&token=8f21c777-89f8-4b71-9666-a0d3ed7de37b"
             },
             "social": {
@@ -44,7 +44,7 @@ export const orgSeeds = [
             "ein": "47-4041494",
             "shareuid": "CHADTGH",
             "images": {
-                "bannerImage": "https://firebasestorage.googleapis.com/v0/b/share-75e74.appspot.com/o/seed%2FldChadToughBannerImage.png?alt=media&token=4c185203-58c9-476e-89ac-48355e4a5c76",
+                "image": "https://firebasestorage.googleapis.com/v0/b/share-75e74.appspot.com/o/seed%2FldChadToughBannerImage.png?alt=media&token=4c185203-58c9-476e-89ac-48355e4a5c76",
                 "logo": "https://firebasestorage.googleapis.com/v0/b/share-75e74.appspot.com/o/seed%2FChadToughLogo.png?alt=media&token=95eb3d37-0683-46ec-b57b-305868c621a3"
             },
             "social": {
@@ -86,7 +86,7 @@ export const orgSeeds = [
             "ein": "72-1218825",
             "shareuid": "DESIREST",
             "images": {
-                "bannerImage": "https://firebasestorage.googleapis.com/v0/b/share-75e74.appspot.com/o/seed%2FdesireStLogo.png?alt=media&token=8eb16fc0-c88a-4b6f-9e43-f99407ebb8c1",
+                "image": "https://firebasestorage.googleapis.com/v0/b/share-75e74.appspot.com/o/seed%2FdesireStLogo.png?alt=media&token=8eb16fc0-c88a-4b6f-9e43-f99407ebb8c1",
                 "logo": "https://firebasestorage.googleapis.com/v0/b/share-75e74.appspot.com/o/seed%2FdesireStLogo.png?alt=media&token=8eb16fc0-c88a-4b6f-9e43-f99407ebb8c1"
             },
             "social": {

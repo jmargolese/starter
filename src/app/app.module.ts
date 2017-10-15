@@ -29,6 +29,8 @@ import { OrganizationProvider } from '../providers/organization/organization';
 import { UserProvider } from '../providers/user/user';
 import { ActivitiesProvider } from '../providers/activities/activities';
 
+import { SocialSharing } from '@ionic-native/social-sharing';
+
 
 @NgModule({
   declarations: [
@@ -71,7 +73,8 @@ import { ActivitiesProvider } from '../providers/activities/activities';
     DataProvider,
     OrganizationProvider,
     UserProvider,
-    ActivitiesProvider
+    ActivitiesProvider,
+    SocialSharing
   ]
 })
 export class AppModule {}
