@@ -20,15 +20,15 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 export class OrgHomePage {
 
   public organization = null;
-  public activities: Observable<any> = null;
+  //public activities: Observable<any> = null;
 
-  public topBackgroundColor = "#FFFFFF";
+  
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public activitiesProvider: ActivitiesProvider) {
-      this.organization = navParams.get('organization');
-      this.topBackgroundColor = this.organization.info.backgroundColor || "#FFFFFF";
+    
+     
 
-     this.activities = activitiesProvider.getActivitiesForOrg(this.organization.id);
+    // this.activities = activitiesProvider.getActivitiesForOrg(this.organization.id);
     /*  .subscribe(activity => {
        console.log("Got an activity in org-home: " + JSON.stringify(activity));
        this.activities = activity;
@@ -40,6 +40,7 @@ export class OrgHomePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad OrgHomePage');
+    this.organization = this.navParams.get('organization');
   }
 
 }

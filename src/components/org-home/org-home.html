@@ -1,0 +1,20 @@
+
+
+<div has-header class="org-home-component-css">
+  <ion-grid no-padding>
+    <ion-row>
+      <img class="orgImage" src="{{organization && organization.images && organization.images.image}}" />
+    </ion-row>
+    <ion-row no-padding>
+      <div class="coreMessage" [style.background-color]="topBackgroundColor">
+        {{organization?.info?.coreMessage}}
+      </div>
+    </ion-row>
+  </ion-grid>
+  <ion-list>
+    <ion-item no-padding *ngFor="let activity of activities | async">
+      <org-home-item [organization]="organization" [activity]="activity"> </org-home-item>
+    </ion-item>
+  </ion-list>
+
+</div>

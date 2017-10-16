@@ -1,33 +1,15 @@
-<!--
-  Generated template for the OrgHomePage page.
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<ion-header>
+<ion-header [hidden]="true">
 
-  <ion-navbar>
-    <ion-title>{{organization.companyName}}</ion-title>
+  <ion-navbar *ngIf="true" swipeBackEnabled="true">
+    <ion-title>{{organization && organization.companyName}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content class="org-home-css" [style.background-color]="organization.info.backgroundColor || '#FFFFFF' ">
-  <ion-grid no-padding>
-    <ion-row >
-        <img class="orgImage" src="{{organization.images.image}}"/>
-     </ion-row>
-     <ion-row no-padding>
-       <div class="coreMessage" [style.background-color]="topBackgroundColor">
-        {{organization.info.coreMessage}}
-     </div>
-    </ion-row>
-  </ion-grid>
-  <ion-list>
-    <ion-item  no-padding *ngFor="let activity of activities | async">
-         <org-home-item [organization]="organization" [activity]="activity" > </org-home-item>
-    </ion-item>
-  </ion-list>
+<ion-content class="org-home-css" [style.background-color]="organization && organization.info && organization.info.backgroundColor || '#FFFFFF' ">
+ 
+  <org-home *ngIf="organization" [organization]='organization'> </org-home>
 
 </ion-content>

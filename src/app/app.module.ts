@@ -1,3 +1,4 @@
+import { OrgHomeComponent } from './../components/org-home/org-home';
 import { ActionsBarComponent } from './../components/actions-bar/actions-bar';
 import { ActionButtonComponent } from './../components/action-button/action-button';
 import { OrgHomeItemComponent } from './../components/org-home-item/org-home-item';
@@ -46,7 +47,8 @@ import { SocialSharing } from '@ionic-native/social-sharing';
     HomeListOrganizationComponent,
     OrgHomeItemComponent,
     ActionButtonComponent,
-    ActionsBarComponent
+    ActionsBarComponent,
+    OrgHomeComponent
   ],
   imports: [
     BrowserModule,

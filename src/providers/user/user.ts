@@ -108,6 +108,7 @@ checkpoint
       Object.keys(this.currentUserInfo.favorites.organizations).forEach(orgLike => {
         this.db.getDocument('organizations', orgLike)
           .subscribe(org => {
+            org.id = orgLike;            // getDocument doesn't retrieve the id, but we happen to have it
             this.organizationLikes.push(org);
           }, error => {
             console.error("Error retrieving document in userProvider:getOrganizationFavorties for key: '" + orgLike + "': " + error.message);
