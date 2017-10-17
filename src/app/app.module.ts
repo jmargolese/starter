@@ -1,7 +1,9 @@
+import { SettingsPage } from './../pages/settings/settings';
 import { OrgHomeComponent } from './../components/org-home/org-home';
 import { ActionsBarComponent } from './../components/actions-bar/actions-bar';
 import { ActionButtonComponent } from './../components/action-button/action-button';
 import { OrgHomeItemComponent } from './../components/org-home-item/org-home-item';
+
 
 import { OrgHomePage } from './../pages/org-home/org-home';
 import { NgModule, ErrorHandler } from '@angular/core';
@@ -42,6 +44,7 @@ import { SocialSharing } from '@ionic-native/social-sharing';
     TabsPage,
     BrowsePage,
     OrgHomePage,
+    SettingsPage,
 
     // components
     HomeListOrganizationComponent,
@@ -65,7 +68,8 @@ import { SocialSharing } from '@ionic-native/social-sharing';
     HomePage,
     TabsPage,
     BrowsePage,
-    OrgHomePage
+    OrgHomePage,
+    SettingsPage
   ],
   providers: [
     StatusBar,

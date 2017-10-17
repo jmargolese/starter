@@ -1,7 +1,8 @@
+import { SettingsPage } from './../settings/settings';
 import { AuthProvider } from './../../providers/auth/auth';
 import { Component , ViewChild} from '@angular/core';
 
-import { AboutPage } from '../about/about';
+
 import { ContactPage } from '../contact/contact';
 import { HomePage } from '../home/home';
 import { BrowsePage } from '../browse/browse';
@@ -17,7 +18,7 @@ export class TabsPage {
 
   tab1Root = HomePage;
   tab2Root = BrowsePage;
-  tab3Root = AboutPage;
+  tab3Root = SettingsPage;
   tab4Root = ContactPage;
 
   constructor(private authProvider: AuthProvider) {

@@ -1,0 +1,48 @@
+<!--
+  Generated template for the Page4Page page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  
+    <ion-navbar>
+      <ion-title>page4</ion-title>
+    </ion-navbar>
+  
+  </ion-header>
+  
+  
+  <ion-content>
+  
+      <ion-item-group *ngFor="let item of config">
+  
+        <ion-item-divider color="light">
+          {{item.sectionTitle}}
+        </ion-item-divider>
+  
+  
+        <div *ngFor="let settingsItem of item.entries">
+          <!-- Simple Text-->
+          <ion-item class="settings-item" *ngIf="settingsItem.textOnly">
+            {{settingsItem.title}}
+          </ion-item>
+  
+          <!-- Link item-->
+  
+          <button ion-item *ngIf="settingsItem.destination" >
+            {{settingsItem.title}}
+           <!--  <i class="icon ion-ios-arrow-right" style="padding:0px;"></i> -->
+          </button>
+  
+          <!--callback item-->
+  
+          <Button ion-item *ngIf="settingsItem.callback"  (click)='presentToast("hello this is " + settingsItem.title)'>
+            {{settingsItem.title}}
+          </Button>
+  
+        </div>
+  
+      </ion-item-group>
+  
+  </ion-content>

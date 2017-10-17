@@ -23,12 +23,28 @@ export class AuthProvider {
     console.log('Hello AuthProvider Provider');
 
     this.user = afAuth.authState;
+   
+    // THis is the official way to monitor user changes but isn't working, so we fall back on the raw firebase call
+    /*
     this.user.subscribe((user: firebase.User) => {
 
-      console.log('AuthProvider subscribe: user is: ' +  user && user.uid);
+      console.log('AuthProvider subscribe: user is: ' +  user ? user.uid : "No one logged in");
       this.currentUser = user;
      
       userProvider.updateUserInfo(this.currentUser);
+    });
+    */
+
+    firebase.auth().onAuthStateChanged( (user) => {
+      if (user) {
+        // User is signed in.
+        console.log('Firebase Auth: ' , user.uid);
+        this.currentUser = user;
+      } else {
+        // No user is signed in.
+        console.log('Firebase Auth None');
+        this.currentUser = null;
+      }
     });
 
   }
@@ -56,12 +72,13 @@ export class AuthProvider {
     this.afAuth.auth.signOut();
     this.currentUser = null;
     this.userProvider.updateUserInfo(this.currentUser);
+    console.log("AuthProvider logout complete");
   }
   sayHello(message: string) {
     console.log("AuthProvider.sayHello called! " + message);
   }
 
   authenticated(): boolean {
-    return this.user ? true : false;
+    return this.currentUser ? true : false;
   }
 }
