@@ -23,7 +23,7 @@ export class AuthProvider {
     console.log('Hello AuthProvider Provider');
 
     this.user = afAuth.authState;
-   
+
     // THis is the official way to monitor user changes but isn't working, so we fall back on the raw firebase call
     /*
     this.user.subscribe((user: firebase.User) => {
@@ -35,11 +35,11 @@ export class AuthProvider {
     });
     */
 
-    firebase.auth().onAuthStateChanged( (user) => {
+    firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         // User is signed in.
-        console.log('Firebase Auth: ' , user.uid);
-        this.currentUser = user;
+        console.log('Firebase Auth: ', user.uid);
+        this.updateCurrentUser(user);
       } else {
         // No user is signed in.
         console.log('Firebase Auth None');
@@ -49,6 +49,8 @@ export class AuthProvider {
 
   }
 
+  // getters
+
   getUser(): firebase.User {
     return this.currentUser;
   }
@@ -56,12 +58,28 @@ export class AuthProvider {
   getAuthState(): Observable<firebase.User> {
     return this.user;
   }
+
+  isAuthenticated(): boolean {
+    return this.currentUser ? true : false;
+  }
+  // end getters
+
+  // setters
+
+  private updateCurrentUser(user) {
+    this.currentUser = user;
+    this.userProvider.updateUserInfo(this.currentUser);   // keep the userProvider in sync with our user at all times
+  }
+
+  // end setters
+
+  // methods
   login(email: string, password: string) {
     this.afAuth.auth.signInWithEmailAndPassword(email, password)
       .then(user => {
-        this.currentUser = user;
+        this.updateCurrentUser(user);
         console.log("Login successful with user: " + user.email);
-        this.userProvider.updateUserInfo(this.currentUser);
+
       })
       .catch(error => {
         console.error("Login failed for user: '" + email + "' with error: " + error.message);
@@ -74,11 +92,42 @@ export class AuthProvider {
     this.userProvider.updateUserInfo(this.currentUser);
     console.log("AuthProvider logout complete");
   }
-  sayHello(message: string) {
-    console.log("AuthProvider.sayHello called! " + message);
+
+  public updatePasscode(currentPasscode, newPasscode) {
+
+    const credential = firebase.auth.EmailAuthProvider.credential(this.currentUser.email, currentPasscode);
+
+    return this.currentUser.reauthenticateWithCredential(credential)
+      .then(() => {
+        this.currentUser.updatePassword(newPasscode)
+          .then(() => {
+            console.log("passcode update successful");
+          })
+          .catch(error => {
+            console.error("passcode update failed: " + error.message);
+            Promise.reject(error);
+          })
+      })
+      .catch(error => {
+        console.error("Error reauthenteWithCredential: " + error.message);
+        Promise.reject(error);
+      })
+
+
+
   }
 
-  authenticated(): boolean {
-    return this.currentUser ? true : false;
+  public resetPasscode() {
+    return this.afAuth.auth.sendPasswordResetEmail(this.currentUser.email)
+    .then(() => {
+      console.log("reset passcode succeeded (sent email)");
+    })
+    .catch(error => {
+      console.error("Resetpasscode failed for: " + this.currentUser.email + " error: " + error.message);
+      Promise.reject(error);
+    })
   }
+  // end methods
+
+
 }

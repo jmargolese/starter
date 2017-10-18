@@ -1,3 +1,5 @@
+import { SettingsPasscodePage } from './../pages/settings-passcode/settings-passcode';
+import { SettingsProfilePage } from './../pages/settings-profile/settings-profile';
 import { SettingsPage } from './../pages/settings/settings';
 import { OrgHomeComponent } from './../components/org-home/org-home';
 import { ActionsBarComponent } from './../components/actions-bar/actions-bar';
@@ -17,8 +19,10 @@ import { HomePage } from '../pages/home/home';
 import { BrowsePage } from '../pages/browse/browse';
 import { TabsPage } from '../pages/tabs/tabs';
 
+
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { AppVersion } from '@ionic-native/app-version';
 
 import { HomeListOrganizationComponent} from '../components/home-list-organization/home-list-organization';
 
@@ -45,6 +49,8 @@ import { SocialSharing } from '@ionic-native/social-sharing';
     BrowsePage,
     OrgHomePage,
     SettingsPage,
+    SettingsProfilePage,
+    SettingsPasscodePage,
 
     // components
     HomeListOrganizationComponent,
@@ -69,7 +75,9 @@ import { SocialSharing } from '@ionic-native/social-sharing';
     TabsPage,
     BrowsePage,
     OrgHomePage,
-    SettingsPage
+    SettingsPage,
+    SettingsProfilePage,
+    SettingsPasscodePage
   ],
   providers: [
     StatusBar,
@@ -80,7 +88,8 @@ import { SocialSharing } from '@ionic-native/social-sharing';
     OrganizationProvider,
     UserProvider,
     ActivitiesProvider,
-    SocialSharing
+    SocialSharing,
+    AppVersion
   ]
 })
 export class AppModule {}

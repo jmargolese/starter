@@ -1,0 +1,47 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{title}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding class="settings-profile-passcode-css">
+  <ion-list no-lines>
+    <p [hidden]="!submitAttempt || isError" style="color: #ea6153;">{{errorMessage}}</p>
+
+    <form [formGroup]="profileForm">
+      <ion-item>
+        <ion-label floating>Current passcode</ion-label>
+        <ion-input formControlName="currentPasscode" type="password" [class.invalid]="!profileForm.controls.currentPasscode.valid && (profileForm.controls.currentPasscode.dirty || submitAttempt)"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="!profileForm.controls.currentPasscode.valid  && (profileForm.controls.currentPasscode.dirty || submitAttempt)">
+        <p>To protect your account, please enter your current passcode.</p>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>New passcode</ion-label>
+        <ion-input formControlName="passcode" type="password" [class.invalid]="!profileForm.controls.passcode.valid && (profileForm.controls.passcode.dirty || submitAttempt)"></ion-input>
+      </ion-item>
+
+
+      <ion-item *ngIf="!profileForm.controls.passcode.valid  && (profileForm.controls.passcode.dirty || submitAttempt)">
+        <p>Please enter a passcode.</p>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Confirm new passcode</ion-label>
+        <ion-input formControlName="confirmPasscode" type="password" [class.invalid]="!profileForm.controls.confirmPasscode.valid && (profileForm.controls.confirmPasscode.dirty || submitAttempt)"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="!profileForm.controls.confirmPasscode.valid  && (profileForm.controls.confirmPasscode.dirty || submitAttempt)">
+        <p>Please enter the password again</p>
+      </ion-item>
+      <ion-item *ngIf="!profileForm.valid && (profileForm.controls.passcode.valid && profileForm.controls.confirmPasscode.valid)  && (profileForm.dirty || submitAttempt)">
+        <p>Passwords must match</p>
+      </ion-item>
+
+    </form>
+  </ion-list>
+  <button [disabled]="!profileForm.dirty || !profileForm.valid" ion-button full color="primary" (click)="update()">Update</button>
+  <br>
+  <button ion-button color="primary" clear (click)="forgotPasscode()" >Forgot passcode?</button>
+</ion-content>

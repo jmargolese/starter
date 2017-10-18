@@ -27,26 +27,19 @@ export class UserProvider {
     console.log('Hello UserProvider Provider');
   }
 
-  public updateUserInfo(authUser: firebase.User) {
-    this.currentAuthUser = authUser;
-    if (authUser) {       // null if logged out
-      return this.db.getDocument('users', authUser.uid)
-        .subscribe(userInfo => {
-          this.currentUserInfo = userInfo;
-        }, error => {
-          console.log("About to write error in user.ts updateUserInfo");
-          console.error("In userProvider updatingUserINfo for uid: " + authUser.uid + ": " + error.message);
-        })
-    } else {
-      this.currentUserInfo = null;
-    }
+  // getters
+  public getUserProfile() {
+    if (!this.currentUserInfo)
+      throw new Error('getUserProfile called with no logged in user');
+    else
+      return this.currentUserInfo.profile;
+
   }
 
   public getUserInfo() {
     return this.currentUserInfo;
   }
-checkpoint
-  
+
   public isUserFavorite(type, id) {
     let retVal = false;
 
@@ -59,44 +52,6 @@ checkpoint
     }
 
     return retVal;
-  }
-  
-
-  public toggleAddToHome(orgId) {
-
-    var favorites = this.currentUserInfo.favorites || {};
-
-    var orgFavorites = favorites.organizations || {};
-
-    // toggle
-    if (orgFavorites.hasOwnProperty(orgId))
-      delete orgFavorites[orgId];
-    else
-      orgFavorites[orgId] = true;
-
-    this.currentUserInfo.favorites.organizations = orgFavorites;
-
-    this.db.updateDocument('users', this.currentAuthUser.uid, this.currentUserInfo)
-  }
-
-  public toggleFavoriteActivity(id) {
-
-    if (!this.currentUserInfo.favorites)
-      this.currentUserInfo.favorites = {};
-
-    var favorites = this.currentUserInfo.favorites || {};
-
-    var activityFavorites = favorites.activities || {};
-
-    // toggle
-    if (activityFavorites.hasOwnProperty(id))
-      delete activityFavorites[id];
-    else
-      activityFavorites[id] = true;
-
-    this.currentUserInfo.favorites.activities = activityFavorites;
-
-    this.db.updateDocument('users', this.currentAuthUser.uid, this.currentUserInfo)
   }
 
   public getFavoriteOrganizations(): Observable<any> {
@@ -120,5 +75,83 @@ checkpoint
     // https://stackoverflow.com/questions/41806188/how-to-create-an-observable-in-angular-2
     return Observable.of(this.organizationLikes);
   }
+  // end getters
+
+  //setters
+  public updateUserInfo(authUser: firebase.User) {
+    // called by AuthProvider to keep us in sync with user Auth data
+    this.currentAuthUser = authUser;
+    if (authUser) {       // null if logged out
+      return this.db.getDocument('users', authUser.uid)
+        .subscribe(userInfo => {
+          this.currentUserInfo = userInfo;
+        }, error => {
+          console.log("About to write error in user.ts updateUserInfo");
+          console.error("In userProvider updatingUserINfo for uid: " + authUser.uid + ": " + error.message);
+        })
+    } else {
+      this.currentUserInfo = null;
+    }
+  }
+
+  public updateProfileInfo(profileInfo) {
+
+    this.currentUserInfo.profile = profileInfo;
+    return this.db.updateDocument('users', this.currentAuthUser.uid, this.currentUserInfo)
+      .then(() => {
+        this.currentUserInfo.profile = profileInfo;
+      })
+
+  }
+
+
+
+  public toggleAddToHome(orgId) {
+
+    if (!this.currentUserInfo.favorites)
+      this.currentUserInfo.favorites = {
+        organizations: {}
+      }
+
+
+    var orgFavorites = this.currentUserInfo.favorites.organizations || {};
+
+    // toggle
+    if (orgFavorites.hasOwnProperty(orgId))
+      delete orgFavorites[orgId];
+    else
+      orgFavorites[orgId] = true;
+
+    this.currentUserInfo.favorites.organizations = orgFavorites;
+
+    this.db.updateDocument('users', this.currentAuthUser.uid, this.currentUserInfo)
+      .then(() => {
+        console.log("Toggled AddtoHome for orgID: " + orgId);
+      })
+      .catch(error =>
+        console.error("Error toggling AddToHome or orgID: " + orgId + ': ' + error.message));
+  }
+
+  public toggleFavoriteActivity(id) {
+
+    if (!this.currentUserInfo.favorites)
+      this.currentUserInfo.favorites = {
+        activities: {}
+      }
+
+    var activityFavorites = this.currentUserInfo.favorites.activities || {};
+
+    // toggle
+    if (activityFavorites.hasOwnProperty(id))
+      delete activityFavorites[id];
+    else
+      activityFavorites[id] = true;
+
+    this.currentUserInfo.favorites.activities = activityFavorites;
+
+    this.db.updateDocument('users', this.currentAuthUser.uid, this.currentUserInfo)
+  }
+
+
 
 }

@@ -7,7 +7,7 @@
 <ion-header>
   
     <ion-navbar>
-      <ion-title>page4</ion-title>
+      <ion-title>Settings</ion-title>
     </ion-navbar>
   
   </ion-header>
@@ -37,7 +37,7 @@
   
           <!--callback item-->
   
-          <Button ion-item *ngIf="settingsItem.callback"  (click)='presentToast("hello this is " + settingsItem.title)'>
+          <Button ion-item *ngIf="settingsItem.callback"  (click)='settingsCallback(settingsItem.callback)'>
             {{settingsItem.title}}
           </Button>
   

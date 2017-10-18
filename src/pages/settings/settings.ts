@@ -1,6 +1,11 @@
+import { SettingsProfilePage } from './../settings-profile/settings-profile';
+import { AuthProvider } from './../../providers/auth/auth';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
+import { AppVersion } from '@ionic-native/app-version';
+
+
 
 /**
  * Generated class for the SettingsPage page.
@@ -18,36 +23,110 @@ export class SettingsPage {
 
   public config: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController) {
-    this.config = [{
-      'sectionTitle': 'Account',
+  public appName: string = "";
+  public packageName: string = "";
+  public versionCode: string = "";
+  public versionNumber: string = "";
+
+  constructor(public platform: Platform, public navCtrl: NavController, public navParams: NavParams, public auth: AuthProvider, public toastCtrl: ToastController, public appVersion: AppVersion) {
+    if (platform.is('cordova')) {
+      this.appVersion.getAppName().then(appName => this.appName = appName);
+      this.appVersion.getPackageName().then(packageName => this.packageName = packageName);
+      this.appVersion.getVersionCode().then(versionCode => this.versionCode = versionCode);
+      this.appVersion.getVersionNumber().then(versionNumber => this.versionNumber = versionNumber);
+    } else {
+      this.versionCode = "Browser";
+    }
+  }
+
+  public settingsCallback  (action) {
+    // general callback available to settings buttons
+    switch (action) {
+      case 'logout':
+       // logout();
+        break;
+      case 'login':
+       // login();
+        break;
+      case 'profile':
+         this.navCtrl.push(SettingsProfilePage);
+        break;
+      case 'paymethods':
+       // payMethods();
+        break;
+      case 'tutorial':
+//tutorial();
+        break;
+
+      default:
+
+    }
+  }
+
+  private setEnvInfo() {
+    this.config.push({
+      'sectionTitle': 'About',
       'entries': [
+        {
+          'title': 'Version: ' + this.versionCode,
+          'textOnly': true,
+        },
+        {
+          'title': 'Environment: sharedev',
+          'textOnly': true,
+        },
+        {
+          'title': 'View tutorial',
+          'callback': 'tutorial',
+        },
+      ],
+    })
+  }
+
+  private setAccountInfo() {
+    
+    let entries = [];
+
+    if (this.auth.isAuthenticated()) {
+      entries.push(
+        {
+          title: 'Profile',
+          callback: 'profile'
+        },
+        {
+          title: 'Payment Methods',
+          callback: 'paymethods'
+        },
+        {
+          title: "Sign-out",
+          callback: 'logout'
+        }
+
+      );
+    }
+    else {
+      entries.push(
         {
           'title': 'Sign-in/Sign-up',
           'callback': 'login',
-        },
-      ],
-    },
-      {
-        'sectionTitle': 'About',
-        'entries': [
-          {
-            'title': 'Version: Browser',
-            'textOnly': true,
-          },
-          {
-            'title': 'Environment: sharedev',
-            'textOnly': true,
-          },
-          {
-            'title': 'View tutorial',
-            'callback': 'tutorial',
-          },
-        ],
-      }];
+        }
+      )
+    }
+
+    this.config.push({
+      'sectionTitle': 'Account',
+      'entries': entries
+    })
+  }
+  public ionViewWillEnter() {
+
+    this.config = [];
+  
+    this.setAccountInfo();
+    this.setEnvInfo();
+
 
   }
-
   public ionViewDidLoad(): void {
     console.log('ionViewDidLoad Page4Page');
   }

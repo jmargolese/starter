@@ -92,7 +92,7 @@ export class ContactPage {
 
   public checkAuth() {
 
-    console.log("Are we authenticated? " + this.myAuth.authenticated());
+    console.log("Are we authenticated? " + this.myAuth.isAuthenticated());
   }
 
 }

@@ -48,6 +48,7 @@ export class HomePage {
   }
 
   ionViewWillEnter() {
+    
     this.organizations = this.userProvider.getFavoriteOrganizations();
   }
   ionViewDidLoad() {

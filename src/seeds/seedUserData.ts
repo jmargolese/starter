@@ -7,7 +7,7 @@ export const userDataSeeds = [
                     "first": "Fred",
                     "last": "Flint20"
                 },
-                "phone_number": "555 555-1212"
+                "phoneNumber": "555 555-1212"
             },
             "info": {
                 "isDemo": false,
@@ -25,7 +25,7 @@ export const userDataSeeds = [
                     "first": "Rocky",
                     "last": "Balboa"
                 },
-                "phone_number": "555 555-1212"
+                "phoneNumber": "555 555-1212"
             },
             "info": {
                 "isDemo": false,
@@ -42,7 +42,7 @@ export const userDataSeeds = [
                     "first": "Apollo",
                     "last": "Cread"
                 },
-                "phone_number": "555 555-1212"
+                "phoneNumber": "555 555-1212"
             },
             "info": {
                 "isDemo": false,

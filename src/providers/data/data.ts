@@ -73,17 +73,24 @@ export class DataProvider {
 
   }
 
-  public updateDocument(collectionName: string, documentKey: string, data: {}): void {
+  public updateDocument(collectionName: string, documentKey: string, data: {}): Promise<any> {
 
     let collection: AngularFirestoreCollection<any> = this.afs.collection<any>(collectionName);
 
-    collection.doc(documentKey).update(data).then(() => {
-      console.log("Wrote document for:" + documentKey);
+    try {
+      return collection.doc(documentKey).update(data).then(() => {
+        console.log("Wrote document for:" + documentKey);
+      }
+      )
+        .catch(error => {
+          console.error("Error writing document for " + documentKey + " error: " + error.message);
+          return Promise.reject(error);
+        })
+    } catch (error) {
+      console.error("Error in data::updateDocument for collection: '" + collectionName + "' key: '" + documentKey + "': " + error.message);
+      return Promise.reject(error);
     }
-    )
-      .catch(error => {
-        console.error("Error writing document for " + documentKey + " error: " + error.message);
-      })
+   
   }
 
 }
