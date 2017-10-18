@@ -1,3 +1,5 @@
+import { Organization } from './../../pages/home/home';
+
 import { DataProvider } from './../data/data';
 
 import { Injectable } from '@angular/core';
@@ -40,6 +42,13 @@ export class UserProvider {
     return this.currentUserInfo;
   }
 
+  public getUserId(): string {
+     return this.currentAuthUser ? this.currentAuthUser.uid : ""
+  }
+
+  public userHasOrganization(): boolean {
+    return this.currentUserInfo ? this.currentUserInfo.organization : false;
+  }
   public isUserFavorite(type, id) {
     let retVal = false;
 
@@ -54,8 +63,9 @@ export class UserProvider {
     return retVal;
   }
 
-  public getFavoriteOrganizations(): Observable<any> {
+  public getFavoriteOrganizations(): any {
     this.organizationLikes = [];   // reset before we work
+
 
     if (this.currentUserInfo && this.currentUserInfo.favorites && this.currentUserInfo.favorites.organizations) {
       // or try .getOwnPropertyNames
@@ -74,24 +84,34 @@ export class UserProvider {
 
     // https://stackoverflow.com/questions/41806188/how-to-create-an-observable-in-angular-2
     return Observable.of(this.organizationLikes);
+
+
   }
   // end getters
 
   //setters
-  public updateUserInfo(authUser: firebase.User) {
+  public updateUserInfo(authUser: firebase.User): Promise<any> {
     // called by AuthProvider to keep us in sync with user Auth data
     this.currentAuthUser = authUser;
-    if (authUser) {       // null if logged out
-      return this.db.getDocument('users', authUser.uid)
-        .subscribe(userInfo => {
-          this.currentUserInfo = userInfo;
-        }, error => {
-          console.log("About to write error in user.ts updateUserInfo");
-          console.error("In userProvider updatingUserINfo for uid: " + authUser.uid + ": " + error.message);
-        })
-    } else {
-      this.currentUserInfo = null;
-    }
+
+    return new Promise((resolve, reject) => {
+      if (authUser) {       // null if logged out
+        this.db.getDocument('users', authUser.uid)
+          .subscribe(userInfo => {
+            this.currentUserInfo = userInfo;
+            resolve(this.currentUserInfo);
+          }, error => {
+            console.log("About to write error in user.ts updateUserInfo");
+            console.error("In userProvider updatingUserINfo for uid: " + authUser.uid + ": " + error.message);
+            reject(error);
+          })
+      } else {
+        this.currentUserInfo = null;
+        resolve(this.currentUserInfo);
+      }
+    })
+
+   
   }
 
   public updateProfileInfo(profileInfo) {

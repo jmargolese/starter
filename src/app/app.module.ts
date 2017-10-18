@@ -1,3 +1,4 @@
+import { DashboardPage } from './../pages/dashboard/dashboard';
 import { SettingsPasscodePage } from './../pages/settings-passcode/settings-passcode';
 import { SettingsProfilePage } from './../pages/settings-profile/settings-profile';
 import { SettingsPage } from './../pages/settings/settings';
@@ -51,6 +52,7 @@ import { SocialSharing } from '@ionic-native/social-sharing';
     SettingsPage,
     SettingsProfilePage,
     SettingsPasscodePage,
+    DashboardPage,
 
     // components
     HomeListOrganizationComponent,
@@ -77,7 +79,8 @@ import { SocialSharing } from '@ionic-native/social-sharing';
     OrgHomePage,
     SettingsPage,
     SettingsProfilePage,
-    SettingsPasscodePage
+    SettingsPasscodePage,
+    DashboardPage
   ],
   providers: [
     StatusBar,

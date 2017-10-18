@@ -24,6 +24,9 @@ export class AuthProvider {
 
     this.user = afAuth.authState;
 
+    this.updateCurrentUser(firebase.auth().currentUser);
+    console.log("At startup we are authenticated? : " + this.isAuthenticated());
+
     // THis is the official way to monitor user changes but isn't working, so we fall back on the raw firebase call
     /*
     this.user.subscribe((user: firebase.User) => {
@@ -51,8 +54,17 @@ export class AuthProvider {
 
   // getters
 
-  getUser(): firebase.User {
-    return this.currentUser;
+  getUser(): Promise<firebase.User> {
+    return new Promise((resolve, reject) => {
+      firebase.auth().onAuthStateChanged((user) => {
+        this.updateCurrentUser(user)
+          .then(() => {
+            resolve(user)
+          }
+          )
+
+      })
+    })
   }
 
   getAuthState(): Observable<firebase.User> {
@@ -66,9 +78,10 @@ export class AuthProvider {
 
   // setters
 
-  private updateCurrentUser(user) {
+  private updateCurrentUser(user): Promise<firebase.User> {
+    // returns a promise
     this.currentUser = user;
-    this.userProvider.updateUserInfo(this.currentUser);   // keep the userProvider in sync with our user at all times
+    return this.userProvider.updateUserInfo(this.currentUser);   // keep the userProvider in sync with our user at all times
   }
 
   // end setters
@@ -119,13 +132,13 @@ export class AuthProvider {
 
   public resetPasscode() {
     return this.afAuth.auth.sendPasswordResetEmail(this.currentUser.email)
-    .then(() => {
-      console.log("reset passcode succeeded (sent email)");
-    })
-    .catch(error => {
-      console.error("Resetpasscode failed for: " + this.currentUser.email + " error: " + error.message);
-      Promise.reject(error);
-    })
+      .then(() => {
+        console.log("reset passcode succeeded (sent email)");
+      })
+      .catch(error => {
+        console.error("Resetpasscode failed for: " + this.currentUser.email + " error: " + error.message);
+        Promise.reject(error);
+      })
   }
   // end methods
 

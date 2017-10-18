@@ -1,5 +1,6 @@
 import { activitySeeds } from './../../seeds/seedActivities';
 import { userDataSeeds } from './../../seeds/seedUserData';
+import {  donationSeeds } from './../../seeds/seedDonations';
 
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
@@ -45,6 +46,24 @@ export class ContactPage {
       console.log("This is the org: " + org.key);
 
       this.organizationsCollection.doc(org.key).set(org.data).then(() => {
+        console.log("Wrote document for:" + org.key)
+      }
+      )
+        .catch(error => {
+          console.error("Error writing document for " + org.key + " error: " + error.message);
+        })
+    })
+  }
+
+  public seedDonations(): void {
+    console.log("seedDonations called");
+
+    let collection : AngularFirestoreCollection<any>  = this.afs.collection<any>('donations');
+
+    donationSeeds.forEach(org => {
+      console.log("This is the donation: " + org.key);
+
+      collection.doc(org.key).set(org.data).then(() => {
         console.log("Wrote document for:" + org.key)
       }
       )

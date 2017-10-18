@@ -1,3 +1,4 @@
+import { DashboardPage } from './../dashboard/dashboard';
 import { SettingsPage } from './../settings/settings';
 import { AuthProvider } from './../../providers/auth/auth';
 import { Component , ViewChild} from '@angular/core';
@@ -19,7 +20,8 @@ export class TabsPage {
   tab1Root = HomePage;
   tab2Root = BrowsePage;
   tab3Root = SettingsPage;
-  tab4Root = ContactPage;
+  tab4Root = DashboardPage;
+  tab5Root = ContactPage;
 
   constructor(private authProvider: AuthProvider) {
     authProvider.getUser();       // just trigger it to init

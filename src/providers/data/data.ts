@@ -43,6 +43,28 @@ export class DataProvider {
 
   }
 
+  public getDonationRecords(collection, forUser, id) : Observable<any> {
+    
+
+    let itemCollection: AngularFirestoreCollection<any> = this.afs.collection(collection, 
+      ref => ref.where(forUser ? 'donor.id' : 'recipient.id', '==', id));
+
+    return itemCollection.snapshotChanges()
+     // returns observable of DocumentChangeAction[]
+     .map(actions => {
+      return actions.map(a => {
+        const data = a.payload.doc.data() as {};
+        const recordId = a.payload.doc.id;
+        //console.log("Here's the data: " + JSON.stringify(data.donor.id) + " equal? " + (id == data.donor.id ? true : false));
+        //console.log("Here's the id for collection: " + collection + ": " + JSON.stringify(recordId));
+        return { id, ...data };
+      }, error => {
+        console.error("Error in data:getDonationRecords for collection/id: " + collection + '/' + id + ": " + error.message);
+      })
+      
+    });
+  }
+
   
   public getCollection(collectionName): AngularFirestoreCollection<any> {
 
