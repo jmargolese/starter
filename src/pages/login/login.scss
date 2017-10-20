@@ -1,5 +1,6 @@
 page-login {
     .login-css {
+        /* https://github.com/ionic-team/ionic/issues/6301#issuecomment-285870542 */
         ion-slides { height: initial; }
             
         p {

@@ -1,3 +1,4 @@
+import { PaymethodsPage } from './../pages/paymethods/paymethods';
 import { LoginPage } from './../pages/login/login';
 import { DashboardPage } from './../pages/dashboard/dashboard';
 import { SettingsPasscodePage } from './../pages/settings-passcode/settings-passcode';
@@ -38,7 +39,9 @@ import { OrganizationProvider } from '../providers/organization/organization';
 import { UserProvider } from '../providers/user/user';
 import { ActivitiesProvider } from '../providers/activities/activities';
 
+
 import { SocialSharing } from '@ionic-native/social-sharing';
+import { PaymethodsProvider } from '../providers/paymethods/paymethods';
 
 
 @NgModule({
@@ -55,6 +58,7 @@ import { SocialSharing } from '@ionic-native/social-sharing';
     SettingsPasscodePage,
     DashboardPage,
     LoginPage,
+    PaymethodsPage,
 
     // components
     HomeListOrganizationComponent,
@@ -83,7 +87,8 @@ import { SocialSharing } from '@ionic-native/social-sharing';
     SettingsProfilePage,
     SettingsPasscodePage,
     DashboardPage,
-    LoginPage
+    LoginPage,
+    PaymethodsPage
   ],
   providers: [
     StatusBar,
@@ -95,7 +100,8 @@ import { SocialSharing } from '@ionic-native/social-sharing';
     UserProvider,
     ActivitiesProvider,
     SocialSharing,
-    AppVersion
+    AppVersion,
+    PaymethodsProvider
   ]
 })
 export class AppModule {}

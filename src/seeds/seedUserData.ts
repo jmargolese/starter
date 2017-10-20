@@ -14,7 +14,28 @@ export const userDataSeeds = [
                 "isAdmin": false,
                 "isEnabled": true
             },
-            "organization": "orgChadTough"
+            "organization": "orgChadTough",
+            "paymethods": [
+                {
+                    vendor: "stripe",
+                    isPreferred: true,
+                    kind: "card",
+                    displayName: "Visa ending in 1234",
+                    brand: "Visa",
+                    hidden: false
+
+                },
+                {
+                    vendor: "stripe",
+                    isPreferred: false,
+                    kind: "card",
+                    displayName: "MC ending in 6663",
+                    brand: "MC",
+                    hidden: false
+
+                },
+
+            ]
         }
     },
     {
@@ -35,7 +56,8 @@ export const userDataSeeds = [
             "organization": "orgChadTough"
         }
     },
-    { key: "103",
+    {
+        key: "103",
         data: {
             "profile": {
                 "name": {

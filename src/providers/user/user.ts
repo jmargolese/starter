@@ -45,6 +45,11 @@ export class UserProvider {
     return this.currentAuthUser ? this.currentAuthUser.uid : ""
   }
 
+  public getPaymethods(): [{}] {
+
+    return (this.currentUserInfo && this.currentUserInfo.paymethods) ? this.currentUserInfo.paymethods : [];
+  }
+
   public userHasOrganization(): boolean {
     return this.currentUserInfo ? this.currentUserInfo.organization : false;
   }
@@ -111,7 +116,7 @@ export class UserProvider {
     email: string,
     firstName: string,
     lastName: string,
-    contactPrefs : {
+    contactPrefs: {
       emailForLikes: boolean,
       emailForGeneral: boolean
     }
@@ -129,7 +134,7 @@ export class UserProvider {
         isEnabled: true
       },
       organization: null,
-      contactPrefs : userInfo.contactPrefs
+      contactPrefs: userInfo.contactPrefs
     }
 
     return new Promise((resolve, reject) => {
@@ -161,7 +166,7 @@ export class UserProvider {
               console.error("In userProvider updatingUserInfo for uid: " + authUser ? authUser.uid : "authUser is null" + ": " + error.message);
               reject(error);
             })
-        else  {
+        else {
           console.log("In update userInfo skipping document read, we already have it");
           resolve(this.currentUserInfo);
         }
@@ -175,13 +180,38 @@ export class UserProvider {
   }
 
 
-  public updateProfileInfo(profileInfo) {
+  public updatePaymethods(paymethods: [{}]): Promise<any> {
+    this.currentUserInfo.paymethods = paymethods;
+
+    return new Promise((resolve, reject) => {
+      this.db.updateDocument('users', this.currentAuthUser.uid, this.currentUserInfo)
+        .then(() => {
+          this.currentUserInfo.profile = paymethods;
+          resolve();
+        })
+        .catch(error => {
+          console.error("Error in user:updatePaymethods: " + error.message);
+          reject(error);
+        })
+    });
+
+  }
+
+  public updateProfileInfo(profileInfo): Promise<any> {
 
     this.currentUserInfo.profile = profileInfo;
-    return this.db.updateDocument('users', this.currentAuthUser.uid, this.currentUserInfo)
-      .then(() => {
-        this.currentUserInfo.profile = profileInfo;
-      })
+    return new Promise((resolve, reject) => {
+      this.db.updateDocument('users', this.currentAuthUser.uid, this.currentUserInfo)
+        .then(() => {
+          this.currentUserInfo.profile = profileInfo;
+          resolve();
+        })
+        .catch(error => {
+          console.error("Error in user:updateProfileInfo: " + error.message);
+          reject(error);
+        })
+    })
+
 
   }
 

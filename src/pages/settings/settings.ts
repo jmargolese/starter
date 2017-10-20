@@ -1,3 +1,4 @@
+import { PaymethodsPage } from './../paymethods/paymethods';
 import { LoginPage } from './../login/login';
 import { SettingsProfilePage } from './../settings-profile/settings-profile';
 import { AuthProvider } from './../../providers/auth/auth';
@@ -5,6 +6,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, ModalController } from 'ionic-angular';
 import { ToastController, Events } from 'ionic-angular';
 import { AppVersion } from '@ionic-native/app-version';
+
 
 
 
@@ -64,7 +66,7 @@ export class SettingsPage {
         this.navCtrl.push(SettingsProfilePage);
         break;
       case 'paymethods':
-        // payMethods();
+        this.navCtrl.push(PaymethodsPage);
         break;
       case 'tutorial':
         //tutorial();

@@ -115,6 +115,9 @@ export class DataProvider {
 
   }
 
+ 
+  // actions
+
  public createDocument(collectionName: string, documentKey: string, data: {}): Promise<any> {
    
   let promise = new Promise((resolve, reject) => {
