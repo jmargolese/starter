@@ -1,5 +1,3 @@
-import { Organization } from './../../pages/home/home';
-
 import { DataProvider } from './../data/data';
 
 import { Injectable } from '@angular/core';
@@ -26,6 +24,7 @@ export class UserProvider {
   public organizationLikes = [];
 
   constructor(public db: DataProvider) {
+
     console.log('Hello UserProvider Provider');
   }
 
@@ -43,7 +42,7 @@ export class UserProvider {
   }
 
   public getUserId(): string {
-     return this.currentAuthUser ? this.currentAuthUser.uid : ""
+    return this.currentAuthUser ? this.currentAuthUser.uid : ""
   }
 
   public userHasOrganization(): boolean {
@@ -90,29 +89,85 @@ export class UserProvider {
   // end getters
 
   //setters
+
+  /*key: "fred.ipmw+20@gmail.com",
+  data: {
+      "profile": {
+          "name": {
+              "first": "Fred",
+              "last": "Flint20"
+          },
+          "phoneNumber": "555 555-1212"
+      },
+      "info": {
+          "isDemo": false,
+          "isAdmin": false,
+          "isEnabled": true
+      },
+      "organization": "orgChadTough"
+  }
+  */
+  public createNewUser(userInfo: {
+    email: string,
+    firstName: string,
+    lastName: string
+  }) {
+
+    let userData = {
+      "profile": {
+        first: userInfo.firstName,
+        last: userInfo.lastName
+      },
+      "info": {
+        isDemo: false,
+        isAdmin: false,
+        isEnabled: false
+      },
+      organization: null
+    }
+
+    return new Promise((resolve, reject) => {
+      this.db.createDocument('users', this.currentAuthUser.uid, userData)
+        .then(() => {
+          this.currentUserInfo.userData;
+          resolve();
+        })
+        .catch(error => {
+          console.log("Error creating new user in userProvider: " + error.message);
+          reject(error);
+        })
+    })
+
+  }
   public updateUserInfo(authUser: firebase.User): Promise<any> {
     // called by AuthProvider to keep us in sync with user Auth data
     this.currentAuthUser = authUser;
 
     return new Promise((resolve, reject) => {
       if (authUser) {       // null if logged out
-        this.db.getDocument('users', authUser.uid)
-          .subscribe(userInfo => {
-            this.currentUserInfo = userInfo;
-            resolve(this.currentUserInfo);
-          }, error => {
-            console.log("About to write error in user.ts updateUserInfo");
-            console.error("In userProvider updatingUserINfo for uid: " + authUser.uid + ": " + error.message);
-            reject(error);
-          })
+        if (!this.currentUserInfo || (authUser.uid != this.currentUserInfo.uid))
+          this.db.getDocument('users', authUser.uid)
+            .subscribe(userInfo => {
+              this.currentUserInfo = userInfo;
+              resolve(this.currentUserInfo);
+            }, error => {
+
+              console.error("In userProvider updatingUserInfo for uid: " + authUser ? authUser.uid : "authUser is null" + ": " + error.message);
+              reject(error);
+            })
+        else  {
+          console.log("In update userInfo skipping document read, we already have it");
+          resolve(this.currentUserInfo);
+        }
       } else {
         this.currentUserInfo = null;
         resolve(this.currentUserInfo);
       }
     })
 
-   
+
   }
+
 
   public updateProfileInfo(profileInfo) {
 

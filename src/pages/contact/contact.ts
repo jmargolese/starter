@@ -1,9 +1,10 @@
+import { LoginPage } from './../login/login';
 import { activitySeeds } from './../../seeds/seedActivities';
 import { userDataSeeds } from './../../seeds/seedUserData';
 import {  donationSeeds } from './../../seeds/seedDonations';
 
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController , ModalController} from 'ionic-angular';
 
 import { orgSeeds } from '../../seeds/seedOrganizations';
 
@@ -22,7 +23,7 @@ export class ContactPage {
 
   private organizationsCollection: AngularFirestoreCollection<any>;
 
-  constructor(public navCtrl: NavController, private readonly afs: AngularFirestore, private myAuth: AuthProvider) {
+  constructor(public navCtrl: NavController, private readonly afs: AngularFirestore, private myAuth: AuthProvider, public modalCtrl: ModalController) {
     this.organizationsCollection = afs.collection<any>('organizations');
 
 
@@ -30,7 +31,9 @@ export class ContactPage {
 
   public login(): void {
 
-    this.myAuth.login("fred.ipmw+20@gmail.com", "abc123");
+    //this.myAuth.login("fred.ipmw+20@gmail.com", "abc123");
+    const loginModal = this.modalCtrl.create(LoginPage);
+    loginModal.present();
 
   }
 

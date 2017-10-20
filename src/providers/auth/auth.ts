@@ -24,7 +24,7 @@ export class AuthProvider {
 
     this.user = afAuth.authState;
 
-    this.updateCurrentUser(firebase.auth().currentUser);
+
     console.log("At startup we are authenticated? : " + this.isAuthenticated());
 
     // THis is the official way to monitor user changes but isn't working, so we fall back on the raw firebase call
@@ -41,7 +41,7 @@ export class AuthProvider {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         // User is signed in.
-        console.log('Firebase Auth: ', user.uid);
+        console.log('Firebase Auth State changed: ', user.uid);
         this.updateCurrentUser(user);
       } else {
         // No user is signed in.
@@ -54,17 +54,19 @@ export class AuthProvider {
 
   // getters
 
-  getUser(): Promise<firebase.User> {
+  public getUser(): Promise<firebase.User> {
+
     return new Promise((resolve, reject) => {
       firebase.auth().onAuthStateChanged((user) => {
+        console.log("Auth:getUser about to call updateCurrentUser with user: " + (user ? user.uid : "User is null"));
         this.updateCurrentUser(user)
           .then(() => {
             resolve(user)
-          }
-          )
-
+          })
       })
     })
+
+
   }
 
   getAuthState(): Observable<firebase.User> {
@@ -81,29 +83,75 @@ export class AuthProvider {
   private updateCurrentUser(user): Promise<firebase.User> {
     // returns a promise
     this.currentUser = user;
+    console.log("auth:updateCurrentUser about to call updateUserInfo: " + (user ? user.uid : "User is null"));
     return this.userProvider.updateUserInfo(this.currentUser);   // keep the userProvider in sync with our user at all times
   }
 
   // end setters
 
   // methods
-  login(email: string, password: string) {
-    this.afAuth.auth.signInWithEmailAndPassword(email, password)
-      .then(user => {
-        this.updateCurrentUser(user);
-        console.log("Login successful with user: " + user.email);
+  login(email: string, password: string): Promise<any> {
 
-      })
-      .catch(error => {
-        console.error("Login failed for user: '" + email + "' with error: " + error.message);
-      })
+    let promise = new Promise((resolve, reject) => {
+      this.afAuth.auth.signInWithEmailAndPassword(email, password)
+        .then(user => {
+          console.log("Login successful with user: (about to call updateCurrentUser)" + user.email);
+          this.updateCurrentUser(user);
+
+          resolve(user);
+
+        })
+        .catch(error => {
+          console.error("Login failed for user: '" + email + "' with error: " + error.message);
+          // Promise.reject(error);
+          reject(error);
+        })
+
+
+    });
+
+    return promise;
+
   }
 
-  logout() {
-    this.afAuth.auth.signOut();
-    this.currentUser = null;
-    this.userProvider.updateUserInfo(this.currentUser);
-    console.log("AuthProvider logout complete");
+  logout(): Promise<any> {
+    let promise = new Promise((resolve, reject) => {
+      this.afAuth.auth.signOut()
+        .then(() => {
+          console.log("AuthProvider logout complete, about to call updateCurrentUser");
+          this.updateCurrentUser(null);
+
+          resolve();
+
+        })
+        .catch(error => {
+          console.error("Error in auth:logout: " + error.message);
+          reject(error);
+        })
+
+
+    });
+
+    return promise;
+  }
+
+  public createAccount(email, passcode) {
+    let promise = new Promise((resolve, reject) => {
+      firebase.auth().createUserWithEmailAndPassword(email, passcode)
+        .then(user => {
+          console.log("Created new user with email: " + email);
+          this.updateCurrentUser(user);
+          resolve(user);
+        })
+        .catch(function (error) {
+          // Handle Errors here.
+
+          console.log("Error in auth:CreateAccount: " + error.message);
+          reject(error);
+        });
+    });
+
+    return promise;
   }
 
   public updatePasscode(currentPasscode, newPasscode) {
@@ -130,16 +178,52 @@ export class AuthProvider {
 
   }
 
-  public resetPasscode() {
-    return this.afAuth.auth.sendPasswordResetEmail(this.currentUser.email)
-      .then(() => {
-        console.log("reset passcode succeeded (sent email)");
-      })
-      .catch(error => {
-        console.error("Resetpasscode failed for: " + this.currentUser.email + " error: " + error.message);
-        Promise.reject(error);
-      })
+  public resetPasscode(email?: string) {
+    let promise = new Promise((resolve, reject) => {
+
+      this.afAuth.auth.sendPasswordResetEmail(email || this.currentUser.email)
+        .then(() => {
+          console.log("reset passcode succeeded (sent email)");
+          resolve();
+        })
+        .catch(error => {
+          console.error("Resetpasscode failed for: " + (email || this.currentUser.email) + " error: " + error.message);
+          reject(error);
+        })
+    });
+    return promise;
   }
+
+  // logins
+
+  public loginFacebook(): Promise<any> {
+    // Sign in using a popup.
+    let promise = new Promise((resolve, reject) => {
+      var provider = new firebase.auth.FacebookAuthProvider();
+      provider.addScope('user_birthday');
+      firebase.auth().signInWithPopup(provider)
+        .then(function (result) {
+          // This gives you a Facebook Access Token.
+          var token = result.credential.accessToken;
+          // The signed-in user info.
+          var user = result.user;
+
+          this.updateCurrentUser(user);
+          console.log("Logged in user with facebook");
+          resolve(user);
+        })
+        .catch(error => {
+          console.error("Error in auth:loginFacebook: " + error.message);
+          reject(error);
+        })
+
+    })
+
+    return promise;
+
+
+  }
+  // end logins
   // end methods
 
 

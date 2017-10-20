@@ -26,7 +26,7 @@ export class BrowsePage {
 
   public organizations: Observable<any[]>;
   private organizationsCollection: AngularFirestoreCollection<any>;
-  public title:string = "Browse";
+  public title:string = "Discover";
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public orgProvider: OrganizationProvider) {
 

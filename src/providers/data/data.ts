@@ -95,6 +95,24 @@ export class DataProvider {
 
   }
 
+ public createDocument(collectionName: string, documentKey: string, data: {}): Promise<any> {
+   
+  let promise = new Promise((resolve, reject) => {
+    let collection: AngularFirestoreCollection<any> = this.afs.collection<any>(collectionName);
+
+    collection.doc(documentKey).set(data).then(() => {
+      console.log("Wrote document in data:createDocument");
+      resolve();
+    })
+    .catch(error => {
+      console.error("Error in data:createDocument for collection/key: " + collectionName + "/" + documentKey + " data: " + JSON.stringify(data) + " error: " + error.message);
+      reject(error);
+    })
+
+  });
+
+  return promise;
+ }
   public updateDocument(collectionName: string, documentKey: string, data: {}): Promise<any> {
 
     let collection: AngularFirestoreCollection<any> = this.afs.collection<any>(collectionName);

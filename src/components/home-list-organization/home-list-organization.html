@@ -21,7 +21,7 @@
         </div>
       </ion-col>
       <ion-col col-4>
-        <img *ngIf="organization" class="logoImage" src="{{organization.images.logo}}" />
+        <img *ngIf="organization && organization.images" class="logoImage" src="{{organization.images.logo}}" />
       </ion-col>
     </ion-row>
 

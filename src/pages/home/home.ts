@@ -28,10 +28,10 @@ export class HomePage {
   public organizations: Observable<any[]>;
   private organizationsCollection: AngularFirestoreCollection<any>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public userProvider: UserProvider, public auth:AuthProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public userProvider: UserProvider, public auth: AuthProvider) {
 
-    
-   
+
+
 
     /* this.organizations = db.collection('organizations').valueChanges();
 
@@ -41,23 +41,24 @@ export class HomePage {
 
   }
 
-  public onSearchInput( event: any): void {
-    
+  public onSearchInput(event: any): void {
+
     let val = event.target.value;
 
     //console.log("onSearchInput called with:  " + val);
   }
 
   ionViewWillEnter() {
-    
+
     // ensure we've completed our login check before trying to load anything
     this.auth.getUser()
-    .then((user) => {
+      .then(() => {
+        this.organizations = this.userProvider.getFavoriteOrganizations();
+      })
 
-      
-      this.organizations = this.userProvider.getFavoriteOrganizations();
-    })
-    
+
+
+
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad HomePage');
