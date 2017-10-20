@@ -22,14 +22,11 @@ export class OrganizationProvider {
   constructor(private db: DataProvider, public userProvider: UserProvider) {
     console.log('Hello OrganizationProvider Provider');
 
-   this.organizationsCollection = db.getCollection('organizations');  // TODO abstract this so we don't know about 'collections'?
-   
-
-   this.allOrganizations = db.getSnapshot(this.organizationsCollection);
   }
 
 
   public getAllOrganizations() : Observable<any[]> {
+    this.allOrganizations = this.db.getAllOrganizations(true);
     return this.allOrganizations;
   }
 

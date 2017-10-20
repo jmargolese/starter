@@ -110,20 +110,26 @@ export class UserProvider {
   public createNewUser(userInfo: {
     email: string,
     firstName: string,
-    lastName: string
+    lastName: string,
+    contactPrefs : {
+      emailForLikes: boolean,
+      emailForGeneral: boolean
+    }
   }) {
 
     let userData = {
       "profile": {
         first: userInfo.firstName,
-        last: userInfo.lastName
+        last: userInfo.lastName,
+        email: userInfo.email             // this is really a dupe of what's in the auth record, but used here for convenience
       },
       "info": {
         isDemo: false,
         isAdmin: false,
-        isEnabled: false
+        isEnabled: true
       },
-      organization: null
+      organization: null,
+      contactPrefs : userInfo.contactPrefs
     }
 
     return new Promise((resolve, reject) => {

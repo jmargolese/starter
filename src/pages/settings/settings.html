@@ -40,6 +40,12 @@
           <Button ion-item *ngIf="settingsItem.callback"  (click)='settingsCallback(settingsItem.callback)'>
             {{settingsItem.title}}
           </Button>
+
+            <!--callback not arrow item-->
+  
+            <Button ion-item detail-none *ngIf="settingsItem.callbackNoArrow"  (click)='settingsCallback(settingsItem.callbackNoArrow)'>
+              {{settingsItem.title}}
+            </Button>
   
         </div>
   

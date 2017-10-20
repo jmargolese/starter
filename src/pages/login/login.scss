@@ -1,6 +1,6 @@
 page-login {
     .login-css {
-        
+        ion-slides { height: initial; }
             
         p {
             font-size: 0.8em;
@@ -26,8 +26,14 @@ page-login {
 
         .errorMessage {
             color: #ea6153;
-            font-size: 120%;
+            font-size: 105%;
             font-weight: bold;
+        }
+
+
+        .checkBoxText {
+            font-size:80% !important;
+            white-space: normal;
         }
 
     }

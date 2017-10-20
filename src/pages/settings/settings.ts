@@ -1,8 +1,9 @@
+import { LoginPage } from './../login/login';
 import { SettingsProfilePage } from './../settings-profile/settings-profile';
 import { AuthProvider } from './../../providers/auth/auth';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
-import { ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, ModalController } from 'ionic-angular';
+import { ToastController, Events } from 'ionic-angular';
 import { AppVersion } from '@ionic-native/app-version';
 
 
@@ -28,7 +29,9 @@ export class SettingsPage {
   public versionCode: string = "";
   public versionNumber: string = "";
 
-  constructor(public platform: Platform, public navCtrl: NavController, public navParams: NavParams, public auth: AuthProvider, public toastCtrl: ToastController, public appVersion: AppVersion) {
+  constructor(public platform: Platform, public navCtrl: NavController, public modalCtrl: ModalController,
+    public navParams: NavParams, public auth: AuthProvider, public toastCtrl: ToastController, public appVersion: AppVersion,
+    public events: Events) {
     if (platform.is('cordova')) {
       this.appVersion.getAppName().then(appName => this.appName = appName);
       this.appVersion.getPackageName().then(packageName => this.packageName = packageName);
@@ -39,23 +42,32 @@ export class SettingsPage {
     }
   }
 
-  public settingsCallback  (action) {
+  public settingsCallback(action) {
     // general callback available to settings buttons
     switch (action) {
       case 'logout':
-       // logout();
+        this.auth.logout()
+          .then(() => {
+            this.events.publish('tabs:select', 1);      // switch to the Browse Tab
+          })
+
         break;
       case 'login':
-       // login();
+        const loginModal = this.modalCtrl.create(LoginPage);
+        loginModal.onDidDismiss(data => {
+          if (!data.canceled)
+            this.events.publish('tabs:select', 0);      // switch to the Home Tab
+        });
+        loginModal.present();
         break;
       case 'profile':
-         this.navCtrl.push(SettingsProfilePage);
+        this.navCtrl.push(SettingsProfilePage);
         break;
       case 'paymethods':
-       // payMethods();
+        // payMethods();
         break;
       case 'tutorial':
-//tutorial();
+        //tutorial();
         break;
 
       default:
@@ -84,7 +96,7 @@ export class SettingsPage {
   }
 
   private setAccountInfo() {
-    
+
     let entries = [];
 
     if (this.auth.isAuthenticated()) {
@@ -99,7 +111,7 @@ export class SettingsPage {
         },
         {
           title: "Sign-out",
-          callback: 'logout'
+          callbackNoArrow: 'logout'
         }
 
       );
@@ -108,7 +120,7 @@ export class SettingsPage {
       entries.push(
         {
           'title': 'Sign-in/Sign-up',
-          'callback': 'login',
+          'callbackNoArrow': 'login',
         }
       )
     }
@@ -121,7 +133,7 @@ export class SettingsPage {
   public ionViewWillEnter() {
 
     this.config = [];
-  
+
     this.setAccountInfo();
     this.setEnvInfo();
 

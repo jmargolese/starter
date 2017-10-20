@@ -28,10 +28,17 @@ export class LoginPage {
 
   public errorMessage: string = "";
 
+  
+
+
+// seemds to be a bug where checkbox can't read an object
+  public emailForLikes: true;
+  public emailForGeneral: true;
+
   public submitAttempt: boolean = false;
   constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public auth: AuthProvider, public toastCtrl: ToastController, public viewCtrl: ViewController, public alertCtrl: AlertController, public userProvider: UserProvider) {
 
-    
+
     this.loginForm = formBuilder.group({
       email: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
       passcode: ['', Validators.compose([Validators.maxLength(30), Validators.required])]
@@ -39,7 +46,7 @@ export class LoginPage {
 
     this.createForm = formBuilder.group({
       firstName: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
-      lastName: ['', Validators.compose([Validators.maxLength(30),  Validators.required])],
+      lastName: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
       email: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
       passcode: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
       confirmPasscode: ['', Validators.compose([Validators.maxLength(30), Validators.required])]
@@ -74,7 +81,10 @@ export class LoginPage {
   }
 
   public cancel() {
-    this.viewCtrl.dismiss();
+    // add the empty catch to deal with an Ionic bug throughing and exception https://github.com/ionic-team/ionic/issues/11776#issuecomment-314050068
+    let data = { canceled: true };
+    this.viewCtrl.dismiss(data)
+      .catch(() => { });
   }
 
   public showCreateNewAccount() {
@@ -141,7 +151,7 @@ export class LoginPage {
           console.log("Login successful");
           this.submitAttempt = false;
           this.presentToast("Login successful");
-          this.viewCtrl.dismiss();
+          this.viewCtrl.dismiss({ loggedIn: true, error: false, canceled: false });
 
         })
         .catch(error => {
@@ -156,64 +166,68 @@ export class LoginPage {
 
   public createAccount() {
     this.submitAttempt = true;
-    
-         if (!this.createForm.valid) {
-           console.error("create account form is not valid");
-           this.errorMessage = "Please correct errors and try again";
-         } else {
-    
-          
-          this.auth.createAccount(this.createForm.value.email, this.createForm.value.passcode)
-          .then((user)=>{
-            console.log('created user account ');
-            
-            this.userProvider.createNewUser( { 
-              email: this.createForm.value.email, 
-              firstName: this.createForm.value.firstName,
-              lastName: this.createForm.value.lastName})
-              .then(()=> {
-                this.viewCtrl.dismiss();
-                this.presentToast("Your account has been created!");
-                this.submitAttempt = false;
-              })
-              .catch(error => {
-                console.error("Error trying save user info after creating new account in login: " + error.message);
-                this.errorMessage = "";
-                // the account was created, so login works, we'll need a way to recover the user info later when this happens
-                // should create the user record from the auth trigger and then we can update it at our leisure
-              })
-           
-           
+
+    if (!this.createForm.valid) {
+      console.error("create account form is not valid");
+      this.errorMessage = "Please correct errors and try again";
+    } else {
+
+
+      this.auth.createAccount(this.createForm.value.email, this.createForm.value.passcode)
+        .then((user) => {
+          console.log('created user account ');
+
+          this.userProvider.createNewUser({
+            email: this.createForm.value.email,
+            firstName: this.createForm.value.firstName,
+            lastName: this.createForm.value.lastName,
+            contactPrefs: { 
+              emailForLikes: this.emailForLikes ? true : false,
+              emailForGeneral: this.emailForGeneral ? true : false}
           })
-          .catch(error => {
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            if (errorCode == 'auth/weak-password') {
-              this.errorMessage = "Please try again with a stronger passcode (at least six characters)";
-            }
-            else if (errorCode == 'auth/email-already-in-use') {
-              this.errorMessage = "That email is already in use. Please login or reset your passcode";
-            } else {
-              console.error("Error creating an account:  " + error.message + "/: " + error.code);
-              this.errorMessage = "Sorry, something went wrong, please try again";
-            }
-           
-          })
-    
-          
-           console.log("Form submitted!");
-         }
+            .then(() => {
+              this.viewCtrl.dismiss({ loggedIn: true, error: false, canceled: false });
+              this.presentToast("Your account has been created!");
+              this.submitAttempt = false;
+            })
+            .catch(error => {
+              console.error("Error trying save user info after creating new account in login: " + error.message);
+              this.errorMessage = "";
+              // the account was created, so login works, we'll need a way to recover the user info later when this happens
+              // should create the user record from the auth trigger and then we can update it at our leisure
+            })
+
+
+        })
+        .catch(error => {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          if (errorCode == 'auth/weak-password') {
+            this.errorMessage = "Please try again with a stronger passcode (at least six characters)";
+          }
+          else if (errorCode == 'auth/email-already-in-use') {
+            this.errorMessage = "That email is already in use. Please login or reset your passcode";
+          } else {
+            console.error("Error creating an account:  " + error.message + "/: " + error.code);
+            this.errorMessage = "Sorry, something went wrong, please try again";
+          }
+
+        })
+
+
+      console.log("Form submitted!");
+    }
   }
   public loginFacebook() {
     console.log("Going to login with facebook!");
     this.auth.loginFacebook()
-    .then(user => {
-      console.log("logged into facebook");
-    })
-    .catch(error => {
-      console.error("Error logging in to facebook");
-      this.errorMessage = "Something went wrong, please try again";
-    })
+      .then(user => {
+        console.log("logged into facebook");
+      })
+      .catch(error => {
+        console.error("Error logging in to facebook");
+        this.errorMessage = "Something went wrong, please try again";
+      })
   }
 
 }

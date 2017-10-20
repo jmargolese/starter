@@ -8,7 +8,7 @@ import { ContactPage } from '../contact/contact';
 import { HomePage } from '../home/home';
 import { BrowsePage } from '../browse/browse';
 
-import {Tabs} from 'ionic-angular'
+import {Tabs, Events} from 'ionic-angular'
 
 @Component({
   templateUrl: 'tabs.html'
@@ -23,7 +23,12 @@ export class TabsPage {
   tab4Root = DashboardPage;
   tab5Root = ContactPage;
 
-  constructor(private authProvider: AuthProvider) {
+  constructor(private authProvider: AuthProvider, public events: Events) {
+    events.subscribe('tabs:select', (newTab) => {
+      // let other parts of the app tell us when a new tab is needed
+      this.tabRef.select(newTab);
+    });
+
     authProvider.getUser();       // just trigger it to init
   }
 

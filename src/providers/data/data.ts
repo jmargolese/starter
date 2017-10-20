@@ -43,6 +43,26 @@ export class DataProvider {
 
   }
 
+  public getAllOrganizations(enabledOnly: boolean) : Observable<any> {
+    // TODO need to abstract this so higher levels can send us queries
+
+   let itemCollection: AngularFirestoreCollection<any> = this.afs.collection('organizations', 
+      ref => ref.where('info.enabled', '==', true));
+
+    return itemCollection.snapshotChanges()
+     // returns observable of DocumentChangeAction[]
+     .map(actions => {
+      return actions.map(a => {
+        const data = a.payload.doc.data() as {};
+        const id = a.payload.doc.id;
+        //console.log("Here's the data: " + JSON.stringify(data));
+        //console.log("Here's the id: " + JSON.stringify(id));
+        return { id, ...data };
+      });
+    });
+
+  }
+
   public getDonationRecords(collection, forUser, id) : Observable<any> {
     
 
