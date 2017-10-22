@@ -1,3 +1,4 @@
+import { AddStripeCcPage } from './../pages/add-stripe-cc/add-stripe-cc';
 import { PaymethodsPage } from './../pages/paymethods/paymethods';
 import { LoginPage } from './../pages/login/login';
 import { DashboardPage } from './../pages/dashboard/dashboard';
@@ -59,6 +60,7 @@ import { PaymethodsProvider } from '../providers/paymethods/paymethods';
     DashboardPage,
     LoginPage,
     PaymethodsPage,
+    AddStripeCcPage,
 
     // components
     HomeListOrganizationComponent,
@@ -88,7 +90,8 @@ import { PaymethodsProvider } from '../providers/paymethods/paymethods';
     SettingsPasscodePage,
     DashboardPage,
     LoginPage,
-    PaymethodsPage
+    PaymethodsPage,
+    AddStripeCcPage
   ],
   providers: [
     StatusBar,

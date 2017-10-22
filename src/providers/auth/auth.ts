@@ -1,3 +1,5 @@
+import { ModalController } from 'ionic-angular';
+import { LoginPage } from './../../pages/login/login';
 import { UserProvider } from './../user/user';
 import { Injectable } from '@angular/core';
 
@@ -19,7 +21,7 @@ export class AuthProvider {
   currentUser: firebase.User = null;
   user: Observable<firebase.User>;
 
-  constructor(public afAuth: AngularFireAuth, public userProvider: UserProvider) {
+  constructor(public afAuth: AngularFireAuth, public userProvider: UserProvider, public modalCtrl: ModalController) {
     console.log('Hello AuthProvider Provider');
 
     this.user = afAuth.authState;
@@ -57,13 +59,58 @@ export class AuthProvider {
   public getUser(): Promise<firebase.User> {
 
     return new Promise((resolve, reject) => {
-      firebase.auth().onAuthStateChanged((user) => {
-        console.log("Auth:getUser about to call updateCurrentUser with user: " + (user ? user.uid : "User is null"));
-        this.updateCurrentUser(user)
-          .then(() => {
+      if (this.currentUser) {
+        resolve(this.currentUser);     // we are done, got the user
+      } else {
+        firebase.auth().onAuthStateChanged((user) => {
+          console.log("Auth:getUser about to call updateCurrentUser with user: " + (user ? user.uid : "User is null"));
+          this.updateCurrentUser(user)
+            .then(() => {
+              resolve(user)
+            })
+            .catch(error => {
+              console.error("Error calling onAuthStateChanged from auth:getUser: " + error.message);
+              reject(error);
+            })
+        })
+      }
+    })
+  }
+
+  public getAuthenticatedUser(message?: string): Promise<any> {
+    // message is to display to the user to explain why we are logging in
+    // returns an authenticated user or rejects the promise with error({ canceled: true, message : "User canceled"})
+
+    return new Promise((resolve, reject) => {
+
+      this.getUser()
+        .then(user => {
+          if (user)
             resolve(user)
-          })
-      })
+          else {
+            // need to get a user logged in
+            const loginModal = this.modalCtrl.create(LoginPage, { message: message ? message : null });
+            loginModal.onDidDismiss(data => {
+              if (!data.canceled) {
+                // should now have a current user
+                if (this.currentUser) {
+                  console.log("auth:getAuthenticatedUser succeed with logged in user");
+                  resolve(this.currentUser);
+                }
+              } else {
+                let error: any = new Error("User canceled");
+                error.canceled = true;
+                reject(error);
+              }
+            });
+            loginModal.present();
+          }
+        })
+        .catch(error => {
+          console.error("Error calling getUser from auth:GetAuthenticatedUser: " + error.message);
+          reject(error);
+        })
+
     })
 
 
@@ -79,6 +126,7 @@ export class AuthProvider {
   // end getters
 
   // setters
+
 
   private updateCurrentUser(user): Promise<firebase.User> {
     // returns a promise
@@ -96,9 +144,10 @@ export class AuthProvider {
       this.afAuth.auth.signInWithEmailAndPassword(email, password)
         .then(user => {
           console.log("Login successful with user: (about to call updateCurrentUser)" + user.email);
-          this.updateCurrentUser(user);
-
-          resolve(user);
+          this.updateCurrentUser(user)
+            .then((user) => {
+              resolve(user);
+            })
 
         })
         .catch(error => {
@@ -119,9 +168,10 @@ export class AuthProvider {
       this.afAuth.auth.signOut()
         .then(() => {
           console.log("AuthProvider logout complete, about to call updateCurrentUser");
-          this.updateCurrentUser(null);
-
-          resolve();
+          this.updateCurrentUser(null)
+            .then(() => {
+              resolve();;
+            })
 
         })
         .catch(error => {
@@ -140,8 +190,11 @@ export class AuthProvider {
       firebase.auth().createUserWithEmailAndPassword(email, passcode)
         .then(user => {
           console.log("Created new user with email: " + email);
-          this.updateCurrentUser(user);
-          resolve(user);
+          this.updateCurrentUser(user)
+            .then(user => {
+              resolve(user);
+            })
+
         })
         .catch(function (error) {
           // Handle Errors here.
@@ -154,25 +207,29 @@ export class AuthProvider {
     return promise;
   }
 
-  public updatePasscode(currentPasscode, newPasscode) {
+  public updatePasscode(currentPasscode: string, newPasscode: string): Promise<any> {
 
     const credential = firebase.auth.EmailAuthProvider.credential(this.currentUser.email, currentPasscode);
 
-    return this.currentUser.reauthenticateWithCredential(credential)
-      .then(() => {
-        this.currentUser.updatePassword(newPasscode)
-          .then(() => {
-            console.log("passcode update successful");
-          })
-          .catch(error => {
-            console.error("passcode update failed: " + error.message);
-            Promise.reject(error);
-          })
-      })
-      .catch(error => {
-        console.error("Error reauthenteWithCredential: " + error.message);
-        Promise.reject(error);
-      })
+    return new Promise((resolve, reject) => {
+      this.currentUser.reauthenticateWithCredential(credential)
+        .then(() => {
+          this.currentUser.updatePassword(newPasscode)
+            .then(() => {
+              console.log("passcode update successful");
+              resolve();
+            })
+            .catch(error => {
+              console.error("passcode update failed: " + error.message);
+              reject(error);
+            })
+        })
+        .catch(error => {
+          console.error("Error reauthenteWithCredential: " + error.message);
+          reject(error);
+        })
+    })
+
 
 
 

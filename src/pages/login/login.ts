@@ -35,9 +35,13 @@ export class LoginPage {
   public emailForLikes: true;
   public emailForGeneral: true;
 
+  public explainMessage: string = "";
+
   public submitAttempt: boolean = false;
   constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public auth: AuthProvider, public toastCtrl: ToastController, public viewCtrl: ViewController, public alertCtrl: AlertController, public userProvider: UserProvider) {
 
+
+    this.explainMessage = navParams.get('message');
 
     this.loginForm = formBuilder.group({
       email: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
@@ -51,6 +55,8 @@ export class LoginPage {
       passcode: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
       confirmPasscode: ['', Validators.compose([Validators.maxLength(30), Validators.required])]
     }, { validator: this.matchingPasswords('passcode', 'confirmPasscode') });
+
+
   }
 
   private matchingPasswords(passwordKey: string, confirmPasswordKey: string) {
@@ -71,6 +77,10 @@ export class LoginPage {
     //this.slides.slideTo(0,0);
   }
 
+  public clearExplainMessage() {
+    this.explainMessage = "";
+  }
+
   public presentToast(message) {
     let toast = this.toastCtrl.create({
       message: message,
@@ -88,17 +98,21 @@ export class LoginPage {
   }
 
   public showCreateNewAccount() {
+    this.clearExplainMessage();
     this.loginSlides.lockSwipes(false);
     this.loginSlides.slideTo(1);
     this.loginSlides.lockSwipes(true);
   }
 
   public showSignIn() {
+    this.clearExplainMessage();
     this.loginSlides.lockSwipes(false);
     this.loginSlides.slideTo(0);
     this.loginSlides.lockSwipes(true);
   }
   public forgotPasscode() {
+    this.clearExplainMessage();
+
     let confirm = this.alertCtrl.create({
       title: 'Reset passcode?',
       message: "Please enter your email address for this account",
@@ -141,6 +155,7 @@ export class LoginPage {
     confirm.present();
   }
   public submit() {
+    this.clearExplainMessage();
     this.submitAttempt = true;
 
     if (this.loginForm.valid) {
@@ -165,6 +180,7 @@ export class LoginPage {
   }
 
   public createAccount() {
+    this.clearExplainMessage();
     this.submitAttempt = true;
 
     if (!this.createForm.valid) {
@@ -219,6 +235,7 @@ export class LoginPage {
     }
   }
   public loginFacebook() {
+    this.clearExplainMessage();
     console.log("Going to login with facebook!");
     this.auth.loginFacebook()
       .then(user => {

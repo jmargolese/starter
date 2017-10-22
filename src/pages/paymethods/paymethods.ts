@@ -1,7 +1,9 @@
+import { AddStripeCcPage } from './../add-stripe-cc/add-stripe-cc';
 import { PaymethodsProvider } from './../../providers/paymethods/paymethods';
 import { UserProvider } from './../../providers/user/user';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+
 
 /**
  * Generated class for the PaymethodsPage page.
@@ -38,6 +40,10 @@ export class PaymethodsPage {
       this.paymethods = this.userProvider.getPaymethods();
     })
     
+  }
+
+  public addPaymethod() {
+    this.navCtrl.push(AddStripeCcPage);
   }
 
 }

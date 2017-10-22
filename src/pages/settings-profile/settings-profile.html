@@ -17,28 +17,30 @@
 
     <form [formGroup]="profileForm">
       <ion-item>
-        <ion-label floating>First Name</ion-label>
+        <ion-label floating>First Name
+            <span class="invalidFormText" *ngIf="!profileForm.controls.firstName.valid  && (profileForm.controls.firstName.dirty || submitAttempt)">
+                Please enter a valid name.
+            </span>
+        </ion-label>
         <ion-input formControlName="firstName" type="text" [class.invalid]="!profileForm.controls.firstName.valid && (profileForm.controls.firstName.dirty || submitAttempt)"></ion-input>
       </ion-item>
 
-
-      <ion-item *ngIf="!profileForm.controls.firstName.valid  && (profileForm.controls.firstName.dirty || submitAttempt)">
-        <p>Please enter a valid name.</p>
-      </ion-item>
       <ion-item>
-        <ion-label floating>Last Name</ion-label>
+        <ion-label floating>Last Name 
+          <span *ngIf="!profileForm.controls.lastName.valid  && (profileForm.controls.lastName.dirty || submitAttempt)" class="invalidFormText">Please enter a valid last name</span> 
+        </ion-label>
         <ion-input formControlName="lastName" type="text" [class.invalid]="!profileForm.controls.lastName.valid && (profileForm.controls.lastName.dirty || submitAttempt)"></ion-input>
       </ion-item>
-      <ion-item *ngIf="!profileForm.controls.lastName.valid  && (profileForm.controls.lastName.dirty || submitAttempt)">
-        <p>Please enter a valid last name.</p>
-      </ion-item>
+     
       <ion-item>
-        <ion-label floating>Phone Number</ion-label>
+        <ion-label floating>Phone Number
+            <span class="invalidFormText" *ngIf="!profileForm.controls.phoneNumber.valid  && (profileForm.controls.phoneNumber.dirty || submitAttempt)">
+                Please enter a valid phone number.
+            </span>
+        </ion-label>
         <ion-input formControlName="phoneNumber" type="tel" [class.invalid]="!profileForm.controls.phoneNumber.valid && (profileForm.controls.phoneNumber.dirty || submitAttempt)"></ion-input>
       </ion-item>
-      <ion-item *ngIf="!profileForm.controls.phoneNumber.valid  && (profileForm.controls.phoneNumber.dirty || submitAttempt)">
-        <p>Please enter a valid phone number.</p>
-      </ion-item>
+    
     </form>
   </ion-list>
   <button [disabled]="!profileForm.dirty || !profileForm.valid" ion-button full color="primary" (click)="update()">Update</button>

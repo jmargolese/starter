@@ -25,7 +25,7 @@ export class UserProvider {
 
   constructor(public db: DataProvider) {
 
-    console.log('Hello UserProvider Provider');
+    console.error('Hello UserProvider Provider');
   }
 
   // getters
@@ -35,6 +35,10 @@ export class UserProvider {
     else
       return this.currentUserInfo.profile;
 
+  }
+
+  public getDisplayName(): String {
+    return this.currentUserInfo ? this.currentUserInfo.profile.name.first + " " + this.currentUserInfo.profile.name.last : "";
   }
 
   public getUserInfo() {
@@ -153,9 +157,10 @@ export class UserProvider {
   public updateUserInfo(authUser: firebase.User): Promise<any> {
     // called by AuthProvider to keep us in sync with user Auth data
     this.currentAuthUser = authUser;
+    console.log("User: updateUserInfo called with user: " + (this.currentAuthUser ? this.currentAuthUser.uid : "curentAuthUser is null"));
 
     return new Promise((resolve, reject) => {
-      if (authUser) {       // null if logged out
+      if (this.currentAuthUser) {       // null if logged out
         if (!this.currentUserInfo || (authUser.uid != this.currentUserInfo.uid))
           this.db.getDocument('users', authUser.uid)
             .subscribe(userInfo => {
@@ -186,7 +191,7 @@ export class UserProvider {
     return new Promise((resolve, reject) => {
       this.db.updateDocument('users', this.currentAuthUser.uid, this.currentUserInfo)
         .then(() => {
-          this.currentUserInfo.profile = paymethods;
+          this.currentUserInfo.paymethods = paymethods;
           resolve();
         })
         .catch(error => {
@@ -217,50 +222,68 @@ export class UserProvider {
 
 
 
-  public toggleAddToHome(orgId) {
+  public toggleAddToHome(orgId): Promise<any> {
 
-    if (!this.currentUserInfo.favorites)
-      this.currentUserInfo.favorites = {
-        organizations: {}
-      }
+    return new Promise((resolve, reject) => {
+
+      if (!this.currentUserInfo.favorites)
+        this.currentUserInfo.favorites = {
+          organizations: {}
+        }
 
 
-    var orgFavorites = this.currentUserInfo.favorites.organizations || {};
+      var orgFavorites = this.currentUserInfo.favorites.organizations || {};
 
-    // toggle
-    if (orgFavorites.hasOwnProperty(orgId))
-      delete orgFavorites[orgId];
-    else
-      orgFavorites[orgId] = true;
+      // toggle
+      if (orgFavorites.hasOwnProperty(orgId))
+        delete orgFavorites[orgId];
+      else
+        orgFavorites[orgId] = true;
 
-    this.currentUserInfo.favorites.organizations = orgFavorites;
+      this.currentUserInfo.favorites.organizations = orgFavorites;
 
-    this.db.updateDocument('users', this.currentAuthUser.uid, this.currentUserInfo)
-      .then(() => {
-        console.log("Toggled AddtoHome for orgID: " + orgId);
-      })
-      .catch(error =>
-        console.error("Error toggling AddToHome or orgID: " + orgId + ': ' + error.message));
+      this.db.updateDocument('users', this.currentAuthUser.uid, this.currentUserInfo)
+        .then(() => {
+          console.log("Toggled AddtoHome for orgID: " + orgId);
+          resolve();
+        })
+        .catch(error => {
+          console.error("Error toggling AddToHome or orgID: " + orgId + ': ' + error.message);
+          reject(error);
+        })
+    })
+
   }
 
-  public toggleFavoriteActivity(id) {
+  public toggleFavoriteActivity(id): Promise<any> {
 
-    if (!this.currentUserInfo.favorites)
-      this.currentUserInfo.favorites = {
-        activities: {}
-      }
+    return new Promise((resolve, reject) => {
+      if (!this.currentUserInfo.favorites)
+        this.currentUserInfo.favorites = {
+          activities: {}
+        }
 
-    var activityFavorites = this.currentUserInfo.favorites.activities || {};
+      var activityFavorites = this.currentUserInfo.favorites.activities || {};
 
-    // toggle
-    if (activityFavorites.hasOwnProperty(id))
-      delete activityFavorites[id];
-    else
-      activityFavorites[id] = true;
+      // toggle
+      if (activityFavorites.hasOwnProperty(id))
+        delete activityFavorites[id];
+      else
+        activityFavorites[id] = true;
 
-    this.currentUserInfo.favorites.activities = activityFavorites;
+      this.currentUserInfo.favorites.activities = activityFavorites;
 
-    this.db.updateDocument('users', this.currentAuthUser.uid, this.currentUserInfo)
+      this.db.updateDocument('users', this.currentAuthUser.uid, this.currentUserInfo)
+        .then(() => {
+          resolve();
+        })
+        .catch(error => {
+          console.error("Error calling updateDocument in toggleFavoriteActivity: " + error.message);
+          reject(error);
+        })
+    })
+
+
   }
 
 

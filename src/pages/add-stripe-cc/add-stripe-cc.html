@@ -1,0 +1,58 @@
+<!-- 
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>addStripeCC</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div hide-nav-bar="false" can-swipe-back="true" hide-back-button="true" id="scan_credit_card" style="background:white;">
+  
+
+    <form id="stripe" #stripeForm>
+
+      <input type="hidden" name="token" />
+      <div class="spacer" style="height: 15em;"></div>
+      <div class="outcome">
+        <div class="error" role="alert"></div>
+        <div class="success">
+          Success! Your Stripe token is
+          <span class="token"></span>
+        </div>
+      </div>
+      <div class="group">
+        <label>
+          <span>Cardholder Name</span>
+          <div>
+             <input id="cardholder-name" name="cardholder-name" class="field" ([ngModal])="data.cardholder"></input> 
+          </div>
+        </label>
+        <label for="card-number">
+          <span>Card number</span>
+          <div id="card-number" class="field"></div>
+          <span class="brand">
+            <i class="pf pf-credit-card" id="brand-icon"></i>
+          </span>
+        </label>
+        <label for="card-expiry">
+          <span>Expiration</span>
+          <div id="card-expiry" class="field"></div>
+        </label>
+        <label for="card-cvc">
+          <span>CVC</span>
+          <div id="card-cvc" class="field"></div>
+        </label>
+        <label for="card-postal-code">
+          <span>Postal Code</span>
+          <div id="card-postal-code" class="field"></div>
+        </label>
+        <button type="submit">Submit</button>
+
+      </div>
+    </form>
+
+    <div>
+</ion-content> -->

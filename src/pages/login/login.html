@@ -13,6 +13,9 @@
       <ion-list no-lines>
         <div class="errorMessage" [hidden]="!submitAttempt && !errorMessage">{{errorMessage}}</div>
 
+        <div #message style="height: 2em;">
+          <div class="explainMessage" *ngIf="explainMessage">{{explainMessage}}</div>
+        </div>
         <form [formGroup]="loginForm">
           <ion-item>
             <ion-label floating>email</ion-label>

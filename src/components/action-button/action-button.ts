@@ -1,7 +1,10 @@
+import { ToastController } from 'ionic-angular';
+import { AuthProvider } from './../../providers/auth/auth';
 import { UserProvider } from './../../providers/user/user';
 import { Component, Input } from '@angular/core';
 
 import { SocialSharing } from '@ionic-native/social-sharing';
+
 
 /**
  * Generated class for the ActionButtonComponent component.
@@ -19,34 +22,73 @@ export class ActionButtonComponent {
   @Input('organization') organization
   @Input('activity') activity
 
-  constructor(public userProvider : UserProvider, public socialSharing: SocialSharing) {
+  constructor(public userProvider: UserProvider, public socialSharing: SocialSharing, public auth: AuthProvider, public toastCtrl: ToastController) {
     console.log('Hello ActionButtonComponent Component');
-    
+
+  }
+
+  public presentToast(message: string): void {
+    let toast: any = this.toastCtrl.create({
+      message: message,
+      duration: 3000,
+    });
+    toast.present();
   }
 
   // supporting actions for each button
   public toggleAddToHome(id) {
     console.log("toggleAddToHome called with id: " + id);
-    this.userProvider.toggleAddToHome(id);
+   
+
+   
+    this.auth.getAuthenticatedUser("You need to login to do that")
+      .then(() => {
+        var profile = this.userProvider.getUserProfile();
+        this.userProvider.toggleAddToHome(id)
+          .then(() => {
+            console.log("ActionButton:Toggle addToHome suceeded");
+          })
+      }).catch(error => {
+        if (error.canceled) {
+          console.log("User canceled in ActionButton:ToggleAddToHome");
+        } else {
+          console.error("Error in action-button:toggleAddToHome: " + error.message);
+          this.presentToast("Sorry, something went wrong, please try again later.");
+        }
+      })
   }
 
-  
+
   public toggleFavoriteActivity(id) {
     console.log("toggleFavoriteActivity called with id: " + id);
-    this.userProvider.toggleFavoriteActivity(id);
+    this.auth.getAuthenticatedUser("You need to login to do that")
+      .then(() => {
+        this.userProvider.toggleFavoriteActivity(id)
+          .then(() => {
+            console.log("Toggle favorite activity suceeded");
+          })
+      }).catch(error => {
+        if (error.canceled) {
+          console.log("User canceled in toggleFavoriteActivity");
+        } else {
+          console.error("Error in action-button:toggleFavoriteActivity: " + error.message);
+          this.presentToast("Sorry, something went wrong, please try again later.");
+        }
+      })
+
   }
 
   public startSocialShare() {
     // give priority to activities, but fall back as gracefully as we can
-      const options = {
-        message: (this.activity && this.activity.social.message) || (this.organization && this.organization.social.message) || "I support " + this.organization.companyName,
-        subject:  (this.activity && this.activity.social.subject) || (this.organization && this.organization.social.subject) || this.organization.companyName,
-        url:  (this.activity && this.activity.social.url) || (this.organization && this.organization.social.url) || "http://getshare.mobi",
-        files : [(this.activity && this.activity.images.image) || (this.organization && this.organization.images.image) || ""]
-      }
+    const options = {
+      message: (this.activity && this.activity.social.message) || (this.organization && this.organization.social.message) || "I support " + this.organization.companyName,
+      subject: (this.activity && this.activity.social.subject) || (this.organization && this.organization.social.subject) || this.organization.companyName,
+      url: (this.activity && this.activity.social.url) || (this.organization && this.organization.social.url) || "http://getshare.mobi",
+      files: [(this.activity && this.activity.images.image) || (this.organization && this.organization.images.image) || ""]
+    }
 
-      
-      this.socialSharing.shareWithOptions(options)
+
+    this.socialSharing.shareWithOptions(options)
       .then(() => {
         console.log("Social share succeeded!");
       })
