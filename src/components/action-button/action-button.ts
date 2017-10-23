@@ -1,3 +1,4 @@
+import { ShareProvider } from './../../providers/share/share';
 import { ToastController } from 'ionic-angular';
 import { AuthProvider } from './../../providers/auth/auth';
 import { UserProvider } from './../../providers/user/user';
@@ -22,7 +23,8 @@ export class ActionButtonComponent {
   @Input('organization') organization
   @Input('activity') activity
 
-  constructor(public userProvider: UserProvider, public socialSharing: SocialSharing, public auth: AuthProvider, public toastCtrl: ToastController) {
+  constructor(public userProvider: UserProvider, public socialSharing: SocialSharing, 
+      public auth: AuthProvider, public toastCtrl: ToastController, public share: ShareProvider) {
     console.log('Hello ActionButtonComponent Component');
 
   }
@@ -72,6 +74,25 @@ export class ActionButtonComponent {
           console.log("User canceled in toggleFavoriteActivity");
         } else {
           console.error("Error in action-button:toggleFavoriteActivity: " + error.message);
+          this.presentToast("Sorry, something went wrong, please try again later.");
+        }
+      })
+
+  }
+
+  public donate(id) {
+    console.log("donate called with id: " + id);
+    this.auth.getAuthenticatedUser("You need to login to do that")
+      .then(() => {
+        this.share.donate(this.activity, this.organization)
+          .then(() => {
+            console.log("action-button:donate:share activity suceeded");
+          })
+      }).catch(error => {
+        if (error.canceled) {
+          console.log("User canceled in action-button:donate");
+        } else {
+          console.error("Error in action-button:donate: " + error.message);
           this.presentToast("Sorry, something went wrong, please try again later.");
         }
       })

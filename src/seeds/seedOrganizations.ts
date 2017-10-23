@@ -29,7 +29,8 @@ export const orgSeeds = [
             ],
             "payMethods": [
                 {
-                    "stripe": {
+                    "type": "stripe",
+                    "data": {
                         "hasStripeAccount": true,
                         "creditCardFee": 0.029
                     }

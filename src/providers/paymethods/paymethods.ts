@@ -5,6 +5,8 @@ import { Injectable } from '@angular/core';
 
 import 'rxjs/add/operator/map';
 
+import * as shareTypes from '../../interfaces/interfaces';
+
 /*
   Generated class for the PaymethodsProvider provider.
 
@@ -14,15 +16,40 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class PaymethodsProvider {
 
-  private payMethods;
+  private payMethods: shareTypes.PayMethod[];
   constructor(public userProvider: UserProvider) {
     console.log('Hello PaymethodsProvider Provider');
   }
 
 
-  public getPaymethods() {
+  public getPaymethods(): shareTypes.PayMethod[] {
     this.payMethods = this.userProvider.getPaymethods();
     return this.payMethods;
+  }
+
+  public getPreferredPaymethod(required: boolean) : Promise<any> {
+    // TODO if required is true, this will ask the user for a paymethod if none exist
+    this.getPaymethods();       // ensure up to date
+    let preferred = null;
+
+    return new Promise((resolve, reject) => {
+      if (this.payMethods && this.payMethods.length) {
+        this.payMethods[0];      // make sure we always return something
+        for (let i = 0; i < this.payMethods.length; i++) {
+          if (this.payMethods[i].isPreferred) {
+            preferred = this.payMethods[i];
+            break;
+          }
+        }
+        resolve(preferred);
+      } else {
+        console.error("getPreferredPaymethod needs to call addPaymethod when it's implemented");
+        reject(new Error("getPreferredPaymethod needs to call addPaymethod when it's implemented"));
+      }
+
+
+    })
+
   }
 
   public deletePaymethod(index: number) {

@@ -43,6 +43,8 @@ import { ActivitiesProvider } from '../providers/activities/activities';
 
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { PaymethodsProvider } from '../providers/paymethods/paymethods';
+import { ShareProvider } from '../providers/share/share';
+import { AlertProvider } from '../providers/alert/alert';
 
 
 @NgModule({
@@ -104,7 +106,9 @@ import { PaymethodsProvider } from '../providers/paymethods/paymethods';
     ActivitiesProvider,
     SocialSharing,
     AppVersion,
-    PaymethodsProvider
+    PaymethodsProvider,
+    ShareProvider,
+    AlertProvider
   ]
 })
 export class AppModule {}

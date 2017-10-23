@@ -5,7 +5,7 @@
     <ion-icon name='home'></ion-icon>
     Add to Home
   </button>
-  <button *ngSwitchCase="'donate'" ion-button clear small color="primary" icon-start>
+  <button *ngSwitchCase="'donate'" ion-button clear small color="primary" (click)="donate((activity ? activity.id : organization.id))" icon-start>
     <ion-icon name='cash'></ion-icon>
     Donate
   </button>

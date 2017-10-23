@@ -9,6 +9,11 @@ import { Observable } from 'rxjs/Observable';
 
 import * as firebase from 'firebase/app';
 
+import * as shareTypes from '../../interfaces/interfaces';
+
+
+
+
 /*
   Generated class for the UserProvider provider.
 
@@ -18,51 +23,53 @@ import * as firebase from 'firebase/app';
 @Injectable()
 export class UserProvider {
 
+
   currentAuthUser: firebase.User = null;
-  currentUserInfo = null;
+  currentUser: shareTypes.User = null;
 
   public organizationLikes = [];
 
   constructor(public db: DataProvider) {
 
-    console.error('Hello UserProvider Provider');
   }
 
   // getters
-  public getUserProfile() {
-    if (!this.currentUserInfo)
+  public getUserProfile(): shareTypes.UserProfile {
+
+
+    if (!this.currentUser)
       throw new Error('getUserProfile called with no logged in user');
     else
-      return this.currentUserInfo.profile;
+      return this.currentUser.profile;
 
   }
 
   public getDisplayName(): String {
-    return this.currentUserInfo ? this.currentUserInfo.profile.name.first + " " + this.currentUserInfo.profile.name.last : "";
+    return this.currentUser ? this.currentUser.profile.name.first + " " + this.currentUser.profile.name.last : "";
   }
 
-  public getUserInfo() {
-    return this.currentUserInfo;
+  public getUserInfo(): shareTypes.UserInfo {
+    return this.currentUser.info;
   }
 
   public getUserId(): string {
     return this.currentAuthUser ? this.currentAuthUser.uid : ""
   }
 
-  public getPaymethods(): [{}] {
+  public getPaymethods(): shareTypes.PayMethod[] {
 
-    return (this.currentUserInfo && this.currentUserInfo.paymethods) ? this.currentUserInfo.paymethods : [];
+    return (this.currentUser && this.currentUser.paymethods) ? this.currentUser.paymethods : [];
   }
 
   public userHasOrganization(): boolean {
-    return this.currentUserInfo ? this.currentUserInfo.organization : false;
+    return this.currentUser && this.currentUser.organization ? true : false;
   }
   public isUserFavorite(type, id) {
     let retVal = false;
 
-    if (this.currentUserInfo) {
-      if (this.currentUserInfo.favorites) {
-        let toTest = type == 'activities' ? (this.currentUserInfo.favorites.activities || {}) : (this.currentUserInfo.favorites.organizations || {});
+    if (this.currentUser) {
+      if (this.currentUser.favorites) {
+        let toTest = type == 'activities' ? (this.currentUser.favorites.activities || {}) : (this.currentUser.favorites.organizations || {});
 
         retVal = toTest.hasOwnProperty(id) ? true : false;
       }
@@ -71,14 +78,18 @@ export class UserProvider {
     return retVal;
   }
 
+  public isRoleDemo(): boolean {
+    return this.currentUser ? this.currentUser.info.isDemo : false;
+  }
+
   public getFavoriteOrganizations(): any {
     this.organizationLikes = [];   // reset before we work
 
 
-    if (this.currentUserInfo && this.currentUserInfo.favorites && this.currentUserInfo.favorites.organizations) {
+    if (this.currentUser && this.currentUser.favorites && this.currentUser.favorites.organizations) {
       // or try .getOwnPropertyNames
 
-      Object.keys(this.currentUserInfo.favorites.organizations).forEach(orgLike => {
+      Object.keys(this.currentUser.favorites.organizations).forEach(orgLike => {
         this.db.getDocument('organizations', orgLike)
           .subscribe(org => {
             org.id = orgLike;            // getDocument doesn't retrieve the id, but we happen to have it
@@ -124,27 +135,34 @@ export class UserProvider {
       emailForLikes: boolean,
       emailForGeneral: boolean
     }
-  }) {
-
-    let userData = {
-      "profile": {
+  }) : Promise<any> {
+    let newUser: shareTypes.User;
+    newUser.profile = {
+      name: {
         first: userInfo.firstName,
         last: userInfo.lastName,
-        email: userInfo.email             // this is really a dupe of what's in the auth record, but used here for convenience
       },
-      "info": {
-        isDemo: false,
-        isAdmin: false,
-        isEnabled: true
-      },
-      organization: null,
-      contactPrefs: userInfo.contactPrefs
+      email: userInfo.email,
+      phoneNumber: ""            // this is really a dupe of what's in the auth record, but used here for convenience
     }
 
+    newUser.info = {
+      isDemo: false,
+      isAdmin: false,
+      isEnabled: true
+    }
+
+    newUser.organization = null,
+
+    newUser.contactPrefs.emailForGeneral = userInfo.contactPrefs.emailForLikes;
+    newUser.contactPrefs.emailForGeneral = userInfo.contactPrefs.emailForGeneral;
+
+
+
     return new Promise((resolve, reject) => {
-      this.db.createDocument('users', this.currentAuthUser.uid, userData)
+      this.db.createDocument('users', this.currentAuthUser.uid, newUser)
         .then(() => {
-          this.currentUserInfo.userData;
+          this.currentUser = newUser;
           resolve();
         })
         .catch(error => {
@@ -161,11 +179,11 @@ export class UserProvider {
 
     return new Promise((resolve, reject) => {
       if (this.currentAuthUser) {       // null if logged out
-        if (!this.currentUserInfo || (authUser.uid != this.currentUserInfo.uid))
+        if (!this.currentUser || (authUser.uid != this.currentUser.uid))
           this.db.getDocument('users', authUser.uid)
             .subscribe(userInfo => {
-              this.currentUserInfo = userInfo;
-              resolve(this.currentUserInfo);
+              this.currentUser = userInfo;
+              resolve(this.currentUser);
             }, error => {
 
               console.error("In userProvider updatingUserInfo for uid: " + authUser ? authUser.uid : "authUser is null" + ": " + error.message);
@@ -173,11 +191,11 @@ export class UserProvider {
             })
         else {
           console.log("In update userInfo skipping document read, we already have it");
-          resolve(this.currentUserInfo);
+          resolve(this.currentUser);
         }
       } else {
-        this.currentUserInfo = null;
-        resolve(this.currentUserInfo);
+        this.currentUser = null;
+        resolve(this.currentUser);
       }
     })
 
@@ -185,13 +203,13 @@ export class UserProvider {
   }
 
 
-  public updatePaymethods(paymethods: [{}]): Promise<any> {
-    this.currentUserInfo.paymethods = paymethods;
+  public updatePaymethods(paymethods: shareTypes.PayMethod[]): Promise<any> {
+    this.currentUser.paymethods = paymethods;
 
     return new Promise((resolve, reject) => {
-      this.db.updateDocument('users', this.currentAuthUser.uid, this.currentUserInfo)
+      this.db.updateDocument('users', this.currentAuthUser.uid, this.currentUser)
         .then(() => {
-          this.currentUserInfo.paymethods = paymethods;
+          this.currentUser.paymethods = paymethods;
           resolve();
         })
         .catch(error => {
@@ -204,11 +222,11 @@ export class UserProvider {
 
   public updateProfileInfo(profileInfo): Promise<any> {
 
-    this.currentUserInfo.profile = profileInfo;
+    this.currentUser.profile = profileInfo;
     return new Promise((resolve, reject) => {
-      this.db.updateDocument('users', this.currentAuthUser.uid, this.currentUserInfo)
+      this.db.updateDocument('users', this.currentAuthUser.uid, this.currentUser)
         .then(() => {
-          this.currentUserInfo.profile = profileInfo;
+          this.currentUser.profile = profileInfo;
           resolve();
         })
         .catch(error => {
@@ -226,13 +244,13 @@ export class UserProvider {
 
     return new Promise((resolve, reject) => {
 
-      if (!this.currentUserInfo.favorites)
-        this.currentUserInfo.favorites = {
+      if (!this.currentUser.favorites)
+        this.currentUser.favorites = {
           organizations: {}
         }
 
 
-      var orgFavorites = this.currentUserInfo.favorites.organizations || {};
+      var orgFavorites = this.currentUser.favorites.organizations || {};
 
       // toggle
       if (orgFavorites.hasOwnProperty(orgId))
@@ -240,9 +258,9 @@ export class UserProvider {
       else
         orgFavorites[orgId] = true;
 
-      this.currentUserInfo.favorites.organizations = orgFavorites;
+      this.currentUser.favorites.organizations = orgFavorites;
 
-      this.db.updateDocument('users', this.currentAuthUser.uid, this.currentUserInfo)
+      this.db.updateDocument('users', this.currentAuthUser.uid, this.currentUser)
         .then(() => {
           console.log("Toggled AddtoHome for orgID: " + orgId);
           resolve();
@@ -258,12 +276,12 @@ export class UserProvider {
   public toggleFavoriteActivity(id): Promise<any> {
 
     return new Promise((resolve, reject) => {
-      if (!this.currentUserInfo.favorites)
-        this.currentUserInfo.favorites = {
+      if (!this.currentUser.favorites)
+        this.currentUser.favorites.activities = {
           activities: {}
         }
 
-      var activityFavorites = this.currentUserInfo.favorites.activities || {};
+      var activityFavorites = this.currentUser.favorites.activities || {};
 
       // toggle
       if (activityFavorites.hasOwnProperty(id))
@@ -271,9 +289,9 @@ export class UserProvider {
       else
         activityFavorites[id] = true;
 
-      this.currentUserInfo.favorites.activities = activityFavorites;
+      this.currentUser.favorites.activities = activityFavorites;
 
-      this.db.updateDocument('users', this.currentAuthUser.uid, this.currentUserInfo)
+      this.db.updateDocument('users', this.currentAuthUser.uid, this.currentUser)
         .then(() => {
           resolve();
         })

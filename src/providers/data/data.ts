@@ -56,7 +56,7 @@ export class DataProvider {
         const data = a.payload.doc.data() as {};
         const id = a.payload.doc.id;
         //console.log("Here's the data: " + JSON.stringify(data));
-        //console.log("Here's the id: " + JSON.stringify(id));
+        //console.log("data:GetAllOrganizations: Here's the id: " + JSON.stringify(id));
         return { id, ...data };
       });
     });

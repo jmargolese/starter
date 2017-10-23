@@ -4,13 +4,8 @@ import { UserProvider } from './../../providers/user/user';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
+import * as shareTypes from '../../interfaces/interfaces';
 
-/**
- * Generated class for the PaymethodsPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -19,7 +14,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class PaymethodsPage {
 
-  public paymethods: [{}];
+  public paymethods: shareTypes.PayMethod[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public userProvider : UserProvider, public payMethodProvider: PaymethodsProvider) {
       
