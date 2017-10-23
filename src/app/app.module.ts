@@ -1,3 +1,4 @@
+
 import { AddStripeCcPage } from './../pages/add-stripe-cc/add-stripe-cc';
 import { PaymethodsPage } from './../pages/paymethods/paymethods';
 import { LoginPage } from './../pages/login/login';
@@ -27,6 +28,8 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AppVersion } from '@ionic-native/app-version';
+import {InAppBrowser} from '@ionic-native/in-app-browser';
+
 
 import { HomeListOrganizationComponent} from '../components/home-list-organization/home-list-organization';
 
@@ -108,7 +111,8 @@ import { AlertProvider } from '../providers/alert/alert';
     AppVersion,
     PaymethodsProvider,
     ShareProvider,
-    AlertProvider
+    AlertProvider,
+    InAppBrowser
   ]
 })
 export class AppModule {}

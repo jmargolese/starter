@@ -85,4 +85,5 @@
     <plugin name="cordova-plugin-x-socialsharing" spec="^5.2.0" />
     <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
     <plugin name="cordova-plugin-app-version" spec="^0.1.9" />
+    <plugin name="cordova-plugin-inappbrowser" spec="^1.7.1" />
 </widget>

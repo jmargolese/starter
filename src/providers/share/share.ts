@@ -1,3 +1,4 @@
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { PayMethod } from './../../interfaces/interfaces.d';
 import { OrganizationProvider } from './../organization/organization';
 import { AlertProvider } from './../alert/alert';
@@ -5,13 +6,15 @@ import { UserProvider } from './../user/user';
 import { URLSearchParams } from '@angular/http';
 import { PaymethodsProvider } from './../paymethods/paymethods';
 import { Injectable } from '@angular/core';
+ 
 
 import * as shareTypes from '../../interfaces/interfaces';
 
 @Injectable()
 export class ShareProvider {
 
-  constructor(public payMethods: PaymethodsProvider, public orgProvider: OrganizationProvider, public userProvider: UserProvider, public alert: AlertProvider) {
+  constructor(public payMethods: PaymethodsProvider, public orgProvider: OrganizationProvider, public userProvider: UserProvider, 
+      public alert: AlertProvider, public iab: InAppBrowser) {
     console.log('Hello ShareProvider Provider');
   }
 
@@ -54,6 +57,7 @@ export class ShareProvider {
     let serializedParams: URLSearchParams = this.serialize(params);
     //serialedParams.toString() to get the URL
 
+    this.iab.create('http://google.com');
   }
 
   public donate(activity: {}, organization: shareTypes.Organization): Promise<any> {

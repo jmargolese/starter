@@ -245,10 +245,7 @@ export class UserProvider {
     return new Promise((resolve, reject) => {
 
       if (!this.currentUser.favorites)
-        this.currentUser.favorites = {
-          organizations: {}
-        }
-
+        this.currentUser.favorites.organizations = {};
 
       var orgFavorites = this.currentUser.favorites.organizations || {};
 
