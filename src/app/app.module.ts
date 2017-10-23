@@ -35,6 +35,8 @@ import { HomeListOrganizationComponent} from '../components/home-list-organizati
 
 import { AngularFireModule } from 'angularfire2';
 import { environment } from '../environments/environment';
+import { ENV } from '@app/env';
+
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AuthProvider } from '../providers/auth/auth';
@@ -76,7 +78,7 @@ import { AlertProvider } from '../providers/alert/alert';
   ],
   imports: [
     BrowserModule,
-    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireModule.initializeApp(ENV.firebase),
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
     IonicModule.forRoot(Share)

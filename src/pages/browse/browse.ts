@@ -7,6 +7,7 @@ import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/fires
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
+import { ENV } from '@app/env';
 
 /**
  * Generated class for the HomePage page.
@@ -29,7 +30,8 @@ export class BrowsePage {
   public title:string = "Discover";
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public orgProvider: OrganizationProvider) {
-
+    
+    console.log("In browse.ts env: " + ENV.mode);
    
 
   }
