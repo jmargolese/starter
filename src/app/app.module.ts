@@ -10,7 +10,8 @@ import { OrgHomeComponent } from './../components/org-home/org-home';
 import { ActionsBarComponent } from './../components/actions-bar/actions-bar';
 import { ActionButtonComponent } from './../components/action-button/action-button';
 import { OrgHomeItemComponent } from './../components/org-home-item/org-home-item';
-
+import { FirebaseDynamicLinks }  from '@ionic-native/firebase-dynamic-links';
+import { Deeplinks } from '@ionic-native/deeplinks';
 
 import { OrgHomePage } from './../pages/org-home/org-home';
 import { NgModule, ErrorHandler } from '@angular/core';
@@ -114,7 +115,9 @@ import { AlertProvider } from '../providers/alert/alert';
     PaymethodsProvider,
     ShareProvider,
     AlertProvider,
-    InAppBrowser
+    InAppBrowser,
+    FirebaseDynamicLinks,
+    Deeplinks
   ]
 })
 export class AppModule {}
