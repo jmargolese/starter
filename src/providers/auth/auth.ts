@@ -3,7 +3,7 @@ import { ModalController } from 'ionic-angular';
 import { LoginPage } from './../../pages/login/login';
 import { UserProvider } from './../user/user';
 import { Injectable } from '@angular/core';
-
+import Raven from 'raven-js';
 
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
@@ -147,6 +147,10 @@ export class AuthProvider {
           console.log("Login successful with user: (about to call updateCurrentUser)" + user.email);
           this.updateCurrentUser(user)
             .then((user) => {
+              Raven.setUserContext({
+                email: this.currentUser.email,
+                id: this.currentUser.uid
+              })
               resolve(user);
             })
 
@@ -171,6 +175,7 @@ export class AuthProvider {
           console.log("AuthProvider logout complete, about to call updateCurrentUser");
           this.updateCurrentUser(null)
             .then(() => {
+              Raven.setUserContext();
               resolve();;
             })
 
@@ -193,6 +198,10 @@ export class AuthProvider {
           console.log("Created new user with email: " + email);
           this.updateCurrentUser(user)
             .then(user => {
+              Raven.setUserContext({
+                email: this.currentUser.email,
+                id: this.currentUser.uid
+              })
               resolve(user);
             })
 

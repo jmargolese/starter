@@ -53,6 +53,8 @@ import { PaymethodsProvider } from '../providers/paymethods/paymethods';
 import { ShareProvider } from '../providers/share/share';
 import { AlertProvider } from '../providers/alert/alert';
 
+import { SentryErrorHandler} from '../services/sentry-errorhandler';
+
 
 @NgModule({
   declarations: [
@@ -105,7 +107,7 @@ import { AlertProvider } from '../providers/alert/alert';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    {provide: ErrorHandler, useClass: SentryErrorHandler},
     AuthProvider,
     DataProvider,
     OrganizationProvider,

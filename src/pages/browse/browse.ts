@@ -27,21 +27,21 @@ export class BrowsePage {
 
   public organizations: Observable<any[]>;
   private organizationsCollection: AngularFirestoreCollection<any>;
-  public title:string = "Discover";
+  public title: string = "Discover";
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public orgProvider: OrganizationProvider) {
-    
-   // console.log("In browse.ts env: " + ENV.mode);
-   
+
+    // console.log("In browse.ts env: " + ENV.mode);
+
 
   }
 
-  setTitle(title){
+  setTitle(title) {
     this.title = title;
-}
+  }
 
-  public onSearchInput( event: any): void {
-    
+  public onSearchInput(event: any): void {
+
     let val = event.target.value;
 
     console.log("onSearchInput called with:  " + val);
@@ -49,16 +49,20 @@ export class BrowsePage {
 
   ionViewWillEnter() {
     this.organizations = this.orgProvider.getAllOrganizations();
+    
+      throw new Error("this is a test error that should be caught");
+    
+
   }
   ionViewDidLoad() {
 
     console.log('ionViewDidLoad BrowsePage');
-   
+
   }
 
   toggleHome() {
     // toggles the 'add/remove' to home setting
-    
+
   }
 
 }

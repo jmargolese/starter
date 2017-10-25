@@ -1,6 +1,7 @@
 // AF2 Settings
 export const ENV = {
     mode: 'Production',
+    release: '1.3.0',
     firebase: {
         apiKey: "AIzaSyAqWKouFk4w5UcULNmklntsYe4EpcLwO98",
         authDomain: "share-75e74.firebaseapp.com",
@@ -11,6 +12,9 @@ export const ENV = {
     },
     stripe: {
       privateKey: "pk_test_guQgqDNKwgXdd5MokoH926oj"
+    },
+    raven : {
+      appKey: "https://59961fc3505241e0ac9e06cd9e8003d0@sentry.io/181175"
     }
   }
 

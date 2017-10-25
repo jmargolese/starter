@@ -47,7 +47,7 @@ export class AlertProvider {
 
       let confirm = this.alertCtrl.create({
         title: params.title,
-        subtitle: params.subtitle || "",
+        subTitle: params.subTitle || "",
         message: params.message,
         buttons: buttons,
         enableBackdropDismiss: false

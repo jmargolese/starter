@@ -132,6 +132,7 @@ export class TabsPage {
 
   ionViewDidEnter() {
     //this.tabRef.select(1);
+    
   }
 
   ionViewDidLoad() {
