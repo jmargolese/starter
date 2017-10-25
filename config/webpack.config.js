@@ -5,6 +5,8 @@ var useDefaultConfig = require('@ionic/app-scripts/config/webpack.config.js');
 
 var env = process.env.IONIC_ENV;
 
+if (process.env.MY_ENV) {env = process.env.MY_ENV};
+
 if (env === 'prod' || env === 'dev') {
   useDefaultConfig[env].resolve.alias = {
     "@app/env": path.resolve(environmentPath())
@@ -18,7 +20,7 @@ if (env === 'prod' || env === 'dev') {
 }
 
 function environmentPath() {
-  var filePath = './src/environments/environment' + (env === 'prod' ? '' : '.' + env) + '.ts';
+  var filePath = './src/environments/environment' + (env === 'production' ? '' : '.' + env) + '.ts';
   if (!fs.existsSync(filePath)) {
     console.log(chalk.red('\n' + filePath + ' does not exist!'));
   } else {
