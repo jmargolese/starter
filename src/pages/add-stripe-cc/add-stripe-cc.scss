@@ -1,3 +1,50 @@
 page-add-stripe-cc {
+    .add-stripe-cc-css {
+        
+            
+                       p {
+                           font-size: 0.8em;
+                           color: #d2d2d2;
+                       }
 
+                       input {
+                        margin-top: 2px !important;
+                        margin-bottom: 2px !important;
+                       }
+                
+                       .swiper-slide {
+                           display: block;
+                       }
+                
+                       ion-label, .select-text {
+                           margin-left: 10px;
+                       }
+                
+                       ion-input, ion-select, ion-textarea {
+                           background-color: #f2f2f2;
+                           padding: 5px 10px;
+                           
+                       }
+                
+                       .invalid {
+                           border: 1px solid #ea6153;
+                       }
+        
+                       .invalidFormText {
+                           color: #ea6153;
+                           font-size: 80%;
+                           display: block;
+                           float: right;
+                           white-space: normal;
+                       }
+
+                       .fit-thumbnail { 
+                           object-fit: cover; 
+                           margin-top: 100px;
+                        }
+                
+                   }
+                
+               
+            
 }

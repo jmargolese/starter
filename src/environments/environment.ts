@@ -8,6 +8,9 @@ export const ENV = {
         projectId: 'share-75e74',
         storageBucket: 'gs://share-75e74.appspot.com/',
         messagingSenderId: '500682232012'
+    },
+    stripe: {
+      privateKey: "pk_test_guQgqDNKwgXdd5MokoH926oj"
     }
   }
 
@@ -21,5 +24,8 @@ export const environment =
             projectId: 'share-75e74',
             storageBucket: 'gs://share-75e74.appspot.com/',
             messagingSenderId: '500682232012'
+        },
+        stripe: {
+          privateKey: "pk_test_guQgqDNKwgXdd5MokoH926oj"
         }
     };

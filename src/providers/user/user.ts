@@ -203,13 +203,13 @@ export class UserProvider {
   }
 
 
+
   public updatePaymethods(paymethods: shareTypes.PayMethod[]): Promise<any> {
     this.currentUser.paymethods = paymethods;
 
     return new Promise((resolve, reject) => {
       this.db.updateDocument('users', this.currentAuthUser.uid, this.currentUser)
         .then(() => {
-          this.currentUser.paymethods = paymethods;
           resolve();
         })
         .catch(error => {

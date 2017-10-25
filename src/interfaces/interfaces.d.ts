@@ -5,7 +5,8 @@ export interface PayMethod {
   kind: string,
   displayName: string,
   brand: string,
-  hidden: boolean
+  hidden: boolean,
+  token: {}
 
 }
 

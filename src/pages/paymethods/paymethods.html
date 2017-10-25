@@ -20,7 +20,7 @@
 
 <ion-content no-padding>
   <div style="height:10px;"></div>
-  <div *ngIf="paymethods.length > 1" style="font-size: 80%; color: gray; padding-left: 10px;">
+  <div *ngIf="paymethods && (paymethods.length > 1)" style="font-size: 80%; color: gray; padding-left: 10px;">
     <ion-icon name="checkmark-circle-outline"></ion-icon> is default paymethod.
   </div>
   <br>

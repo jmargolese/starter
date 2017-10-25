@@ -16,21 +16,27 @@ export class PaymethodsPage {
 
   public paymethods: shareTypes.PayMethod[];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public userProvider : UserProvider, public payMethodProvider: PaymethodsProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public userProvider : UserProvider, public paymethodProvider: PaymethodsProvider) {
       
-    this.paymethods = userProvider.getPaymethods();
+    
   }
 
+  ionViewWillEnter() {
+    this.paymethods = this.userProvider.getPaymethods();
+  }
+  
   ionViewDidLoad() {
     console.log('ionViewDidLoad PaymethodsPage');
   }
 
-  public deletePaymethod(paymethod) {
-    console.log("Called delete paymethod");
+  public deletePaymethod(index : number) {
+    console.log("Called delete paymethod in paymethod page");
+    this.paymethodProvider.deletePaymethod(index);
+   
   }
 
   public makeDefaultPaymethod(index: number) {
-    this.payMethodProvider.makeDefaultPaymethod(index)
+    this.paymethodProvider.makeDefaultPaymethod(index)
     .then(() => {
       this.paymethods = this.userProvider.getPaymethods();
     })

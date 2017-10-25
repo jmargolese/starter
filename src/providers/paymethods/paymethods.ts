@@ -27,7 +27,16 @@ export class PaymethodsProvider {
     return this.payMethods;
   }
 
-  public getPreferredPaymethod(required: boolean) : Promise<any> {
+  public addPaymethod(paymethod): Promise<any> {
+
+    this.getPaymethods();     // ensure up to date
+    this.payMethods.push(paymethod);
+    // make default will also update it to the DB
+    return this.makeDefaultPaymethod(this.payMethods.length - 1);
+
+  }
+
+  public getPreferredPaymethod(required: boolean): Promise<any> {
     // TODO if required is true, this will ask the user for a paymethod if none exist
     this.getPaymethods();       // ensure up to date
     let preferred = null;
@@ -52,19 +61,25 @@ export class PaymethodsProvider {
 
   }
 
+
   public deletePaymethod(index: number) {
     this.getPaymethods();      // refresh just to be sure
     if (index < this.payMethods.length) {
 
+      let findNewPreferred: boolean = this.payMethods[index].isPreferred;
+
       this.payMethods.splice(index, 1);
-      this.userProvider.updatePaymethods(this.payMethods);
+      if (findNewPreferred && this.payMethods.length) {
+        this.makeDefaultPaymethod(0);               // just make the first one default (this calls updatePaymethods for us)
+      } else
+        this.userProvider.updatePaymethods(this.payMethods);
     }
     else
       console.log("delete paymethod called with illegal index: " + index);
   }
 
 
-  public makeDefaultPaymethod(index: number) {
+  public makeDefaultPaymethod(index: number): Promise<any> {
 
     return new Promise((resolve, reject) => {
       this.getPaymethods();      // refresh just to be sure

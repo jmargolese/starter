@@ -17,22 +17,25 @@
           <div class="explainMessage" *ngIf="explainMessage">{{explainMessage}}</div>
         </div>
         <form [formGroup]="loginForm">
+
           <ion-item>
-            <ion-label floating>email</ion-label>
-            <ion-input formControlName="email" type="text" [class.invalid]="!loginForm.controls.email.valid && (loginForm.controls.email.dirty || submitAttempt)"></ion-input>
+            <ion-label floating>email
+              <span class="invalidFormText" *ngIf="!loginForm.controls.email.valid  && (loginForm.controls.email.dirty || submitAttempt)">
+                Email is required
+              </span>
+            </ion-label>
+            <ion-input autocapitalize=off formControlName="email" type="text" [class.invalid]="!loginForm.controls.email.valid && (loginForm.controls.email.dirty || submitAttempt)"></ion-input>
           </ion-item>
 
-
-          <ion-item *ngIf="!loginForm.controls.email.valid  && (loginForm.controls.email.dirty || submitAttempt)">
-            <p>Email is required</p>
-          </ion-item>
           <ion-item>
-            <ion-label floating>passcode</ion-label>
+            <ion-label floating>passcode
+              <span class="invalidFormText" *ngIf="!loginForm.controls.passcode.valid  && (loginForm.controls.passcode.dirty || submitAttempt)">
+                Passcode is required
+              </span>
+            </ion-label>
             <ion-input formControlName="passcode" type="password" [class.invalid]="!loginForm.controls.passcode.valid && (loginForm.controls.passcode.dirty || submitAttempt)"></ion-input>
           </ion-item>
-          <ion-item *ngIf="!loginForm.controls.passcode.valid  && (loginForm.controls.passcode.dirty || submitAttempt)">
-            <p>Passcode is required</p>
-          </ion-item>
+
 
         </form>
       </ion-list>
@@ -58,82 +61,82 @@
       </div>
     </ion-slide>
     <ion-slide>
-      
-        <ion-list no-lines style="margin-bottom: 0px;">
-          <div class="errorMessage" [hidden]="!submitAttempt && !errorMessage">{{errorMessage}}</div>
 
-          <form [formGroup]="createForm">
-            <ion-item>
-              <ion-label floating>First Name</ion-label>
-              <ion-input formControlName="firstName" type="text" [class.invalid]="!createForm.controls.firstName.valid && (createForm.controls.firstName.dirty || submitAttempt)"></ion-input>
-            </ion-item>
+      <ion-list no-lines style="margin-bottom: 0px;">
+        <div class="errorMessage" [hidden]="!submitAttempt && !errorMessage">{{errorMessage}}</div>
 
-
-            <ion-item *ngIf="!createForm.controls.firstName.valid  && (createForm.controls.firstName.dirty || submitAttempt)">
-              <p>Please enter a valid name.</p>
-            </ion-item>
-            <ion-item>
-              <ion-label floating>Last Name</ion-label>
-              <ion-input formControlName="lastName" type="text" [class.invalid]="!createForm.controls.lastName.valid && (createForm.controls.lastName.dirty || submitAttempt)"></ion-input>
-            </ion-item>
-            <ion-item *ngIf="!createForm.controls.lastName.valid  && (createForm.controls.lastName.dirty || submitAttempt)">
-              <p>Please enter a valid last name.</p>
-            </ion-item>
-            <ion-item>
-              <ion-label floating>email</ion-label>
-              <ion-input formControlName="email" type="text" [class.invalid]="!createForm.controls.email.valid && (createForm.controls.email.dirty || submitAttempt)"></ion-input>
-            </ion-item>
-
-
-            <ion-item *ngIf="!createForm.controls.email.valid  && (createForm.controls.email.dirty || submitAttempt)">
-              <p>Email is required</p>
-            </ion-item>
-            <ion-item>
-              <ion-label floating>passcode</ion-label>
-              <ion-input formControlName="passcode" type="password" [class.invalid]="!createForm.controls.passcode.valid && (createForm.controls.passcode.dirty || submitAttempt)"></ion-input>
-            </ion-item>
-            <ion-item *ngIf="!createForm.controls.passcode.valid  && (createForm.controls.passcode.dirty || submitAttempt)">
-              <p>Passcode is required</p>
-            </ion-item>
-            <ion-item>
-              <ion-label floating>Re-enter passcode</ion-label>
-              <ion-input formControlName="confirmPasscode" type="password" [class.invalid]="!createForm.controls.confirmPasscode.valid && (createForm.controls.confirmPasscode.dirty || submitAttempt)"></ion-input>
-            </ion-item>
-            <ion-item *ngIf="!createForm.controls.confirmPasscode.valid  && (createForm.controls.confirmPasscode.dirty || submitAttempt)">
-              <p>Please enter the password again</p>
-            </ion-item>
-            <ion-item *ngIf="!createForm.valid && (createForm.controls.passcode.valid && createForm.controls.confirmPasscode.valid)  && (createForm.dirty || submitAttempt)">
-              <p>Passwords must match</p>
-            </ion-item>
-
-          </form>
-        </ion-list>
-        <div text-center>
-          <button ion-button clear color="primary" (click)="forgotPasscode()">Forgot passcode?</button>
-        </div>
-        <div>
-          <ion-item no-lines>
-            <ion-label class="checkBoxText">
-              Send me occasional emails for non-profits I follow
-            </ion-label>
-            <ion-checkbox color="primary" [(ngModel)]="emailForLikes"></ion-checkbox>
-          </ion-item>
-          <ion-item no-lines>
-            <ion-label class="checkBoxText">
-              Send me (very!) occasional emails for local or other events of interest
-            </ion-label>
-
-            <ion-checkbox color="primary" [(ngModel)]="emailForGeneral"></ion-checkbox>
+        <form [formGroup]="createForm">
+          <ion-item>
+            <ion-label floating>First Name</ion-label>
+            <ion-input formControlName="firstName" type="text" [class.invalid]="!createForm.controls.firstName.valid && (createForm.controls.firstName.dirty || submitAttempt)"></ion-input>
           </ion-item>
 
-        </div>
-        <button [disabled]="!createForm.dirty || !createForm.valid" ion-button full color="primary" (click)="createAccount()">Create account </button>
 
-        <div text-center>
-          <button ion-button clear color="primary" (click)="showSignIn()">Already have an account?</button>
-        </div>
-        <br>
-      
+          <ion-item *ngIf="!createForm.controls.firstName.valid  && (createForm.controls.firstName.dirty || submitAttempt)">
+            <p>Please enter a valid name.</p>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>Last Name</ion-label>
+            <ion-input formControlName="lastName" type="text" [class.invalid]="!createForm.controls.lastName.valid && (createForm.controls.lastName.dirty || submitAttempt)"></ion-input>
+          </ion-item>
+          <ion-item *ngIf="!createForm.controls.lastName.valid  && (createForm.controls.lastName.dirty || submitAttempt)">
+            <p>Please enter a valid last name.</p>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>email</ion-label>
+            <ion-input formControlName="email" type="text" [class.invalid]="!createForm.controls.email.valid && (createForm.controls.email.dirty || submitAttempt)"></ion-input>
+          </ion-item>
+
+
+          <ion-item *ngIf="!createForm.controls.email.valid  && (createForm.controls.email.dirty || submitAttempt)">
+            <p>Email is required</p>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>passcode</ion-label>
+            <ion-input formControlName="passcode" type="password" [class.invalid]="!createForm.controls.passcode.valid && (createForm.controls.passcode.dirty || submitAttempt)"></ion-input>
+          </ion-item>
+          <ion-item *ngIf="!createForm.controls.passcode.valid  && (createForm.controls.passcode.dirty || submitAttempt)">
+            <p>Passcode is required</p>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>Re-enter passcode</ion-label>
+            <ion-input formControlName="confirmPasscode" type="password" [class.invalid]="!createForm.controls.confirmPasscode.valid && (createForm.controls.confirmPasscode.dirty || submitAttempt)"></ion-input>
+          </ion-item>
+          <ion-item *ngIf="!createForm.controls.confirmPasscode.valid  && (createForm.controls.confirmPasscode.dirty || submitAttempt)">
+            <p>Please enter the password again</p>
+          </ion-item>
+          <ion-item *ngIf="!createForm.valid && (createForm.controls.passcode.valid && createForm.controls.confirmPasscode.valid)  && (createForm.dirty || submitAttempt)">
+            <p>Passwords must match</p>
+          </ion-item>
+
+        </form>
+      </ion-list>
+      <div text-center>
+        <button ion-button clear color="primary" (click)="forgotPasscode()">Forgot passcode?</button>
+      </div>
+      <div>
+        <ion-item no-lines>
+          <ion-label class="checkBoxText">
+            Send me occasional emails for non-profits I follow
+          </ion-label>
+          <ion-checkbox color="primary" [(ngModel)]="emailForLikes"></ion-checkbox>
+        </ion-item>
+        <ion-item no-lines>
+          <ion-label class="checkBoxText">
+            Send me (very!) occasional emails for local or other events of interest
+          </ion-label>
+
+          <ion-checkbox color="primary" [(ngModel)]="emailForGeneral"></ion-checkbox>
+        </ion-item>
+
+      </div>
+      <button [disabled]="!createForm.dirty || !createForm.valid" ion-button full color="primary" (click)="createAccount()">Create account </button>
+
+      <div text-center>
+        <button ion-button clear color="primary" (click)="showSignIn()">Already have an account?</button>
+      </div>
+      <br>
+
     </ion-slide>
   </ion-slides>
 </ion-content>

@@ -12,6 +12,7 @@ import { ActionButtonComponent } from './../components/action-button/action-butt
 import { OrgHomeItemComponent } from './../components/org-home-item/org-home-item';
 import { FirebaseDynamicLinks }  from '@ionic-native/firebase-dynamic-links';
 import { Deeplinks } from '@ionic-native/deeplinks';
+import { Stripe } from '@ionic-native/stripe';
 
 import { OrgHomePage } from './../pages/org-home/org-home';
 import { NgModule, ErrorHandler } from '@angular/core';
@@ -117,7 +118,8 @@ import { AlertProvider } from '../providers/alert/alert';
     AlertProvider,
     InAppBrowser,
     FirebaseDynamicLinks,
-    Deeplinks
+    Deeplinks,
+    Stripe
   ]
 })
 export class AppModule {}

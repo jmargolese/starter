@@ -1,6 +1,17 @@
+import { PaymethodsProvider } from './../../providers/paymethods/paymethods';
+import { AlertProvider } from './../../providers/alert/alert';
+import { Page } from './../../../e2e/app.po';
+import { CreditcardNumberValidator } from './../../validators/creditcardnumber';
+
 import { UserProvider } from './../../providers/user/user';
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, ViewController } from 'ionic-angular';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { Stripe } from '@ionic-native/stripe';
+
+import * as shareTypes from '../../interfaces/interfaces';
+
+import { ENV } from '@app/env';
 
 /**
  * Generated class for the AddStripeCcPage page.
@@ -16,157 +27,182 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   selector: 'page-add-stripe-cc',
   templateUrl: 'add-stripe-cc.html',
 })
+
+
 export class AddStripeCcPage {
 
-  @ViewChild('card-number') cardNumber;
-  @ViewChild('stripeForm') stripeForm;
-  public data = {
-    "cardholder": this.userProvider.getDisplayName(),
-    "postalCode": ''
-  };
 
-  public stripe: any;
-  public elements: any;
+  public title: string = "Add credit card";
 
-  public style = {
-    base: {
-      backgroundColor: '#FFFFFF',
-      iconColor: '#666EE8',
-      color: '#31325F',
-      lineHeight: '40px',
-      fontWeight: 300,
-      fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-      fontSize: '15px',
+  public ccForm: FormGroup;
 
-      '::placeholder': {
-        color: '#CFD7E0',
-      },
-    },
-  }
+  public errorMessage: string = "";
 
-  //tom styling can be passed to options when creating an Element.
+  public submitAttempt: boolean = false;
 
-  /**  ??????? */
-  public style222 = {
-    base: {
-      // Add your base input styles here. For example:
-      fontSize: '16px',
-      lineHeight: '38px',
-      height: '38px'
-    }
-  };
+  public ccType: string = null;
 
-  public cardBrandToPfClass = {
-    'visa': 'pf-visa',
-    'mastercard': 'pf-mastercard',
-    'amex': 'pf-american-express',
-    'discover': 'pf-discover',
-    'diners': 'pf-diners',
-    'jcb': 'pf-jcb',
-    'unknown': 'pf-credit-card',
-  }
+  constructor(public navCtrl: NavController, public navParams: NavParams, public userProvider: UserProvider, 
+    public stripe: Stripe, public formBuilder: FormBuilder, public alert: AlertProvider, public payMethod: PaymethodsProvider, public viewCtrl: ViewController) {
+    this.stripe.setPublishableKey(ENV.stripe.privateKey);
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public userProvider: UserProvider) {
-    this.stripe = (<any>window).Stripe("pk_test_guQgqDNKwgXdd5MokoH926oj");
-    this.elements = this.stripe.elements();
+    this.ccForm = formBuilder.group({
+      cardholder: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
+      cardnumber: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
+      expirationDate: ['', Validators.compose([Validators.maxLength(5), Validators.required])],
+      cvc: ['', Validators.compose([Validators.maxLength(3), Validators.required])],
+      postalCode: ['', Validators.compose([Validators.maxLength(11), Validators.required])]
+
+    });
+
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AddStripeCcPage');
   }
 
+  public cardNumberBlurred(value: string) {
 
+    var cardNum: string = value.replace(/\s+/g, '');       // remove spaces
+
+    this.stripe.validateCardNumber(cardNum)
+      .then(() => {
+        console.log("Credit card number is ok: " + value);
+        this.ccForm.controls.cardnumber.setErrors(null);
+      })
+      .catch(() => {
+        // there is an error, but we get no info
+        console.error("Credit card number error: ");
+        this.ccForm.controls.cardnumber.setErrors({ 'Invalid': true });
+      })
+  }
+  public cardNumberChanged(value: string) {
+
+    // don't add a space if it's the last character, screws up delete
+    if (value && value.length < 19 && value.length != 14 && value.length != 4 && value.length != 9)
+      this.ccForm.controls.cardnumber.setValue(value.replace(/\W/gi, '').replace(/(.{4})/g, '$1 '));
+
+    if (value && value.length > 3) {
+      this.stripe.getCardType(value)
+        .then(type => {
+          console.log("Credit card type: " + type);
+          this.ccType = type == "Unknown" ? "" : type.toLowerCase();
+        })
+        .catch(() => {
+          this.ccType = null;
+        })
+    } else    // too short? No type
+      this.ccType = null;
+  }
+
+  public expirationDateChanged(value: string) {
+
+    if (value && value.length != 2 && value.length <= 4) {
+      this.ccForm.controls.expirationDate.setValue(value.replace(/\W/gi, '').replace(/(.{2})/g, '$1\/'));
+    }
+
+    if (value && value.length == 5)
+      this.validateExpirationDate(value);
+  }
+
+  public validateExpirationDate(value: string) {
+    var expirationDate: string = value.replace(/\s+/g, '').replace(/\/+/g, '');       // remove spaces and /
+    if (expirationDate && expirationDate.length == 4) {
+      this.stripe.validateExpiryDate(expirationDate.substr(0, 2), expirationDate.substr(2, 2))
+        .then(() => {
+          this.ccForm.controls.expirationDate.setErrors(null);
+        })
+        .catch((error) => {
+          console.error("Expiration date error: " + (error ? JSON.stringify(error) : "no error returned"));
+          this.ccForm.controls.expirationDate.setErrors({ 'Invalid': true });
+        })
+
+    } else {     // wrong length
+      this.ccForm.controls.expirationDate.setErrors({ 'Invalid': true });
+    }
+
+  }
+
+  public validateCVC(value: string) {
+   
+    if (value && value.length == 3) {
+      this.stripe.validateCVC(value)
+        .then(() => {
+          this.ccForm.controls.cvc.setErrors(null);
+        })
+        .catch((error) => {
+        
+          this.ccForm.controls.cvc.setErrors({ 'Invalid': true });
+        })
+
+    } else {     // wrong length
+      this.ccForm.controls.cvc.setErrors({ 'Invalid': true });
+    }
+
+  }
   public cancel() {
-    //$scope.closeAddPayMethodModal({ cancel: true });
+      // add the empty catch to deal with an Ionic bug throughing and exception https://github.com/ionic-team/ionic/issues/11776#issuecomment-314050068
+      let data = { canceled: true };
+      this.viewCtrl.dismiss(data)
+        .catch(() => { });
   }
 
+  public submit() {
 
-  public init() {
-    let cardNumber = this.elements.create('cardNumber', { style: this.style });
-    cardNumber.mount('#card-number');
-    var cardExpiry = this.elements.create('cardExpiry', { style: this.style });
-    cardExpiry.mount('#card-expiry');
-    var cardCvc = this.elements.create('cardCvc', { style: this.style });
-    cardCvc.mount('#card-cvc');
-    var cardPostalCode = this.elements.create('postalCode', { style: this.style });
-    cardPostalCode.mount('#card-postal-code');
+    this.submitAttempt = true;
 
-    this.cardNumber.changes.subscribe('change', function (event) {
-      if (event.brand) {
-        this.setBrandIcon(event.brand);
+    if (!this.ccForm.valid) {
+      this.errorMessage = "Please correct errors and resubmit";
+      console.error("form is not valid");
+    } else {
+
+      var expirationDate: string = this.ccForm.controls.expirationDate.value.replace(/\s+/g, '').replace(/\/+/g, '');       // remove spaces and /
+      var cardnumber = this.ccForm.controls.cardnumber.value.replace(/\s+/g, '');       // remove spaces
+
+      let card = {
+        name: this.ccForm.controls.cardholder.value,
+        number: cardnumber,
+        expMonth: expirationDate.substr(0,2),
+        expYear: expirationDate.substr(2,2),
+        cvc: this.ccForm.controls.cvc.value,
+        postal_code: this.ccForm.controls.postalCode.value
       }
-      this.setOutcome(event);
-    });
 
-    this.stripeForm.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var form = document.querySelector('form');
-      var extraDetails = {
-        name: this.stripeForm.querySelector('input[name=cardholder-name]').value,
-      };
-      this.stripe.createToken(cardNumber, extraDetails)
-        .then(function (result) {
-          this.setOutcome(result);
+      console.log("About to submit credit card: " + JSON.stringify(card));
 
-        });
-    });
-  }
+     
+
+      this.stripe.createCardToken(<any>card)
+      .then(token => {
+        console.log("Created stripe token: " + JSON.stringify(token));
+        this.submitAttempt = false;
+        let newPaymethod: shareTypes.PayMethod = {
+          brand: this.ccType,
+          displayName: this.ccType + " ending in " + card.number.substr(card.number.length - 4, 4),
+          hidden : false,
+          isPreferred : true,
+          kind : "card",
+          vendor : "stripe",
+          token: token
+        }
 
 
-
-  public setBrandIcon(brand) {
-    var brandIconElement = document.getElementById('brand-icon');
-    var pfClass = 'pf-credit-card';
-    if (brand in this.cardBrandToPfClass) {
-      pfClass = this.cardBrandToPfClass[brand];
+        this.payMethod.addPaymethod(newPaymethod)
+        .then(() => {
+          this.alert.confirm({  title: "Success",  message: "Your credit card has been added", buttons: { ok : true, cancel: false}  })
+          .then(() => {
+            this.viewCtrl.dismiss({  error: false, canceled: false });
+          })
+        })
+        .catch(error => {
+          console.error("Error adding paymethod: " + error.message);
+        })
+       
+      })
+      .catch(error  => {
+        console.error("Stripe token rejected with error: " + JSON.stringify(error));
+        this.alert.confirm({  title: "Error",  message: error, buttons: { ok : true, cancel: false} });
+      })
     }
-    for (var i = brandIconElement.classList.length - 1; i >= 0; i--) {
-      brandIconElement.classList.remove(brandIconElement.classList[i]);
-    }
-    brandIconElement.classList.add('pf');
-    brandIconElement.classList.add(pfClass);
   }
-
-
-
-
-  public setOutcome(result) {
-
-    var successElement = document.querySelector('.success');
-    var errorElement = document.querySelector('.error');
-    successElement.classList.remove('visible');
-    errorElement.classList.remove('visible');
-
-    if (result.token) {
-      /*
-      pmtFactory.addPayMethod(result.token)
-        .then(function () {
-          $scope.closeAddPayMethodModal({ success: true });
-        }).catch(function (err) {
-          console.error('addPayMethod Failure: ' + JSON.stringify(err));
-          var errorMessage = "There was a problem adding this credit card. Please cancel and try again";
-          if (err && err.data && err.data.error && err.data.message) {
-            errorMessage = err.data.message;
-          }
-
-          errorElement.textContent = errorMessage;
-          errorElement.classList.add('visible');
-          */
-
-
-
-    } else if (result.error) {
-      errorElement.textContent = result.error.message;
-      errorElement.classList.add('visible');
-    }
-
-
-  }
-
-
-
-
-
-
-
 }

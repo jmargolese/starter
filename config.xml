@@ -92,4 +92,7 @@
         <variable name="DEEPLINK_HOST" value="nn4wp.app.goo.gl" />
         <variable name="ANDROID_PATH_PREFIX" value="/" />
     </plugin>
+    <plugin name="cordova-plugin-stripe" spec="^1.5.3" />
+    <allow-navigation href="*" />
+    <allow-navigation href="http://10.0.1.28:8100" />
 </widget>
