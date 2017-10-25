@@ -6,15 +6,15 @@ import { UserProvider } from './../user/user';
 import { URLSearchParams } from '@angular/http';
 import { PaymethodsProvider } from './../paymethods/paymethods';
 import { Injectable } from '@angular/core';
- 
+
 
 import * as shareTypes from '../../interfaces/interfaces';
 
 @Injectable()
 export class ShareProvider {
 
-  constructor(public payMethods: PaymethodsProvider, public orgProvider: OrganizationProvider, public userProvider: UserProvider, 
-      public alert: AlertProvider, public iab: InAppBrowser) {
+  constructor(public payMethods: PaymethodsProvider, public orgProvider: OrganizationProvider, public userProvider: UserProvider,
+    public alert: AlertProvider, public iab: InAppBrowser) {
     console.log('Hello ShareProvider Provider');
   }
 
@@ -49,7 +49,7 @@ export class ShareProvider {
       donorId: this.userProvider.getUserId(),
       recipientId: this.orgProvider.getId(organization),
       donationPrefs: organization.donationPrefs,
-     // timeStamp: "Whats the timestamp?",                 // this is to keep the social share message in sync on the return, let's be more deterministic if we can
+      // timeStamp: "Whats the timestamp?",                 // this is to keep the social share message in sync on the return, let's be more deterministic if we can
       isDemo: this.userProvider.isRoleDemo(),
       creditCardFee: this.orgProvider.getCreditCardFee(organization, payMethodType)
 
@@ -57,7 +57,7 @@ export class ShareProvider {
     let serializedParams: URLSearchParams = this.serialize(params);
     //serialedParams.toString() to get the URL
 
-    this.iab.create('http://google.com');
+    this.iab.create('http://google.com', "_system");
   }
 
   public donate(activity: {}, organization: shareTypes.Organization): Promise<any> {
@@ -71,19 +71,21 @@ export class ShareProvider {
           // we got a logged in use and a paymethod, so lets send to the web let confirm = this.alertCtrl.create({
           this.alert.confirm({
             title: "Donate!",
-            message: "We're going to open our secure web-server in a separate browser to complete this donation"
+            message: "We're going to open our secure web-server in a separate browser to complete this donation",
+            buttons: { ok: true, cancel: true }
           })
             .then(() => {
               this.sendToWebsite(activity, organization, payMethod.vendor.toLowerCase());
             })
             .catch(error => {
               // user canceled, don't rejectd, that just forces our caller to handle it, really there's nothing to do
-              if (!error.canceled) 
-                 reject(error);
+              if (!error.canceled)
+                reject(error);
             })
         })
         .catch(error => {
-          reject(error);
+          if (!error.canceled)
+            reject(error);
         })
     })
   }

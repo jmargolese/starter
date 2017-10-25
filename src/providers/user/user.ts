@@ -136,7 +136,7 @@ export class UserProvider {
       emailForGeneral: boolean
     }
   }) : Promise<any> {
-    let newUser: shareTypes.User;
+    let newUser: shareTypes.User = <shareTypes.User>{};
     newUser.profile = {
       name: {
         first: userInfo.firstName,
@@ -152,10 +152,13 @@ export class UserProvider {
       isEnabled: true
     }
 
-    newUser.organization = null,
+    newUser.organization = null;
+    newUser.contactPrefs = <shareTypes.UserContactPrefs>{
+      emailForGeneral : userInfo.contactPrefs.emailForGeneral,
+      emailForLikes :  userInfo.contactPrefs.emailForLikes
+    };
 
-    newUser.contactPrefs.emailForGeneral = userInfo.contactPrefs.emailForLikes;
-    newUser.contactPrefs.emailForGeneral = userInfo.contactPrefs.emailForGeneral;
+
 
 
 

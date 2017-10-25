@@ -13,8 +13,10 @@ export class AlertProvider {
 
   public confirm(params: {
     title: string,
+    subTitle ?: string,
     message: string,
-    buttons: { ok: boolean, cancel: boolean }
+    buttons ?: { ok: boolean, cancel: boolean },
+    
   }): Promise<any> {
     // promise resolves if the user presses OK
     // rejects (with error.cancled = true) if the user presses cancel
@@ -45,8 +47,10 @@ export class AlertProvider {
 
       let confirm = this.alertCtrl.create({
         title: params.title,
+        subtitle: params.subtitle || "",
         message: params.message,
-        buttons: buttons
+        buttons: buttons,
+        enableBackdropDismiss: false
       });
       confirm.present();
     })

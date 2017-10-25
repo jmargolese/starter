@@ -1,3 +1,4 @@
+import { AlertProvider } from './../../providers/alert/alert';
 import { UserProvider } from './../../providers/user/user';
 import { AuthProvider } from './../../providers/auth/auth';
 import { Component } from '@angular/core';
@@ -38,7 +39,9 @@ export class LoginPage {
   public explainMessage: string = "";
 
   public submitAttempt: boolean = false;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public auth: AuthProvider, public toastCtrl: ToastController, public viewCtrl: ViewController, public alertCtrl: AlertController, public userProvider: UserProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, 
+    public auth: AuthProvider, public toastCtrl: ToastController, public viewCtrl: ViewController, 
+  public alert: AlertProvider, public alertCtrl: AlertController, public userProvider: UserProvider) {
 
 
     this.explainMessage = navParams.get('message');
@@ -216,17 +219,24 @@ export class LoginPage {
 
         })
         .catch(error => {
-          var errorCode = error.code;
-          var errorMessage = error.message;
+          let errorCode = error.code;
+          let errorMessage = error.message;
+          let displayErrorMessage : string = "";
+
           if (errorCode == 'auth/weak-password') {
-            this.errorMessage = "Please try again with a stronger passcode (at least six characters)";
+            displayErrorMessage = "Please try again with a stronger passcode (at least six characters)";
           }
           else if (errorCode == 'auth/email-already-in-use') {
-            this.errorMessage = "That email is already in use. Please login or reset your passcode";
+            displayErrorMessage = "That email is already in use. Please login or reset your passcode";
           } else {
             console.error("Error creating an account:  " + error.message + "/: " + error.code);
-            this.errorMessage = "Sorry, something went wrong, please try again";
+            displayErrorMessage = "Sorry, something went wrong, please try again";
           }
+
+          if (displayErrorMessage)
+            this.alert.confirm({ title: "Error", message: displayErrorMessage, buttons: { ok: true, cancel: false} });
+
+          this.submitAttempt = false;
 
         })
 

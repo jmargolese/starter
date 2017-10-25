@@ -191,7 +191,7 @@ export class AddStripeCcPage {
         .then(() => {
           this.alert.confirm({  title: "Success",  message: "Your credit card has been added", buttons: { ok : true, cancel: false}  })
           .then(() => {
-            this.viewCtrl.dismiss({  error: false, canceled: false });
+            this.viewCtrl.dismiss({  error: false, canceled: false, newPaymethod: newPaymethod });
           })
         })
         .catch(error => {

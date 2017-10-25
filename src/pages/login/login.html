@@ -84,7 +84,7 @@
           </ion-item>
           <ion-item>
             <ion-label floating>email</ion-label>
-            <ion-input formControlName="email" type="text" [class.invalid]="!createForm.controls.email.valid && (createForm.controls.email.dirty || submitAttempt)"></ion-input>
+            <ion-input autocapitalize=off formControlName="email" type="text" [class.invalid]="!createForm.controls.email.valid && (createForm.controls.email.dirty || submitAttempt)"></ion-input>
           </ion-item>
 
 
