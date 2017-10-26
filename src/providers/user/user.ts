@@ -1,4 +1,4 @@
-import { DataProvider } from './../data/data';
+import { DataProvider } from '../../../../common/src/providers/data';
 
 import { Injectable } from '@angular/core';
 //import 'rxjs/add/operator/map';

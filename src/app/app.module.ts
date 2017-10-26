@@ -23,10 +23,10 @@ import { ENV } from '@app/env';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AuthProvider } from '../providers/auth/auth';
-import { DataProvider } from '../providers/data/data';
+import { DataProvider } from '../../../common/src/providers/data';
 import { OrganizationProvider } from '../providers/organization/organization';
 import { UserProvider } from '../providers/user/user';
-import { ActivitiesProvider } from '../providers/activities/activities';
+import { ActivitiesProvider } from '../../../common/src/providers/activities';
 
 
 import { SocialSharing } from '@ionic-native/social-sharing';
