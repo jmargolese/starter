@@ -6,6 +6,7 @@ import { AuthProvider } from './../../providers/auth/auth';
 import { Component, ViewChild } from '@angular/core';
 import { FirebaseDynamicLinks } from '@ionic-native/firebase-dynamic-links';
 import { Deeplinks } from '@ionic-native/deeplinks';
+import { ENV } from '@app/env';
 
 import { HomePage } from '../home/home';
 
@@ -30,6 +31,7 @@ export class TabsPage {
       // let other parts of the app tell us when a new tab is needed
       this.tabRef.select(newTab);
 
+    
     });
 
     authProvider.getUser();       // just trigger it to init
@@ -59,7 +61,9 @@ export class TabsPage {
       /*
       Successfully routed {"$link":{"path":"/crwp","queryString":"","fragment":"","host":"nn4wp.app.goo.gl","url":"https://nn4wp.app.goo.gl/crwp","scheme":"https"}}
       */
-      console.error("About to setup deeplinks in tabs.ts");
+      console.log("Environment is: " + ENV.mode);
+     
+     
       // Convenience to route with a given nav
       this.deeplinks.routeWithNavController(this.navCtrl, {
         '/settings': SettingsPage,

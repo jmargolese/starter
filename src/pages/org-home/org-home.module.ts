@@ -1,4 +1,5 @@
 import { ComponentsModule } from './../../components/components.module';
+//import { ComponentsModule } from '@common-shared/components.module';
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { OrgHomePage } from './org-home';

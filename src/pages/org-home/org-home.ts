@@ -1,16 +1,11 @@
 
 import { Observable } from 'rxjs/Observable';
-import { ActivitiesProvider } from './../../providers/activities/activities';
+import { ActivitiesProvider } from '../../../../common/src/providers/activities';
+import { TestProvider } from '../../../../common/src/modules/providers/test';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 
-/**
- * Generated class for the OrgHomePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -23,10 +18,13 @@ export class OrgHomePage {
   //public activities: Observable<any> = null;
 
   
+ public hideHeader: boolean = true;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public activitiesProvider: ActivitiesProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public activitiesProvider: ActivitiesProvider, public testMe: TestProvider) {
     
-     
+     if (navParams.get('showHeader')){
+        this.hideHeader = false;
+     }
 
     // this.activities = activitiesProvider.getActivitiesForOrg(this.organization.id);
     /*  .subscribe(activity => {
@@ -41,6 +39,7 @@ export class OrgHomePage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad OrgHomePage');
     this.organization = this.navParams.get('organization');
+    //this.testMe.testMe();  //
   }
 
 }

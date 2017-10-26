@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { IonicApp, IonicModule, IonicPageModule } from 'ionic-angular';
+import { IonicPageModule } from 'ionic-angular';
 
 import { HomeListOrganizationComponent } from './home-list-organization/home-list-organization';
 import { OrgHomeItemComponent } from './org-home-item/org-home-item';

@@ -2,7 +2,7 @@ import { AuthProvider } from './../../providers/auth/auth';
 import { OrgHomePage } from './../org-home/org-home';
 import { UserProvider } from './../../providers/user/user';
 import { Component } from '@angular/core';
-
+import { TestProvider } from '../../../../common/src/modules/providers/test';
 
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AngularFirestoreCollection } from 'angularfire2/firestore';
@@ -28,7 +28,8 @@ export class HomePage {
   public organizations: Observable<any[]>;
   private organizationsCollection: AngularFirestoreCollection<any>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public userProvider: UserProvider, public auth: AuthProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public userProvider: UserProvider, 
+    public auth: AuthProvider, public testMe: TestProvider) {
 
 
 
@@ -56,7 +57,7 @@ export class HomePage {
         this.organizations = this.userProvider.getFavoriteOrganizations();
       })
 
-
+      this.testMe.testMe(); //
 
 
   }
