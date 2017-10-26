@@ -1,9 +1,11 @@
+import { ActivitiesProvider } from './../../providers/activities/activities';
 
 import { Observable } from 'rxjs/Observable';
-import { ActivitiesProvider } from '../../../../common/src/providers/activities';
+//import { ActivitiesProvider } from '../../../../common/src/providers/activities';
 import { TestProvider } from '../../../../common/src/modules/providers/test';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+
 
 
 
