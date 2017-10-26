@@ -90,7 +90,7 @@ export class AuthProvider {
             resolve(user)
           else {
             // need to get a user logged in
-            const loginModal = this.modalCtrl.create(LoginPage, { message: message ? message : null });
+            const loginModal = this.modalCtrl.create('LoginPage', { message: message ? message : null });
             loginModal.onDidDismiss(data => {
               if (!data.canceled) {
                 // should now have a current user

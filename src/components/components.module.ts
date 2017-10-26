@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { IonicApp, IonicModule } from 'ionic-angular';
+import { IonicApp, IonicModule, IonicPageModule } from 'ionic-angular';
 
 import { HomeListOrganizationComponent } from './home-list-organization/home-list-organization';
 import { OrgHomeItemComponent } from './org-home-item/org-home-item';
@@ -13,7 +13,7 @@ import { OrgHomeComponent } from './org-home/org-home';
     ActionsBarComponent,
     ActionButtonComponent,
     OrgHomeComponent],
-	imports: [IonicModule.forRoot(HomeListOrganizationComponent)],
+	imports: [IonicPageModule.forChild(HomeListOrganizationComponent)],
 	exports: [HomeListOrganizationComponent,
     OrgHomeItemComponent,
     ActionsBarComponent,

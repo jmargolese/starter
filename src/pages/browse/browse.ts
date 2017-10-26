@@ -50,7 +50,7 @@ export class BrowsePage {
   ionViewWillEnter() {
     this.organizations = this.orgProvider.getAllOrganizations();
     
-      throw new Error("this is a test error that should be caught");
+      
     
 
   }

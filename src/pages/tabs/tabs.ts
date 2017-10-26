@@ -1,3 +1,4 @@
+import { ContactPage } from './../contact/contact';
 import { BrowsePage } from './../browse/browse';
 import { DashboardPage } from './../dashboard/dashboard';
 import { SettingsPage } from './../settings/settings';
@@ -6,11 +7,11 @@ import { Component, ViewChild } from '@angular/core';
 import { FirebaseDynamicLinks } from '@ionic-native/firebase-dynamic-links';
 import { Deeplinks } from '@ionic-native/deeplinks';
 
-import { ContactPage } from '../contact/contact';
 import { HomePage } from '../home/home';
 
-import { Tabs, Events, NavController, Platform } from 'ionic-angular'
+import { IonicPage, Tabs, Events, NavController, Platform } from 'ionic-angular'
 
+@IonicPage()
 @Component({
   templateUrl: 'tabs.html'
 })
@@ -18,11 +19,11 @@ export class TabsPage {
 
   @ViewChild('shareTabs') tabRef: Tabs;
 
-  tab1Root = HomePage;
-  tab2Root = BrowsePage;
-  tab3Root = SettingsPage;
-  tab4Root = DashboardPage;
-  tab5Root = ContactPage;
+  tab1Root = 'HomePage';
+  tab2Root = 'BrowsePage';
+  tab3Root = 'SettingsPage';
+  tab4Root = 'DashboardPage';
+  tab5Root = 'ContactPage';
 
   constructor(private authProvider: AuthProvider, public events: Events, public deeplinks: Deeplinks, public navCtrl: NavController, public platform: Platform) {
     events.subscribe('tabs:select', (newTab) => {

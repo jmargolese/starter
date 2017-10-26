@@ -63,10 +63,10 @@ export class SettingsPage {
         loginModal.present();
         break;
       case 'profile':
-        this.navCtrl.push(SettingsProfilePage);
+        this.navCtrl.push('SettingsProfilePage');
         break;
       case 'paymethods':
-        this.navCtrl.push(PaymethodsPage);
+        this.navCtrl.push('PaymethodsPage');
         break;
       case 'tutorial':
         //tutorial();

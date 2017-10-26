@@ -44,7 +44,7 @@ export class SettingsProfilePage {
   }
 
   public changePasscode() {
-    this.navCtrl.push(SettingsPasscodePage)
+    this.navCtrl.push('SettingsPasscodePage')
   }
 
   public update() {

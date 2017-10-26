@@ -135,7 +135,7 @@ export class UserProvider {
       emailForLikes: boolean,
       emailForGeneral: boolean
     }
-  }) : Promise<any> {
+  }): Promise<any> {
     let newUser: shareTypes.User = <shareTypes.User>{};
     newUser.profile = {
       name: {
@@ -154,8 +154,8 @@ export class UserProvider {
 
     newUser.organization = null;
     newUser.contactPrefs = <shareTypes.UserContactPrefs>{
-      emailForGeneral : userInfo.contactPrefs.emailForGeneral,
-      emailForLikes :  userInfo.contactPrefs.emailForLikes
+      emailForGeneral: userInfo.contactPrefs.emailForGeneral,
+      emailForLikes: userInfo.contactPrefs.emailForLikes
     };
 
 
@@ -248,8 +248,10 @@ export class UserProvider {
     return new Promise((resolve, reject) => {
 
       if (!this.currentUser.favorites)
-        this.currentUser.favorites.organizations = {};
-
+        this.currentUser.favorites = {
+          "activities": {},
+          "organizations": {}
+        }
       var orgFavorites = this.currentUser.favorites.organizations || {};
 
       // toggle
@@ -277,8 +279,9 @@ export class UserProvider {
 
     return new Promise((resolve, reject) => {
       if (!this.currentUser.favorites)
-        this.currentUser.favorites.activities = {
-          activities: {}
+        this.currentUser.favorites = {
+          "activities": {},
+          "organizations": {}
         }
 
       var activityFavorites = this.currentUser.favorites.activities || {};

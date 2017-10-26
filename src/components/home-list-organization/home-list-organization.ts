@@ -30,7 +30,7 @@ export class HomeListOrganizationComponent {
   
 
   public goToOrg(organization) {
-    this.navCtrl.push(OrgHomePage, { organization: organization})
+    this.navCtrl.push('OrgHomePage', { organization: organization})
   }
 
 }

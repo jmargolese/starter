@@ -4,7 +4,7 @@ import { userDataSeeds } from './../../seeds/seedUserData';
 import {  donationSeeds } from './../../seeds/seedDonations';
 
 import { Component } from '@angular/core';
-import { NavController , ModalController} from 'ionic-angular';
+import { NavController , ModalController, IonicPage} from 'ionic-angular';
 
 import { orgSeeds } from '../../seeds/seedOrganizations';
 
@@ -15,6 +15,7 @@ import 'rxjs/add/operator/map';
 // providers
 import { AuthProvider } from './../../providers/auth/auth';
 
+@IonicPage()
 @Component({
   selector: 'page-contact',
   templateUrl: 'contact.html'

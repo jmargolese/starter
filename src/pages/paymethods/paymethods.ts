@@ -44,7 +44,7 @@ export class PaymethodsPage {
   }
 
   public addPaymethod() {
-    this.navCtrl.push(AddStripeCcPage);
+    this.navCtrl.push('AddStripeCcPage');
   }
 
 }
