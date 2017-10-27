@@ -2,7 +2,6 @@ import { ActivitiesProvider } from './../../providers/activities/activities';
 
 import { Observable } from 'rxjs/Observable';
 //import { ActivitiesProvider } from '../../../../common/src/providers/activities';
-import { TestProvider } from '../../../../common/src/modules/providers/test';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
@@ -22,7 +21,7 @@ export class OrgHomePage {
   
  public hideHeader: boolean = true;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public activitiesProvider: ActivitiesProvider, public testMe: TestProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public activitiesProvider: ActivitiesProvider) {
     
      if (navParams.get('showHeader')){
         this.hideHeader = false;
