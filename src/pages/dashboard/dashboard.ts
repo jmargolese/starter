@@ -1,5 +1,5 @@
 import { UserProvider } from './../../providers/user/user';
-import { DataProvider } from '../../../../common/src/providers/data';
+import { DataProvider } from './../../providers/data/data';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';

@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { ActivitiesProvider } from '../../../../common/src/providers/activities';
+import { ActivitiesProvider } from './../../providers/activities/activities';
 
 /**
  * Generated class for the OrgHomeComponent component.

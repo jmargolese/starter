@@ -1,6 +1,6 @@
 
 import { UserProvider } from './../user/user';
-import { DataProvider } from '../../../../common/src/providers/data';
+import { DataProvider } from './../data/data';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
