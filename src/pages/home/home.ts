@@ -53,6 +53,8 @@ export class HomePage {
     // ensure we've completed our login check before trying to load anything
     this.auth.getUser()
       .then(() => {
+        console.log("in home.ts ionViewWillEnter are we authenticated? " + this.auth.isAuthenticated());
+        debugger;
         this.organizations = this.userProvider.getFavoriteOrganizations();
       })
 

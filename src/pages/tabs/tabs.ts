@@ -31,19 +31,12 @@ export class TabsPage {
       // let other parts of the app tell us when a new tab is needed
       this.tabRef.select(newTab);
 
-    
     });
 
     authProvider.getUser();       // just trigger it to init
 
     console.log("setting up deeplinks in tabs");
-    /*  this.fdl.onDynamicLink()
-     .then(res => {
-       console.log("got a dynamic link: " +JSON.stringify(res));
-     })
-     .catch(error => {
-       console.error('in tabs:onDynamicLink got an error: ' + error.message);
-     }) */
+    
 
     this.platform.ready().then(() => {
       /*

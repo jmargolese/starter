@@ -27,8 +27,11 @@ export class AuthProvider {
 
     this.user = afAuth.authState;
 
+    this.getUser()
+      .then(() => {
+        console.log("At startup we are authenticated? : " + this.isAuthenticated());
+      })
 
-    console.log("At startup we are authenticated? : " + this.isAuthenticated());
 
     // THis is the official way to monitor user changes but isn't working, so we fall back on the raw firebase call
     /*
