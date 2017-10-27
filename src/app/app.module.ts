@@ -34,7 +34,7 @@ import { PaymethodsProvider } from '../providers/paymethods/paymethods';
 import { ShareProvider } from '../providers/share/share';
 import { AlertProvider } from '../providers/alert/alert';
 
-import { TestProvider } from '../../../common/src/modules/providers/test';
+//import { TestProvider } from '../../../common/src/modules/providers/test';
 
 import { SentryErrorHandler} from '../services/sentry-errorhandler';
 
@@ -78,7 +78,7 @@ import { SentryErrorHandler} from '../services/sentry-errorhandler';
     FirebaseDynamicLinks,
     Deeplinks,
     Stripe,
-    TestProvider
+   // TestProvider
   ]
 })
 export class AppModule {}

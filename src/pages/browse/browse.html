@@ -18,7 +18,6 @@
    
     <ion-list>
       <ion-item  *ngFor="let organization of organizations | async" style="padding-right: 0 !important">
-        <test></test>
         <home-list-organization [organization]="organization"></home-list-organization> 
       </ion-item>
     </ion-list>

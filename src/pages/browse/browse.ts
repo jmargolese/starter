@@ -50,9 +50,6 @@ export class BrowsePage {
   ionViewWillEnter() {
     this.organizations = this.orgProvider.getAllOrganizations();
     
-      
-    
-
   }
   ionViewDidLoad() {
 
