@@ -20,7 +20,7 @@ if (env === 'prod' || env === 'dev') {
 }
 
 function environmentPath() {
-  var filePath = './src/environments/environment' + (env === 'production' ? '' : '.' + env) + '.ts';
+  var filePath = './src/environments/environment' + (env === 'prod' ? '' : '.' + env) + '.ts';
   if (!fs.existsSync(filePath)) {
     console.log(chalk.red('\n' + filePath + ' does not exist!'));
   } else {

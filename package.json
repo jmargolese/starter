@@ -16,7 +16,6 @@
     "serve:dev": "cross-env MY_ENV=dev ionic-app-scripts serve",
     "serve:test": "cross-env MY_ENV=test ionic-app-scripts serve",
     "serve:stage": "cross-env MY_ENV=stage ionic-app-scripts serve",
-    "serve:production": "cross-env MY_ENV=production ionic-app-scripts serve",
     "test": "karma start ./test-config/karma.conf.js",
     "test-ci": "karma start ./test-config/karma.conf.js --single-run",
     "test-coverage": "karma start ./test-config/karma.conf.js --coverage",
