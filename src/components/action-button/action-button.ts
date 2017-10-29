@@ -25,7 +25,6 @@ export class ActionButtonComponent {
 
   constructor(public userProvider: UserProvider, public socialSharing: SocialSharing, 
       public auth: AuthProvider, public toastCtrl: ToastController, public share: ShareProvider) {
-    console.log('Hello ActionButtonComponent Component');
 
   }
 

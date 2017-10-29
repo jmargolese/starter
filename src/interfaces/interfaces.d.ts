@@ -82,3 +82,9 @@ export interface Organization {
       }
   ]
 }
+
+export enum authEventTypes {
+    login = "login",
+    logout = "logout",
+    changed = "changed"
+    }

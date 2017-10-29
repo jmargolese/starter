@@ -17,7 +17,6 @@ export class ActionsBarComponent {
   @Input('activity') activity;
 
   constructor() {
-    console.log('Hello ActionsBarComponent Component: ' + JSON.stringify(this.buttonsToDisplay));
     
   }
 

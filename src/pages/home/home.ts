@@ -1,4 +1,3 @@
-import { AuthProvider } from './../../providers/auth/auth';
 import { OrgHomePage } from './../org-home/org-home';
 import { UserProvider } from './../../providers/user/user';
 import { Component } from '@angular/core';
@@ -27,8 +26,7 @@ export class HomePage {
   public organizations: Observable<any[]>;
   private organizationsCollection: AngularFirestoreCollection<any>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public userProvider: UserProvider, 
-    public auth: AuthProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public userProvider: UserProvider) {
 
 
 
@@ -51,10 +49,10 @@ export class HomePage {
   ionViewWillEnter() {
 
     // ensure we've completed our login check before trying to load anything
-    this.auth.getUser()
-      .then(() => {
-        console.log("in home.ts ionViewWillEnter are we authenticated? " + this.auth.isAuthenticated());
-        debugger;
+    this.userProvider.isAuthenticated()
+      .then((isAuthenticated) => {
+        console.log("in home.ts ionViewWillEnter are we authenticated? " + isAuthenticated);
+        // make the call regardless so that we are tracking the observable in case we do login
         this.organizations = this.userProvider.getFavoriteOrganizations();
       })
 

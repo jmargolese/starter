@@ -1,7 +1,7 @@
 
-import { ModalController } from 'ionic-angular';
+import { ModalController, Events } from 'ionic-angular';
 import { LoginPage } from './../../pages/login/login';
-import { UserProvider } from './../user/user';
+
 import { Injectable } from '@angular/core';
 import Raven from 'raven-js';
 
@@ -9,6 +9,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs/Observable';
 
+//import * as shareTypes from '../../interfaces/interfaces';
 /*
   Generated class for the AuthProvider provider.
 
@@ -22,7 +23,7 @@ export class AuthProvider {
   currentUser: firebase.User = null;
   user: Observable<firebase.User>;
 
-  constructor(public afAuth: AngularFireAuth, public userProvider: UserProvider, public modalCtrl: ModalController) {
+  constructor(public afAuth: AngularFireAuth, public modalCtrl: ModalController, public events: Events) {
     console.log('Hello AuthProvider Provider');
 
     this.user = afAuth.authState;
@@ -58,6 +59,14 @@ export class AuthProvider {
 
   }
 
+  // manage events
+
+  /* public sendEvent(type: shareTypes.authEventTypes) {
+    this.events.publish('auth' + type, this.currentUser);
+  } */
+
+
+  // ***************   End events
   // getters
 
   public getUser(): Promise<firebase.User> {
@@ -70,6 +79,7 @@ export class AuthProvider {
           console.log("Auth:getUser about to call updateCurrentUser with user: " + (user ? user.uid : "User is null"));
           this.updateCurrentUser(user)
             .then(() => {
+              // this.sendEvent(user ? shareTypes.authEventTypes.login : shareTypes.authEventTypes.logout);
               resolve(user)
             })
             .catch(error => {
@@ -134,26 +144,31 @@ export class AuthProvider {
 
   private updateCurrentUser(user): Promise<firebase.User> {
     // returns a promise
-    this.currentUser = user;
-    console.log("auth:updateCurrentUser about to call updateUserInfo: " + (user ? user.uid : "User is null"));
-    return this.userProvider.updateUserInfo(this.currentUser);   // keep the userProvider in sync with our user at all times
+
+    return new Promise((resolve, reject) => {
+      this.currentUser = user;
+      resolve(user);
+    })
+
+    //console.log("auth:updateCurrentUser about to call updateUserInfo: " + (user ? user.uid : "User is null"));
+    // return this.userProvider.updateUserInfo(this.currentUser);   // keep the userProvider in sync with our user at all times
   }
 
   // end setters
 
   // methods
-  login(email: string, password: string): Promise<any> {
+  login(email: string, password: string): Promise<firebase.User> {
 
     let promise = new Promise((resolve, reject) => {
       this.afAuth.auth.signInWithEmailAndPassword(email, password)
         .then(user => {
-          console.log("Login successful with user: (about to call updateCurrentUser)" + user.email);
+          console.log("Login successful with user)" + user.email);
           this.updateCurrentUser(user)
-            .then((user) => {
+            .then(curUser => {
               Raven.setUserContext({
                 email: this.currentUser.email,
                 id: this.currentUser.uid
-              })
+              });
               resolve(user);
             })
 
@@ -167,28 +182,22 @@ export class AuthProvider {
 
     });
 
-    return promise;
+    return promise as Promise<firebase.User>;
 
   }
 
-  logout(): Promise<any> {
+  public logout(): Promise<any> {
     let promise = new Promise((resolve, reject) => {
       this.afAuth.auth.signOut()
         .then(() => {
           console.log("AuthProvider logout complete, about to call updateCurrentUser");
-          this.updateCurrentUser(null)
-            .then(() => {
-              Raven.setUserContext();
-              resolve();;
-            })
-
+          Raven.setUserContext();
+          resolve();;
         })
         .catch(error => {
           console.error("Error in auth:logout: " + error.message);
           reject(error);
         })
-
-
     });
 
     return promise;

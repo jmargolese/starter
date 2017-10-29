@@ -22,8 +22,6 @@ export class OrgHomeItemComponent {
   }
 
   constructor() {
-    console.log('Hello OrgHomeItemComponent Component!');
-    console.log("In org-home-item organization: " + JSON.stringify(this.organization));
    
     
   }

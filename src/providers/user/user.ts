@@ -1,3 +1,4 @@
+import { AuthProvider } from './../auth/auth';
 import { DataProvider } from './../data/data';
 
 import { Injectable } from '@angular/core';
@@ -6,12 +7,11 @@ import { Injectable } from '@angular/core';
 //import { of } from 'rxjs/observable/of';
 import { Observable } from 'rxjs/Observable';
 
-
 import * as firebase from 'firebase/app';
 
 import * as shareTypes from '../../interfaces/interfaces';
 
-
+import * as chalk from 'chalk';
 
 
 /*
@@ -24,16 +24,33 @@ import * as shareTypes from '../../interfaces/interfaces';
 export class UserProvider {
 
 
-  currentAuthUser: firebase.User = null;
-  currentUser: shareTypes.User = null;
-
+  public currentAuthUser: firebase.User = null;
+  public currentUser: shareTypes.User = null;
+  public userInfoPromise: Promise<any> = null;
   public organizationLikes = [];
 
-  constructor(public db: DataProvider) {
+  constructor(public db: DataProvider, public auth: AuthProvider) {
 
   }
 
   // getters
+
+  public isAuthenticated(): Promise<boolean> {
+    // do we have an authenticated user?
+    return new Promise((resolve, reject) => {
+      this.auth.getUser()
+        .then(authUser => {
+          this.updateUserInfo(authUser)
+            .then((user) => {
+              resolve(user == null ? false : true);
+            })
+        })
+        .catch(error => {
+          console.error("Error in User:isAuthenticated:" + error.message);
+          reject(error);
+        })
+    })
+  }
   public getUserProfile(): shareTypes.UserProfile {
 
 
@@ -175,32 +192,53 @@ export class UserProvider {
     })
 
   }
-  public updateUserInfo(authUser: firebase.User): Promise<any> {
-    // called by AuthProvider to keep us in sync with user Auth data
+
+  private promisePending: boolean = false;
+
+  public updateUserInfo(authUser: firebase.User): Promise<shareTypes.User> {
+    // called after a user auth change to ensure we keep the local user info update to date
+
     this.currentAuthUser = authUser;
     console.log("User: updateUserInfo called with user: " + (this.currentAuthUser ? this.currentAuthUser.uid : "curentAuthUser is null"));
 
-    return new Promise((resolve, reject) => {
-      if (this.currentAuthUser) {       // null if logged out
-        if (!this.currentUser || (authUser.uid != this.currentUser.uid))
-          this.db.getDocument('users', authUser.uid)
-            .subscribe(userInfo => {
-              this.currentUser = userInfo;
-              resolve(this.currentUser);
-            }, error => {
+    if (this.userInfoPromise && this.promisePending) {
+      console.log(chalk.blue("returning existing promise in updateUserInfo"));
+      return this.userInfoPromise;
+    } else {
+      this.userInfoPromise = new Promise((resolve, reject) => {
 
-              console.error("In userProvider updatingUserInfo for uid: " + authUser ? authUser.uid : "authUser is null" + ": " + error.message);
-              reject(error);
-            })
-        else {
-          console.log("In update userInfo skipping document read, we already have it");
+        this.promisePending = true;
+
+        if (this.currentAuthUser) {       // null if logged out
+          if (!this.currentUser || (authUser.uid != this.currentUser.uid))
+            this.db.getDocument('users', authUser.uid)
+              .subscribe(userInfo => {
+                this.currentUser = userInfo;
+
+                console.log("update userInfo resolved");
+                this.promisePending = false;
+                resolve(this.currentUser);
+              }, error => {
+
+                console.error("In userProvider updatingUserInfo for uid: " + authUser ? authUser.uid : "authUser is null" + ": " + error.message);
+                this.promisePending = false;
+                reject(error);
+              })
+          else {
+            console.log("In update userInfo skipping document read, we already have it");
+            this.promisePending = false;
+            resolve(this.currentUser);
+          }
+        } else {
+          this.currentUser = null;
+          this.promisePending = false;
           resolve(this.currentUser);
         }
-      } else {
-        this.currentUser = null;
-        resolve(this.currentUser);
-      }
-    })
+      })
+
+      return this.userInfoPromise;
+    }
+
 
 
   }
@@ -241,40 +279,75 @@ export class UserProvider {
 
   }
 
+  // actions **********************************************
 
-
-  public toggleAddToHome(orgId): Promise<any> {
+  public login(email: string, password: string): Promise<shareTypes.User> {
 
     return new Promise((resolve, reject) => {
-
-      if (!this.currentUser.favorites)
-        this.currentUser.favorites = {
-          "activities": {},
-          "organizations": {}
-        }
-      var orgFavorites = this.currentUser.favorites.organizations || {};
-
-      // toggle
-      if (orgFavorites.hasOwnProperty(orgId))
-        delete orgFavorites[orgId];
-      else
-        orgFavorites[orgId] = true;
-
-      this.currentUser.favorites.organizations = orgFavorites;
-
-      this.db.updateDocument('users', this.currentAuthUser.uid, this.currentUser)
-        .then(() => {
-          console.log("Toggled AddtoHome for orgID: " + orgId);
-          resolve();
+      this.auth.login(email, password)
+        .then(authUser => {
+          this.updateUserInfo(authUser)
+            .then(user => {
+              resolve(user);
+            })
         })
         .catch(error => {
-          console.error("Error toggling AddToHome or orgID: " + orgId + ': ' + error.message);
+          console.error("Error in user:login: " + error.message);
           reject(error);
         })
     })
 
   }
 
+  public logout(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.auth.logout()
+        .then(() => {
+          this.updateUserInfo(null)
+          .then(() => {
+            resolve();
+          })
+        })
+        .catch(error => {
+          console.error("Error in user: logout: " + error.message);
+          reject(error);
+        })
+    })
+
+
+  }
+
+  public toggleAddToHome(orgId): Promise<any> {
+    
+        return new Promise((resolve, reject) => {
+    
+          if (!this.currentUser.favorites)
+            this.currentUser.favorites = {
+              "activities": {},
+              "organizations": {}
+            }
+          var orgFavorites = this.currentUser.favorites.organizations || {};
+    
+          // toggle
+          if (orgFavorites.hasOwnProperty(orgId))
+            delete orgFavorites[orgId];
+          else
+            orgFavorites[orgId] = true;
+    
+          this.currentUser.favorites.organizations = orgFavorites;
+    
+          this.db.updateDocument('users', this.currentAuthUser.uid, this.currentUser)
+            .then(() => {
+              console.log("Toggled AddtoHome for orgID: " + orgId);
+              resolve();
+            })
+            .catch(error => {
+              console.error("Error toggling AddToHome or orgID: " + orgId + ': ' + error.message);
+              reject(error);
+            })
+        })
+    
+      }
   public toggleFavoriteActivity(id): Promise<any> {
 
     return new Promise((resolve, reject) => {

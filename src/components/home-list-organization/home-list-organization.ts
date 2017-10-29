@@ -24,7 +24,7 @@ export class HomeListOrganizationComponent {
   }
 
   constructor( public navCtrl : NavController) {
-    console.log('Hello HomeListOrganizationComponent Component');
+
   }
 
   

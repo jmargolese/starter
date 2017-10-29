@@ -55,7 +55,7 @@ export class SettingsPage {
 
         break;
       case 'login':
-        const loginModal = this.modalCtrl.create(LoginPage);
+        const loginModal = this.modalCtrl.create('LoginPage');
         loginModal.onDidDismiss(data => {
           if (!data.canceled)
             this.events.publish('tabs:select', 0);      // switch to the Home Tab

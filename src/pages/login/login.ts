@@ -164,7 +164,7 @@ export class LoginPage {
     if (this.loginForm.valid) {
 
       console.log("about to login");
-      this.auth.login(this.loginForm.value.email, this.loginForm.value.passcode)
+      this.userProvider.login(this.loginForm.value.email, this.loginForm.value.passcode)
         .then(user => {
           console.log("Login successful");
           this.submitAttempt = false;

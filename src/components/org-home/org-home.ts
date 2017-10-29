@@ -21,7 +21,7 @@ export class OrgHomeComponent {
   public topBackgroundColor = "#FFFFFF";
 
   constructor(public activitiesProvider: ActivitiesProvider) {
-    console.log('Hello OrgHomeComponent Component');
+  
     
 
   }
