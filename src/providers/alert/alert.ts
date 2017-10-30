@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
 export class AlertProvider {
 
   constructor(public alertCtrl: AlertController) {
-    console.log('Hello AlertProvider Provider');
+    
   }
 
 

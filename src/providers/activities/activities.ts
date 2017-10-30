@@ -13,7 +13,6 @@ import { Injectable } from '@angular/core';
 export class ActivitiesProvider {
 
   constructor(public db: DataProvider) {
-    console.log('Hello ActivitiesProvider Provider');
   }
 
   public getActivitiesForOrg(orgId) : Observable<any> {

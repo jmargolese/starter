@@ -20,7 +20,7 @@ export class PaymethodsProvider {
 
   private payMethods: shareTypes.PayMethod[];
   constructor(public userProvider: UserProvider, public modalCtrl: ModalController) {
-    console.log('Hello PaymethodsProvider Provider');
+  
   }
 
 

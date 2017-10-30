@@ -13,8 +13,19 @@
 </ion-header>
 
 
-<ion-content>
-  <ion-slides [centeredSlides]="false" [loop]="true" [pager]="true">
+<ion-content class="home-css">
+    <div *ngIf="(organizations | async)?.length == 0" class="infoCard">
+        <ion-card>
+          <ion-card-header>
+            Discover!
+          </ion-card-header>
+          <ion-card-content>
+            Tap the <b>Discover</b> tab below to find your interests.  Then <i>Add to home</i> to see your favorite organization's news, events and updates right here.
+          </ion-card-content>
+        </ion-card>
+      </div>
+
+  <ion-slides *ngIf="(organizations | async)?.length > 0" [centeredSlides]="false" [loop]="true" [pager]="true">
     <ion-slide *ngFor="let organization of organizations | async">
 
       <org-home [organization]='organization'> </org-home>

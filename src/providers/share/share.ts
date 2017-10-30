@@ -17,7 +17,7 @@ export class ShareProvider {
   constructor(public payMethods: PaymethodsProvider, public orgProvider: OrganizationProvider,
     public userProvider: UserProvider, public data: DataProvider,
     public alert: AlertProvider, public iab: InAppBrowser) {
-    console.log('Hello ShareProvider Provider');
+
   }
 
   /**

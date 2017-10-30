@@ -48,6 +48,7 @@ export class HomePage {
 
   ionViewWillEnter() {
 
+    console.log("Entering home.ts");
     // ensure we've completed our login check before trying to load anything
     this.userProvider.isAuthenticated()
       .then((isAuthenticated) => {

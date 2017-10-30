@@ -22,7 +22,7 @@ export class OrganizationProvider {
   public allOrganizations: Observable<any[]>;
 
   constructor(private db: DataProvider, public userProvider: UserProvider) {
-    console.log('Hello OrganizationProvider Provider');
+  
 
   }
 

@@ -16,7 +16,7 @@ export class DataProvider {
   private organizationsCollection: AngularFirestoreCollection<any>;
 
   constructor(public db: AngularFirestore, public readonly afs: AngularFirestore) {
-    console.log('Hello DataProvider Provider');
+    
 
     this.organizationsCollection = afs.collection<any>('organizations');
 
