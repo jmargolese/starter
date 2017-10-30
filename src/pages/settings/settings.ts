@@ -6,6 +6,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, ModalController } from 'ionic-angular';
 import { ToastController, Events } from 'ionic-angular';
 import { AppVersion } from '@ionic-native/app-version';
+import { ENV } from '@app/env';
 
 
 
@@ -86,7 +87,7 @@ export class SettingsPage {
           'textOnly': true,
         },
         {
-          'title': 'Environment: sharedev',
+          'title': 'Environment: '+ENV.mode,
           'textOnly': true,
         },
         {

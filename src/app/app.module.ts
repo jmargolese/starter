@@ -1,6 +1,4 @@
-
-
-import { FirebaseDynamicLinks }  from '@ionic-native/firebase-dynamic-links';
+ import { FirebaseDynamicLinks }  from '@ionic-native/firebase-dynamic-links';
 import { Deeplinks } from '@ionic-native/deeplinks';
 import { Stripe } from '@ionic-native/stripe';
 
@@ -13,11 +11,10 @@ import { Share } from './app.component';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AppVersion } from '@ionic-native/app-version';
-import {InAppBrowser} from '@ionic-native/in-app-browser';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 
 import { AngularFireModule } from 'angularfire2';
-import { environment } from '../environments/environment';
 import { ENV } from '@app/env';
 
 import { AngularFirestoreModule } from 'angularfire2/firestore';

@@ -1,3 +1,4 @@
+import {} from 'jasmine';
 import { TabsPage } from './../pages/tabs/tabs';
 import { async, TestBed } from '@angular/core/testing';
 import { IonicModule, Platform } from 'ionic-angular';
