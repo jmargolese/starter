@@ -1,3 +1,4 @@
+import { AlertProvider } from './../../providers/alert/alert';
 import { ShareProvider } from './../../providers/share/share';
 import { ToastController } from 'ionic-angular';
 import { AuthProvider } from './../../providers/auth/auth';
@@ -23,7 +24,7 @@ export class ActionButtonComponent {
   @Input('organization') organization
   @Input('activity') activity
 
-  constructor(public userProvider: UserProvider, public socialSharing: SocialSharing, 
+  constructor(public userProvider: UserProvider, public socialSharing: SocialSharing, public alert: AlertProvider,
       public auth: AuthProvider, public toastCtrl: ToastController, public share: ShareProvider) {
 
   }
@@ -54,7 +55,8 @@ export class ActionButtonComponent {
           console.log("User canceled in ActionButton:ToggleAddToHome");
         } else {
           console.error("Error in action-button:toggleAddToHome: " + error.message);
-          this.presentToast("Sorry, something went wrong, please try again later.");
+          this.alert.confirm({title: "Error", message: "Sorry, something went wrong, please try again later.", buttons: { ok: true, cancel: false} })
+          
         }
       })
   }
@@ -73,7 +75,7 @@ export class ActionButtonComponent {
           console.log("User canceled in toggleFavoriteActivity");
         } else {
           console.error("Error in action-button:toggleFavoriteActivity: " + error.message);
-          this.presentToast("Sorry, something went wrong, please try again later.");
+          this.alert.confirm({title: "Error", message: "Sorry, something went wrong, please try again later.", buttons: { ok: true, cancel: false} })
         }
       })
 
@@ -86,6 +88,11 @@ export class ActionButtonComponent {
         this.share.donate(this.activity, this.organization)
           .then(() => {
             console.log("action-button:donate:share activity suceeded");
+          })
+          .catch(error => {
+            console.error("Error in action-button:donate: " + error.message);
+            this.alert.confirm({title: "Error", message: "Sorry, something went wrong, please try again later.", buttons: { ok: true, cancel: false} })
+
           })
       }).catch(error => {
         if (error.canceled) {

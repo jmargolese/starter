@@ -1,3 +1,4 @@
+import { DataProvider } from './../data/data';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { PayMethod } from './../../interfaces/interfaces.d';
 import { OrganizationProvider } from './../organization/organization';
@@ -13,7 +14,8 @@ import * as shareTypes from '../../interfaces/interfaces';
 @Injectable()
 export class ShareProvider {
 
-  constructor(public payMethods: PaymethodsProvider, public orgProvider: OrganizationProvider, public userProvider: UserProvider,
+  constructor(public payMethods: PaymethodsProvider, public orgProvider: OrganizationProvider,
+    public userProvider: UserProvider, public data: DataProvider,
     public alert: AlertProvider, public iab: InAppBrowser) {
     console.log('Hello ShareProvider Provider');
   }
@@ -38,26 +40,54 @@ export class ShareProvider {
     }
     return params;
   }
-  public sendToWebsite(activity: {}, organization: shareTypes.Organization, payMethodType: string) {
+  public sendToWebsite(activity: {}, organization: shareTypes.Organization, payMethodType: string): Promise<any> {
 
-    let params = {
-      nocache: 1,
-      api: "true",
-      version: 1,
-      action: "checkout",
-      recipientDisplayName: organization.companyName,
-      donorId: this.userProvider.getUserId(),
-      recipientId: this.orgProvider.getId(organization),
-      donationPrefs: organization.donationPrefs,
-      // timeStamp: "Whats the timestamp?",                 // this is to keep the social share message in sync on the return, let's be more deterministic if we can
-      isDemo: this.userProvider.isRoleDemo(),
-      creditCardFee: this.orgProvider.getCreditCardFee(organization, payMethodType)
+    return new Promise((resolve, reject) => {
+      const userId = this.userProvider.getUserId();
+      const recipientId = this.orgProvider.getId(organization);
 
-    }
-    let serializedParams: URLSearchParams = this.serialize(params);
-    //serialedParams.toString() to get the URL
+      let params = {
+        nocache: 1,
+        api: "true",
+        version: 1,
+        action: "checkout",
+        recipientDisplayName: organization.companyName,
+        donorId: userId,
+        recipientId: recipientId,
+        donationPrefs: organization.donationPrefs,
+        // timeStamp: "Whats the timestamp?",                 // this is to keep the social share message in sync on the return, let's be more deterministic if we can
+        isDemo: this.userProvider.isRoleDemo(),
+        creditCardFee: this.orgProvider.getCreditCardFee(organization, payMethodType)
 
-    this.iab.create('http://google.com', "_system");
+      }
+      let serializedParams: URLSearchParams = this.serialize(params);
+      //serialedParams.toString() to get the URL
+
+      this.createDonationToken(userId, recipientId )
+        .then(() => {
+          this.iab.create('http://google.com?'+serializedParams, "_system");
+          resolve();
+        })
+        .catch(error => {
+          console.error("Error creating donationToken in sendToWebsite: " + error.message);
+          reject(error);
+        })
+    })
+
+  }
+
+  public createDonationToken(userId: string, recipientId: string): Promise<any> {
+
+    return new Promise((resolve, reject) => {
+      const userId = this.userProvider.getUserId();
+      this.data.createDocument('donationTokens', userId , { userId: userId, recipientId: recipientId })
+      .then(() => { resolve()})
+      .catch(error => {
+        console.error("Error creating document in share:createDonationToken: " + error.messsage);
+        reject(error);
+      })
+    });
+
   }
 
   public donate(activity: {}, organization: shareTypes.Organization): Promise<any> {
@@ -75,7 +105,14 @@ export class ShareProvider {
             buttons: { ok: true, cancel: true }
           })
             .then(() => {
-              this.sendToWebsite(activity, organization, payMethod.vendor.toLowerCase());
+              this.sendToWebsite(activity, organization, payMethod.vendor.toLowerCase())
+                .then(() => {
+                  resolve();
+                })
+                .catch(error => {
+                  console.error("Error with sendToWebSite in share:donate: " + error.message);
+                  reject(error);
+                })
             })
             .catch(error => {
               // user canceled, don't rejectd, that just forces our caller to handle it, really there's nothing to do
