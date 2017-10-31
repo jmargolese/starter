@@ -1,12 +1,11 @@
 import { PaymethodsProvider } from './../../providers/paymethods/paymethods';
 import { AlertProvider } from './../../providers/alert/alert';
-import { Page } from './../../../e2e/app.po';
-import { CreditcardNumberValidator } from './../../validators/creditcardnumber';
+//import { Page } from './../../../e2e/app.po';
 
 import { UserProvider } from './../../providers/user/user';
-import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, ViewController } from 'ionic-angular';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Stripe } from '@ionic-native/stripe';
 
 import * as shareTypes from '../../interfaces/interfaces';
@@ -42,8 +41,8 @@ export class AddStripeCcPage {
 
   public ccType: string = null;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public userProvider: UserProvider, 
-    public stripe: Stripe, public formBuilder: FormBuilder, public alert: AlertProvider, public payMethod: PaymethodsProvider, public viewCtrl: ViewController) {
+  constructor(public payMethProvider: PaymethodsProvider, public navCtrl: NavController, public navParams: NavParams, public userProvider: UserProvider, 
+    public stripe: Stripe, public formBuilder: FormBuilder, public alert: AlertProvider,  public viewCtrl: ViewController) {
     this.stripe.setPublishableKey(ENV.stripe.privateKey);
 
     this.ccForm = formBuilder.group({
@@ -187,7 +186,7 @@ export class AddStripeCcPage {
         }
 
 
-        this.payMethod.addPaymethod(newPaymethod)
+        this.payMethProvider.addPaymethod(newPaymethod)
         .then(() => {
           this.alert.confirm({  title: "Success",  message: "Your credit card has been added", buttons: { ok : true, cancel: false}  })
           .then(() => {

@@ -5,5 +5,25 @@ page-home {
         .infoCard {
             margin-top: 25%;
         }
-    }
+   
+
+        .logoImage {
+            max-width: 100px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .nextButton {
+            position: absolute;
+            right: 1vw;;
+            top: 1vh;
+            z-index: 999;
+        }
+
+        .prevButton {
+            position: absolute;
+            left: 1vw;;
+            top: 1vh;
+            z-index: 999;
+        }
+    }   
 }

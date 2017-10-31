@@ -1,6 +1,6 @@
 import { AlertProvider } from './../../providers/alert/alert';
 import { ShareProvider } from './../../providers/share/share';
-import { ToastController } from 'ionic-angular';
+import { ToastController, Events } from 'ionic-angular';
 import { AuthProvider } from './../../providers/auth/auth';
 import { UserProvider } from './../../providers/user/user';
 import { Component, Input } from '@angular/core';
@@ -24,9 +24,26 @@ export class ActionButtonComponent {
   @Input('organization') organization
   @Input('activity') activity
 
-  constructor(public userProvider: UserProvider, public socialSharing: SocialSharing, public alert: AlertProvider,
-      public auth: AuthProvider, public toastCtrl: ToastController, public share: ShareProvider) {
+  public addToHomeText: string;
 
+  constructor(public userProvider: UserProvider, public socialSharing: SocialSharing, public alert: AlertProvider,
+    public auth: AuthProvider, public toastCtrl: ToastController, public share: ShareProvider, public events: Events) {
+
+  }
+
+  ngAfterContentInit() {
+    this.setButtonText();
+  }
+
+  public setButtonText() {
+    switch (this.buttonToDisplay) {
+      case "addToHome":
+        this.addToHomeText = this.userProvider.userLikesOrganization(this.organization.id) ? "Remove from home" : "Add to home";
+        break;
+
+      default:
+        break;
+    }
   }
 
   public presentToast(message: string): void {
@@ -40,23 +57,35 @@ export class ActionButtonComponent {
   // supporting actions for each button
   public toggleAddToHome(id) {
     console.log("toggleAddToHome called with id: " + id);
-   
 
-   
+
+
+
+    let onlyTurnOn: boolean = false;
+
+    this.userProvider.isAuthenticated()
+      .then(isAuthenticated => {
+        onlyTurnOn = !isAuthenticated;    // if we are not authenticated, we only allow turning ON the follow to avoid turning off when the user logs-in
+      })
+
+
     this.auth.getAuthenticatedUser("You need to login to do that")
       .then(() => {
         var profile = this.userProvider.getUserProfile();
-        this.userProvider.toggleAddToHome(id)
+        this.userProvider.toggleAddToHome(id, onlyTurnOn)
           .then(() => {
             console.log("ActionButton:Toggle addToHome suceeded");
+            this.setButtonText();
+            if (this.userProvider.userLikesOrganization(this.organization.id))
+              this.events.publish('tabs:select', 0);      // switch to the Home Tab
           })
       }).catch(error => {
         if (error.canceled) {
           console.log("User canceled in ActionButton:ToggleAddToHome");
         } else {
           console.error("Error in action-button:toggleAddToHome: " + error.message);
-          this.alert.confirm({title: "Error", message: "Sorry, something went wrong, please try again later.", buttons: { ok: true, cancel: false} })
-          
+          this.alert.confirm({ title: "Error", message: "Sorry, something went wrong, please try again later.", buttons: { ok: true, cancel: false } })
+
         }
       })
   }
@@ -75,7 +104,7 @@ export class ActionButtonComponent {
           console.log("User canceled in toggleFavoriteActivity");
         } else {
           console.error("Error in action-button:toggleFavoriteActivity: " + error.message);
-          this.alert.confirm({title: "Error", message: "Sorry, something went wrong, please try again later.", buttons: { ok: true, cancel: false} })
+          this.alert.confirm({ title: "Error", message: "Sorry, something went wrong, please try again later.", buttons: { ok: true, cancel: false } })
         }
       })
 
@@ -91,7 +120,7 @@ export class ActionButtonComponent {
           })
           .catch(error => {
             console.error("Error in action-button:donate: " + error.message);
-            this.alert.confirm({title: "Error", message: "Sorry, something went wrong, please try again later.", buttons: { ok: true, cancel: false} })
+            this.alert.confirm({ title: "Error", message: "Sorry, something went wrong, please try again later.", buttons: { ok: true, cancel: false } })
 
           })
       }).catch(error => {

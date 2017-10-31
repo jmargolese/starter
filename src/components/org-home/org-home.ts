@@ -28,9 +28,10 @@ export class OrgHomeComponent {
 
   // there is no ionic lifecycle events in components
   ngAfterViewInit() {
-    /* setTimeout(function() {
-      this.topBackgroundColor = this.organization.info.backgroundColor || "#FFFFFF";
-    }, 1); */
+    let that = this;
+     setTimeout(function() {
+      that.topBackgroundColor =  (that.organization.info.backgroundColor) || "#FFFFFF";
+    }, 1); 
    
     this.activities = this.activitiesProvider.getActivitiesForOrg(this.organization.id);
   }

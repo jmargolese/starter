@@ -7,6 +7,8 @@ import { Component, ViewChild } from '@angular/core';
 import { FirebaseDynamicLinks } from '@ionic-native/firebase-dynamic-links';
 import { Deeplinks } from '@ionic-native/deeplinks';
 import { ENV } from '@app/env';
+import { AddStripeCcPage } from './../../pages/add-stripe-cc/add-stripe-cc';
+import { ModalController } from 'ionic-angular';
 
 import { HomePage } from '../home/home';
 
@@ -26,10 +28,17 @@ export class TabsPage {
   tab4Root = 'DashboardPage';
   tab5Root = 'ContactPage';
 
-  constructor(private authProvider: AuthProvider, public events: Events, public deeplinks: Deeplinks, public navCtrl: NavController, public platform: Platform) {
+  constructor(private authProvider: AuthProvider, public events: Events, public deeplinks: Deeplinks, 
+    public navCtrl: NavController, public platform: Platform, public modalCtrl: ModalController) {
     events.subscribe('tabs:select', (newTab) => {
       // let other parts of the app tell us when a new tab is needed
       this.tabRef.select(newTab);
+
+    });
+
+    events.subscribe('model:AddStripeCcPage', () => {
+      // let other parts of the app tell us when a modal needs to be display
+      this.showAddStripeCCModal();
 
     });
 
@@ -128,6 +137,19 @@ export class TabsPage {
 
   }
 
+  public showAddStripeCCModal() {
+    const addPayMethod = this.modalCtrl.create('AddStripeCcPage');
+    addPayMethod.onDidDismiss(data => {
+      if (data.canceled) {
+        var error: any = new Error('User canceled');
+        error.canceled = true;
+        this.events.publish("modelDismissed:AddStripeCcPage", { canceled : true})
+      } else
+        
+        this.events.publish("modelDismissed:AddStripeCcPage", { data : data.newPaymethod})
+    });
+    addPayMethod.present();
+  }
   ionViewDidEnter() {
     //this.tabRef.select(1);
     

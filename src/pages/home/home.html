@@ -6,34 +6,63 @@
 -->
 <ion-header>
 
-  <ion-navbar *ngIf="false">
-    <ion-title>Home</ion-title>
-  </ion-navbar>
+    <ion-navbar *ngIf="true" swipeBackEnabled="true">
+        <ion-buttons start>
+            <button *ngIf="showPrevButton" (click)="prev()" ion-button color="primary" clear>
+               Previous
+            </button>
+          </ion-buttons>
+        <ion-title></ion-title>
+        <ion-buttons end>
+            <button *ngIf="showNextButton" (click)="next()" ion-button color="primary" clear>
+               Next
+            </button>
+          </ion-buttons>
+      </ion-navbar>
 
 </ion-header>
 
 
 <ion-content class="home-css">
-    <div *ngIf="(organizations | async)?.length == 0" class="infoCard">
-        <ion-card>
-          <ion-card-header>
-            Discover!
-          </ion-card-header>
-          <ion-card-content>
-            Tap the <b>Discover</b> tab below to find your interests.  Then <i>Add to home</i> to see your favorite organization's news, events and updates right here.
-          </ion-card-content>
-        </ion-card>
-      </div>
+  <div *ngIf="(organizations$ | async)?.length == 0" class="infoCard">
+    <ion-card>
+      <ion-card-header>
+          <img class="logoImage" src="assets/img/share/Share_ICON-192x192px.png"/>
+           Discover!
+       
+      </ion-card-header>
+      <ion-card-content>
+        Tap the
+        <b>Discover</b> tab below to find your interests. Then
+        <i>Add to home</i> to see your favorite organization's news, events and updates right here.
+      </ion-card-content>
+    </ion-card>
+  </div>
 
-  <ion-slides *ngIf="(organizations | async)?.length > 0" [centeredSlides]="false" [loop]="true" [pager]="true">
-    <ion-slide *ngFor="let organization of organizations | async">
+  <ion-slides #orgSlides *ngIf="organizations$ && (organizations$ | async)?.length > 0" [centeredSlides]="false" [loop]="false" [pager]="true"  (ionSlideDidChange)="slideChanged()">
+    <ion-slide *ngFor="let organization of organizations$ | async">
 
       <org-home [organization]='organization'> </org-home>
-    
+
+
     </ion-slide>
 
   </ion-slides>
 
+  <!-- <div class="nextButton" *ngIf="showNextButton" *ngIf="organizations && (organizations | async)?.length > 0">
+    <button ion-button icon-right color="light" (click)="next()">
+      Next
+      <ion-icon name="arrow-forward"></ion-icon>
+    </button>
+  </div>
+  <div class="prevButton" *ngIf="showPrevButton" *ngIf="organizations && (organizations | async)?.length > 0">
+      <button ion-button icon-left color="light" (click)="prev()">
+          <ion-icon name="arrow-back"></ion-icon>
+        Previous
+       
+      </button>
+    </div>
+ -->
 
 
 </ion-content>

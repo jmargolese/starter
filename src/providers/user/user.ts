@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 //import 'rxjs/add/operator/catch';
 //import { of } from 'rxjs/observable/of';
 import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 
 import * as firebase from 'firebase/app';
 
@@ -99,8 +100,19 @@ export class UserProvider {
     return this.currentUser ? this.currentUser.info.isDemo : false;
   }
 
-  public getFavoriteOrganizations(): any {
+  public userLikesOrganization(orgId: string) : boolean {
+    let result: boolean = false;
+    if (this.currentUser && this.currentUser.favorites && this.currentUser.favorites.organizations &&
+      this.currentUser.favorites.organizations.hasOwnProperty(orgId)) {
+        result = true;
+    }
+
+    return result;
+  }
+
+  public getFavoriteOrganizations(): Observable<any> {
     this.organizationLikes = [];   // reset before we work
+    let orgSubject: Subject<any> = new Subject;
 
 
     if (this.currentUser && this.currentUser.favorites && this.currentUser.favorites.organizations) {
@@ -111,6 +123,7 @@ export class UserProvider {
           .subscribe(org => {
             org.id = orgLike;            // getDocument doesn't retrieve the id, but we happen to have it
             this.organizationLikes.push(org);
+            //orgSubject.next(org);
           }, error => {
             console.error("Error retrieving document in userProvider:getOrganizationFavorties for key: '" + orgLike + "': " + error.message);
           })
@@ -120,8 +133,8 @@ export class UserProvider {
 
     // https://stackoverflow.com/questions/41806188/how-to-create-an-observable-in-angular-2
     return Observable.of(this.organizationLikes);
-
-
+   //https://stackoverflow.com/questions/14466285/can-i-observe-additions-to-an-array-with-rx-js
+   //return orgSubject;
   }
   // end getters
 
@@ -317,8 +330,9 @@ export class UserProvider {
 
   }
 
-  public toggleAddToHome(orgId): Promise<any> {
-    
+  public toggleAddToHome(orgId: string, onlyTurnOn: boolean): Promise<any> {
+      // if onlyTurnOn then we can turn it on, but not off  (i.e. if user is logged out and requests a toggle, don't turn it off)
+
         return new Promise((resolve, reject) => {
     
           if (!this.currentUser.favorites)
@@ -329,7 +343,7 @@ export class UserProvider {
           var orgFavorites = this.currentUser.favorites.organizations || {};
     
           // toggle
-          if (orgFavorites.hasOwnProperty(orgId))
+          if (orgFavorites.hasOwnProperty(orgId) && !onlyTurnOn)
             delete orgFavorites[orgId];
           else
             orgFavorites[orgId] = true;

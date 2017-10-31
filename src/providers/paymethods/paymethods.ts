@@ -1,11 +1,8 @@
-import { AddStripeCcPage } from './../../pages/add-stripe-cc/add-stripe-cc';
-import { ModalController } from 'ionic-angular';
+//import { AddStripeCcPage } from './../../pages/add-stripe-cc/add-stripe-cc';
+
 import { UserProvider } from './../user/user';
-import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
-
-
-import 'rxjs/add/operator/map';
+import {  Events } from 'ionic-angular'
 
 import * as shareTypes from '../../interfaces/interfaces';
 
@@ -19,7 +16,7 @@ import * as shareTypes from '../../interfaces/interfaces';
 export class PaymethodsProvider {
 
   private payMethods: shareTypes.PayMethod[];
-  constructor(public userProvider: UserProvider, public modalCtrl: ModalController) {
+  constructor(public userProvider: UserProvider, public events: Events) {
   
   }
 
@@ -55,7 +52,20 @@ export class PaymethodsProvider {
         resolve(preferred);
       } else {
         // need to launch the add paymethod as a modal
-        const addPayMethod = this.modalCtrl.create(AddStripeCcPage);
+        // send a message to launch the modal:
+        this.events.subscribe("modelDismissed:AddStripeCcPage", (result => {
+          if (result.canceled) {
+            var error: any = new Error('User canceled');
+            error.canceled = true;
+            reject(error);
+          } else {
+            resolve(result.data);
+          }
+        }));
+
+        this.events.publish('model:AddStripeCcPage');
+        
+      /*  const addPayMethod = this.modalCtrl.create(AddStripeCcPage);
         addPayMethod.onDidDismiss(data => {
           if (data.canceled) {
             var error: any = new Error('User canceled');
@@ -65,6 +75,7 @@ export class PaymethodsProvider {
             resolve(data.newPaymethod);  // it'll be the first one, the only one that should exist now
         });
         addPayMethod.present();
+        */
       }
 
 
@@ -92,21 +103,23 @@ export class PaymethodsProvider {
 
   public makeDefaultPaymethod(index: number): Promise<any> {
 
-    
-    let promise: Promise<any> = new Promise((resolve, reject) => {
+    // don't refresh -- getPaymethods will call userProvider.getPaymethods() which may not be update to date if we are adding one
+    //this.getPaymethods();      // refresh just to be sure  <- don't make this call, it causes 'this' to become undefined for some reason
 
-    //  this.getPaymethods();      // refresh just to be sure  <- don't make this call, it causes 'this' to become undefined for some reason
+    return new Promise((resolve, reject) => {
+      let that = this;
+     
     
-    let len: number = this.payMethods.length;
+    let len: number = that.payMethods.length;
 
      
       if (index < len) {
 
 
-        for (let i = 0; i < this.payMethods.length; i++) {
-          this.payMethods[i].isPreferred = (i == index ? true : false);
+        for (let i = 0; i < that.payMethods.length; i++) {
+          that.payMethods[i].isPreferred = (i == index ? true : false);
         }
-        this.userProvider.updatePaymethods(this.payMethods)
+        that.userProvider.updatePaymethods(that.payMethods)
           .then(() => {
             resolve();
           })
@@ -121,7 +134,6 @@ export class PaymethodsProvider {
       }
     });
 
-    return promise;
 
   }
 
