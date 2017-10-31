@@ -1,16 +1,8 @@
-import { ContactPage } from './../contact/contact';
-import { BrowsePage } from './../browse/browse';
-import { DashboardPage } from './../dashboard/dashboard';
-import { SettingsPage } from './../settings/settings';
-import { AuthProvider } from './../../providers/auth/auth';
 import { Component, ViewChild } from '@angular/core';
-import { FirebaseDynamicLinks } from '@ionic-native/firebase-dynamic-links';
 import { Deeplinks } from '@ionic-native/deeplinks';
 import { ENV } from '@app/env';
-import { AddStripeCcPage } from './../../pages/add-stripe-cc/add-stripe-cc';
 import { ModalController } from 'ionic-angular';
 
-import { HomePage } from '../home/home';
 
 import { IonicPage, Tabs, Events, NavController, Platform } from 'ionic-angular'
 
@@ -28,7 +20,7 @@ export class TabsPage {
   tab4Root = 'DashboardPage';
   tab5Root = 'ContactPage';
 
-  constructor(private authProvider: AuthProvider, public events: Events, public deeplinks: Deeplinks, 
+  constructor(public events: Events, public deeplinks: Deeplinks,
     public navCtrl: NavController, public platform: Platform, public modalCtrl: ModalController) {
     events.subscribe('tabs:select', (newTab) => {
       // let other parts of the app tell us when a new tab is needed
@@ -42,10 +34,9 @@ export class TabsPage {
 
     });
 
-    authProvider.getUser();       // just trigger it to init
 
     console.log("setting up deeplinks in tabs");
-    
+
 
     this.platform.ready().then(() => {
       /*
@@ -64,21 +55,50 @@ export class TabsPage {
       Successfully routed {"$link":{"path":"/crwp","queryString":"","fragment":"","host":"nn4wp.app.goo.gl","url":"https://nn4wp.app.goo.gl/crwp","scheme":"https"}}
       */
       console.log("Environment is: " + ENV.mode);
-     
-     
+      /*
+            this.deeplinks.route({
+              '/settings': 'SettingsPage',
+      
+              '/return': 'BrowsePage'
+            }).subscribe((match) => {
+              // match.$route - the route we matched, which is the matched entry from the arguments to route()
+              // match.$args - the args passed in the link
+              // match.$link - the full link data
+              console.log('Successfully routed route:' + match.$route, JSON.stringify(match));
+      
+              //var result: any = this.parseUri( match.url.$link);
+              //console.log("Parsed URI looks like: " + JSON.stringify(result.queryParams));
+              if (match.$args) {
+                console.log("Args are: " + JSON.stringify(match.$args));
+              }
+            }, (nomatch) => {
+              // nomatch.$link - the full link data
+              console.error('Got a deeplink that didn\'t match', JSON.stringify(nomatch));
+            });
+      
+      */
       // Convenience to route with a given nav
+
       this.deeplinks.routeWithNavController(this.navCtrl, {
-        '/settings': SettingsPage,
+        '/settings': 'SettingsPage',
         //'/universal-links-test': BrowsePage,
-        '/products/:productId': BrowsePage
+        '/fred': 'BrowsePage'
       }).subscribe((match: any) => {
-        console.log('Successfully routed', JSON.stringify(match));
+        console.log('Successfully routed route:' + match.$route, JSON.stringify(match));
+
         
-        var result: any = this.parseUri( match.url.$link);
-        console.log("Parsed URI looks like: " + JSON.stringify(result.queryParams));
+        if (match.$args) {
+          console.log("Args are: " + JSON.stringify(match.$args));
+        }
+        else {
+          var result: any = this.parseUri( match.$link.url);
+          console.log("Parsed URI looks like: " + JSON.stringify(result.queryParams));
+        
+        }
       }, (nomatch) => {
         console.warn('Unmatched Route', JSON.stringify(nomatch));
       });
+
     })
 
   }
@@ -143,16 +163,16 @@ export class TabsPage {
       if (data.canceled) {
         var error: any = new Error('User canceled');
         error.canceled = true;
-        this.events.publish("modelDismissed:AddStripeCcPage", { canceled : true})
+        this.events.publish("modelDismissed:AddStripeCcPage", { canceled: true })
       } else
-        
-        this.events.publish("modelDismissed:AddStripeCcPage", { data : data.newPaymethod})
+
+        this.events.publish("modelDismissed:AddStripeCcPage", { data: data.newPaymethod })
     });
     addPayMethod.present();
   }
   ionViewDidEnter() {
     //this.tabRef.select(1);
-    
+
   }
 
   ionViewDidLoad() {
