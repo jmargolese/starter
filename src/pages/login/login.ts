@@ -1,3 +1,4 @@
+import { UserProfile, UserContactPrefs } from './../../interfaces/interfaces.d';
 import { AlertProvider } from './../../providers/alert/alert';
 import { UserProvider } from './../../providers/user/user';
 import { AuthProvider } from './../../providers/auth/auth';
@@ -6,6 +7,7 @@ import { IonicPage, NavController, NavParams, ToastController, ViewController, A
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ViewChild } from '@angular/core';
 import { Slides } from 'ionic-angular';
+import * as shareTypes from '../../interfaces/interfaces';
 
 /**
  * Generated class for the LoginPage page.
@@ -29,19 +31,19 @@ export class LoginPage {
 
   public errorMessage: string = "";
 
-  
 
 
-// seemds to be a bug where checkbox can't read an object
+
+  // seemds to be a bug where checkbox can't read an object
   public emailForLikes: true;
   public emailForGeneral: true;
 
   public explainMessage: string = "";
 
   public submitAttempt: boolean = false;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, 
-    public auth: AuthProvider, public toastCtrl: ToastController, public viewCtrl: ViewController, 
-  public alert: AlertProvider, public alertCtrl: AlertController, public userProvider: UserProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder,
+    public auth: AuthProvider, public toastCtrl: ToastController, public viewCtrl: ViewController,
+    public alert: AlertProvider, public alertCtrl: AlertController, public userProvider: UserProvider) {
 
 
     this.explainMessage = navParams.get('message');
@@ -191,37 +193,31 @@ export class LoginPage {
       this.errorMessage = "Please correct errors and try again";
     } else {
 
+      let profile: shareTypes.UserProfile = {
+        name: {
+          first: this.createForm.value.firstName,
+          last: this.createForm.value.lastName,
+        },
+        email: this.createForm.value.email,
+        phoneNumber: ""
+      };
 
-      this.auth.createAccount(this.createForm.value.email, this.createForm.value.passcode)
+      let contactPrefs: shareTypes.UserContactPrefs = {
+        emailForGeneral: this.emailForGeneral ? true : false,
+        emailForLikes: this.emailForLikes ? true : false
+      };
+      this.userProvider.createAccount(this.createForm.value.email, this.createForm.value.passcode, profile, contactPrefs)
         .then((user) => {
           console.log('created user account ');
 
-          this.userProvider.createNewUser({
-            email: this.createForm.value.email,
-            firstName: this.createForm.value.firstName,
-            lastName: this.createForm.value.lastName,
-            contactPrefs: { 
-              emailForLikes: this.emailForLikes ? true : false,
-              emailForGeneral: this.emailForGeneral ? true : false}
-          })
-            .then(() => {
-              this.viewCtrl.dismiss({ loggedIn: true, error: false, canceled: false });
-              this.presentToast("Your account has been created!");
-              this.submitAttempt = false;
-            })
-            .catch(error => {
-              console.error("Error trying save user info after creating new account in login: " + error.message);
-              this.errorMessage = "";
-              // the account was created, so login works, we'll need a way to recover the user info later when this happens
-              // should create the user record from the auth trigger and then we can update it at our leisure
-            })
-
-
+          this.viewCtrl.dismiss({ loggedIn: true, error: false, canceled: false });
+          this.presentToast("Your account has been created!");
+          this.submitAttempt = false;
         })
         .catch(error => {
           let errorCode = error.code;
-          let errorMessage = error.message;
-          let displayErrorMessage : string = "";
+          // let errorMessage = error.message;
+          let displayErrorMessage: string = "";
 
           if (errorCode == 'auth/weak-password') {
             displayErrorMessage = "Please try again with a stronger passcode (at least six characters)";
@@ -234,27 +230,25 @@ export class LoginPage {
           }
 
           if (displayErrorMessage)
-            this.alert.confirm({ title: "Error", message: displayErrorMessage, buttons: { ok: true, cancel: false} });
+            this.alert.confirm({ title: "Error", message: displayErrorMessage, buttons: { ok: true, cancel: false } });
 
           this.submitAttempt = false;
 
-        })
-
-
-      console.log("Form submitted!");
-    }
+        });
+       
   }
+}
   public loginFacebook() {
-    this.clearExplainMessage();
-    console.log("Going to login with facebook!");
-    this.auth.loginFacebook()
-      .then(user => {
-        console.log("logged into facebook");
-      })
-      .catch(error => {
-        console.error("Error logging in to facebook");
-        this.errorMessage = "Something went wrong, please try again";
-      })
-  }
+  this.clearExplainMessage();
+  console.log("Going to login with facebook!");
+  this.auth.loginFacebook()
+    .then(user => {
+      console.log("logged into facebook");
+    })
+    .catch(error => {
+      console.error("Error logging in to facebook");
+      this.errorMessage = "Something went wrong, please try again";
+    })
+}
 
 }

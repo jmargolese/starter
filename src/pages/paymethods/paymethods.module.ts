@@ -1,4 +1,3 @@
-import { AddStripeCcPage } from './../add-stripe-cc/add-stripe-cc';
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { PaymethodsPage } from './paymethods';

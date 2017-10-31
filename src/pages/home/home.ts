@@ -1,11 +1,8 @@
-import { OrgHomePage } from './../org-home/org-home';
 import { UserProvider } from './../../providers/user/user';
-import { Component, ViewChild, ChangeDetectorRef, ViewChildren, QueryList } from '@angular/core';
+import { Component, ViewChild, ViewChildren, QueryList } from '@angular/core';
 
 import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
-import { AngularFirestoreCollection } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
 
 
 
@@ -29,28 +26,19 @@ export class HomePage {
 
   @ViewChildren('orgSlides') activeOrgs: QueryList<any>;
   public organizations$: Observable<any[]>;
-  private organizationsCollection: AngularFirestoreCollection<any>;
+  
 
   public showNextButton: boolean = false;
   public showPrevButton: boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public userProvider: UserProvider,
-    private changeDetectorRef: ChangeDetectorRef) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public userProvider: UserProvider) {
 
-
-
-
-    /* this.organizations = db.collection('organizations').valueChanges();
-
-    this.organizations.subscribe(snapshot => {
-      console.log("organization snapshow: " + JSON.stringify(snapshot))
-    }) */
 
   }
 
   public onSearchInput(event: any): void {
 
-    let val = event.target.value;
+    //let val = event.target.value;
 
     //console.log("onSearchInput called with:  " + val);
   }

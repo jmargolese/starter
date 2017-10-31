@@ -1,6 +1,3 @@
-import { PaymethodsPage } from './../paymethods/paymethods';
-import { LoginPage } from './../login/login';
-import { SettingsProfilePage } from './../settings-profile/settings-profile';
 import { AuthProvider } from './../../providers/auth/auth';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, ModalController } from 'ionic-angular';
@@ -79,22 +76,26 @@ export class SettingsPage {
   }
 
   private setEnvInfo() {
+    var entries = [];
+    entries.push({
+      'title': 'Version: ' + this.versionCode,
+      'textOnly': true,
+    })
+    // we don't tell end-users that it's 'production'
+    if (ENV.mode.toLowerCase() != 'production')
+      entries.push({
+        'title': 'Environment: ' + ENV.mode,
+        'textOnly': true,
+      });
+    entries.push(
+      {
+        'title': 'View tutorial',
+        'callback': 'tutorial',
+      }
+    )
     this.config.push({
       'sectionTitle': 'About',
-      'entries': [
-        {
-          'title': 'Version: ' + this.versionCode,
-          'textOnly': true,
-        },
-        {
-          'title': 'Environment: '+ENV.mode,
-          'textOnly': true,
-        },
-        {
-          'title': 'View tutorial',
-          'callback': 'tutorial',
-        },
-      ],
+      'entries': entries,
     })
   }
 

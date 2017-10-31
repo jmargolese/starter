@@ -1,11 +1,8 @@
 import { OrganizationProvider } from './../../providers/organization/organization';
-import { AuthProvider } from './../../providers/auth/auth';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
 
 //import { ENV } from '@app/env';
 
@@ -26,7 +23,6 @@ export interface Organization { };
 export class BrowsePage {
 
   public organizations: Observable<any[]>;
-  private organizationsCollection: AngularFirestoreCollection<any>;
   public title: string = "Discover";
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public orgProvider: OrganizationProvider) {

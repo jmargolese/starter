@@ -4,7 +4,7 @@ import { Stripe } from '@ionic-native/stripe';
 
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { IonicApp, IonicModule } from 'ionic-angular';
 import { Share } from './app.component';
 
 

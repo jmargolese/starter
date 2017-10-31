@@ -77,7 +77,7 @@ export class DataProvider {
         const recordId = a.payload.doc.id;
         //console.log("Here's the data: " + JSON.stringify(data.donor.id) + " equal? " + (id == data.donor.id ? true : false));
         //console.log("Here's the id for collection: " + collection + ": " + JSON.stringify(recordId));
-        return { id, ...data };
+        return {recordId, ...data };
       }, error => {
         console.error("Error in data:getDonationRecords for collection/id: " + collection + '/' + id + ": " + error.message);
       })

@@ -1,6 +1,5 @@
 
 import { ModalController, Events } from 'ionic-angular';
-import { LoginPage } from './../../pages/login/login';
 
 import { Injectable } from '@angular/core';
 import Raven from 'raven-js';
@@ -166,10 +165,11 @@ export class AuthProvider {
           this.updateCurrentUser(user)
             .then(curUser => {
               Raven.setUserContext({
-                email: this.currentUser.email,
-                id: this.currentUser.uid
+                email: user.email,
+                id: user.uid
               });
               resolve(user);
+
             })
 
         })
@@ -203,21 +203,20 @@ export class AuthProvider {
     return promise;
   }
 
-  public createAccount(email, passcode) {
+  public createAccount(email, passcode): Promise<firebase.User> {
+
     let promise = new Promise((resolve, reject) => {
       firebase.auth().createUserWithEmailAndPassword(email, passcode)
         .then(user => {
-          console.log("Created new user with email: " + email);
-          this.updateCurrentUser(user)
-            .then(user => {
-              Raven.setUserContext({
-                email: this.currentUser.email,
-                id: this.currentUser.uid
-              })
-              resolve(user);
-            })
+          console.log("Created new user with email: " + user.email);
 
+          Raven.setUserContext({
+            email: user.email,
+            id: user.uid
+          });
+          resolve(user);
         })
+
         .catch(function (error) {
           // Handle Errors here.
 
@@ -226,7 +225,8 @@ export class AuthProvider {
         });
     });
 
-    return promise;
+    return promise as Promise<firebase.User>;
+
   }
 
   public updatePasscode(currentPasscode: string, newPasscode: string): Promise<any> {
@@ -283,7 +283,7 @@ export class AuthProvider {
       firebase.auth().signInWithPopup(provider)
         .then(function (result) {
           // This gives you a Facebook Access Token.
-          var token = result.credential.accessToken;
+          // var token = result.credential.accessToken;
           // The signed-in user info.
           var user = result.user;
 

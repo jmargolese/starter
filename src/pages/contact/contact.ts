@@ -9,8 +9,7 @@ import { NavController , ModalController, IonicPage} from 'ionic-angular';
 import { orgSeeds } from '../../seeds/seedOrganizations';
 
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
+
 
 // providers
 import { AuthProvider } from './../../providers/auth/auth';

@@ -1,5 +1,4 @@
 import { NavController } from 'ionic-angular';
-import { OrgHomePage } from './../../pages/org-home/org-home';
 import { Component, Input } from '@angular/core';
 
 

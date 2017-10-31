@@ -1,4 +1,3 @@
-import { AddStripeCcPage } from './../add-stripe-cc/add-stripe-cc';
 import { PaymethodsProvider } from './../../providers/paymethods/paymethods';
 import { UserProvider } from './../../providers/user/user';
 import { Component } from '@angular/core';

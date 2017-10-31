@@ -71,7 +71,7 @@ export class ActionButtonComponent {
 
     this.auth.getAuthenticatedUser("You need to login to do that")
       .then(() => {
-        var profile = this.userProvider.getUserProfile();
+       
         this.userProvider.toggleAddToHome(id, onlyTurnOn)
           .then(() => {
             console.log("ActionButton:Toggle addToHome suceeded");

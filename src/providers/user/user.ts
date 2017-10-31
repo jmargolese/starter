@@ -6,13 +6,11 @@ import { Injectable } from '@angular/core';
 //import 'rxjs/add/operator/catch';
 //import { of } from 'rxjs/observable/of';
 import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
 
 import * as firebase from 'firebase/app';
 
 import * as shareTypes from '../../interfaces/interfaces';
 
-import * as chalk from 'chalk';
 
 
 /*
@@ -112,7 +110,7 @@ export class UserProvider {
 
   public getFavoriteOrganizations(): Observable<any> {
     this.organizationLikes = [];   // reset before we work
-    let orgSubject: Subject<any> = new Subject;
+    //let orgSubject: Subject<any> = new Subject;
 
 
     if (this.currentUser && this.currentUser.favorites && this.currentUser.favorites.organizations) {
@@ -157,24 +155,9 @@ export class UserProvider {
       "organization": "orgChadTough"
   }
   */
-  public createNewUser(userInfo: {
-    email: string,
-    firstName: string,
-    lastName: string,
-    contactPrefs: {
-      emailForLikes: boolean,
-      emailForGeneral: boolean
-    }
-  }): Promise<any> {
+  public createNewUser(uid: string, profile: shareTypes.UserProfile, contactPrefs: shareTypes.UserContactPrefs): Promise<shareTypes.User> {
     let newUser: shareTypes.User = <shareTypes.User>{};
-    newUser.profile = {
-      name: {
-        first: userInfo.firstName,
-        last: userInfo.lastName,
-      },
-      email: userInfo.email,
-      phoneNumber: ""            // this is really a dupe of what's in the auth record, but used here for convenience
-    }
+    newUser.profile = profile;
 
     newUser.info = {
       isDemo: false,
@@ -183,20 +166,13 @@ export class UserProvider {
     }
 
     newUser.organization = null;
-    newUser.contactPrefs = <shareTypes.UserContactPrefs>{
-      emailForGeneral: userInfo.contactPrefs.emailForGeneral,
-      emailForLikes: userInfo.contactPrefs.emailForLikes
-    };
-
-
-
-
+    newUser.contactPrefs = contactPrefs;
 
     return new Promise((resolve, reject) => {
-      this.db.createDocument('users', this.currentAuthUser.uid, newUser)
+      this.db.createDocument('users', uid, newUser)
         .then(() => {
           this.currentUser = newUser;
-          resolve();
+          resolve(newUser);
         })
         .catch(error => {
           console.log("Error creating new user in userProvider: " + error.message);
@@ -215,7 +191,7 @@ export class UserProvider {
     console.log("User: updateUserInfo called with user: " + (this.currentAuthUser ? this.currentAuthUser.uid : "curentAuthUser is null"));
 
     if (this.userInfoPromise && this.promisePending) {
-      console.log(chalk.blue("returning existing promise in updateUserInfo"));
+      console.log("returning existing promise in updateUserInfo");
       return this.userInfoPromise;
     } else {
       this.userInfoPromise = new Promise((resolve, reject) => {
@@ -294,7 +270,27 @@ export class UserProvider {
 
   // actions **********************************************
 
-  public login(email: string, password: string): Promise<shareTypes.User> {
+  public createAccount(email: string, password: string, profile: shareTypes.UserProfile, contactInfo: shareTypes.UserContactPrefs) : Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.auth.createAccount(email, password)
+      .then(authUser => {
+        this.createNewUser(authUser.uid, profile, contactInfo)
+        .then(user => {
+          this.updateUserInfo(authUser)
+          .then((user) => {
+            resolve(user);
+          })
+          
+        })
+      })
+      .catch(error => { 
+        console.error("Error in user:createAccount: " + error.message);
+        reject(error);
+      })
+    });
+  }
+
+  public login(email: string, password: string, profile: shareTypes.UserProfile): Promise<shareTypes.User> {
 
     return new Promise((resolve, reject) => {
       this.auth.login(email, password)

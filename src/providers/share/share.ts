@@ -1,6 +1,5 @@
 import { DataProvider } from './../data/data';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
-import { PayMethod } from './../../interfaces/interfaces.d';
 import { OrganizationProvider } from './../organization/organization';
 import { AlertProvider } from './../alert/alert';
 import { UserProvider } from './../user/user';
