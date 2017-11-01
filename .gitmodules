@@ -1,0 +1,6 @@
+[submodule "src/share-common-components"]
+	path = src/share-common-components
+	url = https://github.com/stansongman/share-common-components.git
+[submodule "src/share-common-providers"]
+	path = src/share-common-providers
+	url = https://github.com/stansongman/share-common-providers.git
