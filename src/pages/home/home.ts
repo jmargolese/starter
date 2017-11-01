@@ -1,4 +1,4 @@
-import { UserProvider } from './../../providers/user/user';
+import { UserProvider } from './../../share-common-providers/user/user';
 import { Component, ViewChild, ViewChildren, QueryList } from '@angular/core';
 
 import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';

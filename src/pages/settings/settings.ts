@@ -1,4 +1,4 @@
-import { AuthProvider } from './../../providers/auth/auth';
+import { AuthProvider } from './../../share-common-providers/auth/auth';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, ModalController } from 'ionic-angular';
 import { ToastController, Events } from 'ionic-angular';

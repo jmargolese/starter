@@ -1,8 +1,8 @@
-import { AlertProvider } from './../../providers/alert/alert';
-import { ShareProvider } from './../../providers/share/share';
+import { AlertProvider } from './../../share-common-providers/alert/alert';
+import { ShareProvider } from './../../share-common-providers/share/share';
 import { ToastController, Events } from 'ionic-angular';
-import { AuthProvider } from './../../providers/auth/auth';
-import { UserProvider } from './../../providers/user/user';
+import { AuthProvider } from './../../share-common-providers/auth/auth';
+import { UserProvider } from './../../share-common-providers/user/user';
 import { Component, Input } from '@angular/core';
 
 import { SocialSharing } from '@ionic-native/social-sharing';

@@ -1,7 +1,7 @@
 import { UserProfile, UserContactPrefs } from './../../interfaces/interfaces.d';
-import { AlertProvider } from './../../providers/alert/alert';
-import { UserProvider } from './../../providers/user/user';
-import { AuthProvider } from './../../providers/auth/auth';
+import { AlertProvider } from './../../share-common-providers/alert/alert';
+import { UserProvider } from './../../share-common-providers/user/user';
+import { AuthProvider } from './../../share-common-providers/auth/auth';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController, ViewController, AlertController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';

@@ -1,4 +1,4 @@
-import { OrganizationProvider } from './../../providers/organization/organization';
+import { OrganizationProvider } from './../../share-common-providers/organization/organization';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 

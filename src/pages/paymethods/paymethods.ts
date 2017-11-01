@@ -1,5 +1,5 @@
-import { PaymethodsProvider } from './../../providers/paymethods/paymethods';
-import { UserProvider } from './../../providers/user/user';
+import { PaymethodsProvider } from './../../share-common-providers/paymethods/paymethods';
+import { UserProvider } from './../../share-common-providers/user/user';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 

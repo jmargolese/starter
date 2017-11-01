@@ -12,7 +12,7 @@ import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/fires
 
 
 // providers
-import { AuthProvider } from './../../providers/auth/auth';
+import { AuthProvider } from './../../share-common-providers/auth/auth';
 
 @IonicPage()
 @Component({

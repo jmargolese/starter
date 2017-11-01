@@ -19,19 +19,19 @@ import { ENV } from '@app/env';
 
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from 'angularfire2/auth';
-import { AuthProvider } from '../providers/auth/auth';
-import { DataProvider } from '../providers/data/data';
-import { OrganizationProvider } from '../providers/organization/organization';
-import { UserProvider } from '../providers/user/user';
-import { ActivitiesProvider } from '../providers/activities/activities';
+import { AuthProvider } from '../share-common-providers/auth/auth';
+import { DataProvider } from '../share-common-providers/data/data';
+import { OrganizationProvider } from '../share-common-providers/organization/organization';
+import { UserProvider } from '../share-common-providers/user/user';
+import { ActivitiesProvider } from '../share-common-providers/activities/activities';
 
 
 import { SocialSharing } from '@ionic-native/social-sharing';
-import { PaymethodsProvider } from '../providers/paymethods/paymethods';
-import { ShareProvider } from '../providers/share/share';
-import { AlertProvider } from '../providers/alert/alert';
+import { PaymethodsProvider } from '../share-common-providers/paymethods/paymethods';
+import { ShareProvider } from '../share-common-providers/share/share';
+import { AlertProvider } from '../share-common-providers/alert/alert';
 
-//import { TestProvider } from '../../../common/src/modules/providers/test';
+//import { TestProvider } from '../../../common/src/modules/share-common-providers/test';
 
 import { SentryErrorHandler} from '../services/sentry-errorhandler';
 
