@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.ipaymyway.share" version="1.3.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.ipaymyway.share" version="1.3.05" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Share</name>
     <description>The mobile way to donate</description>
     <author email="support@ipaymyway.com" href="http://getshare.mobi">IPayMyWay Team</author>
@@ -95,4 +95,5 @@
         <variable name="ANDROID_PATH_PREFIX" value="/" />
     </plugin>
     <plugin name="cordova-plugin-stripe" spec="^1.5.3" />
+    <plugin name="cordova-ios-export-compliance" spec="^1.0.2" />
 </widget>

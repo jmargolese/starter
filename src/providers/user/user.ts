@@ -290,7 +290,7 @@ export class UserProvider {
     });
   }
 
-  public login(email: string, password: string, profile: shareTypes.UserProfile): Promise<shareTypes.User> {
+  public login(email: string, password: string): Promise<shareTypes.User> {
 
     return new Promise((resolve, reject) => {
       this.auth.login(email, password)
