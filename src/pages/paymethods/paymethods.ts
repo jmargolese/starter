@@ -1,4 +1,5 @@
-import { PaymethodsProvider } from './../../share-common-providers/paymethods/paymethods';
+import { AnalyticsProvider } from '../../share-common-providers/analytics/analytics';
+import { PaymethodsProvider } from '../../share-common-providers/paymethods/paymethods';
 import { UserProvider } from './../../share-common-providers/user/user';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
@@ -15,9 +16,14 @@ export class PaymethodsPage {
 
   public paymethods: shareTypes.PayMethod[];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public userProvider : UserProvider, public paymethodProvider: PaymethodsProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public userProvider : UserProvider, 
+     public analytics: AnalyticsProvider, public paymethodProvider: PaymethodsProvider) {
       
     
+  }
+
+  ionViewDidEnter() {
+    this.analytics.setCurrentScreen('BrowsePage');
   }
 
   ionViewWillEnter() {

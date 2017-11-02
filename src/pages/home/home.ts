@@ -1,3 +1,4 @@
+import { AnalyticsProvider } from './../../share-common-providers/analytics/analytics';
 import { UserProvider } from './../../share-common-providers/user/user';
 import { Component, ViewChild, ViewChildren, QueryList } from '@angular/core';
 
@@ -31,7 +32,7 @@ export class HomePage {
   public showNextButton: boolean = false;
   public showPrevButton: boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public userProvider: UserProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public userProvider: UserProvider, public analytics: AnalyticsProvider) {
 
 
   }
@@ -64,6 +65,11 @@ export class HomePage {
       })
    
   }
+
+  ionViewDidEnter() {
+    this.analytics.setCurrentScreen('BrowsePage');
+  }
+
 
   ngAfterViewInit() {
     //https://stackoverflow.com/questions/37087864/execute-a-function-when-ngfor-finished-in-angular-2

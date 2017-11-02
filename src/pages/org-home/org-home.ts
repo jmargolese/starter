@@ -1,4 +1,5 @@
-import { ActivitiesProvider } from './../../share-common-providers/activities/activities';
+import { AnalyticsProvider } from '../../share-common-providers/analytics/analytics';
+import { ActivitiesProvider } from '../../share-common-providers/activities/activities';
 
 import { Observable } from 'rxjs/Observable';
 //import { ActivitiesProvider } from '../../../../common/src/share-common-providers/activities';
@@ -21,7 +22,7 @@ export class OrgHomePage {
   
  public hideHeader: boolean = true;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public activitiesProvider: ActivitiesProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public activitiesProvider: ActivitiesProvider, public analytics:AnalyticsProvider) {
     
      if (navParams.get('showHeader')){
         this.hideHeader = false;
@@ -35,6 +36,10 @@ export class OrgHomePage {
        console.error("Query got an error: " + error.message);
      }) */
 
+  }
+
+  ionViewDidEnter() {
+    this.analytics.setCurrentScreen('BrowsePage');
   }
 
   ionViewDidLoad() {

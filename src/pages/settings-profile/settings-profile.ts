@@ -1,3 +1,4 @@
+import { AnalyticsProvider } from '../../share-common-providers/analytics/analytics';
 import { UserProvider } from './../../share-common-providers/user/user';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
@@ -27,7 +28,8 @@ export class SettingsProfilePage {
  public submitAttempt : boolean = false;
  public isError : boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public userProvider: UserProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, 
+    public analytics: AnalyticsProvider, public userProvider: UserProvider) {
 
     this.userProfile = userProvider.getUserProfile();
 
@@ -38,6 +40,9 @@ export class SettingsProfilePage {
   });
   }
 
+  ionViewDidEnter() {
+    this.analytics.setCurrentScreen('BrowsePage');
+  }
   ionViewDidLoad() {
     console.log('ionViewDidLoad SettingsProfilePage');
   }

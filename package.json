@@ -37,6 +37,7 @@
     "@ionic-native/app-version": "^4.3.2",
     "@ionic-native/core": "4.3.0",
     "@ionic-native/deeplinks": "^4.3.2",
+    "@ionic-native/firebase-analytics": "^4.3.3",
     "@ionic-native/firebase-dynamic-links": "^4.3.2",
     "@ionic-native/in-app-browser": "^4.3.2",
     "@ionic-native/social-sharing": "^4.3.2",
@@ -49,6 +50,7 @@
     "cordova-ios-export-compliance": "^1.0.2",
     "cordova-plugin-app-version": "^0.1.9",
     "cordova-plugin-device": "^1.1.6",
+    "cordova-plugin-firebase-analytics": "^0.11.0",
     "cordova-plugin-inappbrowser": "^1.7.1",
     "cordova-plugin-ionic-webview": "^1.1.16",
     "cordova-plugin-splashscreen": "^4.0.3",
@@ -109,7 +111,8 @@
         "ANDROID_PATH_PREFIX": "/"
       },
       "cordova-plugin-stripe": {},
-      "cordova-ios-export-compliance": {}
+      "cordova-ios-export-compliance": {},
+      "cordova-plugin-firebase-analytics": {}
     },
     "platforms": [
       "ios"

@@ -1,3 +1,4 @@
+import { AnalyticsProvider } from './../../share-common-providers/analytics/analytics';
 import { UserProfile, UserContactPrefs } from './../../interfaces/interfaces.d';
 import { AlertProvider } from './../../share-common-providers/alert/alert';
 import { UserProvider } from './../../share-common-providers/user/user';
@@ -42,7 +43,7 @@ export class LoginPage {
 
   public submitAttempt: boolean = false;
   constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder,
-    public auth: AuthProvider, public toastCtrl: ToastController, public viewCtrl: ViewController,
+    public auth: AuthProvider, public toastCtrl: ToastController, public viewCtrl: ViewController, public analytics: AnalyticsProvider,
     public alert: AlertProvider, public alertCtrl: AlertController, public userProvider: UserProvider) {
 
 
@@ -80,6 +81,10 @@ export class LoginPage {
     console.log('ionViewDidLoad LoginPage');
     this.loginSlides.lockSwipes(true);
     //this.slides.slideTo(0,0);
+  }
+
+  ionViewDidEnter() {
+    this.analytics.setCurrentScreen('BrowsePage');
   }
 
   public clearExplainMessage() {

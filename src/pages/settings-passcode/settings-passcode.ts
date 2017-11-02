@@ -1,3 +1,4 @@
+import { AnalyticsProvider } from '../../share-common-providers/analytics/analytics';
 import { AuthProvider } from './../../share-common-providers/auth/auth';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
@@ -24,7 +25,8 @@ export class SettingsPasscodePage {
   public errorMessage: string = "Please correct errors and resubmit";
 
   public submitAttempt: boolean = false;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public auth: AuthProvider, public toastCtrl: ToastController, public alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public analytics: AnalyticsProvider,
+    public auth: AuthProvider, public toastCtrl: ToastController, public alertCtrl: AlertController) {
 
     this.profileForm = formBuilder.group({
       currentPasscode: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
@@ -32,6 +34,10 @@ export class SettingsPasscodePage {
       confirmPasscode: ['', Validators.compose([Validators.maxLength(30), Validators.required])]
 
     }, { validator: this.matchingPasswords('passcode', 'confirmPasscode') });
+  }
+
+  ionViewDidEnter() {
+    this.analytics.setCurrentScreen('BrowsePage');
   }
 
   private matchingPasswords(passwordKey: string, confirmPasswordKey: string) {

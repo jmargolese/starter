@@ -1,5 +1,6 @@
-import { UserProvider } from './../../share-common-providers/user/user';
-import { DataProvider } from './../../share-common-providers/data/data';
+import { AnalyticsProvider } from '../../share-common-providers/analytics/analytics';
+import { UserProvider } from '../../share-common-providers/user/user';
+import { DataProvider } from '../../share-common-providers/data/data';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
@@ -23,7 +24,7 @@ export class DashboardPage {
   public userHasOrganization: boolean = false;
   public showWhichDonations = "donations";
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public db: DataProvider, public userProvider: UserProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public db: DataProvider, public userProvider: UserProvider, public analytics: AnalyticsProvider) {
     // 
 
   }
@@ -41,6 +42,10 @@ export class DashboardPage {
 
     this.userHasOrganization = this.userProvider.userHasOrganization();
     this.updateDonations();
+  }
+
+  ionViewDidEnter() {
+    this.analytics.setCurrentScreen('BrowsePage');
   }
 
   public selectionChanged(event) {

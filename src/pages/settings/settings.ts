@@ -1,4 +1,5 @@
-import { AuthProvider } from './../../share-common-providers/auth/auth';
+import { AnalyticsProvider } from '../../share-common-providers/analytics/analytics';
+import { AuthProvider } from '../../share-common-providers/auth/auth';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, ModalController } from 'ionic-angular';
 import { ToastController, Events } from 'ionic-angular';
@@ -29,7 +30,7 @@ export class SettingsPage {
   public versionCode: string = "";
   public versionNumber: string = "";
 
-  constructor(public platform: Platform, public navCtrl: NavController, public modalCtrl: ModalController,
+  constructor(public platform: Platform, public navCtrl: NavController, public modalCtrl: ModalController, public analytics: AnalyticsProvider,
     public navParams: NavParams, public auth: AuthProvider, public toastCtrl: ToastController, public appVersion: AppVersion,
     public events: Events) {
     if (platform.is('cordova')) {
@@ -40,6 +41,10 @@ export class SettingsPage {
     } else {
       this.versionCode = "Browser";
     }
+  }
+
+  ionViewDidEnter() {
+    this.analytics.setCurrentScreen('BrowsePage');
   }
 
   public settingsCallback(action) {

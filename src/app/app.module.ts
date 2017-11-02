@@ -1,4 +1,4 @@
- import { FirebaseDynamicLinks }  from '@ionic-native/firebase-dynamic-links';
+import { FirebaseDynamicLinks }  from '@ionic-native/firebase-dynamic-links';
 import { Deeplinks } from '@ionic-native/deeplinks';
 import { Stripe } from '@ionic-native/stripe';
 
@@ -12,6 +12,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AppVersion } from '@ionic-native/app-version';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { FirebaseAnalytics } from '@ionic-native/firebase-analytics';
 
 
 import { AngularFireModule } from 'angularfire2';
@@ -24,6 +25,7 @@ import { DataProvider } from '../share-common-providers/data/data';
 import { OrganizationProvider } from '../share-common-providers/organization/organization';
 import { UserProvider } from '../share-common-providers/user/user';
 import { ActivitiesProvider } from '../share-common-providers/activities/activities';
+import { AnalyticsProvider } from '../share-common-providers/analytics/analytics';
 
 
 import { SocialSharing } from '@ionic-native/social-sharing';
@@ -71,8 +73,10 @@ import { SentryErrorHandler} from '../services/sentry-errorhandler';
     PaymethodsProvider,
     ShareProvider,
     AlertProvider,
+    AnalyticsProvider,
     InAppBrowser,
     FirebaseDynamicLinks,
+    FirebaseAnalytics,
     Deeplinks,
     Stripe,
    // TestProvider

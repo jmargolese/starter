@@ -1,4 +1,7 @@
-import { OrganizationProvider } from './../../share-common-providers/organization/organization';
+import { AnalyticsProvider } from '../../share-common-providers/analytics/analytics';
+
+import { OrganizationProvider } from '../../share-common-providers/organization/organization';
+
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
@@ -25,7 +28,7 @@ export class BrowsePage {
   public organizations: Observable<any[]>;
   public title: string = "Discover";
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public orgProvider: OrganizationProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public orgProvider: OrganizationProvider, public analytics: AnalyticsProvider) {
 
     // console.log("In browse.ts env: " + ENV.mode);
 
@@ -51,6 +54,10 @@ export class BrowsePage {
 
     console.log('ionViewDidLoad BrowsePage');
 
+  }
+
+  ionViewDidEnter() {
+    this.analytics.setCurrentScreen('BrowsePage');
   }
 
   toggleHome() {
