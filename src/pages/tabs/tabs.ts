@@ -1,3 +1,5 @@
+import { NotificationsProvider } from './../../share-common-providers/notifications/notifications';
+import { userDataSeeds } from './../../seeds/seedUserData';
 import { Component, ViewChild } from '@angular/core';
 import { Deeplinks } from '@ionic-native/deeplinks';
 import { ENV } from '@app/env';
@@ -20,20 +22,13 @@ export class TabsPage {
   tab4Root = 'DashboardPage';
   tab5Root = 'ContactPage';
 
-  constructor(public events: Events, public deeplinks: Deeplinks,
+  constructor(public events: Events, public deeplinks: Deeplinks,    public notifications: NotificationsProvider,
     public navCtrl: NavController, public platform: Platform, public modalCtrl: ModalController) {
-    events.subscribe('tabs:select', (newTab) => {
-      // let other parts of the app tell us when a new tab is needed
-      this.tabRef.select(newTab);
+    
+    
+      this.notifications.init();
 
-    });
-
-    events.subscribe('model:AddStripeCcPage', () => {
-      // let other parts of the app tell us when a modal needs to be display
-      this.showAddStripeCCModal();
-
-    });
-
+      this.subscribeToEvents();
 
     console.log("setting up deeplinks in tabs");
 
@@ -99,7 +94,34 @@ export class TabsPage {
         console.warn('Unmatched Route', JSON.stringify(nomatch));
       });
 
-    })
+
+     
+
+    }) // end platform ready
+
+  }
+
+  
+  private subscribeToEvents() {
+    // part of the init process
+
+    this.events.subscribe('tabs:select', (newTab) => {
+      // let other parts of the app tell us when a new tab is needed
+      this.tabRef.select(newTab);
+
+    });
+
+    this.events.subscribe('model:AddStripeCcPage', () => {
+      // let other parts of the app tell us when a modal needs to be display
+      this.showAddStripeCCModal();
+
+    });
+
+    this.events.subscribe('user:updated', () => {
+      // let other parts of the app tell us when a modal needs to be display
+      this.notifications.getCurrentToken();
+
+    });
 
   }
 

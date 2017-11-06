@@ -78,7 +78,7 @@
     </platform>
     <allow-navigation href="*" />
     <allow-navigation href="http://10.0.1.28:8100" />
-    <engine name="ios" spec="4.5.2" />
+    <engine name="ios" spec="4.5.3" />
     <plugin name="cordova-plugin-x-socialsharing" spec="^5.2.1" />
     <plugin name="cordova-plugin-device" spec="^1.1.6" />
     <plugin name="cordova-plugin-ionic-webview" spec="^1.1.16" />
@@ -97,4 +97,5 @@
     <plugin name="cordova-plugin-stripe" spec="^1.5.3" />
     <plugin name="cordova-ios-export-compliance" spec="^1.0.2" />
     <plugin name="cordova-plugin-firebase-analytics" spec="^0.11.0" />
+    <plugin name="cordova-plugin-fcm" spec="^2.1.2" />
 </widget>

@@ -34,4 +34,6 @@ $RECYCLE.BIN/
 Thumbs.db
 UserInterfaceState.xcuserstate
 **/envrionment.*
+**/environmnet.*.*
 !**/environment.model.ts
+src/environments.*

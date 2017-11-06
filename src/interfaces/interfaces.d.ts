@@ -25,7 +25,8 @@ export interface UserInfo {
 
     "isDemo": boolean,
     "isAdmin": boolean,
-    "isEnabled": boolean
+    "isEnabled": boolean,
+    "notificationToken" ?: string
 }
 
 export interface UserContactPrefs {

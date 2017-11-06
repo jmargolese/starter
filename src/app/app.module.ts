@@ -13,6 +13,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { AppVersion } from '@ionic-native/app-version';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { FirebaseAnalytics } from '@ionic-native/firebase-analytics';
+import { FCM } from '@ionic-native/fcm';
 
 
 import { AngularFireModule } from 'angularfire2';
@@ -36,6 +37,7 @@ import { AlertProvider } from '../share-common-providers/alert/alert';
 //import { TestProvider } from '../../../common/src/modules/share-common-providers/test';
 
 import { SentryErrorHandler} from '../services/sentry-errorhandler';
+import { NotificationsProvider } from '../share-common-providers/notifications/notifications';
 
 
 @NgModule({
@@ -79,6 +81,8 @@ import { SentryErrorHandler} from '../services/sentry-errorhandler';
     FirebaseAnalytics,
     Deeplinks,
     Stripe,
+    FCM,
+    NotificationsProvider
    // TestProvider
   ]
 })
