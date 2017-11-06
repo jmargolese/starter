@@ -1,4 +1,4 @@
-import { NotificationsProvider } from './../../share-common-providers/notifications/notifications';
+import { NotificationsProvider } from './../../share-common/providers/notifications/notifications';
 import { userDataSeeds } from './../../seeds/seedUserData';
 import { Component, ViewChild } from '@angular/core';
 import { Deeplinks } from '@ionic-native/deeplinks';

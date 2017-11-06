@@ -1,5 +1,5 @@
-import { AnalyticsProvider } from '../../share-common-providers/analytics/analytics';
-import { UserProvider } from './../../share-common-providers/user/user';
+import { AnalyticsProvider } from '../../share-common/providers/analytics/analytics';
+import { UserProvider } from './../../share-common/providers/user/user';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';

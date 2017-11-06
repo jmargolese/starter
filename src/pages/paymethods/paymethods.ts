@@ -1,10 +1,10 @@
-import { AnalyticsProvider } from '../../share-common-providers/analytics/analytics';
-import { PaymethodsProvider } from '../../share-common-providers/paymethods/paymethods';
-import { UserProvider } from './../../share-common-providers/user/user';
+import { AnalyticsProvider } from '../../share-common/providers/analytics/analytics';
+import { PaymethodsProvider } from '../../share-common/providers/paymethods/paymethods';
+import { UserProvider } from './../../share-common/providers/user/user';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-import * as shareTypes from '../../interfaces/interfaces';
+import * as shareTypes from '../../share-common/interfaces/interfaces';
 
 
 @IonicPage()

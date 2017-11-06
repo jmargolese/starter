@@ -1,14 +1,14 @@
-import { PaymethodsProvider } from './../../share-common-providers/paymethods/paymethods';
-import { AlertProvider } from './../../share-common-providers/alert/alert';
+import { PaymethodsProvider } from './../../share-common/providers/paymethods/paymethods';
+import { AlertProvider } from './../../share-common/providers/alert/alert';
 //import { Page } from './../../../e2e/app.po';
 
-import { UserProvider } from './../../share-common-providers/user/user';
+import { UserProvider } from './../../share-common/providers/user/user';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Stripe } from '@ionic-native/stripe';
 
-import * as shareTypes from '../../interfaces/interfaces';
+import * as shareTypes from '../../share-common/interfaces/interfaces';
 
 import { ENV } from '@app/env';
 

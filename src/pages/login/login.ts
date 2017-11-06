@@ -1,14 +1,14 @@
-import { AnalyticsProvider } from './../../share-common-providers/analytics/analytics';
-import { UserProfile, UserContactPrefs } from './../../interfaces/interfaces.d';
-import { AlertProvider } from './../../share-common-providers/alert/alert';
-import { UserProvider } from './../../share-common-providers/user/user';
-import { AuthProvider } from './../../share-common-providers/auth/auth';
+import { AnalyticsProvider } from '../../share-common/providers/analytics/analytics';
+import { UserProfile, UserContactPrefs } from './../../share-common/interfaces/interfaces.d';
+import { AlertProvider } from './../../share-common/providers/alert/alert';
+import { UserProvider } from './../../share-common/providers/user/user';
+import { AuthProvider } from './../../share-common/providers/auth/auth';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController, ViewController, AlertController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ViewChild } from '@angular/core';
 import { Slides } from 'ionic-angular';
-import * as shareTypes from '../../interfaces/interfaces';
+import * as shareTypes from '../../share-common/interfaces/interfaces';
 
 /**
  * Generated class for the LoginPage page.

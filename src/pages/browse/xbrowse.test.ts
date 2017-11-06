@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { IonicModule } from 'ionic-angular';
 import { Share } from '../../app/app.component';
-import { OrganizationProvider } from './../../share-common-providers/organization/organization';
+import { OrganizationProvider } from './../../share-common/providers/organization/organization';
 
  
 let comp: BrowsePage;

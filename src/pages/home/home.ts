@@ -1,5 +1,5 @@
-import { AnalyticsProvider } from './../../share-common-providers/analytics/analytics';
-import { UserProvider } from './../../share-common-providers/user/user';
+import { AnalyticsProvider } from './../../share-common/providers/analytics/analytics';
+import { UserProvider } from './../../share-common/providers/user/user';
 import { Component, ViewChild, ViewChildren, QueryList } from '@angular/core';
 
 import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';

@@ -1,8 +1,8 @@
-import { AnalyticsProvider } from '../../share-common-providers/analytics/analytics';
-import { ActivitiesProvider } from '../../share-common-providers/activities/activities';
+import { AnalyticsProvider } from '../../share-common/providers/analytics/analytics';
+import { ActivitiesProvider } from '../../share-common/providers/activities/activities';
 
 import { Observable } from 'rxjs/Observable';
-//import { ActivitiesProvider } from '../../../../common/src/share-common-providers/activities';
+//import { ActivitiesProvider } from '../../../../common/src/share-common/providers/activities';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 

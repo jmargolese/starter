@@ -1,6 +1,6 @@
-import { AnalyticsProvider } from '../../share-common-providers/analytics/analytics';
+import { AnalyticsProvider } from '../../share-common/providers/analytics/analytics';
 
-import { OrganizationProvider } from '../../share-common-providers/organization/organization';
+import { OrganizationProvider } from '../../share-common/providers/organization/organization';
 
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';

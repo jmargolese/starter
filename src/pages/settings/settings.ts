@@ -1,5 +1,5 @@
-import { AnalyticsProvider } from '../../share-common-providers/analytics/analytics';
-import { AuthProvider } from '../../share-common-providers/auth/auth';
+import { AnalyticsProvider } from '../../share-common/providers/analytics/analytics';
+import { AuthProvider } from '../../share-common/providers/auth/auth';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, ModalController } from 'ionic-angular';
 import { ToastController, Events } from 'ionic-angular';
