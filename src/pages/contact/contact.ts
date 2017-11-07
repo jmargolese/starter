@@ -1,4 +1,4 @@
-import { LoginPage } from './../login/login';
+import { LoginPage } from './../../share-common/pages/login/login';
 import { activitySeeds } from './../../seeds/seedActivities';
 import { userDataSeeds } from './../../seeds/seedUserData';
 import {  donationSeeds } from './../../seeds/seedDonations';
