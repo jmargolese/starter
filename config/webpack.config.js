@@ -1,7 +1,7 @@
 var chalk = require("chalk");
 var fs = require('fs');
 var path = require('path');
-var useDefaultConfig = require('@ionic/app-scripts/config/webpack.config.js');
+var useDefaultConfig = require('@ionic/app-scripts/config/webpack.config');
 
 var env = process.env.IONIC_ENV;
 
