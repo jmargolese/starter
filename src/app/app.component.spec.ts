@@ -30,7 +30,21 @@ describe('Share Component', () => {
     component = fixture.componentInstance;
   });
 
+  afterEach(() => {
+    fixture.destroy();
+    component = null;
+  });
+
   it ('should be created', () => {
     expect(component instanceof Share).toBe(true);
   });
+
+  it('is created', () => {
+    expect(fixture).toBeTruthy();
+    expect(component).toBeTruthy();
+  });
+
+  it('initializes with a root page of TabsPage', () => {
+    expect(component['rootPage']).toBe('TabsPage');
+  })
 });
