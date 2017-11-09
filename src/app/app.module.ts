@@ -35,7 +35,6 @@ import { ShareProvider } from '../share-common/providers/share/share';
 import { AlertProvider } from '../share-common/providers/alert/alert';
 
 //import { TestProvider } from '../../../common/src/modules/share-common/providers/test';
-
 import { SentryErrorHandler} from '../services/sentry-errorhandler';
 import { NotificationsProvider } from '../share-common/providers/notifications/notifications';
 
