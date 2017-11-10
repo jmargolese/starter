@@ -3,7 +3,7 @@ import { AnalyticsProvider } from './../../share-common/providers/analytics/anal
 import { UserProvider } from './../../share-common/providers/user/user';
 import { Component, ViewChild, ViewChildren, QueryList, NgZone } from '@angular/core';
 
-import { IonicPage, NavController, NavParams, Slides, Content, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Slides, Content, LoadingController, Events } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { setTimeout } from 'timers';
 
@@ -29,21 +29,28 @@ export class HomePage {
   public organizations$: Observable<any[]>;
   public organizations: shareTypes.Organization[];
   public currentOrganization: shareTypes.Organization;
-
+  public currentActivity;
+  
   public showNextButton: boolean = false;
   public showPrevButton: boolean = false;
   public showShareButton: boolean = true;
   public showNavButtons: boolean = true;
   private subscribedToSlideChanges: boolean = false;
   public orgsAreValid: boolean = false;
+  
 
   private loading;
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public userProvider: UserProvider,
-    public analytics: AnalyticsProvider, public zone: NgZone, public loadingCtrl: LoadingController) {
+    public analytics: AnalyticsProvider, public zone: NgZone, public loadingCtrl: LoadingController,
+    public events: Events) {
 
-
+      this.events.subscribe("activity:homeCurrentActivity", (activity) => {
+        // let other parts of the app tell us when a new tab is needed
+        this.currentActivity = activity;
+  
+      });
   }
 
   public onSearchInput(event: any): void {

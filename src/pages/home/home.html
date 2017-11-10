@@ -51,22 +51,9 @@
 
   </ion-slides>
 
-  <!-- <div class="nextButton" *ngIf="showNextButton" *ngIf="organizations && organizations?.length > 0">
-    <button ion-button icon-right color="light" (click)="next()">
-      Next
-      <ion-icon name="arrow-forward"></ion-icon>
-    </button>
-  </div>
-  <div class="prevButton" *ngIf="showPrevButton" *ngIf="organizations && organizations?.length > 0">
-      <button ion-button icon-left color="light" (click)="prev()">
-          <ion-icon name="arrow-back"></ion-icon>
-        Previous
-       
-      </button>
-    </div>
- -->
+
 
 
 </ion-content>
 <!-- <img *ngIf="showShareButton" src="assets/img/icons/icon-donate@x2.png" #fixedButtonName class="fixedButton"> -->
-<action-button class="fixedButton" [buttonToDisplay]="'roundDonate'" [organization]="currentOrganization" [activity]=""> </action-button>
+<action-button class="fixedButton" [buttonToDisplay]="'roundDonate'" [organization]="currentOrganization" [activity]="currentActivity"> </action-button>

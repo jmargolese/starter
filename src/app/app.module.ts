@@ -39,13 +39,13 @@ import { AlertProvider } from '../share-common/providers/alert/alert';
 import { SentryErrorHandler} from '../services/sentry-errorhandler';
 import { NotificationsProvider } from '../share-common/providers/notifications/notifications';
 
-import { ActionChoicesComponent } from './../share-common/components/action-choices/action-choices';
+
 
 @NgModule({
   declarations: [
-    Share,
-    ActionChoicesComponent
+    Share
     // components
+    
     
   ],
   imports: [
@@ -58,7 +58,6 @@ import { ActionChoicesComponent } from './../share-common/components/action-choi
   bootstrap: [IonicApp],
   entryComponents: [
     Share,
-    ActionChoicesComponent
     
   ],
   providers: [
