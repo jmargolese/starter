@@ -59,21 +59,25 @@ export interface Organization {
   "id" : string,         // db reference not stored in the object
   "companyName": string,
   "ein": string,
-  "shareuid":  string,
+  "shareuid" ?:  string,
   "images": {
       "image": string,
       "logo": string,
   },
   "social": {
-      "message": string,
-      "hashTags": string,
-      "subject": string,
+      "message" ?: string,
+      "hashTags"?: string,
+      "subject" ?: string,
   },
   "info": {
       "coreMessage": string,
       "isDemo": boolean,
       "description": string,
       "enabled": boolean
+  },
+  "uxPreferences": {
+      "titleFontColor" ?: string,
+      "backgroundColor" ?: string
   },
   "donationPrefs": number[],
   "payMethods": [

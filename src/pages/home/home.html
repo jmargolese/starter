@@ -1,35 +1,35 @@
-<!--
-  Generated template for the HomePage page.
+<ion-header [hidden]="true">
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<ion-header>
+  <ion-navbar *ngIf="true" swipeBackEnabled="true">
 
-    <ion-navbar *ngIf="true" swipeBackEnabled="true">
-        <ion-buttons start>
-            <button *ngIf="showPrevButton" (click)="prev()" ion-button color="primary" clear>
-               Previous
-            </button>
-          </ion-buttons>
-        <ion-title></ion-title>
-        <ion-buttons end>
-            <button *ngIf="showNextButton" (click)="next()" ion-button color="primary" clear>
-               Next
-            </button>
-          </ion-buttons>
-      </ion-navbar>
+    <ion-title></ion-title>
+
+  </ion-navbar>
 
 </ion-header>
 
+<div *ngIf="!thereAreNoOrgs" id="navButtonsContainer" class="imageOverlayGradient" style="position: relative; top: 0; width: 100vw; height: 30px; z-index: 998">
+  
+    <!-- <button  (click)="prev()" ion-button color="primary" clear> -->
+    <button  *ngIf="showPrevButton" (click)="prev()" ion-button color="white" clear class="navButtonOverlay" style="left: 0;">
+      <ion-icon name="arrow-back"></ion-icon>
+     
+    </button>
+   
+  
+    <button *ngIf="showNextButton" (click)="next()" ion-button color="white" clear class="navButtonOverlay" style="right: 0;">
+        <ion-icon name="arrow-forward"></ion-icon>
+    </button>
+  
+</div>
 
-<ion-content class="home-css">
-  <div *ngIf="(organizations$ | async)?.length == 0" class="infoCard">
+
+<ion-content #content class="home-css">
+  <div *ngIf="thereAreNoOrgs" class="infoCard">
     <ion-card>
       <ion-card-header>
-          <img class="logoImage" src="assets/img/share/Share_ICON-192x192px.png"/>
-           Discover!
-       
+        <img class="logoImage" src="assets/img/share/Share_ICON-192x192px.png" /> Discover!
+
       </ion-card-header>
       <ion-card-content>
         Tap the
@@ -39,8 +39,10 @@
     </ion-card>
   </div>
 
-  <ion-slides #orgSlides *ngIf="organizations$ && (organizations$ | async)?.length > 0" [centeredSlides]="false" [loop]="false" [pager]="true"  (ionSlideDidChange)="slideChanged()">
-    <ion-slide *ngFor="let organization of organizations$ | async">
+
+  <ion-slides #orgSlides *ngIf="organizations$ && (organizations$ | async)?.length > 0" [centeredSlides]="false" [loop]="false"
+    [pager]="true" (ionSlideDidChange)="slideChanged()">
+    <ion-slide #orgSlide *ngFor="let organization of organizations$ | async">
 
       <org-home [organization]='organization'> </org-home>
 
@@ -66,3 +68,4 @@
 
 
 </ion-content>
+<img *ngIf="showShareButton" src="assets/img/icons/icon-donate@x2.png" #fixedButtonName class="fixedButton">

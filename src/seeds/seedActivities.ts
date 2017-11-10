@@ -16,7 +16,7 @@ export const activitySeeds = [
                 "orgDescription": "Serving teens in Naperville"
             },
             "images": {
-                "image": null,
+                "image": "https://firebasestorage.googleapis.com/v0/b/share-75e74.appspot.com/o/seed%2Fgiving%20Tuesday.jpg?alt=media&token=639f9696-ab58-4a4c-b94b-84ade0d548dd",
                 "logo": null
             },
             "messages": {
@@ -189,7 +189,7 @@ export const activitySeeds = [
                 "orgDescription": "Rallying to cure pediatric brain cancer"
             },
             "images": {
-                "image": "https://firebasestorage.googleapis.com/v0/b/share-75e74.appspot.com/o/seed%2FGivingTuesdayLogo.png?alt=media&token=22777d9c-bed7-49e6-9938-1a6eb2d5acf9",
+                "image": "https://firebasestorage.googleapis.com/v0/b/share-75e74.appspot.com/o/seed%2Fgiving%20Tuesday.jpg?alt=media&token=639f9696-ab58-4a4c-b94b-84ade0d548dd",
                 "logo": null
             },
             "messages": {

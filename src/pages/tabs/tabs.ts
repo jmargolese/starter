@@ -14,6 +14,8 @@ import { IonicPage, Tabs, Events, NavController, Platform } from 'ionic-angular'
 })
 export class TabsPage {
 
+  private showDebugTab: boolean = false;
+
   @ViewChild('shareTabs') tabRef: Tabs;
 
   tab1Root = 'HomePage';
@@ -50,6 +52,7 @@ export class TabsPage {
       Successfully routed {"$link":{"path":"/crwp","queryString":"","fragment":"","host":"nn4wp.app.goo.gl","url":"https://nn4wp.app.goo.gl/crwp","scheme":"https"}}
       */
       console.log("Environment is: " + ENV.mode);
+      this.showDebugTab = ENV.mode.toLowerCase() != 'production';
       /*
             this.deeplinks.route({
               '/settings': 'SettingsPage',

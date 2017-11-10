@@ -25,5 +25,41 @@ page-home {
             top: 1vh;
             z-index: 999;
         }
+
+       
+
+        
     }   
+
+    $BAR_TOP: 	rgba(128,128,128,0.5);
+    $BAR_BOTTOM:rgba(128,128,128,0.05);
+    $BAR_TRANSPARENCY: rgba(255,255,255,0.1);
+    
+    
+
+    .imageOverlayGradient{
+        background: -webkit-gradient(left top, $BAR_TOP, $BAR_BOTTOM);
+        background: -o-linear-gradient(bottom right, $BAR_TOP, $BAR_BOTTOM);
+        background: -moz-linear-gradient(bottom right, $BAR_TOP, $BAR_BOTTOM);
+        background: linear-gradient(to bottom , $BAR_TOP, $BAR_BOTTOM);
+    }
+
+    .fixedButton {
+        position: absolute;
+        right: 1vw;;
+        top: 85vh;
+        z-index: 999;
+        max-width: 40px; 
+    }
+
+     .navButtonOverlay {
+        color: white; 
+        position: absolute; 
+       /* background-color: rgba(255,255,255,0.3); */
+        top: 0;
+        z-index: 1000;
+        position: absolute;
+        height: 1.5em;
+        font-size: 1.8em;
+    }
 }

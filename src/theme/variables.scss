@@ -6,6 +6,7 @@
 $font-path: "../assets/fonts";
 
 
+
 // The app direction is used to include
 // rtl styles in your app. For more info, please see:
 // http://ionicframework.com/docs/theming/rtl-support/
@@ -72,6 +73,7 @@ $colors: (
 
 @import "ionic.theme.default";
 
+$font-size-base: 1.0rem;  // default is 1.4 rem
 
 // Ionicons
 // --------------------------------------------------
