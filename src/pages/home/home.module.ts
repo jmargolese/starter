@@ -1,12 +1,19 @@
+import { ComponentsModule } from './../../share-common/components/components.module';
+
+
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { HomePage } from './home';
 
-import { ComponentsModule } from '../../share-common/components/components.module';
+
+
 
 @NgModule({
   declarations: [
-    HomePage,
+    HomePage
+  ],
+  entryComponents: [
+    
   ],
   imports: [
     ComponentsModule,

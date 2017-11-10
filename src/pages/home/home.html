@@ -8,7 +8,7 @@
 
 </ion-header>
 
-<div *ngIf="!thereAreNoOrgs" id="navButtonsContainer" class="imageOverlayGradient" style="position: relative; top: 0; width: 100vw; height: 30px; z-index: 998">
+<div *ngIf="showPrevButton || showNextButton" id="navButtonsContainer" class="imageOverlayGradient" style="position: relative; top: 0; width: 100vw; height: 30px; z-index: 998">
   
     <!-- <button  (click)="prev()" ion-button color="primary" clear> -->
     <button  *ngIf="showPrevButton" (click)="prev()" ion-button color="white" clear class="navButtonOverlay" style="left: 0;">
@@ -25,7 +25,7 @@
 
 
 <ion-content #content class="home-css">
-  <div *ngIf="thereAreNoOrgs" class="infoCard">
+  <div *ngIf="orgsAreValid && organizations && organizations?.length == 0" class="infoCard">
     <ion-card>
       <ion-card-header>
         <img class="logoImage" src="assets/img/share/Share_ICON-192x192px.png" /> Discover!
@@ -40,9 +40,9 @@
   </div>
 
 
-  <ion-slides #orgSlides *ngIf="organizations$ && (organizations$ | async)?.length > 0" [centeredSlides]="false" [loop]="false"
+  <ion-slides #orgSlides *ngIf="organizations && organizations?.length > 0" [centeredSlides]="false" [loop]="false"
     [pager]="true" (ionSlideDidChange)="slideChanged()">
-    <ion-slide #orgSlide *ngFor="let organization of organizations$ | async">
+    <ion-slide #orgSlide *ngFor="let organization of organizations; let i = index">
 
       <org-home [organization]='organization'> </org-home>
 
@@ -51,13 +51,13 @@
 
   </ion-slides>
 
-  <!-- <div class="nextButton" *ngIf="showNextButton" *ngIf="organizations && (organizations | async)?.length > 0">
+  <!-- <div class="nextButton" *ngIf="showNextButton" *ngIf="organizations && organizations?.length > 0">
     <button ion-button icon-right color="light" (click)="next()">
       Next
       <ion-icon name="arrow-forward"></ion-icon>
     </button>
   </div>
-  <div class="prevButton" *ngIf="showPrevButton" *ngIf="organizations && (organizations | async)?.length > 0">
+  <div class="prevButton" *ngIf="showPrevButton" *ngIf="organizations && organizations?.length > 0">
       <button ion-button icon-left color="light" (click)="prev()">
           <ion-icon name="arrow-back"></ion-icon>
         Previous
@@ -68,4 +68,5 @@
 
 
 </ion-content>
-<img *ngIf="showShareButton" src="assets/img/icons/icon-donate@x2.png" #fixedButtonName class="fixedButton">
+<!-- <img *ngIf="showShareButton" src="assets/img/icons/icon-donate@x2.png" #fixedButtonName class="fixedButton"> -->
+<action-button class="fixedButton" [buttonToDisplay]="'roundDonate'" [organization]="currentOrganization" [activity]=""> </action-button>

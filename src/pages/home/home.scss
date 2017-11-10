@@ -1,6 +1,10 @@
 page-home {
     ion-slides { height: initial; }
 
+    .loading-wrapper{
+        background-color:transparent;
+      }
+
     .home-css {
         .infoCard {
             margin-top: 25%;
@@ -31,12 +35,11 @@ page-home {
         
     }   
 
+    // to create the gradient
     $BAR_TOP: 	rgba(128,128,128,0.5);
     $BAR_BOTTOM:rgba(128,128,128,0.05);
     $BAR_TRANSPARENCY: rgba(255,255,255,0.1);
     
-    
-
     .imageOverlayGradient{
         background: -webkit-gradient(left top, $BAR_TOP, $BAR_BOTTOM);
         background: -o-linear-gradient(bottom right, $BAR_TOP, $BAR_BOTTOM);

@@ -1,3 +1,4 @@
+
 import { FirebaseDynamicLinks }  from '@ionic-native/firebase-dynamic-links';
 import { Deeplinks } from '@ionic-native/deeplinks';
 import { Stripe } from '@ionic-native/stripe';
@@ -38,12 +39,12 @@ import { AlertProvider } from '../share-common/providers/alert/alert';
 import { SentryErrorHandler} from '../services/sentry-errorhandler';
 import { NotificationsProvider } from '../share-common/providers/notifications/notifications';
 
+import { ActionChoicesComponent } from './../share-common/components/action-choices/action-choices';
 
 @NgModule({
   declarations: [
     Share,
-    
-
+    ActionChoicesComponent
     // components
     
   ],
@@ -57,7 +58,7 @@ import { NotificationsProvider } from '../share-common/providers/notifications/n
   bootstrap: [IonicApp],
   entryComponents: [
     Share,
-  
+    ActionChoicesComponent
     
   ],
   providers: [
