@@ -20,17 +20,17 @@ export interface Organization { };
 
 @IonicPage()
 @Component({
-  selector: 'page-browse',
-  templateUrl: 'browse.html',
+  selector: 'page-discover',
+  templateUrl: 'discover.html',
 })
-export class BrowsePage {
+export class DiscoverPage {
 
   public organizations: Observable<any[]>;
   public title: string = "Discover";
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public orgProvider: OrganizationProvider, public analytics: AnalyticsProvider) {
 
-    // console.log("In browse.ts env: " + ENV.mode);
+    // console.log("In discover.ts env: " + ENV.mode);
 
 
   }
@@ -52,12 +52,12 @@ export class BrowsePage {
   }
   ionViewDidLoad() {
 
-    console.log('ionViewDidLoad BrowsePage');
+    console.log('ionViewDidLoad discoverPage');
 
   }
 
   ionViewDidEnter() {
-    this.analytics.setCurrentScreen('BrowsePage');
+    this.analytics.setCurrentScreen('discoverPage');
   }
 
   toggleHome() {

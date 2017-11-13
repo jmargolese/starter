@@ -1,17 +1,15 @@
 page-org-home {
-  .org-home-css {
-
-    .orgImage {
-        max-height: 18vh;
-        width:auto;
-        margin-left: auto; 
-        margin-right: auto; 
-        display: block;
+    .org-home-css {
+        
     }
 
-    .coreMessage {
-        font-size: 85%;
-        padding: 3px 5px 0 5px
-    }
+    .orgAddToFavoritesButton {
+      position: absolute;
+      height: 20px;
+      left: 50%;
+      margin-left: -25%;
+      top: 83vh;
+      z-index: 999;
+      
   }
 }

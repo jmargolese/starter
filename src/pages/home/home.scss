@@ -47,13 +47,7 @@ page-home {
         background: linear-gradient(to bottom , $BAR_TOP, $BAR_BOTTOM);
     }
 
-    .fixedButton {
-        position: absolute;
-        right: 1vw;;
-        top: 85vh;
-        z-index: 999;
-        max-width: 40px; 
-    }
+   
 
      .navButtonOverlay {
         color: white; 

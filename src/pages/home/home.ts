@@ -29,7 +29,7 @@ export class HomePage {
   public organizations$: Observable<any[]>;
   public organizations: shareTypes.Organization[];
   public currentOrganization: shareTypes.Organization;
-  public currentActivity;
+  public currentActivity: shareTypes.Activity;
 
   public showNextButton: boolean = false;
   public showPrevButton: boolean = false;
@@ -119,7 +119,7 @@ export class HomePage {
   }
 
   ionViewDidEnter() {
-    this.analytics.setCurrentScreen('BrowsePage');
+    this.analytics.setCurrentScreen('Dashboard');
   }
 
 

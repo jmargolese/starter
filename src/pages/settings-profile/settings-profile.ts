@@ -41,7 +41,7 @@ export class SettingsProfilePage {
   }
 
   ionViewDidEnter() {
-    this.analytics.setCurrentScreen('BrowsePage');
+    this.analytics.setCurrentScreen('settings-profile');
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad SettingsProfilePage');

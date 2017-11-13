@@ -23,7 +23,7 @@ export class PaymethodsPage {
   }
 
   ionViewDidEnter() {
-    this.analytics.setCurrentScreen('BrowsePage');
+    this.analytics.setCurrentScreen('paymethods');
   }
 
   ionViewWillEnter() {

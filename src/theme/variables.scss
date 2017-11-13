@@ -39,12 +39,19 @@ $loading-md-box-shadow: none;
 
 $colors: (
   primary:    #488aff,
-  secondary:  #32db64,
+  secondary:  #0db14b ,
   danger:     #f53d3d,
   light:      #f4f4f4,
   dark:       #222
 );
 
+// change tool bar
+$toolbar-ios-background: color($colors, primary);
+$toolbar-md-background: color($colors, primary);
+$toolbar-wp-background: color($colors, primary);
+$toolbar-text-color: white;
+$searchbar-ios-background-color: white;
+$searchbar-md-background-color: white;
 
 // App iOS Variables
 // --------------------------------------------------

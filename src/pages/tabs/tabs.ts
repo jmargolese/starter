@@ -19,7 +19,7 @@ export class TabsPage {
   @ViewChild('shareTabs') tabRef: Tabs;
 
   tab1Root = 'HomePage';
-  tab2Root = 'BrowsePage';
+  tab2Root = 'DiscoverPage';
   tab3Root = 'SettingsPage';
   tab4Root = 'DashboardPage';
   tab5Root = 'ContactPage';
@@ -57,7 +57,7 @@ export class TabsPage {
             this.deeplinks.route({
               '/settings': 'SettingsPage',
       
-              '/return': 'BrowsePage'
+              '/return': 'DiscoverPage'
             }).subscribe((match) => {
               // match.$route - the route we matched, which is the matched entry from the arguments to route()
               // match.$args - the args passed in the link
@@ -79,8 +79,8 @@ export class TabsPage {
 
       this.deeplinks.routeWithNavController(this.navCtrl, {
         '/settings': 'SettingsPage',
-        //'/universal-links-test': BrowsePage,
-        '/fred': 'BrowsePage'
+        //'/universal-links-test': DiscoverPage,
+        '/fred': 'DiscoverPage'
       }).subscribe((match: any) => {
         console.log('Successfully routed route:' + match.$route, JSON.stringify(match));
 

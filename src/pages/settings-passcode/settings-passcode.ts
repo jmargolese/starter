@@ -37,7 +37,7 @@ export class SettingsPasscodePage {
   }
 
   ionViewDidEnter() {
-    this.analytics.setCurrentScreen('BrowsePage');
+    this.analytics.setCurrentScreen('settings-passcode');
   }
 
   private matchingPasswords(passwordKey: string, confirmPasswordKey: string) {

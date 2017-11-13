@@ -17,9 +17,12 @@ export const orgSeeds = [
             "info": {
                 "coreMessage": "We are helping animals",
                 "isDemo": null,
-                "description": null,
+                "description": "Helping pets in your neighborhood",
                 "enabled": true
             },
+            "uxPreferences" : {
+                "titleFont" : "black"
+              },
             "donationPrefs": [
                 5,
                 10,

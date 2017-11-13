@@ -1,9 +1,7 @@
 <ion-header [hidden]="true">
 
   <ion-navbar *ngIf="true" swipeBackEnabled="true">
-
     <ion-title></ion-title>
-
   </ion-navbar>
 
 </ion-header>
@@ -12,15 +10,12 @@
   
     <!-- <button  (click)="prev()" ion-button color="primary" clear> -->
     <button  *ngIf="showPrevButton" (click)="prev()" ion-button color="white" clear class="navButtonOverlay" style="left: 0;">
-      <ion-icon name="arrow-back"></ion-icon>
-     
+      <ion-icon name="arrow-back"></ion-icon>     
     </button>
-   
-  
+
     <button *ngIf="showNextButton" (click)="next()" ion-button color="white" clear class="navButtonOverlay" style="right: 0;">
         <ion-icon name="arrow-forward"></ion-icon>
     </button>
-  
 </div>
 
 

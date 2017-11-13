@@ -45,7 +45,7 @@ export class DashboardPage {
   }
 
   ionViewDidEnter() {
-    this.analytics.setCurrentScreen('BrowsePage');
+    this.analytics.setCurrentScreen('Dashboard');
   }
 
   public selectionChanged(event) {
