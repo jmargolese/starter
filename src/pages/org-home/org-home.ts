@@ -51,6 +51,7 @@ export class OrgHomePage {
 
   ionViewWillLeave() {
     this.showDonateButton = false;
+    this.showAddToHomeButton = false;
   }
 
   ionViewDidLoad() {
