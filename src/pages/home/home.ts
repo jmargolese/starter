@@ -30,14 +30,14 @@ export class HomePage {
   public organizations: shareTypes.Organization[];
   public currentOrganization: shareTypes.Organization;
   public currentActivity;
-  
+
   public showNextButton: boolean = false;
   public showPrevButton: boolean = false;
   public showShareButton: boolean = true;
   public showNavButtons: boolean = true;
   private subscribedToSlideChanges: boolean = false;
   public orgsAreValid: boolean = false;
-  
+
 
   private loading;
 
@@ -46,11 +46,19 @@ export class HomePage {
     public analytics: AnalyticsProvider, public zone: NgZone, public loadingCtrl: LoadingController,
     public events: Events) {
 
-      this.events.subscribe("activity:homeCurrentActivity", (activity) => {
-        // let other parts of the app tell us when a new tab is needed
-        this.currentActivity = activity;
-  
-      });
+    this.events.subscribe("activity:homeCurrentActivity", (activity) => {
+      // let other parts of the app tell us when a new tab is needed
+      this.currentActivity = activity;
+    });
+
+    this.events.subscribe('action-button:complete', data => {
+      console.log("in homePage got event that action button completed: " + data.type);
+      if (data.type == "addToHome") {
+        this.organizations = null;
+        this.getFavoriteOrganizations();
+      }
+
+    })
   }
 
   public onSearchInput(event: any): void {
@@ -60,39 +68,53 @@ export class HomePage {
     //console.log("onSearchInput called with:  " + val);
   }
 
+  private getFavoriteOrganizations() {
+
+    // make the call regardless so that we are tracking the observable in case we do login
+
+    this.organizations$ = this.userProvider.getFavoriteOrganizations();
+
+    this.organizations$.subscribe(docs => {
+
+      // try to avoid an error in slides if you remove a slide, so clear it first
+      if (this.organizations && this.organizations.length && docs && (docs.length != this.organizations.length))
+        this.organizations = null;
+
+      this.organizations = docs;
+      console.log("In home.ts subscribe returned: " + (docs ? docs.length : "no docs"));
+      setTimeout(() => {
+
+        this.updateNavButtons(500);
+        this.subscribeToSlideChanges();
+        if (this.loading) {
+          this.loading.dismiss().catch()
+        }
+      
+      }, 250)
+
+    })
+  }
+
 
   ionViewWillEnter() {
     console.log("Entering home.ts");
     this.loading = this.loadingCtrl.create({
       content: ''
     });
-    this.loading.present();
-    this.currentOrganization = null;
-    this.orgsAreValid = false;
+    this.loading.present()
+      .then(() => {
+        this.currentOrganization = null;
+        this.orgsAreValid = false;
 
-    // ensure we've completed our login check before trying to load anything
-    this.userProvider.isAuthenticated()
-      .then((isAuthenticated) => {
+        // ensure we've completed our login check before trying to load anything
+        this.userProvider.isAuthenticated()
+          .then((isAuthenticated) => {
+            console.log("in home.ts ionViewWillEnter are we authenticated? " + isAuthenticated);
+            this.getFavoriteOrganizations();
 
-        console.log("in home.ts ionViewWillEnter are we authenticated? " + isAuthenticated);
-        // make the call regardless so that we are tracking the observable in case we do login
-
-        this.organizations$ = this.userProvider.getFavoriteOrganizations();
-
-        this.organizations$.subscribe(docs => {
-
-          this.organizations = docs;
-          console.log("In home.ts subscribe returned: " + (docs ? docs.length : "no docs"));
-          setTimeout(() => {
-
-            this.updateNavButtons(500);
-            this.subscribeToSlideChanges();
-            this.loading.dismiss();
-          }, 250)
-
-        })
-
+          })
       })
+
 
   }
 
@@ -106,7 +128,7 @@ export class HomePage {
     //https://stackoverflow.com/questions/37087864/execute-a-function-when-ngfor-finished-in-angular-2
 
     this.activeOrgs.changes.subscribe(item => {
-      console.log("got a change in activeOrgs");
+      console.log("got a change in activeOrgs: ");
       this.updateNavButtons(400);
 
     });
@@ -152,8 +174,15 @@ export class HomePage {
 
   private updateCurrentOrganization() {
     if (this.slides && this.organizations && this.organizations.length) {
-      this.currentOrganization = this.organizations[this.slides.getActiveIndex()];
-      console.log("Changed current organization to: " + this.currentOrganization.companyName);
+     
+     let indx: number = this.slides.getActiveIndex();
+     if (typeof indx != 'undefined') {
+        this.currentOrganization = this.organizations[this.slides.getActiveIndex()];
+        console.log("Active index: " + this.slides.getActiveIndex() , 'and length', this.slides.length());
+        console.log("Changed current organization to: " + this.currentOrganization.companyName);
+     
+     }
+      
     }
   }
 
