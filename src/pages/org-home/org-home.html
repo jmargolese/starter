@@ -7,7 +7,6 @@
 
 </ion-header>
 
-
 <!-- <ion-content class="org-home-css" [style.background-color]="organization && organization.info && organization.info.backgroundColor || '#FFFFFF' "> -->
 <ion-content  *ngIf="organization" class="org-home-css" parallax-header>
   <div class="header-image"  [ngStyle]="{'background-image': 'url(' + organization.images.image + ')'}"></div>
@@ -21,3 +20,4 @@
   [options]="{buttonToDisplay : 'donateButtonStdButton', changeTab: false}"> </action-button>
 <action-button *ngIf="showDonateButton" class="fixedButton" [organization]="organization" [activity]="currentActivity" [options]="{buttonToDisplay : 'roundDonate', changeTab: false}">
 </action-button>
+

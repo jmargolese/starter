@@ -5,6 +5,11 @@ module.exports = function(config) {
     basePath: '../',
 
     frameworks: ['jasmine'],
+//    frameworks: ['jasmine', '@angular/cli'],
+
+    client:{
+      clearContext: false // leave Jasmine Spec Runner output visible in browser
+    },
 
     files: [
       {
@@ -24,10 +29,6 @@ module.exports = function(config) {
       '/assets/': '/base/src/assets/'
     },
 
-    preprocessors: {
-      './test-config/karma-test-shim.js': ['webpack', 'sourcemap']
-    },
-
     webpack: webpackConfig,
 
     webpackMiddleware: {
@@ -44,18 +45,46 @@ module.exports = function(config) {
       terminal: true
     },
 
+    preprocessors: {
+      './test-config/karma-test-shim.js': ['webpack', 'sourcemap']    },
+
+
+ //   coverageIstanbulReporter: {
+ //     reports: [ 'html', 'lcovonly' ],
+ //     fixWebpackSourcePaths: true
+ //   },
+
+    mime: {
+      'text/x-typescript': ['ts','tsx']
+    },
     coverageIstanbulReporter: {
       reports: [ 'html', 'lcovonly' ],
       fixWebpackSourcePaths: true
     },
-
-    reporters: config.coverage ? ['kjhtml', 'dots', 'coverage-istanbul'] : ['kjhtml', 'dots'],
+    angularCli: {
+      environment: 'dev'
+    },
+  
+    reporters: config.angularCli && config.angularCli.codeCoverage ? ['progress', 'coverage-istanbul'] : ['progress', 'kjhtml'],
+   //reporters: config.coverage ? ['kjhtml', 'dots', 'coverage-istanbul'] : ['kjhtml', 'dots'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['Chrome'],
-    singleRun: false
+    browsers: ['ChromeNoSandbox'],
+  //browsers: ['Chrome'],
+    singleRun: false,
+    junitReporter: {
+      outputDir: process.env.JUNIT_REPORT_PATH,
+      outputFile: process.env.JUNIT_REPORT_NAME,
+      useBrowserName: false
+    },
+    customLaunchers: {
+      ChromeNoSandbox: {
+        base: 'Chrome',
+//        flags: ['--no-sandbox']
+      }
+    }
   };
 
   config.set(_config);
