@@ -9,11 +9,11 @@
 <div *ngIf="showPrevButton || showNextButton" id="navButtonsContainer" class="imageOverlayGradient" style="position: relative; top: 0; width: 100vw; height: 30px; z-index: 998">
   
     <!-- <button  (click)="prev()" ion-button color="primary" clear> -->
-    <button  *ngIf="showPrevButton" (click)="prev()" ion-button color="white" clear class="navButtonOverlay" style="left: 0;">
+    <button  *ngIf="showPrevButton" (click)="prev()" ion-button color="white" clear class="navButtonOverlay" style="left: 0;top: 5vw;">
       <ion-icon name="arrow-back"></ion-icon>     
     </button>
 
-    <button *ngIf="showNextButton" (click)="next()" ion-button color="white" clear class="navButtonOverlay" style="right: 0;">
+    <button *ngIf="showNextButton" (click)="next()" ion-button color="white" clear class="navButtonOverlay" style="right: 0;top: 5vw;">
         <ion-icon name="arrow-forward"></ion-icon>
     </button>
 </div>
@@ -36,7 +36,7 @@
 
 
   <ion-slides #orgSlides *ngIf="organizations && organizations?.length > 0" [pager]="false" [centeredSlides]="false" [loop]="false"
-    [pager]="true" (ionSlideDidChange)="slideChanged()">
+     (ionSlideDidChange)="slideChanged()">
     <ion-slide #orgSlide *ngFor="let organization of organizations; let i = index">
 
       <org-home [organization]='organization'> </org-home>
@@ -51,4 +51,4 @@
 
 </ion-content>
 <!-- <img *ngIf="showShareButton" src="assets/img/icons/icon-donate@x2.png" #fixedButtonName class="fixedButton"> -->
-<action-button class="fixedButton" [buttonToDisplay]="'roundDonate'" [organization]="currentOrganization" [activity]="currentActivity"> </action-button>
+<action-button *ngIf="showDonateButton" class="fixedButton" [buttonToDisplay]="'roundDonate'" [organization]="currentOrganization" [activity]="currentActivity"> </action-button>

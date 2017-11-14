@@ -65,7 +65,7 @@
     "cordova-plugin-x-socialsharing": "^5.2.1",
     "es6-promise-plugin": "^4.1.1",
     "firebase": "^4.6.0",
-    "ionic-angular": "3.7.1",
+    "ionic-angular": "^3.9.2",
     "ionic-plugin-deeplinks": "^1.0.15",
     "ionic-plugin-keyboard": "^2.2.1",
     "ionicons": "3.0.0",
@@ -77,6 +77,7 @@
   },
   "devDependencies": {
     "@angular/cli": "^1.3.2",
+    "@angular/language-service": "github:angular/language-service-builds",
     "@angular/router": "^5.0.0",
     "@ionic/app-scripts": "^3.1.0",
     "@types/jasmine": "^2.6.3",

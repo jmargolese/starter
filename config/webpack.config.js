@@ -9,7 +9,7 @@ if (process.env.MY_ENV) {env = process.env.MY_ENV};
 
 
 if (env === 'prod' || env === 'dev') {
-  console.log(chalk.red('\n' + ' env == dev @app/env =' + path.resolve(environmentPath()) ));
+  //console.log(chalk.red('\n' + ' env == dev @app/env =' + path.resolve(environmentPath()) ));
   useDefaultConfig[env].resolve.alias = {
     "@app/env": path.resolve(environmentPath())
   };

@@ -35,6 +35,7 @@ export class HomePage {
   public showPrevButton: boolean = false;
   public showShareButton: boolean = true;
   public showNavButtons: boolean = true;
+  public showDonateButton: boolean = false;
   private subscribedToSlideChanges: boolean = false;
   public orgsAreValid: boolean = false;
 
@@ -173,6 +174,7 @@ export class HomePage {
   }
 
   private updateCurrentOrganization() {
+    // when slide changes (Swipe) we have to update what is current organization
     if (this.slides && this.organizations && this.organizations.length) {
      
      let indx: number = this.slides.getActiveIndex();
@@ -200,6 +202,14 @@ export class HomePage {
         this.showNextButton = !this.slides.isEnd();
         this.showPrevButton = !this.slides.isBeginning();
         this.updateCurrentOrganization();
+        try {   // there is a bug in slides when things are changing fast, just catch the error
+          this.showDonateButton =  this.slides && this.slides.length() ? true : false;
+        } catch (error) {
+          this.showDonateButton = false;
+        }
+       
+      } else {
+        this.showDonateButton = false;
       }
     }, delay)
 

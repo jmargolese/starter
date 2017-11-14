@@ -30,6 +30,26 @@
 
   <link href="build/main.css" rel="stylesheet">
 
+  <!-- Temp fix for iPhone X  https://github.com/ionic-team/ionic-v1/issues/317 -->
+
+  <style>
+    .platform-ios.platform-cordova:not(.fullscreen) .bar-header:not(.bar-subheader) {
+      height: calc(44px + constant(safe-area-inset-top));
+    }
+    
+    
+    .platform-ios.platform-cordova:not(.fullscreen) .bar-header:not(.bar-subheader) > * {
+      margin-top: constant(safe-area-inset-top);
+    }
+    
+    div.tab-nav.tabs {
+      height: calc(49px + constant(safe-area-inset-bottom));
+    }
+    
+    ion-content.padding.scroll-content.ionic-scroll.has-header.has-tabs {
+      top: calc(64px + constant(safe-area-inset-top));
+    }
+    </style>
 </head>
 <body>
 
