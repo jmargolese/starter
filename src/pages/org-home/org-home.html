@@ -1,14 +1,14 @@
 
 <ion-header [hidden]="hideHeader">
+  
+    <ion-navbar *ngIf="true" swipeBackEnabled="true">
+      <ion-title>{{organization && organization.companyName}}</ion-title>
+    </ion-navbar>
 
-  <ion-navbar *ngIf="true" swipeBackEnabled="true">
-    <ion-title>{{organization && organization.companyName}}</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
-<ion-content class="org-home-css" [style.background-color]="organization && organization.info && organization.info.backgroundColor || '#FFFFFF' ">
- 
-  <org-home *ngIf="organization" [organization]='organization'> </org-home>
-</ion-content>
+  </ion-header>
+  
+  
+  <ion-content class="org-home-css" [style.background-color]="organization && organization.info && organization.info.backgroundColor || '#FFFFFF' ">
+   
+    <org-home *ngIf="organization" [organization]='organization'> </org-home>
+  </ion-content>

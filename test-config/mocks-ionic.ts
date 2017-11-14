@@ -1,5 +1,7 @@
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+import * as shareTypes from '../src/share-common/interfaces/interfaces';
 
 export class PlatformMock {
   public ready(): Promise<string> {
@@ -111,5 +113,251 @@ export class NavMock {
 }
 
 export class DeepLinkerMock {
+  public routeWithNavController() {
+    return new Promise((resolve, reject) => {
+      resolve(this);
+    });
+  }    
+}
 
+export class StripeMock {
+  
+  }
+
+export class AlertProviderMock {
+  
+}
+
+export class ViewControllerMock {
+  
+      public readReady: any = {
+          emit(): void {
+  
+          },
+          subscribe(): any {
+  
+          }
+      };
+  
+      public writeReady: any = {
+          emit(): void {
+  
+          },
+          subscribe(): any {
+  
+          }
+      };
+  
+      public contentRef(): any {
+          return new Promise(function (resolve: Function): void {
+              resolve();
+          });
+      }
+  
+      public didEnter(): any {
+          return new Promise(function (resolve: Function): void {
+              resolve();
+          });
+      }
+  
+      public didLeave(): any {
+          return new Promise(function (resolve: Function): void {
+              resolve();
+          });
+      }
+  
+      public onDidDismiss(): any {
+          return new Promise(function (resolve: Function): void {
+              resolve();
+          });
+      }
+  
+      public onWillDismiss(): any {
+          return new Promise(function (resolve: Function): void {
+              resolve();
+          });
+      }
+  
+      public willEnter(): any {
+          return new Promise(function (resolve: Function): void {
+              resolve();
+          });
+      }
+  
+      public willLeave(): any {
+          return new Promise(function (resolve: Function): void {
+              resolve();
+          });
+      }
+  
+      public willUnload(): any {
+          return new Promise(function (resolve: Function): void {
+              resolve();
+          });
+      }
+  
+      public dismiss(): any {
+          return true;
+      }
+  
+      public enableBack(): any {
+          return true;
+      }
+  
+      public getContent(): any {
+          return true;
+      }
+  
+      public hasNavbar(): any {
+          return true;
+      }
+  
+      public index(): any {
+          return true;
+      }
+  
+      public isFirst(): any {
+          return true;
+      }
+  
+      public isLast(): any {
+          return true;
+      }
+  
+      public pageRef(): any {
+          return true;
+      }
+  
+      public setBackButtonText(): any {
+          return true;
+      }
+  
+      public showBackButton(): any {
+          return true;
+      }
+  
+      public _setHeader(): any {
+          return true;
+      }
+  
+      public _setIONContent(): any {
+          return true;
+      }
+  
+      public _setIONContentRef(): any {
+          return true;
+      }
+  
+      public _setNavbar(): any {
+          return true;
+      }
+  
+      public _setContent(): any {
+          return true;
+      }
+  
+      public _setContentRef(): any {
+          return true;
+      }
+  
+      public _setFooter(): any {
+          return true;
+      }
+  
+  }
+
+export class AnalyticsProviderMock {
+  
+}
+
+export class PaymethodsProviderMock {
+  
+}
+
+export class AuthProviderMock {
+  
+}
+
+export class DataProviderMock {
+  
+}
+
+export class UserProviderMock {
+  currentUser: shareTypes.User = null;
+  public getUserProfile() {
+    return new Promise( (resolve, reject) => {
+      resolve (this.currentUser.profile)
+    });
+  }
+}
+
+export class NavParamsMock {
+  public get(key): any {
+    return String(key) + 'Output';
+  }
+}
+
+
+
+export class AngularFirestoreMock {
+  b = 0;
+  public collection() {
+    return new Promise( (resolve, reject) => { 
+      resolve(this.b)
+    });
+  }
+}
+
+export class DeeplinksMock {
+  
+}
+
+export class ActivitiesProviderMock {
+  
+}
+
+export class OrganizationProviderMock {
+  organization = 'mockedOrganization';
+  public getAllOrganization() {
+    return new Promise( (resolve, reject) => {
+      resolve(this.organization)
+    });
+  }  
+}
+
+export class NotificationsProviderMock {
+  b = 0;
+  public init() {
+    return new Promise( (resolve, reject) => {
+      resolve(this.b)
+    });
+  }   
+}
+
+export class AppVersionMock {
+  version = 20;
+  name = 'mockedAppName';
+  package = 'mockedAppPackage';
+  code = 20;
+
+  public getVersionNumber() {
+    return new Promise( (resolve, reject) => {
+      resolve(this.version)
+    });
+  }
+  public getAppName() {
+    return new Promise( (resolve, reject) => {
+      resolve(this.name)
+    });
+  }
+  public getPackageName() {
+    return new Promise( (resolve, reject) => {
+      resolve(this.package)
+    });
+  }
+  public getVersionCode() {
+    return new Promise( (resolve, reject) => {
+      resolve(this.code)
+    });
+  }
 }
