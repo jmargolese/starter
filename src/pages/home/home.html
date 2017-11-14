@@ -6,7 +6,8 @@
 
 </ion-header>
 
-<div *ngIf="showPrevButton || showNextButton" id="navButtonsContainer" class="imageOverlayGradient" style="position: relative; top: 0; width: 100vw; height: 30px; z-index: 998">
+
+<div *ngIf="showNavButtons && (showPrevButton || showNextButton)" id="navButtonsContainer" class="imageOverlayGradient" style="position: relative; top: 0; width: 100vw; height: 80px; z-index: 998">
   
     <!-- <button  (click)="prev()" ion-button color="primary" clear> -->
     <button  *ngIf="showPrevButton" (click)="prev()" ion-button color="white" clear class="navButtonOverlay" style="left: 0;top: 5vw;">

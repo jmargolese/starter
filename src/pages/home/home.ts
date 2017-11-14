@@ -136,11 +136,12 @@ export class HomePage {
 
 
     this.content.ionScroll.subscribe((data) => {
-      //console.log('Scroll event: ' + data.scrollTop);
+     //  console.log('Scroll event: ' + data.scrollTop);
       this.zone.run(() => {
         // since scrollAmount is data-binded,
         // the update needs to happen in zone
         this.showNavButtons = (data.scrollTop < 40);
+       // console.log("this.showNavButtons: " + this.showNavButtons);
       })
 
     })

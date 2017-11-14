@@ -21,7 +21,7 @@ export class TabsPage {
   tab1Root = 'HomePage';
   tab2Root = 'DiscoverPage';
   tab3Root = 'SettingsPage';
-  tab4Root = 'DashboardPage';
+  tab4Root = 'Impact';
   tab5Root = 'ContactPage';
 
   constructor(public events: Events, public deeplinks: Deeplinks,    public notifications: NotificationsProvider,

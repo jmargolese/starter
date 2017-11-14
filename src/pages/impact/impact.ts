@@ -6,7 +6,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 
 /**
- * Generated class for the DashboardPage page.
+ * Generated class for the impactPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -14,10 +14,10 @@ import { Observable } from 'rxjs/Observable';
 
 @IonicPage()
 @Component({
-  selector: 'page-dashboard',
-  templateUrl: 'dashboard.html',
+  selector: 'page-impact',
+  templateUrl: 'impact.html',
 })
-export class DashboardPage {
+export class ImpactPage {
 
   public donations: Observable<any[]>;
 
@@ -37,7 +37,7 @@ export class DashboardPage {
   }
 
   ionViewWillEnter() {
-    console.log('ionViewDidLoad DashboardPage');
+    console.log('ionViewDidLoad impactPage');
     //this.donations = this.db.getDocument('donations', '1');
 
     this.userHasOrganization = this.userProvider.userHasOrganization();
@@ -45,7 +45,7 @@ export class DashboardPage {
   }
 
   ionViewDidEnter() {
-    this.analytics.setCurrentScreen('Dashboard');
+    this.analytics.setCurrentScreen('impact');
   }
 
   public selectionChanged(event) {
