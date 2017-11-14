@@ -14,5 +14,7 @@ export interface Environment {
   },
   raven : {
     appKey: string;
-  }
+  },
+  addStripeSourceUrl : string,
+  devStripeSourceUrl : string
 }

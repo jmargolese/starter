@@ -1,7 +1,7 @@
 import { FirebaseDynamicLinks }  from '@ionic-native/firebase-dynamic-links';
 import { Deeplinks } from '@ionic-native/deeplinks';
 import { Stripe } from '@ionic-native/stripe';
-
+import { HttpModule } from '@angular/http';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule } from 'ionic-angular';
@@ -27,6 +27,7 @@ import { OrganizationProvider } from '../share-common/providers/organization/org
 import { UserProvider } from '../share-common/providers/user/user';
 import { ActivitiesProvider } from '../share-common/providers/activities/activities';
 import { AnalyticsProvider } from '../share-common/providers/analytics/analytics';
+import { StripeProvider } from '../share-common/providers/stripe/stripe';
 
 
 import { SocialSharing } from '@ionic-native/social-sharing';
@@ -41,14 +42,11 @@ import { NotificationsProvider } from '../share-common/providers/notifications/n
 
 @NgModule({
   declarations: [
-    Share,
-    
-
-    // components
-    
+    Share
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     AngularFireModule.initializeApp(ENV.firebase),
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
@@ -56,9 +54,7 @@ import { NotificationsProvider } from '../share-common/providers/notifications/n
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    Share,
-  
-    
+    Share
   ],
   providers: [
     StatusBar,
@@ -81,8 +77,8 @@ import { NotificationsProvider } from '../share-common/providers/notifications/n
     Deeplinks,
     Stripe,
     FCM,
-    NotificationsProvider
-   // TestProvider
+    NotificationsProvider,
+    StripeProvider
   ]
 })
 export class AppModule {}

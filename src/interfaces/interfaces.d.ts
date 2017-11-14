@@ -1,13 +1,16 @@
 export interface PayMethod {
-
   vendor: string,
   isPreferred: boolean,
   kind: string,
   displayName: string,
   brand: string,
   hidden: boolean,
-  token: {}
+  sourceId: string
+}
 
+export interface StripeToken {
+  userId: string,
+  token: {}
 }
 
 export interface UserProfile {
