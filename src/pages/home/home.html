@@ -41,11 +41,11 @@
 
   <ion-slides #orgSlides *ngIf="organizations$ && (organizations$ | async)?.length > 0" [centeredSlides]="false" [loop]="false" [pager]="true"  (ionSlideDidChange)="slideChanged()">
     <ion-slide *ngFor="let organization of organizations$ | async">
-
-      <org-home [organization]='organization'> </org-home>
-
-
-    </ion-slide>
+      
+            <org-home [organization]='organization'> </org-home>
+      
+      
+          </ion-slide>
 
   </ion-slides>
 

@@ -39,7 +39,7 @@
     "@firebase/webchannel-wrapper": "0.2.1",
     "@ionic-native/app-version": "^4.3.2",
     "@ionic-native/core": "4.3.0",
-    "@ionic-native/deeplinks": "^4.3.2",
+    "@ionic-native/deeplinks": "^4.4.0",
     "@ionic-native/fcm": "^4.3.3",
     "@ionic-native/firebase-analytics": "^4.3.3",
     "@ionic-native/firebase-dynamic-links": "^4.3.2",
@@ -65,7 +65,10 @@
     "cordova-plugin-x-socialsharing": "^5.2.1",
     "es6-promise-plugin": "^4.1.1",
     "firebase": "^4.6.0",
+<<<<<<< HEAD
     "ionic": "^3.18.0",
+=======
+>>>>>>> 3c45869f15af25025d3f50dc40cdbb83b937bd41
     "ionic-angular": "3.7.1",
     "ionic-plugin-deeplinks": "^1.0.15",
     "ionic-plugin-keyboard": "^2.2.1",
@@ -117,9 +120,15 @@
       "cordova-plugin-app-version": {},
       "cordova-plugin-inappbrowser": {},
       "ionic-plugin-deeplinks": {
+<<<<<<< HEAD
         "URL_SCHEME": "getshare",
         "DEEPLINK_SCHEME": "https",
         "DEEPLINK_HOST": "nn4wp.app.goo.gl",
+=======
+        "URL_SCHEME": "Share",
+        "DEEPLINK_SCHEME": "https",
+        "DEEPLINK_HOST": "example.com",
+>>>>>>> 3c45869f15af25025d3f50dc40cdbb83b937bd41
         "ANDROID_PATH_PREFIX": "/"
       },
       "cordova-plugin-stripe": {},
@@ -131,4 +140,8 @@
       "ios"
     ]
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 3c45869f15af25025d3f50dc40cdbb83b937bd41
