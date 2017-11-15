@@ -55,11 +55,12 @@ export class OrgHomePage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad OrgHomePage');
+    
     this.organization = this.navParams.get('organization');
     this.showAddToHomeButton =  this.userProvider.userLikesOrganization(this.organization.id) ? false : true;
     //this.testMe.testMe();  //
-   
+    console.log('ionViewDidLoad OrgHomePage and showAddToHome is: ' + this.showAddToHomeButton);
+    this.showAddToHomeButton = true;
   }
 
 }
