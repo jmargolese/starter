@@ -131,7 +131,7 @@ export class AddStripeCcPage {
 
   public validateCVC(value: string) {
    
-    if (value && value.length == 3) {
+    if (value && value.length == this.cvcLength) {
       this.stripe.validateCVC(value)
         .then(() => {
           this.ccForm.controls.cvc.setErrors(null);
@@ -176,8 +176,7 @@ export class AddStripeCcPage {
 
       console.log("About to submit credit card: " + JSON.stringify(card));
 
-     
-
+    
       this.stripe.createCardToken(<any>card)
       .then(token => {
 
@@ -190,24 +189,22 @@ export class AddStripeCcPage {
           token: token
         };
 
-        this.stripeProvider.submitStripeToken(ENV.addStripeSourceUrl, newStripeToken)
+        this.stripeProvider.submitStripeToken(newStripeToken)
         .then(()=>{
             console.log('submitted!!');
             this.alert.confirm({  title: "Success",  message: "Your credit card has been added", buttons: { ok : true, cancel: false}  })
             .then(() => {
-              this.viewCtrl.dismiss({  error: false, canceled: false, newPaymethod: newPaymethod });
-            })
-          })
-        }).catch(error =>{
-          console.log(`error! : ${error}`);
+              // this.viewCtrl.dismiss({  error: false, canceled: false, newPaymethod: newPaymethod });
+              this.viewCtrl.dismiss({  error: false, canceled: false });
+            });
+          }).catch(error =>{
+          console.log(`stripeProvider.submitStripeToken rejected with error: ${error}`);
+          this.alert.confirm({  title: "Error",  message: error, buttons: { ok : true, cancel: false} });
         });
-
-       
-      })
-      .catch(error  => {
+      }).catch(error  => {
         console.error("Stripe token rejected with error: " + JSON.stringify(error));
         this.alert.confirm({  title: "Error",  message: error, buttons: { ok : true, cancel: false} });
-      })
+      });
     }
   }
 }

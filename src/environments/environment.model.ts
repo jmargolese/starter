@@ -8,13 +8,12 @@ export interface Environment {
       projectId: string;
       storageBucket: string;
       messagingSenderId: string;
+      cloudFunctionUrl: string;
   },
   stripe: {
     privateKey: string;
   },
   raven : {
     appKey: string;
-  },
-  addStripeSourceUrl : string,
-  devStripeSourceUrl : string
+  }
 }

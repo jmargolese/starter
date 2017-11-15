@@ -1,7 +1,7 @@
-import { LoginPage } from './../login/login';
+import { LoginPage } from './../../share-common/pages/login/login';
 import { activitySeeds } from './../../seeds/seedActivities';
 import { userDataSeeds } from './../../seeds/seedUserData';
-import {  donationSeeds } from './../../seeds/seedDonations';
+import { donationSeeds } from './../../seeds/seedDonations';
 
 import { Component } from '@angular/core';
 import { NavController , ModalController, IonicPage} from 'ionic-angular';
@@ -9,7 +9,6 @@ import { NavController , ModalController, IonicPage} from 'ionic-angular';
 import { orgSeeds } from '../../seeds/seedOrganizations';
 
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
-
 
 // providers
 import { AuthProvider } from './../../share-common/providers/auth/auth';
