@@ -7,7 +7,8 @@
 
 </ion-header>
 
-<div *ngIf="showNavButtons && (showPrevButton || showNextButton)" id="navButtonsContainer" class="imageOverlayGradient" style="position: relative; top: 0; width: 100vw; height: 34vh; z-index: 998">
+
+<div  #navButtons  *ngIf="showNavButtons && (showPrevButton || showNextButton)" id="navButtonsContainer" class="imageOverlayGradient" style="position: relative; top: 0; width: 100vw; height: 34vh; z-index: 998">
 
   <!-- <button  (click)="prev()" ion-button color="primary" clear> -->
   <button *ngIf="showPrevButton" (click)="prev()" ion-button color="white"  clear class="prevButton navButton" >
@@ -21,7 +22,7 @@
 <!-- <ion-content class="org-home-css" [style.background-color]="organization && organization.info && organization.info.backgroundColor || '#FFFFFF' "> -->
 
 
-<ion-content  class="org-home-css" parallax-header (swipe)="swipeEvent($event)">
+<ion-content #content  class="org-home-css" parallax-header (swipe)="swipeEvent($event)">
 
   <div class="header-image" [ngStyle]="{'background-image': 'url(' +  (organization ? organization.images.image  : 'assets/img/share/Share_ICON-1x1.png') + ')'}"></div>
   <div class="main-content">

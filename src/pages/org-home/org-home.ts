@@ -5,14 +5,15 @@ import { ActivitiesProvider } from '../../share-common/providers/activities/acti
 
 import { Observable } from 'rxjs/Observable';
 //import { ActivitiesProvider } from '../../../../common/src/share-common/providers/activities';
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
+import { Component, ViewChild, NgZone, ElementRef, Renderer2 } from '@angular/core';
+import { IonicPage, NavController, NavParams, Events, Content, LoadingController } from 'ionic-angular';
 
 
 import * as shareTypes from '../../share-common/interfaces/interfaces';
 import { UserProvider } from '../../share-common/providers/user/user';
 
 import * as _ from 'lodash';
+import * as CONST from '../../share-common/config/constants'
 
 @IonicPage()
 @Component({
@@ -20,6 +21,9 @@ import * as _ from 'lodash';
   templateUrl: 'org-home.html',
 })
 export class OrgHomePage {
+
+  @ViewChild('content') content: Content;
+  @ViewChild('navButtons') navButtons;
 
   public organization: shareTypes.Organization = null;
   private organizationFavorites: shareTypes.Organization[] = null;
@@ -37,9 +41,12 @@ export class OrgHomePage {
 
   public hideHeader: boolean = true;
   private isVisible: boolean = false;
+  private activityListTop: number = null;    // where the activityList will be displayed so we can watch scrolling and know when it's visible
+  private loading;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public activitiesProvider: ActivitiesProvider,
-    public events: Events, public analytics: AnalyticsProvider, public userProvider: UserProvider) {
+    public events: Events, public analytics: AnalyticsProvider, public userProvider: UserProvider, public zone: NgZone,
+    public element: ElementRef, public renderer: Renderer2, public loadingCtrl: LoadingController, ) {
     console.log("Entered orgHomePage");
     if (navParams.get('showHeader')) {
       this.hideHeader = false;
@@ -65,6 +72,7 @@ export class OrgHomePage {
             if (this.organizationFavorites.length) {
               // we are the root and there is at least one more, so change our identity
               this.setOrganization(0);
+              this.content.scrollToTop(200);
             } else {
               // we are the last so just display the 'get more favorites message'
               this.organization = null;
@@ -78,32 +86,54 @@ export class OrgHomePage {
       }
 
     })
+
     this.showDonateButton = false;
+
+    this.events.subscribe(CONST.EventTypes.orgHomeActivityListPosition, data => {
+      this.activityListTop = data.position;
+    });
+
 
   }
 
   ionViewWillEnter() {
-    this.isVisible = true;
+
+    this.loading = this.loadingCtrl.create({
+      content: ''
+    });
+
+    this.loading.present()
+      .then(() => {
+        this.isVisible = true;
+        this.analytics.setCurrentScreen('org-Home');
+        this.showDonateButton = true;
+        console.log("orgHomePage: ionViewDidEnter");
+
+        this.userProvider.isAuthenticated()
+          .then(() => {
+
+            this.useOrgFavorites = this.navParams.get('useOrgFavorites') ? true : false;
+
+            if (this.useOrgFavorites)
+              this.orgIndex = this.navParams.get('orgIndex')
+            // this means we are part of a list of organization favorites with an index, as opposed to be being passed in an organization
+            this.setOrganization(this.orgIndex || 0);
+
+
+            if (this.loading) {
+              this.loading.dismiss().catch()
+            }
+          })
+      })
+
 
   }
 
   ionViewDidEnter() {
-    this.analytics.setCurrentScreen('org-Home');
-    this.showDonateButton = true;
-    console.log("orgHomePage: ionViewDidEnter");
-
-    this.userProvider.isAuthenticated()
-      .then(() => {
-
-        this.useOrgFavorites = this.navParams.get('useOrgFavorites') ? true : false;
-
-        if (this.useOrgFavorites)
-          this.orgIndex = this.navParams.get('orgIndex')
-        // this means we are part of a list of organization favorites with an index, as opposed to be being passed in an organization
-        this.setOrganization(this.orgIndex || 0);
 
 
-      })
+
+
   }
 
   public setOrganization(orgIndex: number) {
@@ -125,6 +155,8 @@ export class OrgHomePage {
       this.showAddToHomeButton = this.userProvider.userLikesOrganization(this.organization.id) ? false : true;
     }
 
+
+
     if (!this.organization)
       console.error("Organization is null in orgHomePage");
     else {
@@ -134,6 +166,8 @@ export class OrgHomePage {
       //
     }
   }
+
+
 
   public swipeEvent(event) {
 
@@ -161,7 +195,10 @@ export class OrgHomePage {
   }
 
 
+  ngAfterViewInit() {
 
+
+  }
   ionViewWillLeave() {
     this.isVisible = false;
     this.showDonateButton = false;
@@ -170,6 +207,23 @@ export class OrgHomePage {
 
   ionViewDidLoad() {
 
+    this.content.ionScroll.subscribe((data) => {
+      // console.log('Scroll event: ' + data.scrollTop + " and activityListTop: " + this.activityListTop);
+      const buffer = 70;
+
+      this.zone.run(() => {
+        // since scrollAmount is data-binded,
+        // the update needs to happen in zone
+        if (data.scrollTop > buffer && this.navButtons) {
+          // as the user scrolls up, the nav buttons disappear, slowly
+          this.renderer.setStyle(this.navButtons.nativeElement, "top", -(data.scrollTop - buffer) / 2 + "px");
+        }
+
+        this.showDonateButton = (data.scrollTop < this.activityListTop);
+
+      })
+
+    })
 
   }
 
