@@ -50,7 +50,7 @@ ion-header {
 
  // to create the gradient
  $BAR_TOP: 	rgba(128,128,128,0.35);
- $BAR_BOTTOM:rgba(128,128,128,0.15);
+ $BAR_BOTTOM:rgba(128,128,128,0.00);
  $BAR_TRANSPARENCY: rgba(255,255,255,0.3);
  
  .imageOverlayGradient{
@@ -59,3 +59,10 @@ ion-header {
      background: -moz-linear-gradient(bottom right, $BAR_TOP, $BAR_BOTTOM);
      background: linear-gradient(to bottom , $BAR_TOP, $BAR_BOTTOM);
  }
+
+ .imageOverlayGradientLightTop{
+    background: -webkit-gradient(left top, $BAR_BOTTOM,  $BAR_TOP);
+    background: -o-linear-gradient(bottom right, $BAR_BOTTOM,  $BAR_TOP);
+    background: -moz-linear-gradient(bottom right, $BAR_BOTTOM,  $BAR_TOP);
+    background: linear-gradient(to bottom , $BAR_BOTTOM,  $BAR_TOP);
+}

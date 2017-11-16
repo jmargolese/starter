@@ -18,7 +18,7 @@ export class TabsPage {
 
   @ViewChild('shareTabs') tabRef: Tabs;
 
-  tab1Root = 'HomePage';
+  tab1Root = 'OrgHomePage';
   tab2Root = 'DiscoverPage';
   tab3Root = 'SettingsPage';
   tab4Root = 'Impact';
