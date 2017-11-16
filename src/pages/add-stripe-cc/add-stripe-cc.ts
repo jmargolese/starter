@@ -189,6 +189,7 @@ export class AddStripeCcPage {
           token: token
         };
 
+        console.log("submitting Stripe Token.  ENV="+JSON.stringify(ENV));
         this.stripeProvider.submitStripeToken(newStripeToken)
         .then(()=>{
             console.log('submitted!!');

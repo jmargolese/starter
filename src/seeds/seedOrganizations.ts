@@ -1,3 +1,4 @@
+export const testStripeAcct = "acct_1Ai6pMHMFCaEtegi";
 export const orgSeeds = [
     {
         "key":  "orgHumane",
