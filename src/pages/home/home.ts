@@ -5,8 +5,6 @@ import { Component, ViewChild, ViewChildren, QueryList, NgZone } from '@angular/
 
 import { IonicPage, NavController, NavParams, Slides, Content, LoadingController, Events } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
-import { setTimeout } from 'timers';
-
 
 import * as shareTypes from '../../share-common/interfaces/interfaces';
 
