@@ -265,11 +265,16 @@ export class ActivitiesProviderMock {}
 export class SocialSharingMock {}
 
 export class UserProviderMock {
-  currentUser: shareTypes.User = null;
+  currentUser: shareTypes.UserProfile = {
+    name: {
+      first: 'MockFirstName',
+      last: 'MockLastName'
+    },
+    email: 'MockEmail',
+    phoneNumber: '123-456-7890'
+  }
   public getUserProfile() {
-    return new Promise( (resolve, reject) => {
-      resolve (this.currentUser.profile)
-    });
+    return (this.currentUser);
   }
 }
 
