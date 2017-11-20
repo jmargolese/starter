@@ -251,9 +251,17 @@ export class AnalyticsProviderMock {}
 export class ShareProviderMock {}
 export class PaymethodsProviderMock {}
 export class AuthProviderMock {}
-export class DataProviderMock {}
 export class ActivitiesProviderMock {}
 export class SocialSharingMock {}
+
+export class DataProviderMock {
+  b = 0;
+  public getActivitiesForOrg() {
+    return new Promise( (resolve, reject) => { 
+      resolve(this.b)
+    })
+  }
+}
 
 export class UserProviderMock {
   currentUser: shareTypes.UserProfile = {
