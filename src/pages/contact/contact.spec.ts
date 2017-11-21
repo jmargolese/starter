@@ -21,8 +21,8 @@ import { AnalyticsProviderMock, AuthProviderMock, DataProviderMock, UserProvider
 describe('ContactPage', () => {
   let comp: ContactPage;
   let fixture: ComponentFixture<ContactPage>;
-  let de:      DebugElement;      //Element to test
-
+  let de:      DebugElement;
+  
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ContactPage],
@@ -58,5 +58,8 @@ describe('ContactPage', () => {
     const iontitle = de.nativeElement;
     expect(iontitle.innerText).toMatch('Contact');
   });
-});
 
+ // it('Name should be rendered', function() {
+ //   expect(element[0].innerText).toEqual('John');
+ // });
+});
