@@ -1,3 +1,0 @@
-[submodule "src/share-common"]
-	path = src/share-common
-	url = https://github.com/stansongman/share-common.git
