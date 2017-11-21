@@ -1,14 +1,17 @@
 import { HomePage } from './home';
+
 import { AnalyticsProvider } from '../../share-common/providers/analytics/analytics';
 import { UserProvider } from './../../share-common/providers/user/user';
-import { PlatformMock, StatusBarMock, SplashScreenMock,  NavParamsMock } from '../../../test-config/mocks-ionic';
-import { AnalyticsProviderMock, UserProviderMock } from '../../../test-config/mocks-ionic';
 import { ComponentsModule } from '../../share-common/components/components.module';
+
 import { NavParams } from 'ionic-angular';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule, Platform, NavController} from 'ionic-angular/index';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+
+import { PlatformMock, StatusBarMock, SplashScreenMock,  NavParamsMock } from '../../../test-config/mocks-ionic';
+import { AnalyticsProviderMock, UserProviderMock } from '../../../test-config/mocks-ionic';
 
 describe('HomePage', () => {
 

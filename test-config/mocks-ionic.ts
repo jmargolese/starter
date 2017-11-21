@@ -110,22 +110,10 @@ export class NavMock {
     return ;
   }
 
-}
-
-export class DeepLinkerMock {
-  public routeWithNavController() {
-    return new Promise((resolve, reject) => {
-      resolve(this);
-    });
-  }    
-}
-
-export class StripeMock {
-  
+  public unregisterChildNav(nav: any) {
+    return ;
   }
 
-export class AlertProviderMock {
-  
 }
 
 export class ViewControllerMock {
@@ -266,28 +254,27 @@ export class ViewControllerMock {
   
   }
 
-export class AnalyticsProviderMock {
-  
-}
-
-export class PaymethodsProviderMock {
-  
-}
-
-export class AuthProviderMock {
-  
-}
-
-export class DataProviderMock {
-  
-}
+export class StripeMock {}
+export class AlertProviderMock {}
+export class AnalyticsProviderMock {}
+export class ShareProviderMock {}
+export class PaymethodsProviderMock {}
+export class AuthProviderMock {}
+export class DataProviderMock {}
+export class ActivitiesProviderMock {}
+export class SocialSharingMock {}
 
 export class UserProviderMock {
-  currentUser: shareTypes.User = null;
+  currentUser: shareTypes.UserProfile = {
+    name: {
+      first: 'MockFirstName',
+      last: 'MockLastName'
+    },
+    email: 'MockEmail',
+    phoneNumber: '123-456-7890'
+  }
   public getUserProfile() {
-    return new Promise( (resolve, reject) => {
-      resolve (this.currentUser.profile)
-    });
+    return (this.currentUser);
   }
 }
 
@@ -296,8 +283,6 @@ export class NavParamsMock {
     return String(key) + 'Output';
   }
 }
-
-
 
 export class AngularFirestoreMock {
   b = 0;
@@ -308,13 +293,6 @@ export class AngularFirestoreMock {
   }
 }
 
-export class DeeplinksMock {
-  
-}
-
-export class ActivitiesProviderMock {
-  
-}
 
 export class OrganizationProviderMock {
   organization = 'mockedOrganization';

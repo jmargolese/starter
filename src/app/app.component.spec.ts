@@ -1,19 +1,16 @@
+import { Share } from './app.component';
+
 import { async, TestBed } from '@angular/core/testing';
 import { IonicModule, Platform } from 'ionic-angular';
-
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { Share } from './app.component';
-import {
-  PlatformMock,
-  StatusBarMock,
-  SplashScreenMock
-} from '../../test-config/mocks-ionic';
+import { StatusBarMock, SplashScreenMock } from '../../test-config/mocks-ionic';
+import { PlatformMock } from '../../test-config/mocks-ionic';
 
 describe('Share Component', () => {
   let fixture;
-  let component;
+  let comp;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -22,23 +19,28 @@ describe('Share Component', () => {
         IonicModule.forRoot(Share)
       ],
       providers: [
+        { provide: Platform, useClass: PlatformMock },
         { provide: StatusBar, useClass: StatusBarMock },
         { provide: SplashScreen, useClass: SplashScreenMock },
-        { provide: Platform, useClass: PlatformMock }
       ]
     })
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(Share);
-    component = fixture.componentInstance;
+    comp = fixture.componentInstance;
   });
 
-  it ('should be created', () => {
-    expect(component instanceof Share).toBe(true);
+  afterEach(() => {
+    fixture.destroy();
+    comp = null;
+  });
+
+  it('should create component', () => {
+    expect(comp instanceof Share).toBe(true);
   });
 
   it('initializes with a root page of TabsPage', () => {
-    expect(component['rootPage']).toBe('TabsPage');
+    expect(comp['rootPage']).toBe('TabsPage');
   })
 });
