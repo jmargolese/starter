@@ -21,6 +21,8 @@ export const activitySeeds = [
             },
             "messages": {
                 "heading": "Giving Tuesday 2017",
+                "mainMessage": "Help us raise money on Giving Tuesday",
+                "headline": "Giving Tuesday 2017",
                 "shortText": "Help us raise money on Giving Tuesday",
                 "fullText": "Help us raise money on Giving Tuesday",
                 "callToAction": "Give on Tuesday Nov 7th!",
@@ -64,6 +66,8 @@ export const activitySeeds = [
                 "logo": null
             },
             "messages": {
+                "headline": "Stars for Strays!",
+                "mainMessage": "Purchase a $5 star to support the animals of A.D.O.P.T. and cover the shelter in patriotic pride!",
                 "heading": "Stars for Strays!",
                 "shortText": "Stars for Strays: Purchase a $5 star to support the animals of A.D.O.P.T.",
                 "fullText": "Purchase a $5 star to support the animals of A.D.O.P.T. and cover the shelter in patriotic pride!",
@@ -108,8 +112,10 @@ export const activitySeeds = [
             },
             "messages": {
                 "heading": "Giving Tuesday 2017",
-                "shortText": "Help us raise money on Giving Tuesday",
                 "fullText": "Help us raise money on Giving Tuesday",
+                "headline": "Giving Tuesday 2017",
+                "shortText": "Help us raise money on Giving Tuesday",
+                "mainMessage": "Help us raise money on Giving Tuesday",
                 "callToAction": "Give on Tuesday Nov 7th!",
                 "motd": null
             },
@@ -151,8 +157,10 @@ export const activitySeeds = [
             },
             "messages": {
                 "heading": "Achieve What Matters",
-                "shortText": "Join Danny Wuerffel and other leaders in the fight to revitalize distressed neighborhoods.",
                 "fullText": "Join Danny Wuerffel and Desire Street Ministries in competing against ChadTough to see whose fans can donate more.   <br><br> <span class='info-competition-cta'> One dollar = 1 point, $1,000 bonus to winner <br> Donate now and check back Sept 2nd to help your side win!</span>",
+                "headline": "Achieve What Matters",
+                "shortText": "Join Danny Wuerffel and other leaders in the fight to revitalize distressed neighborhoods.",
+                "mainMessage": "Join Danny Wuerffel and Desire Street Ministries in competing against ChadTough to see whose fans can donate more.   <br><br> <span class='info-competition-cta'> One dollar = 1 point, $1,000 bonus to winner <br> Donate now and check back Sept 2nd to help your side win!</span>",
                 "callToAction": "Tap $hare Now! to donate and heart for updates",
                 "motd": null
             },
@@ -194,8 +202,10 @@ export const activitySeeds = [
             },
             "messages": {
                 "heading": "Giving Tuesday 2017",
-                "shortText": "Help us raise money on Giving Tuesday",
                 "fullText": "Help us raise money on Giving Tuesday",
+                "headline": "Giving Tuesday 2017",
+                "shortText": "Help us raise money on Giving Tuesday",
+                "mainMessage": "Help us raise money on Giving Tuesday",
                 "callToAction": "Give on Tuesday Nov 7th!",
                 "motd": null
             },
@@ -237,8 +247,10 @@ export const activitySeeds = [
             },
             "messages": {
                 "heading": "Holiday Campaign",
-                "shortText": "End of year is the best time to give (short)",
                 "fullText": "This is the long and full text of this activity for end of year giving",
+                "headline": "Holiday Campaign",
+                "shortText": "End of year is the best time to give (short)",
+                "mainMessage": "This is the long and full text of this activity for end of year giving",
                 "callToAction": "Tap Donate and give now!!",
                 "motd": null
             },
@@ -280,8 +292,10 @@ export const activitySeeds = [
             },
             "messages": {
                 "heading": "Giving Tuesday 2017",
-                "shortText": "Help us raise money on Giving Tuesday",
                 "fullText": "Help us raise money on Giving Tuesday",
+                "headline": "Giving Tuesday 2017",
+                "shortText": "Help us raise money on Giving Tuesday",
+                "mainMessage": "Help us raise money on Giving Tuesday",
                 "callToAction": "Give on Tuesday Nov 7th!",
                 "motd": null
             },

@@ -121,6 +121,13 @@ export class OrgHomePage {
 
 
             if (this.loading) {
+              console.log("Dismissing loading in org-homePage");
+              this.loading.dismiss().catch()
+            }
+          })
+          .catch(error => {
+            console.error("org-homePage ionViewWillEnter error from isAuthenticated(): " + error.message);
+            if (this.loading) {
               this.loading.dismiss().catch()
             }
           })
