@@ -44,7 +44,7 @@ export class SettingsPage {
   }
 
   ionViewDidEnter() {
-    this.analytics.setCurrentScreen('BrowsePage');
+    this.analytics.setCurrentScreen('Settings');
   }
 
   public settingsCallback(action) {

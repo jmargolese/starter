@@ -66,7 +66,7 @@
     "cordova-plugin-x-socialsharing": "^5.2.1",
     "es6-promise-plugin": "^4.1.1",
     "firebase": "^4.6.2",
-    "ionic": "^3.18.0",
+    "ionic": "^3.19.0",
     "ionic-angular": "^3.9.2",
     "ionic-plugin-deeplinks": "^1.0.15",
     "ionic-plugin-keyboard": "^2.2.1",
@@ -118,9 +118,9 @@
       "cordova-plugin-app-version": {},
       "cordova-plugin-inappbrowser": {},
       "ionic-plugin-deeplinks": {
-        "URL_SCHEME": "Share",
+        "URL_SCHEME": "getshare",
         "DEEPLINK_SCHEME": "https",
-        "DEEPLINK_HOST": "example.com",
+        "DEEPLINK_HOST": "nn4wp.app.goo.gl",
         "ANDROID_PATH_PREFIX": "/"
       },
       "cordova-plugin-stripe": {},

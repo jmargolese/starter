@@ -14,12 +14,14 @@ import { IonicPage, Tabs, Events, NavController, Platform } from 'ionic-angular'
 })
 export class TabsPage {
 
+  private showDebugTab: boolean = false;
+
   @ViewChild('shareTabs') tabRef: Tabs;
 
   tab1Root = 'HomePage';
-  tab2Root = 'BrowsePage';
+  tab2Root = 'DiscoverPage';
   tab3Root = 'SettingsPage';
-  tab4Root = 'DashboardPage';
+  tab4Root = 'Impact';
   tab5Root = 'ContactPage';
 
   constructor(public events: Events, public deeplinks: Deeplinks,    public notifications: NotificationsProvider,
@@ -50,11 +52,12 @@ export class TabsPage {
       Successfully routed {"$link":{"path":"/crwp","queryString":"","fragment":"","host":"nn4wp.app.goo.gl","url":"https://nn4wp.app.goo.gl/crwp","scheme":"https"}}
       */
       console.log("Environment is: " + ENV.mode);
+      this.showDebugTab = ENV.mode.toLowerCase() != 'production';
       /*
             this.deeplinks.route({
               '/settings': 'SettingsPage',
       
-              '/return': 'BrowsePage'
+              '/return': 'DiscoverPage'
             }).subscribe((match) => {
               // match.$route - the route we matched, which is the matched entry from the arguments to route()
               // match.$args - the args passed in the link
@@ -76,8 +79,8 @@ export class TabsPage {
 
       this.deeplinks.routeWithNavController(this.navCtrl, {
         '/settings': 'SettingsPage',
-        //'/universal-links-test': BrowsePage,
-        '/fred': 'BrowsePage'
+        //'/universal-links-test': DiscoverPage,
+        '/fred': 'DiscoverPage'
       }).subscribe((match: any) => {
         console.log('Successfully routed route:' + match.$route, JSON.stringify(match));
 

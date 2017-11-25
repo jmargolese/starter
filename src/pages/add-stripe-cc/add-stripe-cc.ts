@@ -40,7 +40,7 @@ export class AddStripeCcPage {
 
   public submitAttempt: boolean = false;
 
-  public ccType: string = null;
+  public ccType: string = "";
 
   public cvcLength: number = 3;
 
@@ -83,6 +83,7 @@ export class AddStripeCcPage {
   public cardNumberChanged(value: string) {
 
     // don't add a space if it's the last character, screws up delete
+
     if (value && value.length < 19 && value.length != 14 && value.length != 4 && value.length != 9)
       this.ccForm.controls.cardnumber.setValue(value.replace(/\W/gi, '').replace(/(.{4})/g, '$1 '));
 
@@ -90,9 +91,9 @@ export class AddStripeCcPage {
       this.stripe.getCardType(value)
         .then(type => {
           console.log("Credit card type: " + type);
-          this.ccType = type == "Unknown" ? "" : type.toLowerCase();
+          this.ccType = (type == "Unknown" ? "" : type.toLowerCase());
           // cvc code length is 4 if it is amex, otherwise always 3 (for now).
-          this.cvcLength = this.ccType == 'amex' ? 4 : 3;
+          this.cvcLength = this.ccType && this.ccType == 'american express' ? 4 : 3;
         })
         .catch(() => {
           this.ccType = null;
@@ -189,10 +190,9 @@ export class AddStripeCcPage {
           token: token
         };
 
-        console.log("submitting Stripe Token.  ENV="+JSON.stringify(ENV));
         this.stripeProvider.submitStripeToken(newStripeToken)
         .then(()=>{
-            console.log('submitted!!');
+            console.log('Token submitted to the cloud');
             this.alert.confirm({  title: "Success",  message: "Your credit card has been added", buttons: { ok : true, cancel: false}  })
             .then(() => {
               // this.viewCtrl.dismiss({  error: false, canceled: false, newPaymethod: newPaymethod });

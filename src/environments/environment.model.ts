@@ -1,6 +1,7 @@
 export interface Environment {
   mode: string;
   release: string;
+
   firebase: {
       apiKey: string;
       authDomain: string;
@@ -9,11 +10,12 @@ export interface Environment {
       storageBucket: string;
       messagingSenderId: string;
       cloudFunctionUrl: string;
+      shareWebBaseUrl: string;
   },
   stripe: {
     privateKey: string;
   },
-  raven : {
+  raven: {
     appKey: string;
   }
 }

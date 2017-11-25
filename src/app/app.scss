@@ -1,6 +1,4 @@
 // http://ionicframework.com/docs/theming/
-
-
 // App Global Sass
 // --------------------------------------------------
 // Put style rules here that you want to apply globally. These
@@ -14,3 +12,50 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+
+.fixedButton {
+    position: absolute;
+    right: 3vw;;
+    top: 83vh;
+    z-index: 999;
+    max-width: 45px; 
+
+}
+
+
+ion-header {
+    .button-md {
+        box-shadow: none;
+    }
+    .toolbar-title {
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-direction: row;
+        flex-direction: row;
+        -webkit-align-items: center;
+        align-items: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+    }
+}
+
+.action-choice-popover {
+   // .popover-content, .popover-ios {
+   //     width: 130px !important; /* the new global width */
+    //  }
+
+     
+}
+
+ // to create the gradient
+ $BAR_TOP: 	rgba(128,128,128,0.35);
+ $BAR_BOTTOM:rgba(128,128,128,0.15);
+ $BAR_TRANSPARENCY: rgba(255,255,255,0.3);
+ 
+ .imageOverlayGradient{
+     background: -webkit-gradient(left top, $BAR_TOP, $BAR_BOTTOM);
+     background: -o-linear-gradient(bottom right, $BAR_TOP, $BAR_BOTTOM);
+     background: -moz-linear-gradient(bottom right, $BAR_TOP, $BAR_BOTTOM);
+     background: linear-gradient(to bottom , $BAR_TOP, $BAR_BOTTOM);
+ }

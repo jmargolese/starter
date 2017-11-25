@@ -27,8 +27,6 @@ export class ContactPage {
   constructor(public navCtrl: NavController, private readonly afs: AngularFirestore, private myAuth: AuthProvider, public modalCtrl: ModalController) {
     this.organizationsCollection = afs.collection<any>('organizations');
     this.stripeAccountsCollection = afs.collection<any>('stripeAccountObjects');
-
-
   }
 
   public login(): void {
@@ -55,7 +53,7 @@ export class ContactPage {
           console.log("Wrote document for:" + org.key)
           console.log("Adding Stripe Account for:" + org.key);
 
-          this.stripeAccountsCollection.doc(org.key).set({stripeAccountId : testStripeAcct})
+          this.stripeAccountsCollection.doc(org.key).set(testStripeAcct)
             .then(()=> {
               console.log("Wrote Stripe account for: "+org.key)
             }).catch(error => {

@@ -1,3 +1,4 @@
+
 import { FirebaseDynamicLinks }  from '@ionic-native/firebase-dynamic-links';
 import { Deeplinks } from '@ionic-native/deeplinks';
 import { Stripe } from '@ionic-native/stripe';
@@ -38,6 +39,8 @@ import { AlertProvider } from '../share-common/providers/alert/alert';
 //import { TestProvider } from '../../../common/src/modules/share-common/providers/test';
 import { SentryErrorHandler} from '../services/sentry-errorhandler';
 import { NotificationsProvider } from '../share-common/providers/notifications/notifications';
+import { CloudFunctionProvider } from '../share-common/providers/cloud-function/cloud-function';
+
 
 
 @NgModule({
@@ -54,6 +57,7 @@ import { NotificationsProvider } from '../share-common/providers/notifications/n
   ],
   bootstrap: [IonicApp],
   entryComponents: [
+
     Share
   ],
   providers: [
@@ -78,7 +82,9 @@ import { NotificationsProvider } from '../share-common/providers/notifications/n
     Stripe,
     FCM,
     NotificationsProvider,
-    StripeProvider
+    StripeProvider,
+    CloudFunctionProvider,
+    CloudFunctionProvider
   ]
 })
 export class AppModule {}
