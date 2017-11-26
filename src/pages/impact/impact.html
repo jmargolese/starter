@@ -50,16 +50,16 @@
             <img *ngIf="donation.recipient.icon" src="{{donation.recipient.icon}}" />
           </ion-col>
           <ion-col col-3>
-            {{donation.donation.time | date:'MM/dd/yy' }}
+            {{donation.time | date:'MM/dd/yy' }}
           </ion-col>
           <ion-col col-3 style="white-space: normal;">
             {{ donation.recipient.name}}
           </ion-col>
           <ion-col col-2>
-            {{ donation.donation.amount | currency:'USD':true}}
+            {{ donation.amount | currency:'USD':true}}
           </ion-col>
           <ion-col col-2>
-            <ion-icon style="font-size: 180%;" *ngIf="donation.donation.donorPaidFees" name="checkmark"></ion-icon>
+            <ion-icon style="font-size: 180%;" *ngIf="donation.donorPaidFees" name="checkmark"></ion-icon>
           </ion-col>
         </ion-row>
       </ion-grid>
