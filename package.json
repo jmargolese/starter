@@ -69,7 +69,6 @@
     "es6-promise-plugin": "^4.1.1",
     "firebase": "^4.6.0",
     "g": "^2.0.1",
-
     "ionic-angular": "^3.9.2",
     "ionic-plugin-deeplinks": "^1.0.15",
     "ionic-plugin-keyboard": "^2.2.1",
