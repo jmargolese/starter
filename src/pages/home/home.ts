@@ -5,8 +5,6 @@ import { Component, ViewChild, ViewChildren, QueryList, NgZone } from '@angular/
 
 import { IonicPage, NavController, NavParams, Slides, Content, LoadingController, Events } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
-import { setTimeout } from 'timers';
-
 
 import * as shareTypes from '../../share-common/interfaces/interfaces';
 
@@ -73,10 +71,10 @@ export class HomePage {
 
     // make the call regardless so that we are tracking the observable in case we do login
 
-    this.organizations$ = this.userProvider.getFavoriteOrganizations();
+    /* this.organizations$ = this.userProvider.getFavoriteOrganizations();
 
     this.organizations$.subscribe(docs => {
-
+       console.log("in homePage: organizations changed:");
       // try to avoid an error in slides if you remove a slide, so clear it first
       if (this.organizations && this.organizations.length && docs && (docs.length != this.organizations.length))
         this.organizations = null;
@@ -93,7 +91,7 @@ export class HomePage {
       
       }, 250)
 
-    })
+    }) */
   }
 
 
@@ -102,7 +100,7 @@ export class HomePage {
     this.loading = this.loadingCtrl.create({
       content: ''
     });
-    this.loading.present()
+   /*  this.loading.present()
       .then(() => {
         this.currentOrganization = null;
         this.orgsAreValid = false;
@@ -114,7 +112,7 @@ export class HomePage {
             this.getFavoriteOrganizations();
 
           })
-      })
+      }) */
 
 
   }

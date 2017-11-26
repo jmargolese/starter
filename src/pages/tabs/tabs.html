@@ -1,5 +1,5 @@
 <ion-tabs #shareTabs>
-  <ion-tab [root]="tab1Root" tabTitle="Favorites" tabIcon="star"></ion-tab>
+  <ion-tab [root]="tab1Root" [rootParams]="{useOrgFavorites: true, orgIndex: 0 }" tabTitle="Favorites" tabIcon="star"></ion-tab>
   
 <ion-tab [root]="tab2Root" tabTitle="Discover" tabIcon="browsers"></ion-tab>
   <ion-tab [root]="tab3Root" tabTitle="Settings" tabIcon="settings"></ion-tab>

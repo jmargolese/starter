@@ -1,44 +1,53 @@
+import { ImpactPage } from './impact';
+
 import { AnalyticsProvider } from '../../share-common/providers/analytics/analytics';
 import { AuthProvider } from '../../share-common/providers/auth/auth';
+import { DataProvider } from '../../share-common/providers/data/data';
+import { UserProvider } from '../../share-common/providers/user/user';
+
 import { NavParams } from 'ionic-angular';
+import { AppVersion } from '@ionic-native/app-version';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By }           from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-import { SettingsPasscodePage } from './settings-passcode';
 import { IonicModule, Platform, NavController} from 'ionic-angular/index';
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { PlatformMock, StatusBarMock, SplashScreenMock, AnalyticsProviderMock, AuthProviderMock, NavParamsMock } from '../../../test-config/mocks-ionic';
 
-describe('SettingsPasscodePage', () => {
-  let comp: SettingsPasscodePage;
-  let fixture: ComponentFixture<SettingsPasscodePage>;
-  let de:      DebugElement;      //Element to test
-  let el:      HTMLElement;       //HMTL of elemen
+import { PlatformMock, NavParamsMock, AppVersionMock } from '../../../test-config/mocks-ionic';
+import { AnalyticsProviderMock, AuthProviderMock, DataProviderMock, UserProviderMock } from '../../../test-config/mocks-ionic';
 
+describe('ImpactPage', () => {
+  let comp: ImpactPage;
+  let fixture: ComponentFixture<ImpactPage>;
+  let de: DebugElement; 
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [SettingsPasscodePage],
+      declarations: [ImpactPage],
       imports: [
-        IonicModule.forRoot(SettingsPasscodePage)
+        IonicModule.forRoot(ImpactPage)
       ],
       providers: [
         NavController,
         { provide: Platform, useClass: PlatformMock},
-        { provide: StatusBar, useClass: StatusBarMock },
-        { provide: SplashScreen, useClass: SplashScreenMock },
         { provide: AnalyticsProvider, useClass: AnalyticsProviderMock },
         { provide: AuthProvider, useClass: AuthProviderMock },
-        { provide: NavParams, useClass: NavParamsMock }
+        { provide: DataProvider, useClass: DataProviderMock },
+        { provide: UserProvider, useClass: UserProviderMock },
+        { provide: NavParams, useClass: NavParamsMock },
+        { provide: AppVersion, useClass: AppVersionMock },
       ]
     });
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SettingsPasscodePage);
+    fixture = TestBed.createComponent(ImpactPage);
     comp = fixture.componentInstance;
     de = fixture.debugElement.query(By.css('ion-title'));
+  });
+
+  afterEach(() => {
+    fixture.destroy();
+    comp = null;
   });
 
   it('should create component', () => expect(comp).toBeDefined());
@@ -46,7 +55,7 @@ describe('SettingsPasscodePage', () => {
   it('should have expected ion-title text', () => {
     fixture.detectChanges();
     const iontitle = de.nativeElement;
-    expect(iontitle.innerText).toMatch('Change passcode');
+    expect(iontitle.innerText).toMatch('Dashboard');
   });
 });
 

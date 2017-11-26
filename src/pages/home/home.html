@@ -20,7 +20,7 @@
 </div>
 
 
-<ion-content #content class="home-css">
+<ion-content #content class="home-css" style="height: 2000px; background-color: black;">
   <div *ngIf="orgsAreValid && organizations && organizations?.length == 0" class="infoCard">
     <ion-card>
       <ion-card-header>
@@ -54,4 +54,4 @@
 
 </ion-content>
 <!-- <img *ngIf="showShareButton" src="assets/img/icons/icon-donate@x2.png" #fixedButtonName class="fixedButton"> -->
-<action-button *ngIf="showDonateButton" class="fixedButton" [buttonToDisplay]="'roundDonate'" [organization]="currentOrganization" [activity]="currentActivity"> </action-button>
+<!-- <action-button *ngIf="showDonateButton" class="fixedButton" [buttonToDisplay]="'roundDonate'" [organization]="currentOrganization" [activity]="currentActivity"> </action-button> -->
