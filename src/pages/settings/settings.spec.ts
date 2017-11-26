@@ -18,9 +18,7 @@ import { PlatformMock, StatusBarMock, SplashScreenMock, AnalyticsProviderMock, A
 describe('SettingsPage', () => {
   let comp: SettingsPage;
   let fixture: ComponentFixture<SettingsPage>;
-  let de:      DebugElement;      //Element to test
-  let el:      HTMLElement;       //HMTL of elemen
-
+  let de:      DebugElement;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -47,12 +45,18 @@ describe('SettingsPage', () => {
     de = fixture.debugElement.query(By.css('ion-title'));
   });
 
-  it('should create component', () => expect(comp).toBeDefined());
+  afterEach(() => {
+    fixture.destroy();
+    comp = null;
+  });
 
-  it('should have expected ion-title text', () => {
+  it('test page creation: create SettingsPage component', () => {
+    expect(comp).toBeDefined();
+  });
+
+  it('test constructor: expect Settings title', () => {
     fixture.detectChanges();
-    const iontitle = de.nativeElement;
-    expect(iontitle.innerText).toMatch('Settings');
+    expect(de.nativeElement.innerText).toMatch('Settings');
   });
 });
 

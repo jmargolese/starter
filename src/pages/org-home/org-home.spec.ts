@@ -7,6 +7,8 @@ import { UserProvider } from './../../share-common/providers/user/user';
 import { ComponentsModule } from '../../share-common/components/components.module';
 import { NavParams } from 'ionic-angular';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { By }           from '@angular/platform-browser';
+import { DebugElement } from '@angular/core';
 import { IonicModule, Platform, NavController} from 'ionic-angular/index';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -18,6 +20,7 @@ describe('OrgHomePage', () => {
 
   let comp: OrgHomePage;
   let fixture: ComponentFixture<OrgHomePage>;
+  let de: DebugElement;
 
    beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -42,10 +45,21 @@ describe('OrgHomePage', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(OrgHomePage);
     comp = fixture.componentInstance;
+    de = fixture.debugElement.query(By.css('ion-title'));
   });
 
-  it('should create component', () => {
+  afterEach(() => {
+    fixture.destroy();
+    comp = null;
+  });
+
+  it('test page creation: create OrgHomePage component', () => {
     expect(comp).toBeDefined();
-  }); 
+  });
+
+  it('test constructor: expect blank title', () => {
+    fixture.detectChanges();
+    expect(de.nativeElement.innerText).toMatch('');
+  });
 })
 

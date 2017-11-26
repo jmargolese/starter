@@ -19,8 +19,6 @@ describe('TabsPage', () => {
 
   let comp: TabsPage;
   let fixture: ComponentFixture<TabsPage>;
-  let de: DebugElement;
-  let el: HTMLElement;
 
    beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -42,22 +40,14 @@ describe('TabsPage', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TabsPage);
     comp = fixture.componentInstance;
-    de = fixture.debugElement.query(By.css('ion-tabs'));
-    el = de.nativeElement;
   });
 
-  it('should create component', () => {
+  afterEach(() => {
+    fixture.destroy();
+    comp = null;
+  });
+
+  it('test page creation: create TabsPage component', () => {
     expect(comp).toBeDefined();
-  });
-
-//  it('checks for the ion-tab element in the DOM', () => {
- //   fixture.detectChanges();
- //   expect(el.textContent).toContain('Favorites');
- // });
-
- // it('should have expected tabTitle text', () => {
- //   fixture.detectChanges();
- //   const tabtitle = de.nativeElement;
- //   expect(tabtitle.innerText).toMatch('Favorites');
- // });
+  }); 
 })

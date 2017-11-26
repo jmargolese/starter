@@ -40,7 +40,7 @@
     "@firebase/webchannel-wrapper": "0.2.1",
     "@ionic-native/app-version": "^4.3.2",
     "@ionic-native/core": "4.3.0",
-    "@ionic-native/deeplinks": "^4.4.0",
+    "@ionic-native/deeplinks": "^4.4.2",
     "@ionic-native/fcm": "^4.3.3",
     "@ionic-native/firebase-analytics": "^4.3.3",
     "@ionic-native/firebase-dynamic-links": "^4.3.2",
