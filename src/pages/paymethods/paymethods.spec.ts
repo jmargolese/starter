@@ -45,12 +45,18 @@ describe('PaymethodsPage', () => {
     de = fixture.debugElement.query(By.css('ion-title'));
   });
 
-  it('should create component', () => expect(comp).toBeDefined());
+  afterEach(() => {
+    fixture.destroy();
+    comp = null;
+  });
 
-  it('should have expected ion-title text', () => {
+  it('test page creation: create PaymethodsPage component', () => {
+    expect(comp).toBeDefined();
+  });
+
+  it('test constructor: expect Paymethods title', () => {
     fixture.detectChanges();
-    const iontitle = de.nativeElement;
-    expect(iontitle.innerText).toMatch('Paymethods');
+    expect(de.nativeElement.innerText).toMatch('Paymethods');
   });
 });
 
