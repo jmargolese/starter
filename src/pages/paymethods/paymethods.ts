@@ -14,7 +14,7 @@ import * as shareTypes from '../../share-common/interfaces/interfaces';
 })
 export class PaymethodsPage {
 
-  public paymethods: shareTypes.PayMethod[];
+  private paymethods: shareTypes.PayMethod[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public userProvider : UserProvider, 
      public analytics: AnalyticsProvider, public paymethodProvider: PaymethodsProvider) {

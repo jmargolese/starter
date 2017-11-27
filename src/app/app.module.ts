@@ -84,7 +84,6 @@ import { CloudFunctionProvider } from '../share-common/providers/cloud-function/
     NotificationsProvider,
     StripeProvider,
     CloudFunctionProvider,
-    CloudFunctionProvider
   ]
 })
 export class AppModule {}
