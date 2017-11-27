@@ -255,12 +255,24 @@ export class ActivitiesProviderMock {}
 export class SocialSharingMock {}
 
 export class DataProviderMock {
-  b = 0;
+  activity = 'mockActivity';
+  donation = ['mockDonation'];
+  organization = ['mockOrganization'];
   public getActivitiesForOrg() {
     return new Promise( (resolve, reject) => { 
-      resolve(this.b)
+      resolve(this.activity);
     })
   }
+  public getDonationRecords() {
+    return new Promise( (resolve, reject) => { 
+      resolve(this.donation);
+    })
+  }   
+  public getAllOrganizations() {
+    return new Promise( (resolve, reject) => { 
+      resolve(this.organization);
+    })
+  }  
 }
 
 export class UserProviderMock {
@@ -271,14 +283,98 @@ export class UserProviderMock {
     },
     email: 'MockEmail',
     phoneNumber: '123-456-7890'
-  }
+  };
+  currentAuthUser = 'mockAuthUser';
+  mockUserHasOrganization = true;
   public getUserProfile() {
     return (this.currentUser);
-  }
+  };
+  public getUserId() {
+    return (this.currentAuthUser);
+  };
+   public userHasOrganization() {
+    return (this.mockUserHasOrganization);
+  };
+  public isUserFavorite(type, id) {
+    return (false);
+  };
 }
 
 export class NavParamsMock {
+  result = null;
+  activity: shareTypes.Activity = {
+    "id": "mock",
+    "organization": "orgAlive",
+    "info": {
+        "type": "Campaign",
+        "featured": false,
+        "promoted": false,
+        "displayOrder": 0,
+        "shareuid": "ALIVE",
+        "enabled": true,
+    },
+    "images": {
+        "image": null,
+        "logo": null
+    },
+    "messages": {
+        "headline": "mockHeadline",
+        "mainMessage": "Help us raise money on Giving Tuesday",
+        "callToAction": "Give on Tuesday Nov 7th!",
+        "motd": null
+    },
+
+    "dates": {
+        "startDate": "2017-10-25",
+        "endDate": "2017-11-15",
+        "activityDate": null,
+        "activeDateStart": null,
+        "activeDateEnd": null,
+        "activeDateTimer": null
+    },
+    "social": null,
+    "parent": null,
+    "children": null,
+    "metadata" : null
+  };
+
+  organization: shareTypes.Organization = {
+    "id": 'mockId',
+    "companyName": 'mockcompanyName',
+    "ein": 'mockein',
+    "shareuid": 'mockshareuid',
+    "images": {
+        "image": 'mockimage',
+        "logo": 'mocklogo'
+    },
+    "social": {
+      "message": null,
+      "hashTags": null,
+      "subject": null
+    },
+    "info": {
+        "coreMessage": 'mockcoreMessage',
+        "isDemo": true,
+        "description": 'mockdescription',
+        "enabled": true
+    },
+    "donationPrefs": [100],
+    "payMethods": [
+        {
+            "type": 'mockType',
+            "data": 0
+        }
+    ],
+    "metadata": null
+  };
+
   public get(key): any {
+    switch (key) {
+      case 'activity':
+        return(this.activity);
+      case 'organization':
+        return(this.organization);
+    }
     return String(key) + 'Output';
   }
 }
@@ -293,10 +389,10 @@ export class AngularFirestoreMock {
 }
 
 export class OrganizationProviderMock {
-  organization = 'mockedOrganization';
-  public getAllOrganization() {
+  allOrganizations = ['mockOrganization'];
+  public getAllOrganizations() {
     return new Promise( (resolve, reject) => {
-      resolve(this.organization)
+     resolve(this.allOrganizations)
     })
   }  
 }

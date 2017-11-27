@@ -51,15 +51,17 @@ describe('ContactPage', () => {
     de = fixture.debugElement.query(By.css('ion-title'));
   });
 
-  it('should create component', () => expect(comp).toBeDefined());
-
-  it('should have expected ion-title text', () => {
-    fixture.detectChanges();
-    const iontitle = de.nativeElement;
-    expect(iontitle.innerText).toMatch('Contact');
+  afterEach(() => {
+    fixture.destroy();
+    comp = null;
   });
 
- // it('Name should be rendered', function() {
- //   expect(element[0].innerText).toEqual('John');
- // });
+  it('test page creation: expect ContactPage component', () => {
+    expect(comp).toBeDefined();
+  });
+
+  it('test constructor: expect Contact title', () => {
+    fixture.detectChanges();
+    expect(de.nativeElement.innerText).toMatch('Contact');
+  });
 });
