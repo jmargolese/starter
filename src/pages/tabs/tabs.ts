@@ -24,18 +24,21 @@ export class TabsPage {
   tab4Root = 'ImpactPage';
   tab5Root = 'ContactPage';
 
-  constructor(public events: Events, public deeplinks: Deeplinks,    public notifications: NotificationsProvider,
+  constructor(public events: Events, public deeplinks: Deeplinks, public notifications: NotificationsProvider,
     public navCtrl: NavController, public platform: Platform, public modalCtrl: ModalController) {
-    
-    
-      this.notifications.init();
 
-      this.subscribeToEvents();
+
+    
+
+    this.subscribeToEvents();
 
     console.log("setting up deeplinks in tabs");
 
 
     this.platform.ready().then(() => {
+
+      this.notifications.init();
+      
       /*
       IonicDeeplink.route({
         '/about-us': AboutPage,
@@ -52,7 +55,7 @@ export class TabsPage {
       Successfully routed {"$link":{"path":"/crwp","queryString":"","fragment":"","host":"nn4wp.app.goo.gl","url":"https://nn4wp.app.goo.gl/crwp","scheme":"https"}}
       */
       console.log("Environment is: " + ENV.mode);
-      this.showDebugTab = ENV.mode.toLowerCase() != 'production';
+      this.showDebugTab = true; // ENV.mode.toLowerCase() != 'production';
       /*
             this.deeplinks.route({
               '/settings': 'SettingsPage',
@@ -84,27 +87,27 @@ export class TabsPage {
       }).subscribe((match: any) => {
         console.log('Successfully routed route:' + match.$route, JSON.stringify(match));
 
-        
+
         if (match.$args) {
           console.log("Args are: " + JSON.stringify(match.$args));
         }
         else {
-          var result: any = this.parseUri( match.$link.url);
+          var result: any = this.parseUri(match.$link.url);
           console.log("Parsed URI looks like: " + JSON.stringify(result.queryParams));
-        
+
         }
       }, (nomatch) => {
         console.warn('Unmatched Route', JSON.stringify(nomatch));
       });
 
 
-     
+
 
     }) // end platform ready
 
   }
 
-  
+
   private subscribeToEvents() {
     // part of the init process
 
@@ -115,15 +118,20 @@ export class TabsPage {
     });
 
     this.events.subscribe('model:AddStripeCcPage', () => {
-      // let other parts of the app tell us when a modal needs to be display
+
       this.showAddStripeCCModal();
 
     });
 
-    this.events.subscribe('user:updated', () => {
-      // let other parts of the app tell us when a modal needs to be display
-      this.notifications.getCurrentToken();
+    /*  this.events.subscribe('user:updated', () => {
+       
+       
+ 
+     }); */
 
+    this.platform.resume.subscribe(() => {
+      console.log("Resume event");
+      this.notifications.getCurrentToken();
     });
 
   }

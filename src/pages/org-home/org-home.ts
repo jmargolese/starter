@@ -44,10 +44,20 @@ export class OrgHomePage {
   private activityListTop: number = null;    // where the activityList will be displayed so we can watch scrolling and know when it's visible
   private loading;
 
+  public drawerOptions: any;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public activitiesProvider: ActivitiesProvider,
     public events: Events, public analytics: AnalyticsProvider, public userProvider: UserProvider, public zone: NgZone,
     public element: ElementRef, public renderer: Renderer2, public loadingCtrl: LoadingController, ) {
-    console.log("Entered orgHomePage");
+
+
+    this.drawerOptions = {
+      handleHeight: 50,
+      thresholdFromBottom: 200,
+      thresholdFromTop: 200,
+      bounceBack: true
+    };
+
     if (navParams.get('showHeader')) {
       this.hideHeader = false;
     }

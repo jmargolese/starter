@@ -1,8 +1,21 @@
 page-org-home {
     .org-home-css {}
 
-   
-   /*  .toolbar-background-ios {
+    .contentDrawer {
+        background-color: red;
+    }
+    .ios,
+    .md {
+        page-home {
+            content-drawer {
+                background-color: #34495e !important;
+            }
+            content-drawer .content {
+                padding: 20px;
+            }
+        }
+    }
+    /*  .toolbar-background-ios {
         background-color: transparent;
     } */
     .orgAddToFavoritesButton {
@@ -14,14 +27,12 @@ page-org-home {
         z-index: 999;
     }
     .header-image {
-       // background-image: url(https://ununsplash.imgix.net/photo-1421091242698-34f6ad7fc088?fit=crop&fm=jpg&h=650&q=75&w=950);
+        // background-image: url(https://ununsplash.imgix.net/photo-1421091242698-34f6ad7fc088?fit=crop&fm=jpg&h=650&q=75&w=950);
         height: 75vh;
     }
     .main-content {
-        
         background-color: white;
     }
-
     .navButton {
         position: absolute;
         top: 0vh;
@@ -30,33 +41,26 @@ page-org-home {
         font-weight: bold;
     }
     .nextButton {
-        
-        right: 0vw;;
-       
+        right: 0vw;
+        ;
     }
     ion-icon {
         font-size: 200%;
         font-weight: bold;
         color: white;
     }
-
     .prevButton {
-       
-        left: 3vw;;
-       
+        left: 3vw;
+        ;
     }
-
-
     .navButtonOverlay {
-        color: white; 
-        position: absolute; 
-       /* background-color: rgba(255,255,255,0.3); */
+        color: white;
+        position: absolute;
+        /* background-color: rgba(255,255,255,0.3); */
         top: 0;
         z-index: 1000;
         position: absolute;
         height: 30px;
         font-size: 2.5em;
     }
-
-    
 }

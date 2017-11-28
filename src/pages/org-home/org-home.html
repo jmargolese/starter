@@ -8,10 +8,11 @@
 </ion-header>
 
 
-<div  #navButtons  *ngIf="showNavButtons && (showPrevButton || showNextButton)" id="navButtonsContainer" class="imageOverlayGradient" style="position: relative; top: 0; width: 100vw; height: 34vh; z-index: 998">
+<div #navButtons *ngIf="showNavButtons && (showPrevButton || showNextButton)" id="navButtonsContainer" class="imageOverlayGradient"
+  style="position: relative; top: 0; width: 100vw; height: 34vh; z-index: 998">
 
   <!-- <button  (click)="prev()" ion-button color="primary" clear> -->
-  <button *ngIf="showPrevButton" (click)="prev()" ion-button color="white"  clear class="prevButton navButton" >
+  <button *ngIf="showPrevButton" (click)="prev()" ion-button color="white" clear class="prevButton navButton">
     <ion-icon name="arrow-back"></ion-icon>
   </button>
 
@@ -22,25 +23,25 @@
 <!-- <ion-content class="org-home-css" [style.background-color]="organization && organization.info && organization.info.backgroundColor || '#FFFFFF' "> -->
 
 
-<ion-content #content  class="org-home-css" parallax-header (swipe)="swipeEvent($event)">
+<ion-content #content class="org-home-css" parallax-header (swipe)="swipeEvent($event)">
 
   <div class="header-image" [ngStyle]="{'background-image': 'url(' +  (organization ? organization.images.image  : 'assets/img/share/Share_ICON-1x1.png') + ')'}"></div>
   <div class="main-content">
 
     <div *ngIf="!organization">
-        <div class="infoCard">
-            <ion-card>
-              <ion-card-header>
-                <img class="logoImage" src="assets/img/share/Share_ICON-192x192px.png" style="width:1px; height:1px;"/> Discover!
-        
-              </ion-card-header>
-              <ion-card-content>
-                Tap the
-                <b>Discover</b> tab below to find your interests. Then
-                <i>Add to home</i> to see your favorite organization's news, events and updates right here.
-              </ion-card-content>
-            </ion-card>
-          </div>
+      <div class="infoCard">
+        <ion-card>
+          <ion-card-header>
+            <img class="logoImage" src="assets/img/share/Share_ICON-192x192px.png" style="width:1px; height:1px;" /> Discover!
+
+          </ion-card-header>
+          <ion-card-content>
+            Tap the
+            <b>Discover</b> tab below to find your interests. Then
+            <i>Add to home</i> to see your favorite organization's news, events and updates right here.
+          </ion-card-content>
+        </ion-card>
+      </div>
     </div>
     <org-home *ngIf="organization" [organization]='organization' [options]="{hideImage: true}"> </org-home>
   </div>
@@ -51,3 +52,14 @@
   [options]="{buttonToDisplay : 'donateButtonStdButton', changeTab: false}"> </action-button>
 <action-button *ngIf="showDonateButton" class="fixedButton" [organization]="organization" [activity]="currentActivity" [options]="{buttonToDisplay : 'roundDonate', changeTab: false}">
 </action-button>
+
+
+  <!-- <content-drawer [options]="drawerOptions">
+    <div class="contentDrawer">
+      The world is your oyster.
+      <p>
+        If you get lost, the
+        <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
+      </p>
+    </div>
+  </content-drawer> -->
