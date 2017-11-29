@@ -63,7 +63,7 @@ export class OrgHomePage {
     }
 
     this.events.subscribe("activity:homeCurrentActivity", (activity) => {
-      // let other parts of the app tell us when a new tab is needed
+      // let other parts of the app tell us when a new tab is needed   
       this.currentActivity = activity;
     });
 

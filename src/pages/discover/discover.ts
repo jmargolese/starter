@@ -28,6 +28,7 @@ export class DiscoverPage {
 
   public organizations: Observable<any[]>;
   public title: string = "Discover";
+  public showSearchBar: boolean = false;         // we can turn it back on when we support it
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public orgProvider: OrganizationProvider, public analytics: AnalyticsProvider) {
 

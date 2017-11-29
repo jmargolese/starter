@@ -17,7 +17,7 @@
     </ion-list>
     
   </ion-content>
-  <ion-footer>
+  <ion-footer *ngIf="showSearchBar">
   <ion-toolbar class="discover-class-css whiteSearchbar">
       <ion-searchbar [showCancelButton]="true" (ionInput)="onSearchInput($event)">
       </ion-searchbar>

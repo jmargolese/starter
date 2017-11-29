@@ -48,10 +48,11 @@
 
 </ion-content>
 
-<action-button *ngIf="showAddToHomeButton" class="orgAddToFavoritesButton" [organization]="organization" [activity]="currentActivity"
+<!-- <action-button *ngIf="showAddToHomeButton" class="orgAddToFavoritesButton" [organization]="organization" [activity]="currentActivity"
   [options]="{buttonToDisplay : 'donateButtonStdButton', changeTab: false}"> </action-button>
 <action-button *ngIf="showDonateButton" class="fixedButton" [organization]="organization" [activity]="currentActivity" [options]="{buttonToDisplay : 'roundDonate', changeTab: false}">
-</action-button>
+</action-button> -->
+<actions-bar  *ngIf="showDonateButton" class="orgShowActionBar" [organization]="organization" [activity]="currentActivity" [options]="{buttonsToDisplay : ['largeDonateButton', 'largeOptionsButton'], changeTab: false}"></actions-bar>
 
 
   <!-- <content-drawer [options]="drawerOptions">
