@@ -118,141 +118,132 @@ export class NavMock {
 
 export class ViewControllerMock {
   
-      public readReady: any = {
-          emit(): void {
-  
-          },
-          subscribe(): any {
-  
-          }
-      };
-  
-      public writeReady: any = {
-          emit(): void {
-  
-          },
-          subscribe(): any {
-  
-          }
-      };
-  
-      public contentRef(): any {
-          return new Promise(function (resolve: Function): void {
-              resolve();
-          });
-      }
-  
-      public didEnter(): any {
-          return new Promise(function (resolve: Function): void {
-              resolve();
-          });
-      }
-  
-      public didLeave(): any {
-          return new Promise(function (resolve: Function): void {
-              resolve();
-          });
-      }
-  
-      public onDidDismiss(): any {
-          return new Promise(function (resolve: Function): void {
-              resolve();
-          });
-      }
-  
-      public onWillDismiss(): any {
-          return new Promise(function (resolve: Function): void {
-              resolve();
-          });
-      }
-  
-      public willEnter(): any {
-          return new Promise(function (resolve: Function): void {
-              resolve();
-          });
-      }
-  
-      public willLeave(): any {
-          return new Promise(function (resolve: Function): void {
-              resolve();
-          });
-      }
-  
-      public willUnload(): any {
-          return new Promise(function (resolve: Function): void {
-              resolve();
-          });
-      }
-  
-      public dismiss(): any {
-          return true;
-      }
-  
-      public enableBack(): any {
-          return true;
-      }
-  
-      public getContent(): any {
-          return true;
-      }
-  
-      public hasNavbar(): any {
-          return true;
-      }
-  
-      public index(): any {
-          return true;
-      }
-  
-      public isFirst(): any {
-          return true;
-      }
-  
-      public isLast(): any {
-          return true;
-      }
-  
-      public pageRef(): any {
-          return true;
-      }
-  
-      public setBackButtonText(): any {
-          return true;
-      }
-  
-      public showBackButton(): any {
-          return true;
-      }
-  
-      public _setHeader(): any {
-          return true;
-      }
-  
-      public _setIONContent(): any {
-          return true;
-      }
-  
-      public _setIONContentRef(): any {
-          return true;
-      }
-  
-      public _setNavbar(): any {
-          return true;
-      }
-  
-      public _setContent(): any {
-          return true;
-      }
-  
-      public _setContentRef(): any {
-          return true;
-      }
-  
-      public _setFooter(): any {
-          return true;
-      }
-  
+  public readReady: any = {
+    emit(): void {},
+    subscribe(): any {}
+  };
+
+  public writeReady: any = {
+    emit(): void {},
+    subscribe(): any {}
+  };
+
+  public contentRef(): any {
+    return new Promise(function (resolve: Function): void {
+        resolve();
+    });
   }
+
+  public didEnter(): any {
+    return new Promise(function (resolve: Function): void {
+        resolve();
+    });
+  }
+
+  public didLeave(): any {
+    return new Promise(function (resolve: Function): void {
+        resolve();
+    });
+  }
+
+  public onDidDismiss(): any {
+    return new Promise(function (resolve: Function): void {
+        resolve();
+    });
+  }
+
+  public onWillDismiss(): any {
+    return new Promise(function (resolve: Function): void {
+        resolve();
+    });
+  }
+
+  public willEnter(): any {
+    return new Promise(function (resolve: Function): void {
+        resolve();
+    });
+  }
+
+  public willLeave(): any {
+    return new Promise(function (resolve: Function): void {
+        resolve();
+    });
+  }
+
+  public willUnload(): any {
+    return new Promise(function (resolve: Function): void {
+        resolve();
+    });
+  }
+
+  public dismiss(): any {
+    return true;
+  }
+
+  public enableBack(): any {
+    return true;
+  }
+
+  public getContent(): any {
+    return true;
+  }
+
+  public hasNavbar(): any {
+    return true;
+  }
+
+  public index(): any {
+    return true;
+  }
+
+  public isFirst(): any {
+    return true;
+  }
+
+  public isLast(): any {
+    return true;
+  }
+
+  public pageRef(): any {
+    return true;
+  }
+
+  public setBackButtonText(): any {
+    return true;
+  }
+
+  public showBackButton(): any {
+    return true;
+  }
+
+  public _setHeader(): any {
+    return true;
+  }
+
+  public _setIONContent(): any {
+    return true;
+  }
+
+  public _setIONContentRef(): any {
+    return true;
+  }
+
+  public _setNavbar(): any {
+    return true;
+  }
+
+  public _setContent(): any {
+    return true;
+  }
+
+  public _setContentRef(): any {
+    return true;
+  }
+
+  public _setFooter(): any {
+    return true;
+  }
+}
 
 export class StripeMock {}
 export class AlertProviderMock {}
@@ -260,9 +251,29 @@ export class AnalyticsProviderMock {}
 export class ShareProviderMock {}
 export class PaymethodsProviderMock {}
 export class AuthProviderMock {}
-export class DataProviderMock {}
 export class ActivitiesProviderMock {}
 export class SocialSharingMock {}
+
+export class DataProviderMock {
+  activity = 'mockActivity';
+  donation = ['mockDonation'];
+  organization = ['mockOrganization'];
+  public getActivitiesForOrg() {
+    return new Promise( (resolve, reject) => { 
+      resolve(this.activity);
+    })
+  }
+  public getDonationRecords() {
+    return new Promise( (resolve, reject) => { 
+      resolve(this.donation);
+    })
+  }   
+  public getAllOrganizations() {
+    return new Promise( (resolve, reject) => { 
+      resolve(this.organization);
+    })
+  }  
+}
 
 export class UserProviderMock {
   currentUser: shareTypes.UserProfile = {
@@ -272,14 +283,98 @@ export class UserProviderMock {
     },
     email: 'MockEmail',
     phoneNumber: '123-456-7890'
-  }
+  };
+  currentAuthUser = 'mockAuthUser';
+  mockUserHasOrganization = true;
   public getUserProfile() {
     return (this.currentUser);
-  }
+  };
+  public getUserId() {
+    return (this.currentAuthUser);
+  };
+   public userHasOrganization() {
+    return (this.mockUserHasOrganization);
+  };
+  public isUserFavorite(type, id) {
+    return (false);
+  };
 }
 
 export class NavParamsMock {
+  result = null;
+  activity: shareTypes.Activity = {
+    "id": "mock",
+    "organization": "orgAlive",
+    "info": {
+        "type": "Campaign",
+        "featured": false,
+        "promoted": false,
+        "displayOrder": 0,
+        "shareuid": "ALIVE",
+        "enabled": true,
+    },
+    "images": {
+        "image": null,
+        "logo": null
+    },
+    "messages": {
+        "headline": "mockHeadline",
+        "mainMessage": "Help us raise money on Giving Tuesday",
+        "callToAction": "Give on Tuesday Nov 7th!",
+        "motd": null
+    },
+
+    "dates": {
+        "startDate": "2017-10-25",
+        "endDate": "2017-11-15",
+        "activityDate": null,
+        "activeDateStart": null,
+        "activeDateEnd": null,
+        "activeDateTimer": null
+    },
+    "social": null,
+    "parent": null,
+    "children": null,
+    "metadata" : null
+  };
+
+  organization: shareTypes.Organization = {
+    "id": 'mockId',
+    "companyName": 'mockcompanyName',
+    "ein": 'mockein',
+    "shareuid": 'mockshareuid',
+    "images": {
+        "image": 'mockimage',
+        "logo": 'mocklogo'
+    },
+    "social": {
+      "message": null,
+      "hashTags": null,
+      "subject": null
+    },
+    "info": {
+        "coreMessage": 'mockcoreMessage',
+        "isDemo": true,
+        "description": 'mockdescription',
+        "enabled": true
+    },
+    "donationPrefs": [100],
+    "payMethods": [
+        {
+            "type": 'mockType',
+            "data": 0
+        }
+    ],
+    "metadata": null
+  };
+
   public get(key): any {
+    switch (key) {
+      case 'activity':
+        return(this.activity);
+      case 'organization':
+        return(this.organization);
+    }
     return String(key) + 'Output';
   }
 }
@@ -289,17 +384,16 @@ export class AngularFirestoreMock {
   public collection() {
     return new Promise( (resolve, reject) => { 
       resolve(this.b)
-    });
+    })
   }
 }
 
-
 export class OrganizationProviderMock {
-  organization = 'mockedOrganization';
-  public getAllOrganization() {
+  allOrganizations = ['mockOrganization'];
+  public getAllOrganizations() {
     return new Promise( (resolve, reject) => {
-      resolve(this.organization)
-    });
+     resolve(this.allOrganizations)
+    })
   }  
 }
 
@@ -308,7 +402,7 @@ export class NotificationsProviderMock {
   public init() {
     return new Promise( (resolve, reject) => {
       resolve(this.b)
-    });
+    })
   }   
 }
 
@@ -321,21 +415,22 @@ export class AppVersionMock {
   public getVersionNumber() {
     return new Promise( (resolve, reject) => {
       resolve(this.version)
-    });
+    })
   }
   public getAppName() {
     return new Promise( (resolve, reject) => {
       resolve(this.name)
-    });
+    })
   }
   public getPackageName() {
     return new Promise( (resolve, reject) => {
       resolve(this.package)
-    });
+    })
   }
+
   public getVersionCode() {
     return new Promise( (resolve, reject) => {
       resolve(this.code)
-    });
+    })
   }
 }

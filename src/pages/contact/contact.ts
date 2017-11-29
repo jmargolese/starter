@@ -1,15 +1,15 @@
 import { LoginPage } from './../../share-common/pages/login/login';
 import { activitySeeds } from './../../seeds/seedActivities';
 import { userDataSeeds } from './../../seeds/seedUserData';
-import {  donationSeeds } from './../../seeds/seedDonations';
+import { donationSeeds } from './../../seeds/seedDonations';
+
 
 import { Component } from '@angular/core';
 import { NavController , ModalController, IonicPage} from 'ionic-angular';
 
-import { orgSeeds } from '../../seeds/seedOrganizations';
+import { orgSeeds, testStripeAcct } from '../../seeds/seedOrganizations';
 
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
-
 
 // providers
 import { AuthProvider } from './../../share-common/providers/auth/auth';
@@ -22,11 +22,11 @@ import { AuthProvider } from './../../share-common/providers/auth/auth';
 export class ContactPage {
 
   private organizationsCollection: AngularFirestoreCollection<any>;
+  private stripeAccountsCollection: AngularFirestoreCollection<any>;
 
   constructor(public navCtrl: NavController, private readonly afs: AngularFirestore, private myAuth: AuthProvider, public modalCtrl: ModalController) {
     this.organizationsCollection = afs.collection<any>('organizations');
-
-
+    this.stripeAccountsCollection = afs.collection<any>('stripeAccountObjects');
   }
 
   public login(): void {
@@ -48,13 +48,20 @@ export class ContactPage {
     orgSeeds.forEach(org => {
       console.log("This is the org: " + org.key);
 
-      this.organizationsCollection.doc(org.key).set(org.data).then(() => {
-        console.log("Wrote document for:" + org.key)
-      }
-      )
-        .catch(error => {
-          console.error("Error writing document for " + org.key + " error: " + error.message);
-        })
+      this.organizationsCollection.doc(org.key).set(org.data)
+        .then(() => {
+          console.log("Wrote document for:" + org.key)
+          console.log("Adding Stripe Account for:" + org.key);
+
+          this.stripeAccountsCollection.doc(org.key).set(testStripeAcct)
+            .then(()=> {
+              console.log("Wrote Stripe account for: "+org.key)
+            }).catch(error => {
+              console.error("Error Stripe Account document for " + org.key + "error: " + error.message);
+            });
+        }).catch(error => {
+          console.error("Error writing Org document for " + org.key + " error: " + error.message);
+        });
     })
   }
 

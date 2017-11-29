@@ -1,3 +1,4 @@
+export const testStripeAcct = {"id" : "acct_1Ai6pMHMFCaEtegi"};
 export const orgSeeds = [
     {
         "key":  "orgHumane",
@@ -32,13 +33,15 @@ export const orgSeeds = [
             ],
             "payMethods": [
                 {
-                    "type": "stripe",
-                    "data": {
-                        "hasStripeAccount": true,
-                        "creditCardFee": 0.029
+                "type": "stripe",
+                "data": {
+                    "creditCardFee": 0.029
                     }
-                }
-            ]
+                },
+            ],
+            "subscription": {
+                "applicationFee" : 0.0
+            }
         }
     },
     {
@@ -76,14 +79,16 @@ export const orgSeeds = [
                 100,
                 500
             ],
-            "payMethods": [
+            "paymethods": [
                 {
-                    "stripe": {
-                        "hasStripeAccount": true,
-                        "creditCardFee": 0.029
-                    }
+                  "type" : "stripe",
+                   "creditCardFee": 0.029
                 }
-            ]
+            ],
+            "subscription":
+                {
+                    "applicationFee" : 0.0
+                }
         }
     },
     {
@@ -123,12 +128,15 @@ export const orgSeeds = [
               },
             "payMethods": [
                 {
-                    "stripe": {
-                        "hasStripeAccount": true,
-                        "creditCardFee": 0.029
+                "type": "stripe",
+                "data": {
+                    "creditCardFee": 0.029
                     }
-                }
-            ]
+                },
+            ],
+            "subscription": {
+                "applicationFee" : 0.0
+            }
         }
     }
 ]

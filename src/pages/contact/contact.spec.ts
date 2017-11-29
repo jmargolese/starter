@@ -21,8 +21,8 @@ import { AnalyticsProviderMock, AuthProviderMock, DataProviderMock, UserProvider
 describe('ContactPage', () => {
   let comp: ContactPage;
   let fixture: ComponentFixture<ContactPage>;
-  let de:      DebugElement;      //Element to test
-
+  let de:      DebugElement;
+  
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ContactPage],
@@ -51,12 +51,17 @@ describe('ContactPage', () => {
     de = fixture.debugElement.query(By.css('ion-title'));
   });
 
-  it('should create component', () => expect(comp).toBeDefined());
+  afterEach(() => {
+    fixture.destroy();
+    comp = null;
+  });
 
-  it('should have expected ion-title text', () => {
+  it('test page creation: expect ContactPage component', () => {
+    expect(comp).toBeDefined();
+  });
+
+  it('test constructor: expect Contact title', () => {
     fixture.detectChanges();
-    const iontitle = de.nativeElement;
-    expect(iontitle.innerText).toMatch('Contact');
+    expect(de.nativeElement.innerText).toMatch('Contact');
   });
 });
-

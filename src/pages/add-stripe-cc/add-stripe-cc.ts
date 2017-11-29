@@ -3,6 +3,7 @@ import { AlertProvider } from './../../share-common/providers/alert/alert';
 //import { Page } from './../../../e2e/app.po';
 
 import { UserProvider } from './../../share-common/providers/user/user';
+import { StripeProvider } from './../../share-common/providers/stripe/stripe';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -39,17 +40,21 @@ export class AddStripeCcPage {
 
   public submitAttempt: boolean = false;
 
-  public ccType: string = null;
+  public ccType: string = "";
 
-  constructor(public payMethProvider: PaymethodsProvider, public navCtrl: NavController, public navParams: NavParams, public userProvider: UserProvider, 
-    public stripe: Stripe, public formBuilder: FormBuilder, public alert: AlertProvider,  public viewCtrl: ViewController) {
+  public cvcLength: number = 3;
+
+  constructor(public payMethProvider: PaymethodsProvider, public navCtrl: NavController, public navParams: NavParams, 
+    public userProvider: UserProvider, public stripe: Stripe, public formBuilder: FormBuilder, public alert: AlertProvider,  
+    public viewCtrl: ViewController, public stripeProvider: StripeProvider) {
+
     this.stripe.setPublishableKey(ENV.stripe.privateKey);
 
     this.ccForm = formBuilder.group({
       cardholder: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
       cardnumber: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
       expirationDate: ['', Validators.compose([Validators.maxLength(5), Validators.required])],
-      cvc: ['', Validators.compose([Validators.maxLength(3), Validators.required])],
+      cvc: ['', Validators.compose([Validators.maxLength(this.cvcLength), Validators.required])],
       postalCode: ['', Validators.compose([Validators.maxLength(11), Validators.required])]
 
     });
@@ -78,6 +83,7 @@ export class AddStripeCcPage {
   public cardNumberChanged(value: string) {
 
     // don't add a space if it's the last character, screws up delete
+
     if (value && value.length < 19 && value.length != 14 && value.length != 4 && value.length != 9)
       this.ccForm.controls.cardnumber.setValue(value.replace(/\W/gi, '').replace(/(.{4})/g, '$1 '));
 
@@ -85,7 +91,9 @@ export class AddStripeCcPage {
       this.stripe.getCardType(value)
         .then(type => {
           console.log("Credit card type: " + type);
-          this.ccType = type == "Unknown" ? "" : type.toLowerCase();
+          this.ccType = (type == "Unknown" ? "" : type.toLowerCase());
+          // cvc code length is 4 if it is amex, otherwise always 3 (for now).
+          this.cvcLength = this.ccType && this.ccType == 'american express' ? 4 : 3;
         })
         .catch(() => {
           this.ccType = null;
@@ -124,7 +132,7 @@ export class AddStripeCcPage {
 
   public validateCVC(value: string) {
    
-    if (value && value.length == 3) {
+    if (value && value.length == this.cvcLength) {
       this.stripe.validateCVC(value)
         .then(() => {
           this.ccForm.controls.cvc.setErrors(null);
@@ -169,39 +177,35 @@ export class AddStripeCcPage {
 
       console.log("About to submit credit card: " + JSON.stringify(card));
 
-     
-
+    
       this.stripe.createCardToken(<any>card)
       .then(token => {
+
         console.log("Created stripe token: " + JSON.stringify(token));
+
         this.submitAttempt = false;
-        let newPaymethod: shareTypes.PayMethod = {
-          brand: this.ccType,
-          displayName: this.ccType + " ending in " + card.number.substr(card.number.length - 4, 4),
-          hidden : false,
-          isPreferred : true,
-          kind : "card",
-          vendor : "stripe",
+
+        let newStripeToken: shareTypes.StripeToken = {
+          userId: this.userProvider.getUserId(),
           token: token
-        }
+        };
 
-
-        this.payMethProvider.addPaymethod(newPaymethod)
-        .then(() => {
-          this.alert.confirm({  title: "Success",  message: "Your credit card has been added", buttons: { ok : true, cancel: false}  })
-          .then(() => {
-            this.viewCtrl.dismiss({  error: false, canceled: false, newPaymethod: newPaymethod });
-          })
-        })
-        .catch(error => {
-          console.error("Error adding paymethod: " + error.message);
-        })
-       
-      })
-      .catch(error  => {
+        this.stripeProvider.submitStripeToken(newStripeToken)
+        .then(()=>{
+            console.log('Token submitted to the cloud');
+            this.alert.confirm({  title: "Success",  message: "Your credit card has been added", buttons: { ok : true, cancel: false}  })
+            .then(() => {
+              // this.viewCtrl.dismiss({  error: false, canceled: false, newPaymethod: newPaymethod });
+              this.viewCtrl.dismiss({  error: false, canceled: false });
+            });
+          }).catch(error =>{
+          console.log(`stripeProvider.submitStripeToken rejected with error: ${error}`);
+          this.alert.confirm({  title: "Error",  message: error, buttons: { ok : true, cancel: false} });
+        });
+      }).catch(error  => {
         console.error("Stripe token rejected with error: " + JSON.stringify(error));
         this.alert.confirm({  title: "Error",  message: error, buttons: { ok : true, cancel: false} });
-      })
+      });
     }
   }
 }

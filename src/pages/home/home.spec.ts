@@ -42,7 +42,12 @@ describe('HomePage', () => {
     comp = fixture.componentInstance;
   });
 
-  it('should create component', () => {
+  afterEach(() => {
+    fixture.destroy();
+    comp = null;
+  });
+
+  it('test page creation: expect HomePage component', () => {
     expect(comp).toBeDefined();
   });
 })

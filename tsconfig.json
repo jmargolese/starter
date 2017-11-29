@@ -6,6 +6,7 @@
         "environments/environment"
       ]
     },
+    "noStrictGenericChecks": true,
     "allowSyntheticDefaultImports": true,
     "declaration": false,
     "emitDecoratorMetadata": true,

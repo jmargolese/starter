@@ -6,6 +6,8 @@ import { Deeplinks } from '@ionic-native/deeplinks';
 
 import { NavParams } from 'ionic-angular';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { By }           from '@angular/platform-browser';
+import { DebugElement } from '@angular/core';
 import { IonicModule, Platform, NavController} from 'ionic-angular/index';
 
 import { NotificationsProviderMock } from '../../../test-config/mocks-ionic';
@@ -40,7 +42,12 @@ describe('TabsPage', () => {
     comp = fixture.componentInstance;
   });
 
-  it('should create component', () => {
-    expect(comp).toBeDefined();
+  afterEach(() => {
+    fixture.destroy();
+    comp = null;
   });
+
+  it('test page creation: create TabsPage component', () => {
+    expect(comp).toBeDefined();
+  }); 
 })

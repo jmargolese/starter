@@ -17,7 +17,7 @@ describe('DiscoverPage', () => {
 
   let comp: DiscoverPage;
   let fixture: ComponentFixture<DiscoverPage>;
-  let de: DebugElement;      //Element to test
+  let de: DebugElement;
 
    beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -35,7 +35,7 @@ describe('DiscoverPage', () => {
       ]
     });
   }));
-  
+
   beforeEach(() => {
     fixture = TestBed.createComponent(DiscoverPage);
     comp = fixture.componentInstance;
@@ -47,14 +47,25 @@ describe('DiscoverPage', () => {
     comp = null;
   });
 
-  it('should create component', () => {
+  it('test page creation: expect DiscoverPage component', () => {
     expect(comp).toBeDefined();
-  });
-  
-  it('should have expected ion-title text', () => {
+  }); 
+
+  it('test constructor: expect Discover title', () => {
     fixture.detectChanges();
-    const iontitle = de.nativeElement;
-    expect(iontitle.innerText).toMatch('Discover');
+    expect(de.nativeElement.innerText).toMatch('Discover');
   });
-})
+
+  it('test setTitle: expect mockTitle title', () => {
+    comp.setTitle('mockTitle');
+    fixture.detectChanges();
+    expect(de.nativeElement.innerText).toMatch('mockTitle');    
+  });
+
+  it('test ionViewWillEnter: expect organizations contain mockOrganization', () => {
+    comp.ionViewWillEnter();
+    expect(JSON.stringify(comp.organizations)).toContain('mockOrganization');
+  });
+});
+
 

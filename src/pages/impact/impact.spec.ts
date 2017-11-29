@@ -50,12 +50,28 @@ describe('ImpactPage', () => {
     comp = null;
   });
 
-  it('should create component', () => expect(comp).toBeDefined());
+  it('test page creation: create ImpactPage component', () => {
+    expect(comp).toBeDefined();
+  }); 
 
-  it('should have expected ion-title text', () => {
+  it('test constructor: expect Dashboard title', () => {
     fixture.detectChanges();
-    const iontitle = de.nativeElement;
-    expect(iontitle.innerText).toMatch('Dashboard');
+    expect(de.nativeElement.innerText).toMatch('Dashboard');
+  });
+
+  it('test updateDonations: expect donations contain mockDonation', () => {
+    comp.updateDonations();
+      expect(JSON.stringify(comp.donations)).toContain('mockDonation');
+  });
+
+  it('test ionViewWillEnter: expect userHasOrganization to be true and donations contain mockDonation', () => {
+    comp.ionViewWillEnter();
+    expect(comp.userHasOrganization).toBeTruthy();
+    expect(JSON.stringify(comp.donations)).toContain('mockDonation');
+  });
+
+  it('test selectionChanged: expect donations contain mockDonation', () => {
+    comp.selectionChanged(event);
+    expect(JSON.stringify(comp.donations)).toContain('mockDonation');
   });
 });
-
