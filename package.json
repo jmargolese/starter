@@ -11,6 +11,7 @@
     "clean": "ionic-app-scripts clean",
     "build": "ionic-app-scripts build",
     "build:dev": "cross-env MY_ENV=dev ionic-app-scripts build",
+    "build:local": "cross-env MY_ENV=local ionic-app-scripts build",
     "lint": "ionic-app-scripts lint",
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve",
