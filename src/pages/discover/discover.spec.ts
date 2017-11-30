@@ -47,7 +47,7 @@ describe('DiscoverPage', () => {
     comp = null;
   });
 
-  it('test page creation: expect DiscoverPage component', () => {
+  it('test page creation: DiscoverPage', () => {
     expect(comp).toBeDefined();
   }); 
 
@@ -62,9 +62,9 @@ describe('DiscoverPage', () => {
     expect(de.nativeElement.innerText).toMatch('mockTitle');    
   });
 
-  it('test ionViewWillEnter: expect organizations contain mockOrganization', () => {
+  it('test ionViewWillEnter: expect organizations to be defined', () => {
     comp.ionViewWillEnter();
-    expect(JSON.stringify(comp.organizations)).toContain('mockOrganization');
+    expect(comp.organizations).toBeDefined();
   });
 });
 

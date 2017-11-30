@@ -47,7 +47,7 @@ describe('TabsPage', () => {
     comp = null;
   });
 
-  it('test page creation: create TabsPage component', () => {
+  it('test page creation: TabsPage', () => {
     expect(comp).toBeDefined();
   }); 
 })
