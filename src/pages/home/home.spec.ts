@@ -47,7 +47,7 @@ describe('HomePage', () => {
     comp = null;
   });
 
-  it('test page creation: expect HomePage component', () => {
+  it('test page creation: HomePage', () => {
     expect(comp).toBeDefined();
   });
 })

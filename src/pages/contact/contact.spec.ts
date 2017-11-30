@@ -56,7 +56,7 @@ describe('ContactPage', () => {
     comp = null;
   });
 
-  it('test page creation: expect ContactPage component', () => {
+  it('test page creation: ContactPage', () => {
     expect(comp).toBeDefined();
   });
 

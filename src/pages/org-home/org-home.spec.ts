@@ -53,7 +53,7 @@ describe('OrgHomePage', () => {
     comp = null;
   });
 
-  it('test page creation: create OrgHomePage component', () => {
+  it('test page creation: OrgHomePage', () => {
     expect(comp).toBeDefined();
   });
 
