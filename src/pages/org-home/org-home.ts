@@ -6,7 +6,7 @@ import { ActivitiesProvider } from '../../share-common/providers/activities/acti
 import { Observable } from 'rxjs/Observable';
 //import { ActivitiesProvider } from '../../../../common/src/share-common/providers/activities';
 import { Component, ViewChild, NgZone, ElementRef, Renderer2 } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events, Content, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events, Content } from 'ionic-angular';
 
 
 import * as shareTypes from '../../share-common/interfaces/interfaces';
@@ -45,7 +45,7 @@ export class OrgHomePage {
   public hideHeader: boolean = true;
   private isVisible: boolean = false;
   private activityListTop: number = null;    // where the activityList will be displayed so we can watch scrolling and know when it's visible
-  private loading;
+  public loading: boolean = true;
 
   public isReady: boolean = false;       // don't show anything while loading
 
@@ -59,16 +59,25 @@ export class OrgHomePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public activitiesProvider: ActivitiesProvider,
     public events: Events, public analytics: AnalyticsProvider, public userProvider: UserProvider, public zone: NgZone,
-    public element: ElementRef, public renderer: Renderer2, public loadingCtrl: LoadingController, private org: OrganizationProvider) {
+    public element: ElementRef, public renderer: Renderer2, private org: OrganizationProvider) {
 
 
     this.featuredMode = navParams.get('featured') || false;
 
     this.hideHeader = navParams.get('showHeader') ? false : true;
+    this.useOrgFavorites = navParams.get('useOrgFavorites') || false;
 
     this.events.subscribe("activity:homeCurrentActivity", (activity) => {
       // let other parts of the app tell us when a new tab is needed   
       this.currentActivity = activity;
+    });
+
+    this.events.subscribe(constants.EventTypes.userUpdated, user => {
+      // if we are displayed in featured view, then we don't worry about changes to favorites
+      console.log("User status updated in org-home page");
+      if (this.isVisible) {       // only do this check if we are visible rather than cached
+        this.recheckOrganizationList();
+      }
     });
 
 
@@ -77,7 +86,7 @@ export class OrgHomePage {
 
       // if we are displayed in featured view, then we don't worry about changes to favorites
       if (!this.featuredMode && data.type == "addToFavorites" && this.isVisible) {       // only do this check if we are visible rather than cached
-        this.recheckFavoriteOrganizations();
+        this.recheckOrganizationList();
       }
 
     })
@@ -93,89 +102,66 @@ export class OrgHomePage {
 
   ionViewWillEnter() {
 
-    this.loading = this.loadingCtrl.create({
-      content: ''
-    });
+    this.loading = true;
 
-    this.loading.present()
+
+    this.isVisible = true;
+    this.analytics.setCurrentScreen('org-Home');
+
+    this.userProvider.isAuthenticated()
       .then(() => {
-        this.isVisible = true;
-        this.analytics.setCurrentScreen('org-Home');
+        // this page is used in multiple ways
+        // 1- From Discover page, just display a single organiziation passed in navParams (and set in this.setOrganization())
+        // 2- We are part of a sequence of 'favorites' where we get an index into the organizationFavorites array
+        // 3- We are part of a sequence of 'featured' organizations where we get an index into the featuredOrganizations array
 
-        this.userProvider.isAuthenticated()
-          .then(() => {
-            // this page is used in multiple ways
-            // 1- From Discover page, just display a single organiziation passed in navParams (and set in this.setOrganization())
-            // 2- We are part of a sequence of 'favorites' where we get an index into the organizationFavorites array
-            // 3- We are part of a sequence of 'featured' organizations where we get an index into the featuredOrganizations array
+        // if we are part of the favorites display, we are passed an index and just grab the organization in the index
+        if (this.useOrgFavorites || this.featuredMode)
+          this.orgIndex = this.navParams.get('orgIndex')
 
-            // if we are part of the favorites display, we are passed an index and just grab the organization in the index
-            if (this.useOrgFavorites || this.featuredMode)
-              this.orgIndex = this.navParams.get('orgIndex')
-
-            if (this.featuredMode) {
-              this.org.getFeaturedOrganizations()
-              .subscribe(featuredOrgs => {
-                this.organizationList = featuredOrgs;
-                this.setOrganization(this.orgIndex || 0);
-                if (this.loading) this.loading.dismiss().catch();
-              }, error => {
-                console.error("Error in org-home calling getFeaturedOrganizations: " + error.message);
-                this.organizationList = [];
-                this.setOrganization(this.orgIndex || 0);
-                if (this.loading) this.loading.dismiss().catch();
-              })
-               /*  .then(featuredOrgs => {
-                  this.organizationList = featuredOrgs;
-                  this.setOrganization(this.orgIndex || 0);
-                  if (this.loading) this.loading.dismiss().catch();
-
-                })
-                .catch(error => {
-                  console.error("Error in org-home calling getFeaturedOrganizations: " + error.message);
-                  this.organizationList = [];
-                  this.setOrganization(this.orgIndex || 0);
-                  if (this.loading) this.loading.dismiss().catch();
-                }) */
-            } else {
-              this.useOrgFavorites = this.navParams.get('useOrgFavorites') ? true : false;
-
-
-              // this means we are part of a list of organization favorites with an index, as opposed to be being passed in an organization
+        if (this.featuredMode) {
+          this.org.getFeaturedOrganizations()
+            .subscribe(featuredOrgs => {
+              this.organizationList = featuredOrgs;
               this.setOrganization(this.orgIndex || 0);
+              this.loading = false;
+            }, error => {
+              console.error("Error in org-home calling getFeaturedOrganizations: " + error.message);
+              this.organizationList = [];
+              this.setOrganization(this.orgIndex || 0);
+              this.loading = false;
+            });
 
-              if (this.loading) this.loading.dismiss().catch();
-            }
+        } else {
+          this.useOrgFavorites = this.navParams.get('useOrgFavorites') ? true : false;
+
+
+          // this means we are part of a list of organization favorites with an index, as opposed to be being passed in an organization
+          this.setOrganization(this.orgIndex || 0);
+          this.loading = false;
+        }
 
 
 
-          })
-          .catch(error => {
-            console.error("org-homePage ionViewWillEnter error from isAuthenticated(): " + error.message);
-            if (this.loading) {
-              this.loading.dismiss().catch();
-
-            }
-          })
+      })
+      .catch(error => {
+        console.error("org-homePage ionViewWillEnter error from isAuthenticated(): " + error.message);
+        this.loading = false;
       })
 
 
-  }
-
-  ionViewDidEnter() {
-
-
-
 
   }
 
-  private recheckFavoriteOrganizations() {
+
+  private recheckOrganizationList() {
     // a user may have added or removed favorite orgs, make sure we (the org displayed on this page) is still in the favorites, 
     // if not, take action to remove us from view
     // we need to see if our organization still is in the favorites list.
-    this.organizationList = this.userProvider.getFavoriteOrganizations();
+    if (this.useOrgFavorites)
+      this.organizationList = this.userProvider.getFavoriteOrganizations();
 
-    if (!_.find(this.organizationList, ['id', this.organization.id])) {
+    if (this.organization && !_.find(this.organizationList, ['id', this.organization.id])) {
       // the organization we are displaying was removed from the list, so:
       if (this.orgIndex == 0) {
         if (this.organizationList.length) {
@@ -212,8 +198,10 @@ export class OrgHomePage {
         this.organization = this.organizationList[orgIndex];
         this.showPrevButton = orgIndex > 0;
         this.showNextButton = orgIndex < this.organizationList.length - 1;
-      } else
+      } else {
         this.organization = null;
+        this.showNextButton = this.showPrevButton = false;
+      }
     } else {
       this.organization = this.navParams.get('organization') || null;
       this.showAddToFavorites = this.organization && this.userProvider.userLikesOrganization(this.organization.id) ? false : true;

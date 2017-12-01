@@ -8,6 +8,7 @@
 </ion-header>
 
 
+
 <div #navButtons *ngIf="showNavButtons && (showPrevButton || showNextButton)" id="navButtonsContainer" class="imageOverlayGradient"
   style="position: relative; top: 0; width: 100vw; height: 34vh; z-index: 998">
 
@@ -25,7 +26,7 @@
   
 
 <ion-content #content class="org-home-css" parallax-header [showImage]="organization ? true : false" (swipe)="swipeEvent($event)">
-
+  <ion-spinner class="centerSpinner" *ngIf="loading"></ion-spinner>
   <div class="header-image" [ngClass]="!organization ? 'header-image-hidden' : ''"   [ngStyle]="{'background-image': 'url(' +  (organization ? organization.images.image  : '') + ')'}"></div>
   <div class="main-content">
 
