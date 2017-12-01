@@ -50,7 +50,7 @@ describe('SettingsPage', () => {
     comp = null;
   });
 
-  it('test page creation: create SettingsPage component', () => {
+  it('test page creation: SettingsPage', () => {
     expect(comp).toBeDefined();
   });
 

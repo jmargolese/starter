@@ -248,16 +248,30 @@ export class ViewControllerMock {
 export class StripeMock {}
 export class AlertProviderMock {}
 export class AnalyticsProviderMock {}
-export class ShareProviderMock {}
 export class PaymethodsProviderMock {}
-export class AuthProviderMock {}
 export class ActivitiesProviderMock {}
 export class SocialSharingMock {}
 
+export class ShareProviderMock {
+  public donate() {
+    return new Promise( (resolve, reject) => { 
+      resolve();
+    })
+  } 
+}
+
+export class AuthProviderMock {
+  public getAuthenticatedUser() {
+    return new Promise( (resolve, reject) => { 
+      resolve(true);
+    })
+  }  
+}
+
 export class DataProviderMock {
-  activity = 'mockActivity';
-  donation = ['mockDonation'];
-  organization = ['mockOrganization'];
+  activity = null;
+  donation = null;
+  organization = null;
   public getActivitiesForOrg() {
     return new Promise( (resolve, reject) => { 
       resolve(this.activity);
@@ -298,10 +312,12 @@ export class UserProviderMock {
   public isUserFavorite(type, id) {
     return (false);
   };
+  public userLikesOrganization(type, id) {
+    return (false);
+  };
 }
 
 export class NavParamsMock {
-  result = null;
   activity: shareTypes.Activity = {
     "id": "mock",
     "organization": "orgAlive",
@@ -319,11 +335,10 @@ export class NavParamsMock {
     },
     "messages": {
         "headline": "mockHeadline",
-        "mainMessage": "Help us raise money on Giving Tuesday",
-        "callToAction": "Give on Tuesday Nov 7th!",
+        "mainMessage": "mockMessage",
+        "callToAction": "mockCalToAction",
         "motd": null
     },
-
     "dates": {
         "startDate": "2017-10-25",
         "endDate": "2017-11-15",
@@ -389,10 +404,10 @@ export class AngularFirestoreMock {
 }
 
 export class OrganizationProviderMock {
-  allOrganizations = ['mockOrganization'];
+  organizations = null;
   public getAllOrganizations() {
     return new Promise( (resolve, reject) => {
-     resolve(this.allOrganizations)
+     resolve(this.organizations)
     })
   }  
 }

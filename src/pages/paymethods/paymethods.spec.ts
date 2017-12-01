@@ -50,7 +50,7 @@ describe('PaymethodsPage', () => {
     comp = null;
   });
 
-  it('test page creation: create PaymethodsPage component', () => {
+  it('test page creation: PaymethodsPage', () => {
     expect(comp).toBeDefined();
   });
 
