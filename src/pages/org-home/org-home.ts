@@ -13,7 +13,8 @@ import * as shareTypes from '../../share-common/interfaces/interfaces';
 import { UserProvider } from '../../share-common/providers/user/user';
 
 import * as _ from 'lodash';
-import * as CONST from '../../share-common/config/constants'
+import * as constants from '../../share-common/config/constants'
+import { OrganizationProvider } from '../../share-common/providers/organization/organization';
 
 @IonicPage()
 @Component({
@@ -25,15 +26,17 @@ export class OrgHomePage {
   @ViewChild('content') content: Content;
   @ViewChild('navButtons') navButtons;
 
+  public featuredMode: boolean = false;        // are we the 'featured' page showing orgs that are featured (as opposed to favorites)
+
   public organization: shareTypes.Organization = null;
-  private organizationFavorites: shareTypes.Organization[] = null;
   private orgIndex: number;
+  public organizationList: shareTypes.Organization[] = null;      // the list of orgs we work with
   public showNextButton: boolean = false;
   public showPrevButton: boolean = false;
   public showNavButtons: boolean = true;
 
   public showDonateButton: boolean = false;
-  public showAddToHomeButton: boolean = false;
+  public showAddToFavorites: boolean = false;
 
   public currentActivity: shareTypes.Activity = null;
   //public activities: Observable<any> = null;
@@ -44,23 +47,24 @@ export class OrgHomePage {
   private activityListTop: number = null;    // where the activityList will be displayed so we can watch scrolling and know when it's visible
   private loading;
 
-  public drawerOptions: any;
+  public isReady: boolean = false;       // don't show anything while loading
+
+
+  public engageOptions: shareTypes.engageOptions = {
+    buttonsToDisplay: {
+      socialShare: true,
+      addToFavorites: true
+    }
+  }
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public activitiesProvider: ActivitiesProvider,
     public events: Events, public analytics: AnalyticsProvider, public userProvider: UserProvider, public zone: NgZone,
-    public element: ElementRef, public renderer: Renderer2, public loadingCtrl: LoadingController, ) {
+    public element: ElementRef, public renderer: Renderer2, public loadingCtrl: LoadingController, private org: OrganizationProvider) {
 
 
-    this.drawerOptions = {
-      handleHeight: 50,
-      thresholdFromBottom: 200,
-      thresholdFromTop: 200,
-      bounceBack: true
-    };
+    this.featuredMode = navParams.get('featured') || false;
 
-    if (navParams.get('showHeader')) {
-      this.hideHeader = false;
-    }
+    this.hideHeader = navParams.get('showHeader') ? false : true;
 
     this.events.subscribe("activity:homeCurrentActivity", (activity) => {
       // let other parts of the app tell us when a new tab is needed   
@@ -69,37 +73,18 @@ export class OrgHomePage {
 
 
     // in case someone presses 'remove from home' we have to respond
-    this.events.subscribe('action-button:complete', data => {
+    this.events.subscribe(constants.EventTypes.actionButtonComplete, data => {
 
-      if (data.type == "addToHome" && this.isVisible) {       // only do this check if we are visible rather than cached
-
-        // we need to see if our organization still is in the favorites list.
-        this.organizationFavorites = this.userProvider.getFavoriteOrganizations();
-
-        if (!_.find(this.organizationFavorites, ['id', this.organization.id])) {
-          // the organization we are displaying was removed from the list, so:
-          if (this.orgIndex == 0) {
-            if (this.organizationFavorites.length) {
-              // we are the root and there is at least one more, so change our identity
-              this.setOrganization(0);
-              this.content.scrollToTop(200);
-            } else {
-              // we are the last so just display the 'get more favorites message'
-              this.organization = null;
-            }
-          }
-          else {
-            // if we are up in the stack, just pop.
-            this.prev();
-          }
-        }
+      // if we are displayed in featured view, then we don't worry about changes to favorites
+      if (!this.featuredMode && data.type == "addToFavorites" && this.isVisible) {       // only do this check if we are visible rather than cached
+        this.recheckFavoriteOrganizations();
       }
 
     })
 
     this.showDonateButton = false;
 
-    this.events.subscribe(CONST.EventTypes.orgHomeActivityListPosition, data => {
+    this.events.subscribe(constants.EventTypes.orgHomeActivityListPosition, data => {
       this.activityListTop = data.position;
     });
 
@@ -116,29 +101,60 @@ export class OrgHomePage {
       .then(() => {
         this.isVisible = true;
         this.analytics.setCurrentScreen('org-Home');
-        this.showDonateButton = true;
-        console.log("orgHomePage: ionViewDidEnter");
 
         this.userProvider.isAuthenticated()
           .then(() => {
+            // this page is used in multiple ways
+            // 1- From Discover page, just display a single organiziation passed in navParams (and set in this.setOrganization())
+            // 2- We are part of a sequence of 'favorites' where we get an index into the organizationFavorites array
+            // 3- We are part of a sequence of 'featured' organizations where we get an index into the featuredOrganizations array
 
-            this.useOrgFavorites = this.navParams.get('useOrgFavorites') ? true : false;
-
-            if (this.useOrgFavorites)
+            // if we are part of the favorites display, we are passed an index and just grab the organization in the index
+            if (this.useOrgFavorites || this.featuredMode)
               this.orgIndex = this.navParams.get('orgIndex')
-            // this means we are part of a list of organization favorites with an index, as opposed to be being passed in an organization
-            this.setOrganization(this.orgIndex || 0);
+
+            if (this.featuredMode) {
+              this.org.getFeaturedOrganizations()
+              .subscribe(featuredOrgs => {
+                this.organizationList = featuredOrgs;
+                this.setOrganization(this.orgIndex || 0);
+                if (this.loading) this.loading.dismiss().catch();
+              }, error => {
+                console.error("Error in org-home calling getFeaturedOrganizations: " + error.message);
+                this.organizationList = [];
+                this.setOrganization(this.orgIndex || 0);
+                if (this.loading) this.loading.dismiss().catch();
+              })
+               /*  .then(featuredOrgs => {
+                  this.organizationList = featuredOrgs;
+                  this.setOrganization(this.orgIndex || 0);
+                  if (this.loading) this.loading.dismiss().catch();
+
+                })
+                .catch(error => {
+                  console.error("Error in org-home calling getFeaturedOrganizations: " + error.message);
+                  this.organizationList = [];
+                  this.setOrganization(this.orgIndex || 0);
+                  if (this.loading) this.loading.dismiss().catch();
+                }) */
+            } else {
+              this.useOrgFavorites = this.navParams.get('useOrgFavorites') ? true : false;
 
 
-            if (this.loading) {
-              console.log("Dismissing loading in org-homePage");
-              this.loading.dismiss().catch()
+              // this means we are part of a list of organization favorites with an index, as opposed to be being passed in an organization
+              this.setOrganization(this.orgIndex || 0);
+
+              if (this.loading) this.loading.dismiss().catch();
             }
+
+
+
           })
           .catch(error => {
             console.error("org-homePage ionViewWillEnter error from isAuthenticated(): " + error.message);
             if (this.loading) {
-              this.loading.dismiss().catch()
+              this.loading.dismiss().catch();
+
             }
           })
       })
@@ -153,35 +169,61 @@ export class OrgHomePage {
 
   }
 
+  private recheckFavoriteOrganizations() {
+    // a user may have added or removed favorite orgs, make sure we (the org displayed on this page) is still in the favorites, 
+    // if not, take action to remove us from view
+    // we need to see if our organization still is in the favorites list.
+    this.organizationList = this.userProvider.getFavoriteOrganizations();
+
+    if (!_.find(this.organizationList, ['id', this.organization.id])) {
+      // the organization we are displaying was removed from the list, so:
+      if (this.orgIndex == 0) {
+        if (this.organizationList.length) {
+          // we are the root and there is at least one more, so change our identity
+          this.setOrganization(0);
+          this.content.scrollToTop(200);
+        } else {
+          // we are the last so just display the 'get more favorites message'
+
+          this.setOrganization(0);
+        }
+      }
+      else {
+        // if we are up in the stack, just pop.
+        this.prev();
+      }
+    }
+  }
+
   public setOrganization(orgIndex: number) {
 
-    if (this.useOrgFavorites) {
-      this.hideHeader = true;
-      this.showNavButtons = true;
-      this.showAddToHomeButton = false;
-      this.organizationFavorites = this.userProvider.getFavoriteOrganizations();
-      if (this.organizationFavorites.length) {
+    if (this.useOrgFavorites || this.featuredMode) {
 
-        this.organization = this.organizationFavorites[orgIndex];
+      if (this.useOrgFavorites)
+        // userProvider downloads favorite organizations on setup
+        this.organizationList = this.userProvider.getFavoriteOrganizations();
+
+      if (this.organizationList && this.organizationList.length) {
+        this.hideHeader = true;
+        this.showNavButtons = true;
+        this.showAddToFavorites = false;
+
+
+        this.organization = this.organizationList[orgIndex];
         this.showPrevButton = orgIndex > 0;
-        this.showNextButton = orgIndex < this.organizationFavorites.length - 1;
+        this.showNextButton = orgIndex < this.organizationList.length - 1;
       } else
         this.organization = null;
     } else {
       this.organization = this.navParams.get('organization') || null;
-      this.showAddToHomeButton = this.userProvider.userLikesOrganization(this.organization.id) ? false : true;
+      this.showAddToFavorites = this.organization && this.userProvider.userLikesOrganization(this.organization.id) ? false : true;
     }
 
-
-
-    if (!this.organization)
-      console.error("Organization is null in orgHomePage");
-    else {
-
-      //this.testMe.testMe();  //
-      console.log('ionViewDidLoad OrgHomePage and showAddToHome is: ' + this.showAddToHomeButton);
-      //
-    }
+    if (this.organization)
+      this.showDonateButton = true;
+    //this.testMe.testMe();  
+    console.log('ionViewDidLoad OrgHomePage and showAddToFavorites is: ' + this.showAddToFavorites);
+    this.isReady = true;
   }
 
 
@@ -202,8 +244,8 @@ export class OrgHomePage {
   }
 
   public next() {
-    if (this.orgIndex < this.organizationFavorites.length - 1) {
-      this.navCtrl.push('OrgHomePage', { useOrgFavorites: true, orgIndex: this.orgIndex + 1 })
+    if (this.orgIndex < this.organizationList.length - 1) {
+      this.navCtrl.push('OrgHomePage', { useOrgFavorites: true, orgIndex: this.orgIndex + 1, featured: this.featuredMode })
     }
   }
 
@@ -219,7 +261,7 @@ export class OrgHomePage {
   ionViewWillLeave() {
     this.isVisible = false;
     this.showDonateButton = false;
-    this.showAddToHomeButton = false;
+    this.showAddToFavorites = false;
   }
 
   ionViewDidLoad() {

@@ -45,6 +45,9 @@ $colors: (
   dark:       #222
 );
 
+
+//washed version of primary
+$faded-primary:     rgba(72, 138, 255, 0.5);
 // change tool bar
 $toolbar-ios-background: color($colors, primary);
 $toolbar-md-background: color($colors, primary);

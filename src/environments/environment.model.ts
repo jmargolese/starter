@@ -19,3 +19,11 @@ export interface Environment {
     appKey: string;
   }
 }
+
+  
+export enum envMode {
+  production = "Production",
+  dev = "Development",
+  local = "Local"
+}
+

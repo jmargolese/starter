@@ -18,17 +18,18 @@ export class TabsPage {
 
   @ViewChild('shareTabs') tabRef: Tabs;
 
-  tab1Root = 'OrgHomePage';
-  tab2Root = 'DiscoverPage';
-  tab3Root = 'SettingsPage';
-  tab4Root = 'ImpactPage';
-  tab5Root = 'ContactPage';
+  tab1Root = "OrgHomePage";
+  tab2Root = 'OrgHomePage';
+  tab3Root = 'DiscoverPage';
+  tab4Root = 'SettingsPage';
+  tab5Root = 'ImpactPage';
+
 
   constructor(public events: Events, public deeplinks: Deeplinks, public notifications: NotificationsProvider,
     public navCtrl: NavController, public platform: Platform, public modalCtrl: ModalController) {
 
 
-    
+
 
     this.subscribeToEvents();
 
@@ -38,7 +39,7 @@ export class TabsPage {
     this.platform.ready().then(() => {
 
       this.notifications.init();
-      
+
       /*
       IonicDeeplink.route({
         '/about-us': AboutPage,

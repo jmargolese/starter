@@ -1,3 +1,4 @@
+import { envMode } from './../../environments/environment.model';
 import { AnalyticsProvider } from '../../share-common/providers/analytics/analytics';
 import { AuthProvider } from '../../share-common/providers/auth/auth';
 import { Component } from '@angular/core';
@@ -75,6 +76,9 @@ export class SettingsPage {
         //tutorial();
         break;
 
+      case 'debug':
+        this.navCtrl.push("ContactPage");
+        break;
       default:
 
     }
@@ -102,6 +106,25 @@ export class SettingsPage {
       'sectionTitle': 'About',
       'entries': entries,
     })
+  }
+
+  private setAdminOptions() {
+    // only displayed in dev and for admins  
+    let entries = [];
+
+    if (ENV.mode != envMode.production) {
+      entries.push(
+        {
+          title: 'Debug',
+          callback: 'debug'
+        }
+      );
+
+      this.config.push({
+        'sectionTitle': 'Admin',
+        'entries': entries
+      });
+    }
   }
 
   private setAccountInfo() {
@@ -145,6 +168,7 @@ export class SettingsPage {
 
     this.setAccountInfo();
     this.setEnvInfo();
+    this.setAdminOptions();
 
 
   }

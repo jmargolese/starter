@@ -40,12 +40,16 @@ ion-header {
     }
 }
 
-.action-choice-popover {
-   // .popover-content, .popover-ios {
-   //     width: 130px !important; /* the new global width */
-    //  }
+.action-choice-popover .popover-ios {
+    width: 80%;
+    top: 70px;
+    left: 30px;
+    bottom: 90px;
+    
+}
 
-     
+.popover-content {
+    max-width: 165px;
 }
 
 /* copied from yummly

@@ -52,7 +52,7 @@ export class HomePage {
 
     this.events.subscribe('action-button:complete', data => {
       console.log("in homePage got event that action button completed: " + data.type);
-      if (data.type == "addToHome") {
+      if (data.type == "addToFavorites") {
         this.organizations = null;
         this.getFavoriteOrganizations();
       }

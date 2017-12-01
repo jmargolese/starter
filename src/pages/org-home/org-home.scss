@@ -23,6 +23,7 @@ page-org-home {
         left: 00%;
         width: 100vw;
         bottom: 95px;
+        bottom: calc(95px + env(safe-area-inset-bottom));
         z-index: 999;
     }
     .orgAddToFavoritesButton {
@@ -35,7 +36,21 @@ page-org-home {
     }
     .header-image {
         // background-image: url(https://ununsplash.imgix.net/photo-1421091242698-34f6ad7fc088?fit=crop&fm=jpg&h=650&q=75&w=950);
-        height: 75vh;
+        height: 60vh;
+    }
+
+    .header-image-hidden {
+        // when there is no org and no header image to display
+        height: 0 !important;
+        width: 0 !important;
+    }
+
+    .infoCard {
+        position: absolute;
+        top: 30vh;
+        background-color: $faded-primary;
+        width:85vw;
+        left: 7.5vw;
     }
     .main-content {
         background-color: white;

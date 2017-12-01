@@ -1,4 +1,4 @@
-export interface PayMethod {
+/* export interface PayMethod {
   vendor: string,
   isPreferred: boolean,
   kind: string,
@@ -92,3 +92,4 @@ export enum authEventTypes {
     logout = "logout",
     changed = "changed"
     }
+ */
