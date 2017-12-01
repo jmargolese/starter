@@ -312,8 +312,8 @@ export class UserProviderMock {
   public isUserFavorite(type, id) {
     return (false);
   };
-  public userLikesOrganization(type, id) {
-    return (false);
+  public userLikesOrganization(id) : boolean {
+    return (id ? true : false);
   };
 }
 

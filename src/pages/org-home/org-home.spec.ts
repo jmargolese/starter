@@ -1,3 +1,4 @@
+import { OrganizationProvider } from './../../share-common/providers/organization/organization';
 import { OrgHomePage } from './org-home';
 
 import { AnalyticsProvider } from '../../share-common/providers/analytics/analytics';
@@ -14,7 +15,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { PlatformMock, StatusBarMock, SplashScreenMock,  NavParamsMock } from '../../../test-config/mocks-ionic';
-import { AnalyticsProviderMock, ActivitiesProviderMock, UserProviderMock } from '../../../test-config/mocks-ionic';
+import { AnalyticsProviderMock, ActivitiesProviderMock, UserProviderMock, OrganizationProviderMock } from '../../../test-config/mocks-ionic';
 
 describe('OrgHomePage', () => {
 
@@ -36,6 +37,7 @@ describe('OrgHomePage', () => {
         { provide: SplashScreen, useClass: SplashScreenMock },
         { provide: AnalyticsProvider, useClass: AnalyticsProviderMock },
         { provide: ActivitiesProvider, useClass: ActivitiesProviderMock },
+        { provide: OrganizationProvider, useClass: OrganizationProviderMock },
         { provide: UserProvider, useClass: UserProviderMock },
         { provide: NavParams, useClass: NavParamsMock }
       ]
