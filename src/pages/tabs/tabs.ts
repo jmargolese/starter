@@ -80,7 +80,6 @@ export class TabsPage {
       
       */
       // Convenience to route with a given nav
-
       this.deeplinks.routeWithNavController(this.navCtrl, {
         '/settings': 'SettingsPage',
         //'/universal-links-test': DiscoverPage,
@@ -105,13 +104,11 @@ export class TabsPage {
 
 
     }) // end platform ready
-
   }
 
 
   private subscribeToEvents() {
     // part of the init process
-
     this.events.subscribe('tabs:select', (newTab) => {
       // let other parts of the app tell us when a new tab is needed
       this.tabRef.select(newTab);
@@ -206,7 +203,6 @@ export class TabsPage {
   }
   ionViewDidEnter() {
     //this.tabRef.select(1);
-
   }
 
   ionViewDidLoad() {

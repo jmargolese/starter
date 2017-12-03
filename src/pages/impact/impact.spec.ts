@@ -59,18 +59,18 @@ describe('ImpactPage', () => {
     expect(de.nativeElement.innerText).toMatch('Dashboard');
   });
 
-  it('test updateDonations: expect donations to be defined', () => {
+  it('test updateDonations: expect donations set', () => {
     comp.updateDonations();
     expect(comp.donations).toBeDefined();
   });
 
-  it('test ionViewWillEnter: expect userHasOrganization to be true and donations to be defined', () => {
+  it('test ionViewWillEnter: expect userHasOrganization to be true and donations set', () => {
     comp.ionViewWillEnter();
     expect(comp.userHasOrganization).toBeTruthy();
     expect(comp.donations).toBeDefined();
   });
 
-  it('test selectionChanged: expect donations donations to be defined', () => {
+  it('test selectionChanged: expect donations set', () => {
     comp.selectionChanged(event);
     expect(comp.donations).toBeDefined();
   });

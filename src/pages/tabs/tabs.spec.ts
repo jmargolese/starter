@@ -3,7 +3,6 @@ import { TabsPage } from './tabs';
 import { NotificationsProvider } from './../../share-common/providers/notifications/notifications';
 
 import { Deeplinks } from '@ionic-native/deeplinks';
-
 import { NavParams } from 'ionic-angular';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By }           from '@angular/platform-browser';

@@ -62,7 +62,7 @@ describe('DiscoverPage', () => {
     expect(de.nativeElement.innerText).toMatch('mockTitle');    
   });
 
-  it('test ionViewWillEnter: expect organizations to be defined', () => {
+  it('test ionViewWillEnter: expect organizations set', () => {
     comp.ionViewWillEnter();
     expect(comp.organizations).toBeDefined();
   });

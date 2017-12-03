@@ -10,6 +10,11 @@ export class PlatformMock {
     });
   }
 
+  public resume: any = {
+    emit(): void {},
+    subscribe(): any {}
+  };
+
   public getQueryParam() {
     return true;
   }
