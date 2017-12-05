@@ -1,0 +1,26 @@
+page-paymethod-choices {
+   .paymethod-choices-css {
+    font-size: 16px;
+    .fit-thumbnail {
+    	max-height: 30px;
+    	object-fit: cover;
+    }
+    .headerText {
+        width: 100%;
+        white-space: normal;
+        text-align: center;
+        font-size: 75%;
+        padding-top: 4px;
+        font-weight: bold;
+    }
+    .paymethodText {
+        width: 100%;
+        white-space: normal;
+        text-align: center;
+        font-size: 60%;
+        padding-top: 4px;
+      
+    }
+    
+   }
+}

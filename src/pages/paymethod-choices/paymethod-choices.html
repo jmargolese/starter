@@ -1,0 +1,17 @@
+<div class="paymethod-choices-css">
+  <ion-grid no-padding>
+    <ion-row nowrap no-padding (click)="addPaymethod('stripe')">
+      <ion-col>
+      	<ion-icon name="card"></ion-icon>
+      </ion-col>
+      <ion-col>
+      	Add credit card
+      </ion-col>
+    </ion-row>
+    <ion-row nowrap no-padding (click)="addPaymethod('paypal')">
+    	<ion-col><img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/PP_logo_h_100x26.png" alt="PayPal Logo">
+    	</ion-col>
+    	<ion-col>Checkout with PayPal</ion-col>
+    </ion-row>
+  </ion-grid>
+</div>

@@ -181,7 +181,7 @@ export class AddStripeCcPage {
       this.stripe.createCardToken(<any>card)
       .then(token => {
 
-        console.log("Created stripe token: " + JSON.stringify(token));
+        console.log("Created stripe token.");
 
         this.submitAttempt = false;
 

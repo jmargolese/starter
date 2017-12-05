@@ -15,6 +15,14 @@ export interface Environment {
   stripe: {
     privateKey: string;
   },
+  paypal: {
+    baseUrl: string;
+    clientId: string;
+    secret: string;
+    payerId: string;
+    BNCode: string;
+    accessToken: string;
+  },
   raven: {
     appKey: string;
   }
