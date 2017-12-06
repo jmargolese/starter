@@ -1,6 +1,6 @@
 {
   "name": "shareapp3",
-  "app_id": "",
+  "app_id": "941cf226",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}

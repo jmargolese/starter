@@ -1,9 +1,6 @@
-import { Organization } from './../home/home';
-
 import { AnalyticsProvider } from '../../share-common/providers/analytics/analytics';
 import { ActivitiesProvider } from '../../share-common/providers/activities/activities';
 
-import { Observable } from 'rxjs/Observable';
 //import { ActivitiesProvider } from '../../../../common/src/share-common/providers/activities';
 import { Component, ViewChild, NgZone, ElementRef, Renderer2 } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, Content } from 'ionic-angular';
@@ -117,7 +114,7 @@ export class OrgHomePage {
 
         // if we are part of the favorites display, we are passed an index and just grab the organization in the index
         if (this.useOrgFavorites || this.featuredMode)
-          this.orgIndex = this.navParams.get('orgIndex')
+          this.orgIndex = this.navParams.get('orgIndex') || 0;
 
         if (this.featuredMode) {
           this.org.getFeaturedOrganizations()
@@ -134,9 +131,9 @@ export class OrgHomePage {
 
         } else {
           this.useOrgFavorites = this.navParams.get('useOrgFavorites') ? true : false;
-
-
           // this means we are part of a list of organization favorites with an index, as opposed to be being passed in an organization
+          
+
           this.setOrganization(this.orgIndex || 0);
           this.loading = false;
         }
@@ -153,6 +150,15 @@ export class OrgHomePage {
 
   }
 
+  private determineIndex() : number {
+    let index: number = this.orgIndex; 
+    let requestedOrg = this.navParams.get('showOrg') || null;
+    if (requestedOrg) {
+      index = _.findIndex(this.organizationList, ['active', false]);
+      index = index < 0 ? this.orgIndex : 0;       // in case the requested org wasn't in the list for some reason
+    }
+    return index;
+  }
 
   private recheckOrganizationList() {
     // a user may have added or removed favorite orgs, make sure we (the org displayed on this page) is still in the favorites, 
@@ -187,13 +193,14 @@ export class OrgHomePage {
 
       if (this.useOrgFavorites)
         // userProvider downloads favorite organizations on setup
+        
         this.organizationList = this.userProvider.getFavoriteOrganizations();
 
       if (this.organizationList && this.organizationList.length) {
+        orgIndex = this.determineIndex();        // we may have been told to go a specific org and we can't check the list until now
         this.hideHeader = true;
         this.showNavButtons = true;
         this.showAddToFavorites = false;
-
 
         this.organization = this.organizationList[orgIndex];
         this.showPrevButton = orgIndex > 0;

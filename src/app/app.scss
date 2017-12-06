@@ -87,3 +87,8 @@ background-image: linear-gradient(0deg, rgba(0, 0, 0, .9) 15%, transparent 50%);
     top: 50%;
     left: 47%;
 }
+
+// used in tabs.ts but needs to be here for alertController to see it
+.share-alert-button {
+    font-weight: bold;
+}
