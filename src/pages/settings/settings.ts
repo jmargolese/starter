@@ -91,7 +91,7 @@ export class SettingsPage {
       'textOnly': true,
     })
     // we don't tell end-users that it's 'production'
-    if (ENV.mode.toLowerCase() != 'production')
+    if (ENV.mode != envMode.production)
       entries.push({
         'title': 'Environment: ' + ENV.mode,
         'textOnly': true,
