@@ -61,7 +61,7 @@
             <ion-item>
               <ion-label floating>CVC
                 <span class="invalidFormText" *ngIf="!ccForm.controls.cvc.valid  && (ccForm.controls.cvc.dirty || submitAttempt)">
-                  Valid CVC from card back code is required
+                  Valid CVC is required
                 </span>
               </ion-label>
               <ion-input formControlName="cvc" type="tel" (blur)="validateCVC($event.target.value)" [class.invalid]="!ccForm.controls.cvc.valid && (ccForm.controls.cvc.dirty || submitAttempt)"></ion-input>
