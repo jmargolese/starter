@@ -27,7 +27,7 @@
 
 <ion-content #content class="org-home-css" parallax-header [showImage]="organization ? true : false" (swipe)="swipeEvent($event)">
   <ion-spinner class="centerSpinner" *ngIf="loading"></ion-spinner>
-  <div class="header-image" [ngClass]="!organization ? 'header-image-hidden' : ''" [ngStyle]="{'background-image': 'url(' +  (organization ? organization.images.image  : '') + ')'}"></div>
+  <div class="header-image" [ngClass]="!organization ? 'header-image-hidden' : ''" [ngStyle]="{'background-image': 'url(' +  (orgMainImageUrl) + ')'}"></div>
   <div class="main-content">
 
     <div *ngIf="isReady && !organization">

@@ -23,7 +23,7 @@ export class OrgHomePage {
   @ViewChild('content') content: Content;
   @ViewChild('navButtons') navButtons;
 
-  public featuredMode: boolean = false;        // are we the 'featured' page showing orgs that are featured (as opposed to favorites)
+  public featuredMode: boolean = false;        // are we the 'featured' page showing orgs that are featured (as opposed to favorites)  
 
   public organization: shareTypes.Organization = null;
   private orgIndex: number;
@@ -34,6 +34,7 @@ export class OrgHomePage {
 
   public showDonateButton: boolean = false;
   public showAddToFavorites: boolean = false;
+  public orgMainImageUrl: string = "";
 
   public currentActivity: shareTypes.Activity = null;
   //public activities: Observable<any> = null;
@@ -216,6 +217,7 @@ export class OrgHomePage {
 
     if (this.organization)
       this.showDonateButton = true;
+      this.orgMainImageUrl = this.org.getImageUrl(this.organization, constants.imageTypes.organizationImage, constants.imageSizes.reduced );
     //this.testMe.testMe();  
     console.log('ionViewDidLoad OrgHomePage and showAddToFavorites is: ' + this.showAddToFavorites);
     this.isReady = true;
