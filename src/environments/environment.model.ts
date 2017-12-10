@@ -14,6 +14,7 @@ export interface Environment {
   },
   stripe: {
     privateKey: string;
+    clientId: string;
   },
   paypal: {
     baseUrl: string;
