@@ -177,8 +177,8 @@ export class TabsPage {
 
       } else { // donation failed. reiterate.
           let toast = this.toastCtrl.create({
-            message: `Unable to complete donation to ${params.displayName}<br/>${params.errorMessage}`,
-            duration: 3000,
+            message: `Unable to complete donation to ${params.displayName}\n${params.errorMessage}`,
+            duration: 5000,
             position: 'top'
           });
 

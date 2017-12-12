@@ -49,7 +49,7 @@ export class AddStripeCcPage {
 
     this.ccForm = formBuilder.group({
       cardholder: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
-      nickname: ['', Validators.compose([Validators.maxLength(10),Validators.pattern('[a-zA-Z \']*')])],
+      nickname: ['', Validators.compose([Validators.maxLength(20),Validators.pattern("[a-zA-Z0-9 ']*")])],
       cardnumber: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
       expirationDate: ['', Validators.compose([Validators.maxLength(5), Validators.required])],
       cvc: ['', Validators.compose([Validators.maxLength(this.cvcLength), Validators.required])],

@@ -42,7 +42,7 @@
                   Nickname can only be 10 characters or less. Please enter a valid nickname.
                 </span>
               </ion-label>
-              <ion-input formControlName="nickname" type="text" [class.invalid]="!ccForm.controls.nickname.valid && (ccForm.controls.nickname.dirty || submitAttempt)"></ion-input>
+              <ion-input formControlName="nickname" type="text" autocapitalize="none" [class.invalid]="!ccForm.controls.nickname.valid && (ccForm.controls.nickname.dirty || submitAttempt)"></ion-input>
             </ion-item>
 
             <ion-item>

@@ -106,7 +106,9 @@ private setPaymethodChoices(): any {
   }
 
   ionViewWillEnter() {
-    this.paymethods = this.userProvider.getPaymethods();
+    // have to call this one which calls the userProvider one, but sets
+    // up the paymethods variable in the paymethodsProvider.
+    this.paymethods = this.paymethodProvider.getPaymethods();
   }
   
   ionViewDidLoad() {
@@ -114,18 +116,26 @@ private setPaymethodChoices(): any {
   }
 
   public deletePaymethod(index : number) {
-    console.log("Called delete paymethod in paymethod page");
-    this.paymethodProvider.deletePaymethod(index)
-    .catch(err=>{
-      this.alert.confirm({title: 'An error occured.',message: 'there was a problem deleting this paymethod.',buttons:{ok: true}});
-    });
-   
+    this.alert.confirm({title: 'Delete', message: 'You are about to delete this payment method.',
+      buttons:{ok: true, cancel:true} })
+        .then(()=>{
+          console.log("Called delete paymethod in paymethod page");
+          this.paymethodProvider.deletePaymethod(index)
+            .then(()=>{
+              this.paymethodProvider.getPaymethods(); //refresh
+            })
+          .catch(err=>{
+            this.alert.confirm({title: 'An error occured.',message: 'there was a problem deleting this paymethod.',buttons:{ok: true}});
+          });
+        }).catch(error=>{ // changed their mind.
+          return;
+        });
   }
 
   public makeDefaultPaymethod(index: number) {
     this.paymethodProvider.makeDefaultPaymethod(index)
     .then(() => {
-      this.paymethods = this.userProvider.getPaymethods();
+      this.paymethods = this.paymethodProvider.getPaymethods();
     })
     
   }
