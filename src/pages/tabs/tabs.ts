@@ -7,7 +7,7 @@ import { NotificationsProvider } from './../../share-common/providers/notificati
 import { Component, ViewChild } from '@angular/core';
 import { Deeplinks } from '@ionic-native/deeplinks';
 import { ENV } from '@app/env';
-import { ModalController, AlertController } from 'ionic-angular';
+import { ModalController, AlertController, ToastController } from 'ionic-angular';
 
 
 
@@ -34,7 +34,7 @@ export class TabsPage {
   constructor(public events: Events, public deeplinks: Deeplinks, public notifications: NotificationsProvider,
     public navCtrl: NavController, public platform: Platform, public modalCtrl: ModalController,
     private alertCtrl: AlertController, private socialShare: SocialShareProvider,
-    private org: OrganizationProvider, private activitiesProvider: ActivitiesProvider) {
+    private org: OrganizationProvider, private activitiesProvider: ActivitiesProvider, private toastCtrl: ToastController) {
 
 
 
@@ -129,53 +129,65 @@ export class TabsPage {
   private handleDonationReturn(params) {
     // we are returning from a donation go to the requested organization and thank them
 
-    //this.tabRef.select(1);
-    let thankYouMsg: string = `Thank you for your generous donation to ${params.displayName}`;
-    // this.alertCtrl.confirm({title: "Thank you", message: thankYouMsg, buttons: { ok: true, cancel: false}});
+    // Don't post an alert if the donation failed, we already let them know.
+    if(!(params.status == 'error')){
+      //this.tabRef.select(1);
+      let thankYouMsg: string = `Thank you for your generous donation to ${params.displayName}`;
+      // this.alertCtrl.confirm({title: "Thank you", message: thankYouMsg, buttons: { ok: true, cancel: false}});
 
-    let alert = this.alertCtrl.create({
-      title: 'Thank you!',
-      message: thankYouMsg,
-      buttons: [
+      let alert = this.alertCtrl.create({
+        title: 'Thank you!',
+        message: thankYouMsg,
+        buttons: [
 
-        {
-          text: 'Share with friends',
-          cssClass: 'share-alert-button',
-          handler: () => {
-            let organization: shareTypes.Organization;
-            let orgSubscription: Subscription = this.org.getOrganization(params.recipientId)
-              .subscribe(org => {
-                orgSubscription.unsubscribe();
-                orgSubscription = this.activitiesProvider.getActivity( params.activityId || "")
-                  .subscribe(activity => {
-                    orgSubscription.unsubscribe();
-                    this.socialShare.startSocialShare(org, activity);
-                  }, error => {
-                    console.error("Error getting org in tabs:handleDonationReturn: " + error.message);
+          {
+            text: 'Share with friends',
+            cssClass: 'share-alert-button',
+            handler: () => {
+              let organization: shareTypes.Organization;
+              let orgSubscription: Subscription = this.org.getOrganization(params.recipientId)
+                .subscribe(org => {
+                  orgSubscription.unsubscribe();
+                  orgSubscription = this.activitiesProvider.getActivity( params.activityId || "")
+                    .subscribe(activity => {
+                      orgSubscription.unsubscribe();
+                      this.socialShare.startSocialShare(org, activity);
+                    }, error => {
+                      console.error("Error getting org in tabs:handleDonationReturn: " + error.message);
 
-                  }, () => {
-                    // we will end up here if there is no activity
-                    this.socialShare.startSocialShare(org);
-                  })
-              }, error => {
-                console.error("Error getting org in tabs:handleDonationReturn: " + error.message);
-              });
-
-
-
-
+                    }, () => {
+                      // we will end up here if there is no activity
+                      this.socialShare.startSocialShare(org);
+                    })
+                }, error => {
+                  console.error("Error getting org in tabs:handleDonationReturn: " + error.message);
+                });
+            }
+          },
+          {
+            text: 'OK',
+            role: 'cancel',
+            handler: () => {
+              console.log('Ok => Cancel clicked');
+            }
           }
-        },
-        {
-          text: 'OK',
-          role: 'cancel',
-          handler: () => {
-            console.log('Ok => Cancel clicked');
-          }
-        }
-      ]
-    });
-    alert.present();
+        ]
+      });
+      alert.present();
+
+      } else { // donation failed. reiterate.
+          let toast = this.toastCtrl.create({
+            message: `Unable to complete donation to ${params.displayName}<br/>${params.errorMessage}`,
+            duration: 3000,
+            position: 'top'
+          });
+
+          toast.onDidDismiss(() => {
+            console.log('Dismissed toast - donation failed.');
+          });
+
+          toast.present();
+      }
 
   }
 

@@ -1,3 +1,9 @@
 page-paymethods {
-
+	.paymethods-page-css {
+		font-size: 60% !important;
+       img {
+       	max-height: 30px;
+       	object-fit: cover;
+    	}
+	}
 }

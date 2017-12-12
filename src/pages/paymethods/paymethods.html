@@ -1,43 +1,40 @@
 
 <ion-header>
-
   <ion-navbar>
     <ion-title>Paymethods</ion-title>
     <ion-buttons end>
-        <button (click)="addPaymethod()" ion-button color="white" clear>
+        <button (click)="showSelectPopover($event)" ion-button color="white" clear>
            Add
         </button>
       </ion-buttons>
   </ion-navbar>
-
 </ion-header>
 
-
-<ion-content no-padding>
-  <div style="height:10px;"></div>
-  <div *ngIf="paymethods && (paymethods.length > 1)" style="font-size: 80%; color: gray; padding-left: 10px;">
-    <ion-icon name="checkmark-circle-outline"></ion-icon> is default paymethod.
-  </div>
-  <br>
-  <div style="height: 10px;"></div>
-  <ion-list>
-    <ion-item *ngFor="let paymethod of  paymethods; let i = index">
-
-
-      <ion-grid no-padding>
-        <ion-row>
-          <ion-col (click)="makeDefaultPaymethod(i)">
-            <ion-icon *ngIf="paymethod.isPreferred" name="checkmark-circle-outline"></ion-icon>
-          </ion-col>
-          <ion-col col-10 (click)="makeDefaultPaymethod(i)">
-            {{paymethod.displayName}}
-          </ion-col>
-          <ion-col>
-            <ion-icon (click)="deletePaymethod(i)" name="trash"></ion-icon>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-item>
-  </ion-list>
-
+<ion-content no-padding class = "paymethods-page-css">
+    <div style="height:10px;"></div>
+    <div *ngIf="paymethods && (paymethods.length > 1)" style="font-size: 80%; color: gray; padding-left: 10px;">
+      <ion-icon name="checkmark-circle-outline"></ion-icon> is default paymethod.
+    </div>
+    <br>
+    <div style="height: 10px;"></div>
+    <ion-list>
+      <ion-item *ngFor="let paymethod of  paymethods; let i = index">
+        <ion-grid no-padding>
+          <ion-row nowrap (click)="makeDefaultPaymethod(i)">
+            <ion-col>
+              <ion-icon *ngIf="paymethod.isPreferred" name="checkmark-circle-outline"></ion-icon>
+            </ion-col>
+            <ion-col col-4>
+              <img class="fit-thumbnail" src="./assets/img/ccIcons/{{paymethod.brand | lowercase}}.png">
+            </ion-col>
+            <ion-col col-5 align-self-center>
+              {{paymethod.nickname ? paymethod.nickname+'  ('+paymethod.displayName+')' : paymethod.displayName}}
+            </ion-col>
+            <ion-col align-self-center >
+              <ion-icon (click)="deletePaymethod(i)" name="trash"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-list>
 </ion-content>

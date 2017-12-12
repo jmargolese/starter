@@ -1,0 +1,20 @@
+page-paymethod-choices {
+   .paymethod-choices-css {
+        font-size: 16px !important;
+
+        img {
+            width: 70px;
+            object-fit: contain;
+        }
+
+        icon {
+            width: 70px;
+        }
+        .choicesItem {
+            width: 100%;
+            white-space: normal;
+            font-size: 70%;
+            padding-top: 2px;
+        }       
+    }
+}

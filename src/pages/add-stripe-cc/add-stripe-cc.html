@@ -13,7 +13,6 @@
 
 <ion-content padding class="add-stripe-cc-css">
 
-  
 
   <ion-grid no-padding>
     <ion-row no-padding>
@@ -34,6 +33,16 @@
                 </span>
               </ion-label>
               <ion-input formControlName="cardholder" type="text" [class.invalid]="!ccForm.controls.cardholder.valid && (ccForm.controls.cardholder.dirty || submitAttempt)"></ion-input>
+            </ion-item>
+
+            <ion-item>
+
+              <ion-label floating>Nickname (optional)
+                <span class="invalidFormText" *ngIf="!ccForm.controls.nickname.valid  && (ccForm.controls.nickname.dirty || submitAttempt)">
+                  Nickname can only be 10 characters or less. Please enter a valid nickname.
+                </span>
+              </ion-label>
+              <ion-input formControlName="nickname" type="text" [class.invalid]="!ccForm.controls.nickname.valid && (ccForm.controls.nickname.dirty || submitAttempt)"></ion-input>
             </ion-item>
 
             <ion-item>
