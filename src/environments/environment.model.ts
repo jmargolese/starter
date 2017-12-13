@@ -26,10 +26,10 @@ export interface Environment {
   },
   raven: {
     appKey: string;
+    appKeyConsole: string;
   }
 }
-
-  
+ 
 export enum envMode {
   production = "Production",
   dev = "Development",
