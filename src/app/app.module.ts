@@ -40,6 +40,7 @@ import { AlertProvider } from '../share-common/providers/alert/alert';
 import { SentryErrorHandler} from '../services/sentry-errorhandler';
 import { NotificationsProvider } from '../share-common/providers/notifications/notifications';
 import { CloudFunctionProvider } from '../share-common/providers/cloud-function/cloud-function';
+import { SocialShareProvider } from '../share-common/providers/social-share/social-share';
 
 
 
@@ -84,6 +85,7 @@ import { CloudFunctionProvider } from '../share-common/providers/cloud-function/
     NotificationsProvider,
     StripeProvider,
     CloudFunctionProvider,
+    SocialShareProvider,
   ]
 })
 export class AppModule {}

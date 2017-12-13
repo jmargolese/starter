@@ -1,20 +1,26 @@
+import { ActivitiesProvider } from './../../share-common/providers/activities/activities';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+
+import { SocialShareProvider } from './../../share-common/providers/social-share/social-share';
 import { NotificationsProvider } from './../../share-common/providers/notifications/notifications';
-import { userDataSeeds } from './../../seeds/seedUserData';
 import { Component, ViewChild } from '@angular/core';
 import { Deeplinks } from '@ionic-native/deeplinks';
 import { ENV } from '@app/env';
-import { ModalController } from 'ionic-angular';
+import { ModalController, AlertController, ToastController } from 'ionic-angular';
+
 
 
 import { IonicPage, Tabs, Events, NavController, Platform } from 'ionic-angular'
+
+import * as shareTypes from '../../share-common/interfaces/interfaces';
+import { OrganizationProvider } from '../../share-common/providers/organization/organization';
 
 @IonicPage()
 @Component({
   templateUrl: 'tabs.html'
 })
 export class TabsPage {
-
-  private showDebugTab: boolean = false;
 
   @ViewChild('shareTabs') tabRef: Tabs;
 
@@ -26,7 +32,9 @@ export class TabsPage {
 
 
   constructor(public events: Events, public deeplinks: Deeplinks, public notifications: NotificationsProvider,
-    public navCtrl: NavController, public platform: Platform, public modalCtrl: ModalController) {
+    public navCtrl: NavController, public platform: Platform, public modalCtrl: ModalController,
+    private alertCtrl: AlertController, private socialShare: SocialShareProvider,
+    private org: OrganizationProvider, private activitiesProvider: ActivitiesProvider, private toastCtrl: ToastController) {
 
 
 
@@ -56,7 +64,7 @@ export class TabsPage {
       Successfully routed {"$link":{"path":"/crwp","queryString":"","fragment":"","host":"nn4wp.app.goo.gl","url":"https://nn4wp.app.goo.gl/crwp","scheme":"https"}}
       */
       console.log("Environment is: " + ENV.mode);
-      this.showDebugTab = true; // ENV.mode.toLowerCase() != 'production';
+
       /*
             this.deeplinks.route({
               '/settings': 'SettingsPage',
@@ -94,7 +102,18 @@ export class TabsPage {
         else {
           var result: any = this.parseUri(match.$link.url);
           console.log("Parsed URI looks like: " + JSON.stringify(result.queryParams));
+        }
 
+        switch (match.$link.host) {
+          case "/return":
+          case "return":
+            // coming back from a donation
+            this.handleDonationReturn(result.queryParams);
+
+            break;
+
+          default:
+            break;
         }
       }, (nomatch) => {
         console.warn('Unmatched Route', JSON.stringify(nomatch));
@@ -106,6 +125,71 @@ export class TabsPage {
     }) // end platform ready
   }
 
+
+  private handleDonationReturn(params) {
+    // we are returning from a donation go to the requested organization and thank them
+
+    // Don't post an alert if the donation failed, we already let them know.
+    if(!(params.status == 'error')){
+      //this.tabRef.select(1);
+      let thankYouMsg: string = `Thank you for your generous donation to ${params.displayName}`;
+      // this.alertCtrl.confirm({title: "Thank you", message: thankYouMsg, buttons: { ok: true, cancel: false}});
+
+      let alert = this.alertCtrl.create({
+        title: 'Thank you!',
+        message: thankYouMsg,
+        buttons: [
+
+          {
+            text: 'Share with friends',
+            cssClass: 'share-alert-button',
+            handler: () => {
+              let organization: shareTypes.Organization;
+              let orgSubscription: Subscription = this.org.getOrganization(params.recipientId)
+                .subscribe(org => {
+                  orgSubscription.unsubscribe();
+                  orgSubscription = this.activitiesProvider.getActivity( params.activityId || "")
+                    .subscribe(activity => {
+                      orgSubscription.unsubscribe();
+                      this.socialShare.startSocialShare(org, activity);
+                    }, error => {
+                      console.error("Error getting org in tabs:handleDonationReturn: " + error.message);
+
+                    }, () => {
+                      // we will end up here if there is no activity
+                      this.socialShare.startSocialShare(org);
+                    })
+                }, error => {
+                  console.error("Error getting org in tabs:handleDonationReturn: " + error.message);
+                });
+            }
+          },
+          {
+            text: 'OK',
+            role: 'cancel',
+            handler: () => {
+              console.log('Ok => Cancel clicked');
+            }
+          }
+        ]
+      });
+      alert.present();
+
+      } else { // donation failed. reiterate.
+          let toast = this.toastCtrl.create({
+            message: `Unable to complete donation to ${params.displayName}\n${params.errorMessage}`,
+            duration: 5000,
+            position: 'top'
+          });
+
+          toast.onDidDismiss(() => {
+            console.log('Dismissed toast - donation failed.');
+          });
+
+          toast.present();
+      }
+
+  }
 
   private subscribeToEvents() {
     // part of the init process
@@ -124,7 +208,7 @@ export class TabsPage {
     /*  this.events.subscribe('user:updated', () => {
        
        
- 
+   
      }); */
 
     this.platform.resume.subscribe(() => {

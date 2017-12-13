@@ -1,3 +1,4 @@
+import { OrganizationProvider } from './../../share-common/providers/organization/organization';
 import { TabsPage } from './tabs';
 
 import { NotificationsProvider } from './../../share-common/providers/notifications/notifications';
@@ -9,10 +10,12 @@ import { By }           from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { IonicModule, Platform, NavController} from 'ionic-angular/index';
 
-import { NotificationsProviderMock } from '../../../test-config/mocks-ionic';
-import { PlatformMock, NavParamsMock } from '../../../test-config/mocks-ionic';
+import { NotificationsProviderMock, OrganizationProviderMock, ActivitiesProviderMock } from '../../../test-config/mocks-ionic';
+import { PlatformMock, NavParamsMock, SocialShareProviderMock } from '../../../test-config/mocks-ionic';
 import { ComponentsModule } from '../../share-common/components/components.module';
 import { NavMock } from '../../../test-config/mocks-ionic';
+import { SocialShareProvider } from '../../share-common/providers/social-share/social-share';
+import { ActivitiesProvider } from '../../share-common/providers/activities/activities';
 
 describe('TabsPage', () => {
 
@@ -31,7 +34,10 @@ describe('TabsPage', () => {
         { provide: NavController, useClass: NavMock},
         { provide: NotificationsProvider, useClass: NotificationsProviderMock},
         { provide: Platform, useClass: PlatformMock},
-        { provide: NavParams, useClass: NavParamsMock }
+        { provide: NavParams, useClass: NavParamsMock },
+        { provide: SocialShareProvider, useClass: SocialShareProviderMock},
+        { provide: OrganizationProvider, useClass: OrganizationProviderMock},
+        { provide: ActivitiesProvider, useClass: ActivitiesProviderMock}
       ]
     });
   }));

@@ -1,13 +1,19 @@
-page-dashboard {
-  .dashboard-css {
-    
+page-impact {
+  .impact-css {
+    font-size: 16px !important;
+
     .donationTable  {
         font-size: 90%;
     }
 
     .headerRow {
+        font-size: 95% !important;
         margin-top: auto;
         margin-bottom: auto;
+    }
+
+    .impact-text {
+      font-size: 90% !important;
     }
 
   }

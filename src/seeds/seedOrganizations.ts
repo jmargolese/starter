@@ -1,7 +1,7 @@
-export const testStripeAcct = {"id" : "acct_1Ai6pMHMFCaEtegi"};
+export const testStripeAcct = { "id": "acct_1Ai6pMHMFCaEtegi" };
 export const orgSeeds = [
     {
-        "key":  "orgHumane",
+        "key": "orgHumane",
         "data": {
             "companyName": "Naperville Area Humane Society",
             "ein": "36-3040480",
@@ -21,9 +21,9 @@ export const orgSeeds = [
                 "description": "Helping pets in your neighborhood",
                 "enabled": true
             },
-            "uxPreferences" : {
-                "titleFont" : "black"
-              },
+            "uxPreferences": {
+                "titleFont": "black"
+            },
             "donationPrefs": [
                 5,
                 10,
@@ -33,21 +33,21 @@ export const orgSeeds = [
             ],
             "payMethods": [
                 {
-                "type": "stripe",
-                "data": {
-                    "creditCardFee": 0.029
+                    "type": "stripe",
+                    "data": {
+                        "creditCardFee": 0.029
                     }
                 },
             ],
             "subscription": {
-                "applicationFee" : 0.0
+                "applicationFee": 0.0
             }
         }
     },
     {
-        "key":  "orgChadTough",
+        "key": "orgChadTough",
         "data": {
-            "companyName": "Chad Tough",
+            "companyName": "ChadTough",
             "ein": "47-4041494",
             "shareuid": "CHADTGH",
             "images": {
@@ -55,22 +55,22 @@ export const orgSeeds = [
                 "logo": "https://firebasestorage.googleapis.com/v0/b/share-75e74.appspot.com/o/seed%2FChadToughLogo.png?alt=media&token=95eb3d37-0683-46ec-b57b-305868c621a3"
             },
             "social": {
-                "message": "I support Chad Tough's fight against pediatric cancer",
+                "message": "I support ChadTough's fight against pediatric cancer",
                 "hashTags": "#chadTough",
-                "subject": "Chad Tough"
+                "subject": "ChadTough"
             },
             "info": {
-                "coreMessage": "The Chad Tough Foundation, founded by the Lloyd Carr family, supports pediatric brain tumor research and studies nationwide.",
+                "coreMessage": "The ChadTough Foundation, founded by the Lloyd Carr family, supports pediatric brain tumor research and studies nationwide.",
                 "description": "Attack pediatric brain cancer",
                 "isDemo": false,
                 "enabled": true,
-                "backgroundColor" : "rgba(255, 117, 0, 1)"
+                "backgroundColor": "rgba(255, 117, 0, 1)"
             },
-            "featuredActivity" : {
-                "shortMessage" : "Promoting the current activity"
+            "featuredActivity": {
+                "shortMessage": "Promoting the current activity"
             },
-            "uxPreferences" : {
-              "titleFont" : "white"
+            "uxPreferences": {
+                "titleFont": "white"
             },
             "donationPrefs": [
                 10,
@@ -79,20 +79,22 @@ export const orgSeeds = [
                 100,
                 500
             ],
-            "paymethods": [
+            "payMethods": [
                 {
-                  "type" : "stripe",
-                   "creditCardFee": 0.029
-                }
+                    "type": "stripe",
+                    "data": {
+                        "creditCardFee": 0.029
+                    }
+                },
             ],
             "subscription":
                 {
-                    "applicationFee" : 0.0
+                    "applicationFee": 0.0
                 }
         }
     },
     {
-        "key":  "orgDesireStreet",
+        "key": "orgDesireStreet",
         "data": {
             "companyName": "Desire Street Ministries",
             "ein": "72-1218825",
@@ -106,15 +108,15 @@ export const orgSeeds = [
                 "hashTags": "#DesireStreetMinistries",
                 "subject": "Desire Street Ministries"
             },
-            "featuredActivity" : {
-                "shortMessage" : "Promoting the current activity"
+            "featuredActivity": {
+                "shortMessage": "Promoting the current activity"
             },
             "info": {
                 "coreMessage": "Transforming impoverished urban neighborhoods into flourishing, healthy communities is our goal, and Desire Street believes that bolstering the leaders in those neighborhoods is the best route toward that goal",
                 "description": "Transforming neighborhoods two steps at a time",
                 "isDemo": false,
                 "enabled": true,
-                "backgroundColor" : "#E3831E"
+                "backgroundColor": "#E3831E"
             },
             "donationPrefs": [
                 10,
@@ -123,19 +125,19 @@ export const orgSeeds = [
                 100,
                 500
             ],
-            "uxPreferences" : {
-                "titleFont" : "black"
-              },
+            "uxPreferences": {
+                "titleFont": "black"
+            },
             "payMethods": [
                 {
-                "type": "stripe",
-                "data": {
-                    "creditCardFee": 0.029
+                    "type": "stripe",
+                    "data": {
+                        "creditCardFee": 0.029
                     }
                 },
             ],
             "subscription": {
-                "applicationFee" : 0.0
+                "applicationFee": 0.0
             }
         }
     }

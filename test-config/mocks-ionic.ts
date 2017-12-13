@@ -300,6 +300,16 @@ export class DataProviderMock {
   }  
 }
 
+export class SocialShareProviderMock {
+  public startSocialShare(organization?: shareTypes.Organization, activity?: shareTypes.Activity){
+    return new Promise((resolve, reject) => {
+      resolve();
+    });
+  }
+}
+
+
+
 export class UserProviderMock {
   currentUser: shareTypes.UserProfile = {
     name: {

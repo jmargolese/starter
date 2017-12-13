@@ -25,8 +25,7 @@ export class ImpactPage {
   public showWhichDonations = "donations";
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public db: DataProvider, public userProvider: UserProvider, public analytics: AnalyticsProvider) {
-    // 
-
+    
   }
 
   public updateDonations() {

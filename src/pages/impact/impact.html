@@ -13,7 +13,7 @@
 </ion-header>
 
 
-<ion-content no-padding class="dashboard-css">
+<ion-content no-padding class="impact-css">
   <div *ngIf="userHasOrganization">
   <ion-segment style="padding-left: 10%; padding-right: 10%;" [(ngModel)]="showWhichDonations" (ionChange)="selectionChanged($event)">
     <ion-segment-button value="donations">My Donations
@@ -44,7 +44,7 @@
   </ion-grid>
   <ion-list>
     <ion-item *ngFor="let donation of donations | async"  class="donationTable">
-      <ion-grid>
+      <ion-grid class="impact-text">
         <ion-row>
           <ion-col col-2>
             <img *ngIf="donation.recipient.icon" src="{{donation.recipient.icon}}" />
@@ -52,11 +52,11 @@
           <ion-col col-3>
             {{donation.time | date:'MM/dd/yy' }}
           </ion-col>
-          <ion-col col-3 style="white-space: normal;">
+          <ion-col class="impact-text" col-3 style="white-space: normal;">
             {{ donation.recipient.name}}
           </ion-col>
           <ion-col col-2>
-            {{ donation.amount | currency:'USD':true}}
+            {{ donation.amount | currency:'USD':'symbol':'1.2-2'}}
           </ion-col>
           <ion-col col-2>
             <ion-icon style="font-size: 180%;" *ngIf="donation.donorPaidFees" name="checkmark"></ion-icon>
