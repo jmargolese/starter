@@ -257,6 +257,12 @@ export class PaymethodsProviderMock {}
 export class ActivitiesProviderMock {}
 export class SocialSharingMock {}
 
+export class SlidesMock {
+  public slideTo(): any {
+    return 0; 
+  }
+}
+
 export class ShareProviderMock {
   public donate() {
     return new Promise( (resolve, reject) => { 
