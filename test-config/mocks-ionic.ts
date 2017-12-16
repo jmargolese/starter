@@ -433,12 +433,32 @@ export class NavParamsMock {
     "metadata": this.documentmetadata
   };
 
+  paymethodChoices: shareTypes.paymethodChoices[] = 
+  [
+    {
+      kind: 'stripe',
+      iconType: 'icon',
+      imgUrl: '',
+      description: 'Add credit card',
+      canHaveMany: true
+    },
+    {
+      kind: 'paypal',
+      iconType: 'image',
+      imgUrl: './assets/img/ccIcons/paypal.png',
+      description: 'Checkout with PayPal',
+      canHaveMany: false
+    }
+  ];
+
   public get(key): any {
     switch (key) {
       case 'activity':
         return(this.activity);
       case 'organization':
         return(this.organization);
+      case 'paymethodChoices':
+        return(this.paymethodChoices);
     }
     return String(key) + 'Output';
   }
