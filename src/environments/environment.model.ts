@@ -1,7 +1,8 @@
+import { Environment } from './environment.model';
 export interface Environment {
-  mode: string;
+  mode: envMode;
   release: string;
-
+  type: envType,
   firebase: {
       apiKey: string;
       authDomain: string;
@@ -16,23 +17,29 @@ export interface Environment {
     privateKey: string;
     clientId: string;
   },
-  paypal: {
-    baseUrl: string;
-    clientId: string;
-    secret: string;
-    payerId: string;
-    BNCode: string;
-    accessToken: string;
+    paypal: {
+      baseUrl: string;
+      clientId: string;
+      secret: string;
+      payerId: string;
+      BNCode: string;
+      accessToken: string;
   },
   raven: {
     appKey: string;
     appKeyConsole: string;
   }
 }
- 
+
+  
 export enum envMode {
   production = "Production",
   dev = "Development",
   local = "Local"
+}
+
+export enum  envType {
+  console = "console",
+  app = "app"
 }
 
