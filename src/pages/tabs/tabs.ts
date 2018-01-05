@@ -205,6 +205,10 @@ export class TabsPage {
 
     });
 
+    this.events.subscribe('modal:AddPaymethodPage', ()=> {
+      this.showAddPaymethodModal();
+    });
+
     /*  this.events.subscribe('user:updated', () => {
        
        
@@ -285,6 +289,21 @@ export class TabsPage {
     });
     addPayMethod.present();
   }
+
+    public showAddPaymethodModal() {
+    const addPayMethod = this.modalCtrl.create('PaymethodsPage');
+    addPayMethod.onDidDismiss(data => {
+      if (data.canceled) {
+        var error: any = new Error('User canceled');
+        error.canceled = true;
+        this.events.publish("modalDismissed:AddPaymethodsPage", { canceled: true })
+      } else {
+        this.events.publish("modalDismissed:AddPaymethodsPage", { data: data.newPaymethod })
+      }
+    });
+    addPayMethod.present();
+  }
+
   ionViewDidEnter() {
     //this.tabRef.select(1);
   }

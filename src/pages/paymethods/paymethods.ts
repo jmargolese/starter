@@ -58,12 +58,13 @@ private setPaymethodChoices(): any {
  }
 
   private newPaymethod(kind: string) {
-    this.paymethodProvider.getPaymethods(); // refresh
+    this.paymethods = this.paymethodProvider.getPaymethods(); // refresh
     switch(kind){
       case 'stripe':
       // credit cards get added via the cloud for security reasons.
         this.navCtrl.push('AddStripeCcPage');
         break;
+
       case 'paypal':
         let email = this.userProvider.currentUser.profile.email;
         if (email == ""){ // Should never happen, for debugging
@@ -80,6 +81,8 @@ private setPaymethodChoices(): any {
             brand: "PayPal",
             hidden: false,
             sourceId: email
+          }).then(()=>{
+            this.paymethods = this.paymethodProvider.getPaymethods();
           });
         break;
     }
@@ -122,7 +125,7 @@ private setPaymethodChoices(): any {
           console.log("Called delete paymethod in paymethod page");
           this.paymethodProvider.deletePaymethod(index)
             .then(()=>{
-              this.paymethodProvider.getPaymethods(); //refresh
+              this.paymethods = this.paymethodProvider.getPaymethods(); //refresh
             })
           .catch(err=>{
             this.alert.confirm({title: 'An error occured.',message: 'there was a problem deleting this paymethod.',buttons:{ok: true}});

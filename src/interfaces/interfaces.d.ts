@@ -79,12 +79,15 @@ export interface Organization {
       "enabled": boolean
   },
   "donationPrefs": number[],
-  "payMethods": [
+  "paymentAccounts": [
       {
           "type" : string,
           "data": any
       }
   ]
+  "account": {
+    "applicationFee": number
+  }
 }
 
 export enum authEventTypes {
