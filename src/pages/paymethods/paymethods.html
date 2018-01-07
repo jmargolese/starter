@@ -3,9 +3,13 @@
   <ion-navbar>
     <ion-title>Paymethods</ion-title>
     <ion-buttons end>
-        <button (click)="showSelectPopover($event)" ion-button color="white" clear>
+        <button (click)="newPaymethod('stripe')" ion-button color="white" clear>
            Add
         </button>
+<!--    Add the popover back when PayPal is working. 
+        <button (click)="showSelectPopover($event)" ion-button color="white" clear>
+           Add
+        </button> -->
       </ion-buttons>
   </ion-navbar>
 </ion-header>

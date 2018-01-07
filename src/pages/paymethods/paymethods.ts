@@ -34,13 +34,14 @@ export class PaymethodsPage {
         description: 'Add credit card',
         canHaveMany: true
       },
-      {
-        kind: 'paypal',
-        iconType: 'image',
-        imgUrl: './assets/img/ccIcons/paypal.png',
-        description: 'Checkout with PayPal',
-        canHaveMany: false
-      }
+      // {
+      //   kind: 'paypal',
+      //   iconType: 'image',
+      //   imgUrl: './assets/img/ccIcons/paypal.png',
+      //   description: 'Checkout with PayPal',
+      //   canHaveMany: false
+      // },
+
     ];
 
 private setPaymethodChoices(): any {
@@ -89,20 +90,21 @@ private setPaymethodChoices(): any {
 
   }
 // when the user clicks 'Add', we give them a choice of paymethod types.
-  private showSelectPopover(event) {
-    let pop = this.popoverCtrl.create('PaymethodChoicesPage',
-      {paymethodChoices: this.setPaymethodChoices()});
+// supports PayPal
+  // private showSelectPopover(event) {
+  //   let pop = this.popoverCtrl.create('PaymethodChoicesPage',
+  //     {paymethodChoices: this.setPaymethodChoices()});
 
-    pop.onDidDismiss(kind =>{
-      if(kind){
-        this.newPaymethod(kind);
-      }
-    });
+  //   pop.onDidDismiss(kind =>{
+  //     if(kind){
+  //       this.newPaymethod(kind);
+  //     }
+  //   });
 
-    pop.present({
-      ev: event
-    });
-  }
+  //   pop.present({
+  //     ev: event
+  //   });
+  // }
 
   ionViewDidEnter() {
     this.analytics.setCurrentScreen('paymethods');
