@@ -250,12 +250,26 @@ export class ViewControllerMock {
   }
 }
 
-export class StripeMock {}
+export class StripeMock {
+  public setPublishableKey() {
+    return new Promise( (resolve, reject) => { 
+      resolve();
+    })
+  }
+}
+
 export class AlertProviderMock {}
 export class AnalyticsProviderMock {}
 export class PaymethodsProviderMock {}
 export class ActivitiesProviderMock {}
 export class SocialSharingMock {}
+export class StripeProviderMock {}
+
+export class SlidesMock {
+  public slideTo(): any {
+    return 0; 
+  }
+}
 
 export class ShareProviderMock {
   public donate() {
@@ -302,8 +316,6 @@ export class SocialShareProviderMock {
   }
 }
 
-
-
 export class UserProviderMock {
   currentUser: shareTypes.UserProfile = {
     name: {
@@ -337,36 +349,62 @@ export class NavParamsMock {
     "id": "mock",
     "organization": "orgAlive",
     "info": {
-        "type": "Campaign",
-        "featured": false,
-        "promoted": false,
-        "displayOrder": 0,
-        "shareuid": "ALIVE",
-        "enabled": true,
+      "type": "Campaign",
+      "featured": false,
+      "promoted": false,
+      "displayOrder": 0,
+      "shareuid": "ALIVE",
+      "enabled": true
     },
     "images": {
-        "image": null,
-        "logo": null
+      "image": null,
+      "logo": null,
+       "mainImage" : null
     },
     "messages": {
-        "headline": "mockHeadline",
-        "mainMessage": "mockMessage",
-        "callToAction": "mockCalToAction",
-        "motd": null
+      "headline": "mockHeadline",
+      "mainMessage": "mockMessage",
+      "callToAction": "mockCalToAction",
+      "motd": null
     },
     "dates": {
-        "startDate": "2017-10-25",
-        "endDate": "2017-11-15",
-        "activityDate": null,
-        "activeDateStart": null,
-        "activeDateEnd": null,
-        "activeDateTimer": null
+      "startDate": "2017-10-25",
+      "endDate": "2017-11-15",
+      "activityDate": null,
+      "activeDateStart": null,
+      "activeDateEnd": null,
+      "activeDateTimer": null
     },
     "social": null,
     "parent": null,
     "children": null,
     "metadata" : null
-  };
+  }
+
+  stripeaccountInfo: shareTypes.stripeAccountInfo = {
+    "type": null,
+    "stripeConnectToken": null,
+    "stripeState": null,
+    "account": null,
+    "creditCardFee": 0  
+  }
+
+  paypalaccountInfo: shareTypes.paypalAccountInfo = {
+      "type": null,
+      "data": null
+  }
+
+  documentmetadata: shareTypes.documentMetadata = {
+    createdAt: null,
+    updatedAt: null,
+    id: null
+  }
+
+  imagesizes: shareTypes.ImageSizes = {
+    "full": null,
+    "thumbnail": null,
+    "reduced": null
+  }
 
   organization: shareTypes.Organization = {
     "id": 'mockId',
@@ -375,7 +413,8 @@ export class NavParamsMock {
     "shareuid": 'mockshareuid',
     "images": {
         "image": 'mockimage',
-        "logo": 'mocklogo'
+        "mainImage" : this.imagesizes,
+        "logo": this.imagesizes
     },
     "social": {
       "message": null,
@@ -386,17 +425,31 @@ export class NavParamsMock {
         "coreMessage": 'mockcoreMessage',
         "isDemo": true,
         "description": 'mockdescription',
-        "enabled": true
+        "enabled": true,
+        "featured": true
     },
     "donationPrefs": [100],
-    "payMethods": [
-        {
-            "type": 'mockType',
-            "data": 0
-        }
-    ],
-    "metadata": null
+    "accounts": [this.stripeaccountInfo],
+    "metadata": this.documentmetadata
   };
+
+  paymethodChoices: shareTypes.paymethodChoices[] = 
+  [
+    {
+      kind: 'stripe',
+      iconType: 'icon',
+      imgUrl: '',
+      description: 'Add credit card',
+      canHaveMany: true
+    },
+    {
+      kind: 'paypal',
+      iconType: 'image',
+      imgUrl: './assets/img/ccIcons/paypal.png',
+      description: 'Checkout with PayPal',
+      canHaveMany: false
+    }
+  ];
 
   public get(key): any {
     switch (key) {
@@ -404,6 +457,8 @@ export class NavParamsMock {
         return(this.activity);
       case 'organization':
         return(this.organization);
+      case 'paymethodChoices':
+        return(this.paymethodChoices);
     }
     return String(key) + 'Output';
   }

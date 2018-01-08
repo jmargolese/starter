@@ -3,6 +3,7 @@ import { PaymethodsPage } from './paymethods';
 import { PaymethodsProvider } from '../../share-common/providers/paymethods/paymethods';
 import { AnalyticsProvider } from '../../share-common/providers/analytics/analytics';
 import { UserProvider } from '../../share-common/providers/user/user';
+import { AlertProvider } from './../../share-common/providers/alert/alert';
 
 import { NavParams } from 'ionic-angular';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
@@ -13,7 +14,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { PlatformMock, StatusBarMock, SplashScreenMock,  NavParamsMock } from '../../../test-config/mocks-ionic';
-import { PaymethodsProviderMock, AnalyticsProviderMock, UserProviderMock } from '../../../test-config/mocks-ionic';
+import { PaymethodsProviderMock, AnalyticsProviderMock, UserProviderMock, AlertProviderMock } from '../../../test-config/mocks-ionic';
 
 describe('PaymethodsPage', () => {
   let comp: PaymethodsPage;
@@ -34,6 +35,7 @@ describe('PaymethodsPage', () => {
         { provide:PaymethodsProvider, useClass: PaymethodsProviderMock },
         { provide: AnalyticsProvider, useClass: AnalyticsProviderMock },
         { provide: UserProvider, useClass: UserProviderMock },
+        { provide: AlertProvider, useClass: AlertProviderMock },
         { provide: NavParams, useClass: NavParamsMock }
       ]
     });
