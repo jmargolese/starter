@@ -1,8 +1,8 @@
 import { Environment } from './environment.model';
 export interface Environment {
-  mode: envMode,
-  release: string,
-  type: envType,
+  mode: envMode;
+  release: string;
+  type: envType;
   firebase: {
       apiKey: string;
       authDomain: string;
