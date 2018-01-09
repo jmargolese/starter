@@ -4,7 +4,7 @@ import { PaymethodsProvider } from '../../share-common/providers/paymethods/paym
 import { UserProvider } from './../../share-common/providers/user/user';
 import { AlertProvider } from './../../share-common/providers/alert/alert';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, PopoverController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, PopoverController, LoadingController } from 'ionic-angular';
 
 import * as shareTypes from '../../share-common/interfaces/interfaces';
 
@@ -17,15 +17,16 @@ import * as shareTypes from '../../share-common/interfaces/interfaces';
 export class PaymethodsPage {
 
   private paymethods: shareTypes.PayMethod[];
+  private loading;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public userProvider : UserProvider, 
-     public analytics: AnalyticsProvider, public paymethodProvider: PaymethodsProvider, private popoverCtrl: PopoverController,
-     private alert: AlertProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public userProvider: UserProvider,
+    public analytics: AnalyticsProvider, public paymethodProvider: PaymethodsProvider, private popoverCtrl: PopoverController,
+    private alert: AlertProvider, private loadingCtrl: LoadingController) {
   }
 
-// This is where we add new paymethod choices
+  // This is where we add new paymethod choices
 
- public paymethodChoices: shareTypes.paymethodChoices[] = 
+  public paymethodChoices: shareTypes.paymethodChoices[] =
     [
       {
         kind: 'stripe',
@@ -44,31 +45,31 @@ export class PaymethodsPage {
 
     ];
 
-private setPaymethodChoices(): any {
-  let pmChoices: shareTypes.paymethodChoices[] = [];
+  private setPaymethodChoices(): any {
+    let pmChoices: shareTypes.paymethodChoices[] = [];
 
-  for(let choice of this.paymethodChoices) {
-    if(choice.canHaveMany){
-      pmChoices.push(choice);
-    } else {
-      if (!this.paymethodProvider.hasPaymethod(choice.kind))
+    for (let choice of this.paymethodChoices) {
+      if (choice.canHaveMany) {
         pmChoices.push(choice);
+      } else {
+        if (!this.paymethodProvider.hasPaymethod(choice.kind))
+          pmChoices.push(choice);
       }
     }
-  return (pmChoices != [] ? pmChoices : this.setPaymethodChoices);        
- }
+    return (pmChoices != [] ? pmChoices : this.setPaymethodChoices);
+  }
 
   private newPaymethod(kind: string) {
     this.paymethods = this.paymethodProvider.getPaymethods(); // refresh
-    switch(kind){
+    switch (kind) {
       case 'stripe':
-      // credit cards get added via the cloud for security reasons.
+        // credit cards get added via the cloud for security reasons.
         this.navCtrl.push('AddStripeCcPage');
         break;
 
       case 'paypal':
         let email = this.userProvider.currentUser.profile.email;
-        if (email == ""){ // Should never happen, for debugging
+        if (email == "") { // Should never happen, for debugging
           email = '<unknown>';
         }
 
@@ -82,15 +83,15 @@ private setPaymethodChoices(): any {
             brand: "PayPal",
             hidden: false,
             sourceId: email
-          }).then(()=>{
+          }).then(() => {
             this.paymethods = this.paymethodProvider.getPaymethods();
           });
         break;
     }
 
   }
-// when the user clicks 'Add', we give them a choice of paymethod types.
-// supports PayPal
+  // when the user clicks 'Add', we give them a choice of paymethod types.
+  // supports PayPal
   // private showSelectPopover(event) {
   //   let pop = this.popoverCtrl.create('PaymethodChoicesPage',
   //     {paymethodChoices: this.setPaymethodChoices()});
@@ -115,34 +116,43 @@ private setPaymethodChoices(): any {
     // up the paymethods variable in the paymethodsProvider.
     this.paymethods = this.paymethodProvider.getPaymethods();
   }
-  
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad PaymethodsPage');
   }
 
-  public deletePaymethod(index : number) {
-    this.alert.confirm({title: 'Delete', message: 'You are about to delete this payment method.',
-      buttons:{ok: true, cancel:true} })
-        .then(()=>{
-          console.log("Called delete paymethod in paymethod page");
-          this.paymethodProvider.deletePaymethod(index)
-            .then(()=>{
-              this.paymethods = this.paymethodProvider.getPaymethods(); //refresh
-            })
-          .catch(err=>{
-            this.alert.confirm({title: 'An error occured.',message: 'there was a problem deleting this paymethod.',buttons:{ok: true}});
-          });
-        }).catch(error=>{ // changed their mind.
-          return;
-        });
+  public deletePaymethod(index: number) {
+    this.alert.confirm({
+      title: 'Delete', message: 'You are about to delete this payment method.',
+      buttons: { ok: true, cancel: true }
+    })
+      .then(() => {
+        console.log("Called delete paymethod in paymethod page");
+        this.loading = this.loadingCtrl.create({ content: '' });
+        this.loading.present()
+          .then(() => {
+            this.paymethodProvider.deletePaymethod(index)
+              .then(() => {
+                if (this.loading) { this.loading.dismiss().catch(); this.loading = null; }
+                this.paymethods = this.paymethodProvider.getPaymethods(); //refresh
+              })
+              .catch(err => {
+                if (this.loading) { this.loading.dismiss().catch(); this.loading = null; }
+                this.alert.confirm({ title: 'An error occured.', message: 'there was a problem deleting this paymethod.', buttons: { ok: true } });
+              });
+          }).catch(error => { // changed their mind.
+            return;
+          })
+
+      });
   }
 
   public makeDefaultPaymethod(index: number) {
     this.paymethodProvider.makeDefaultPaymethod(index)
-    .then(() => {
-      this.paymethods = this.paymethodProvider.getPaymethods();
-    })
-    
+      .then(() => {
+        this.paymethods = this.paymethodProvider.getPaymethods();
+      })
+
   }
 
 

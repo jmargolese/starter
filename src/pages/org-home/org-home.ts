@@ -10,7 +10,7 @@ import * as shareTypes from '../../share-common/interfaces/interfaces';
 import { UserProvider } from '../../share-common/providers/user/user';
 
 import * as _ from 'lodash';
-import * as constants from '../../share-common/config/constants'
+import * as constants from '../../share-common/config/constants';
 import { OrganizationProvider } from '../../share-common/providers/organization/organization';
 
 @IonicPage()

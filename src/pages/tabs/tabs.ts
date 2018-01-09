@@ -8,6 +8,7 @@ import { ShareProvider } from './../../share-common/providers/share/share';
 import { Component, ViewChild } from '@angular/core';
 import { Deeplinks } from '@ionic-native/deeplinks';
 import { ENV } from '@app/env';
+import * as constants from '../../share-common/config/constants'
 import { ModalController, AlertController, ToastController } from 'ionic-angular';
 
 
@@ -15,7 +16,9 @@ import { ModalController, AlertController, ToastController } from 'ionic-angular
 import { IonicPage, Tabs, Events, NavController, Platform } from 'ionic-angular'
 
 import * as shareTypes from '../../share-common/interfaces/interfaces';
+
 import { OrganizationProvider } from '../../share-common/providers/organization/organization';
+import { constructDependencies } from '@angular/core/src/di/reflective_provider';
 
 @IonicPage()
 @Component({
@@ -202,7 +205,7 @@ export class TabsPage {
 
     });
 
-    this.events.subscribe('model:AddStripeCcPage', () => {
+    this.events.subscribe(constants.EventTypes.modalAddPayMethodPage, () => {
 
       this.showAddStripeCCModal();
 
@@ -281,10 +284,10 @@ export class TabsPage {
       if (data.canceled) {
         var error: any = new Error('User canceled');
         error.canceled = true;
-        this.events.publish("modelDismissed:AddStripeCcPage", { canceled: true })
+        this.events.publish(constants.EventTypes.modalDismissedAddPayMethodsPage, { canceled: true })
       } else
 
-        this.events.publish("modelDismissed:AddStripeCcPage", { data: data.newPaymethod })
+        this.events.publish(constants.EventTypes.modalDismissedAddPayMethodsPage, { data: data.newPaymethod })
     });
     addPayMethod.present();
   }
