@@ -1,6 +1,6 @@
 import { AnalyticsProvider } from '../../share-common/providers/analytics/analytics';
 import { PaymethodsProvider } from '../../share-common/providers/paymethods/paymethods';
-import { PayPalProvider } from './../../share-common/providers/paypal/paypal';
+//import { PayPalProvider } from './../../share-common/providers/paypal/paypal';
 import { UserProvider } from './../../share-common/providers/user/user';
 import { AlertProvider } from './../../share-common/providers/alert/alert';
 import { Component } from '@angular/core';

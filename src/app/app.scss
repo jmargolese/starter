@@ -12,17 +12,14 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
-
-
 .fixedButton {
     position: absolute;
-    right: 3vw;;
+    right: 3vw;
+    ;
     top: 83vh;
     z-index: 999;
-    max-width: 45px; 
-
+    max-width: 45px;
 }
-
 
 ion-header {
     .button-md {
@@ -45,34 +42,33 @@ ion-header {
     top: 70px;
     left: 30px;
     bottom: 90px;
-    
 }
 
 .popover-content {
     max-width: 165px;
 }
 
+
 /* copied from yummly
 background-image: linear-gradient(0deg, rgba(0, 0, 0, .9) 15%, transparent 50%);
 */
 
- // to create the gradient
- $BAR_TOP: 	rgba(128,128,128,0.45);
- $BAR_BOTTOM:rgba(128,128,128,0.00);
- $BAR_TRANSPARENCY: rgba(255,255,255,0.3);
- 
- .imageOverlayGradient{
-     background: -webkit-gradient(left top, $BAR_TOP, $BAR_BOTTOM);
-     background: -o-linear-gradient(bottom right, $BAR_TOP, $BAR_BOTTOM);
-     background: -moz-linear-gradient(bottom right, $BAR_TOP, $BAR_BOTTOM);
-     background: linear-gradient(to bottom , $BAR_TOP, $BAR_BOTTOM);
- }
+// to create the gradient
+$BAR_TOP : rgba(128, 128, 128, 0.45);
+$BAR_BOTTOM:rgba(128, 128, 128, 0.00);
+$BAR_TRANSPARENCY: rgba(255, 255, 255, 0.3);
+.imageOverlayGradient {
+    background: -webkit-gradient(left top, $BAR_TOP, $BAR_BOTTOM);
+    background: -o-linear-gradient(bottom right, $BAR_TOP, $BAR_BOTTOM);
+    background: -moz-linear-gradient(bottom right, $BAR_TOP, $BAR_BOTTOM);
+    background: linear-gradient(to bottom, $BAR_TOP, $BAR_BOTTOM);
+}
 
- .imageOverlayGradientLightTop{
-    background: -webkit-gradient(left top, $BAR_BOTTOM,  $BAR_TOP);
-    background: -o-linear-gradient(bottom right, $BAR_BOTTOM,  $BAR_TOP);
-    background: -moz-linear-gradient(bottom right, $BAR_BOTTOM,  $BAR_TOP);
-    background: linear-gradient(to bottom , $BAR_BOTTOM,  $BAR_TOP);
+.imageOverlayGradientLightTop {
+    background: -webkit-gradient(left top, $BAR_BOTTOM, $BAR_TOP);
+    background: -o-linear-gradient(bottom right, $BAR_BOTTOM, $BAR_TOP);
+    background: -moz-linear-gradient(bottom right, $BAR_BOTTOM, $BAR_TOP);
+    background: linear-gradient(to bottom, $BAR_BOTTOM, $BAR_TOP);
 }
 
 .centeredText {
@@ -91,4 +87,46 @@ background-image: linear-gradient(0deg, rgba(0, 0, 0, .9) 15%, transparent 50%);
 // used in tabs.ts but needs to be here for alertController to see it
 .share-alert-button {
     font-weight: bold;
+}
+
+.share-form {
+    p {
+        font-size: 0.8em;
+        color: #d2d2d2;
+    }
+    input {
+        margin-top: 2px !important;
+        margin-bottom: 2px !important;
+    }
+    .swiper-slide {
+        display: block;
+    }
+    ion-label,
+    .select-text {
+        margin-left: 10px;
+    }
+    ion-input,
+    ion-select,
+    ion-textarea {
+        background-color: #f2f2f2;
+        padding: 5px 10px;
+    }
+    .invalid {
+        border: 1px solid #ea6153;
+    }
+    .invalidFormText {
+        color: #ea6153;
+        font-size: 80%;
+        display: block;
+        float: right;
+        white-space: normal;
+    }
+    .fit-thumbnail {
+        object-fit: cover;
+        margin-top: 100px;
+    }
+
+    .label-ios[floating], .label-md[floating] {
+        margin-left: 0px;
+    }
 }

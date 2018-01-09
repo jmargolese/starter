@@ -10,6 +10,7 @@ import { NavController , ModalController, IonicPage} from 'ionic-angular';
 import { orgSeeds, testStripeAcct } from '../../seeds/seedOrganizations';
 
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+import { ENV } from '@app/env';
 
 // providers
 import { AuthProvider } from './../../share-common/providers/auth/auth';
@@ -23,10 +24,12 @@ export class ContactPage {
 
   private organizationsCollection: AngularFirestoreCollection<any>;
   private stripeAccountsCollection: AngularFirestoreCollection<any>;
+  public projectId : string = "";
 
   constructor(public navCtrl: NavController, private readonly afs: AngularFirestore, private myAuth: AuthProvider, public modalCtrl: ModalController) {
     this.organizationsCollection = afs.collection<any>('organizations');
     this.stripeAccountsCollection = afs.collection<any>('stripeAccountObjects');
+    this.projectId = ENV.firebase.projectId
   }
 
   public login(): void {
