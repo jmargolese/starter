@@ -4,7 +4,6 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { SocialShareProvider } from './../../share-common/providers/social-share/social-share';
 import { NotificationsProvider } from './../../share-common/providers/notifications/notifications';
-import { ShareProvider } from './../../share-common/providers/share/share';
 import { Component, ViewChild } from '@angular/core';
 import { Deeplinks } from '@ionic-native/deeplinks';
 import { ENV } from '@app/env';
@@ -39,7 +38,7 @@ export class TabsPage {
     public navCtrl: NavController, public platform: Platform, public modalCtrl: ModalController,
     private alertCtrl: AlertController, private socialShare: SocialShareProvider,
     private org: OrganizationProvider, private activitiesProvider: ActivitiesProvider,
-    private share: ShareProvider, private toastCtrl: ToastController) {
+     private toastCtrl: ToastController) {
 
 
 

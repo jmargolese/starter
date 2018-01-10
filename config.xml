@@ -98,6 +98,6 @@
     </plugin>
     <plugin name="cordova-ios-export-compliance" spec="^1.0.2" />
     <plugin name="cordova-plugin-firebase-analytics" spec="^0.12.1" />
-    <plugin name="cordova-plugin-stripe" spec="^1.5.3" />
     <plugin name="phonegap-plugin-push" spec="^2.1.2" />
+    <plugin name="cordova-plugin-stripe" spec="^1.5.3" />
 </widget>
