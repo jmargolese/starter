@@ -219,7 +219,8 @@ export class TabsPage {
 
     this.platform.resume.subscribe(() => {
       console.log("Resume event");
-      this.notifications.getCurrentToken();
+      //this.notifications.getCurrentToken();
+      this.events.publish(constants.EventTypes.resumeEvent);
     });
 
   }
