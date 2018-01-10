@@ -14,7 +14,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { AppVersion } from '@ionic-native/app-version';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { FirebaseAnalytics } from '@ionic-native/firebase-analytics';
-import { FCM } from '@ionic-native/fcm';
+
 
 
 import { AngularFireModule } from 'angularfire2';
@@ -41,7 +41,7 @@ import { SentryErrorHandler} from '../services/sentry-errorhandler';
 import { NotificationsProvider } from '../share-common/providers/notifications/notifications';
 import { CloudFunctionProvider } from '../share-common/providers/cloud-function/cloud-function';
 import { SocialShareProvider } from '../share-common/providers/social-share/social-share';
-
+import { Push } from '@ionic-native/push';
 
 
 @NgModule({
@@ -81,7 +81,7 @@ import { SocialShareProvider } from '../share-common/providers/social-share/soci
     FirebaseAnalytics,
     Deeplinks,
     Stripe,
-    FCM,
+    Push,
     NotificationsProvider,
     StripeProvider,
     CloudFunctionProvider,
