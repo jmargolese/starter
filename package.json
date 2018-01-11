@@ -45,9 +45,8 @@
     "@firebase/webchannel-wrapper": "^0.2.4",
     "@ionic-native/app-version": "^4.4.2",
     "@ionic-native/core": "^4.4.2",
-    "@ionic-native/deeplinks": "^4.4.2",
+    "@ionic-native/deeplinks": "^4.5.2",
     "@ionic-native/firebase-analytics": "^4.4.2",
-    "@ionic-native/firebase-dynamic-links": "^4.4.2",
     "@ionic-native/in-app-browser": "^4.4.2",
     "@ionic-native/push": "^4.5.2",
     "@ionic-native/social-sharing": "^4.4.2",
@@ -134,7 +133,7 @@
       "ionic-plugin-deeplinks": {
         "URL_SCHEME": "getshare",
         "DEEPLINK_SCHEME": "https",
-        "DEEPLINK_HOST": "nn4wp.app.goo.gl",
+        "DEEPLINK_HOST": "rstc5.app.goo.gl",
         "ANDROID_PATH_PREFIX": "/"
       },
       "cordova-ios-export-compliance": {},
