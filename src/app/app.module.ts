@@ -1,5 +1,3 @@
-
-import { FirebaseDynamicLinks }  from '@ionic-native/firebase-dynamic-links';
 import { Deeplinks } from '@ionic-native/deeplinks';
 import { Stripe } from '@ionic-native/stripe';
 import { HttpModule } from '@angular/http';
@@ -77,7 +75,6 @@ import { Push } from '@ionic-native/push';
     AlertProvider,
     AnalyticsProvider,
     InAppBrowser,
-    FirebaseDynamicLinks,
     FirebaseAnalytics,
     Deeplinks,
     Stripe,

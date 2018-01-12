@@ -1,3 +1,4 @@
+import { UserProvider } from './../../share-common/providers/user/user';
 import { ActivitiesProvider } from './../../share-common/providers/activities/activities';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -19,6 +20,7 @@ import * as shareTypes from '../../share-common/interfaces/interfaces';
 
 import { OrganizationProvider } from '../../share-common/providers/organization/organization';
 import { constructDependencies } from '@angular/core/src/di/reflective_provider';
+import { AuthProvider } from '../../share-common/providers/auth/auth';
 
 @IonicPage()
 @Component({
@@ -39,7 +41,8 @@ export class TabsPage {
     public navCtrl: NavController, public platform: Platform, public modalCtrl: ModalController,
     private alertCtrl: AlertController, private socialShare: SocialShareProvider,
     private org: OrganizationProvider, private activitiesProvider: ActivitiesProvider,
-    private share: ShareProvider, private toastCtrl: ToastController) {
+    private share: ShareProvider, private toastCtrl: ToastController, private userProvider: UserProvider,
+    private auth: AuthProvider) {
 
 
 
@@ -69,6 +72,8 @@ export class TabsPage {
       Successfully routed {"$link":{"path":"/crwp","queryString":"","fragment":"","host":"nn4wp.app.goo.gl","url":"https://nn4wp.app.goo.gl/crwp","scheme":"https"}}
       */
       console.log("Environment is: " + ENV.mode);
+      this.auth.init();
+      this.userProvider.init();            // ensure this get enstantiated  (after a login redirect we'll end up back here)
 
       /*
             this.deeplinks.route({
