@@ -1,9 +1,4 @@
-<!--
-  Generated template for the DashboardPage page.
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar>
@@ -23,46 +18,16 @@
   </ion-segment>
 </div>
  
-  <ion-grid style="font-weight: bold;">
-    <ion-row class="headerRow">
-      <ion-col col-2 class="headerRow">
-
-      </ion-col>
-      <ion-col col-3 class="headerRow">
-        Date
-      </ion-col>
-      <ion-col col-3 style="white-space: normal;" class="headerRow">
-        Recipient
-      </ion-col>
-      <ion-col col-2 class="headerRow">
-        Amount
-      </ion-col>
-      <ion-col col-2 class="headerRow">
-        Paid fees?
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <div style="margin-top: 15px;"></div>
   <ion-list>
-    <ion-item *ngFor="let donation of donations | async"  class="donationTable">
-      <ion-grid class="impact-text">
-        <ion-row>
-          <ion-col col-2>
-            <img *ngIf="donation.recipient.icon" src="{{donation.recipient.icon}}" />
-          </ion-col>
-          <ion-col col-3>
-            {{donation.time | date:'MM/dd/yy' }}
-          </ion-col>
-          <ion-col class="impact-text" col-3 style="white-space: normal;">
-            {{ donation.recipient.name}}
-          </ion-col>
-          <ion-col col-2>
-            {{ donation.amount | currency:'USD':'symbol':'1.2-2'}}
-          </ion-col>
-          <ion-col col-2>
-            <ion-icon style="font-size: 180%;" *ngIf="donation.donorPaidFees" name="checkmark"></ion-icon>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+    <ion-item *ngFor="let donation of donations"  class="donationTable">
+        <ion-thumbnail item-start>
+            <img src="{{donation.recipient.icon}}">
+          </ion-thumbnail>
+          <h2>{{donation.recipient.name}}</h2>
+          <p> <span>$hared {{ donation.amount | currency:'USD':'symbol':'1.2-2'}}</span><span class="donation-date"> {{donation.time | date:'MMM dd yyyy' }}</span></p>
+          <p class="donation-paid-fees">{{donation.donorPaidFees ? '(Includes processing fees)' : ''}}</p>
+      
     </ion-item>
   </ion-list>
 

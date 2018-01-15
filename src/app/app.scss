@@ -35,7 +35,14 @@ ion-header {
         -webkit-justify-content: center;
         justify-content: center;
     }
+
+    .toolbar-title {
+        text-overflow: unset;
+        white-space: unset;
+     }
 }
+
+
 
 .action-choice-popover .popover-ios {
     width: 80%;

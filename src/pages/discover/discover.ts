@@ -10,12 +10,6 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 //import { ENV } from '@app/env';
 
-/**
- * Generated class for the HomePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 export interface Organization { };
 

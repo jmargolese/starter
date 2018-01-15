@@ -1,7 +1,7 @@
 <ion-header [hidden]="hideHeader">
 
   <ion-navbar swipeBackEnabled="true">
-    <ion-title>{{organization && organization.companyName}}</ion-title>
+    <ion-title>{{organization && organization.companyName.substring(0,50)}}</ion-title>
 
   </ion-navbar>
 

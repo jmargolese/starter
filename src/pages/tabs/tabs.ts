@@ -32,8 +32,9 @@ export class TabsPage {
   tab1Root = "OrgHomePage";
   tab2Root = 'OrgHomePage';
   tab3Root = 'DiscoverPage';
-  tab4Root = 'SettingsPage';
-  tab5Root = 'ImpactPage';
+  tab4Root = 'ImpactPage';
+  tab5Root = 'SettingsPage';
+  
 
 
   constructor(public events: Events, public deeplinks: Deeplinks, public notifications: NotificationsProvider,
