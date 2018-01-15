@@ -140,7 +140,7 @@ export class TabsPage {
     // we are returning from a donation go to the requested organization and thank them
 
     // Don't post an alert if the donation failed, we already let them know.
-    if(!(params.status == 'error')){
+    if (!(params.status == 'error')) {
       //this.tabRef.select(1);
       let thankYouMsg: string = `Thank you for your generous donation to ${params.displayName}`;
       // this.alertCtrl.confirm({title: "Thank you", message: thankYouMsg, buttons: { ok: true, cancel: false}});
@@ -158,7 +158,7 @@ export class TabsPage {
               let orgSubscription: Subscription = this.org.getOrganization(params.recipientId)
                 .subscribe(org => {
                   orgSubscription.unsubscribe();
-                  orgSubscription = this.activitiesProvider.getActivity( params.activityId || "")
+                  orgSubscription = this.activitiesProvider.getActivity(params.activityId || "")
                     .subscribe(activity => {
                       orgSubscription.unsubscribe();
                       this.socialShare.startSocialShare(org, activity);
@@ -185,24 +185,38 @@ export class TabsPage {
       });
       alert.present();
 
-      } else { // donation failed. reiterate.
-          let toast = this.toastCtrl.create({
-            message: `Unable to complete donation to ${params.displayName}\n${params.errorMessage}`,
-            duration: 5000,
-            position: 'top'
-          });
+    } else { // donation failed. reiterate.
+      let toast = this.toastCtrl.create({
+        message: `Unable to complete donation to ${params.displayName}\n${params.errorMessage}`,
+        duration: 5000,
+        position: 'top'
+      });
 
-          toast.onDidDismiss(() => {
-            console.log('Dismissed toast - donation failed.');
-          });
+      toast.onDidDismiss(() => {
+        console.log('Dismissed toast - donation failed.');
+      });
 
-          toast.present();
-      }
+      toast.present();
+    }
 
   }
 
   private subscribeToEvents() {
     // part of the init process
+    this.events.subscribe(constants.EventTypes.authStateChange, (newState: constants.authStateChange) => {
+      switch (newState) {
+        case constants.authStateChange.logout:
+          this.tabRef.select(0);
+          break;
+        case constants.authStateChange.login:
+          this.tabRef.select(1);
+
+        default:
+          break;
+      }
+
+    });
+
     this.events.subscribe('tabs:select', (newTab) => {
       // let other parts of the app tell us when a new tab is needed
       this.tabRef.select(newTab);

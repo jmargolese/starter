@@ -1,3 +1,4 @@
+import { EventTypes } from './../../share-common/config/constants';
 import { envMode } from './../../environments/environment.model';
 import { AnalyticsProvider } from '../../share-common/providers/analytics/analytics';
 import { AuthProvider } from '../../share-common/providers/auth/auth';
@@ -6,6 +7,7 @@ import { IonicPage, NavController, NavParams, Platform, ModalController } from '
 import { ToastController, Events } from 'ionic-angular';
 import { AppVersion } from '@ionic-native/app-version';
 import { ENV } from '@app/env';
+import * as constants from '../../share-common/config/constants';
 
 
 
@@ -54,7 +56,7 @@ export class SettingsPage {
       case 'logout':
         this.auth.logout()
           .then(() => {
-            this.events.publish('tabs:select', 1);      // switch to the Browse Tab
+            this.events.publish(constants.EventTypes.authStateChange, constants.authStateChange.logout);      // switch to the Browse Tab
           })
 
         break;
@@ -62,7 +64,7 @@ export class SettingsPage {
         const loginModal = this.modalCtrl.create('LoginPage');
         loginModal.onDidDismiss(data => {
           if (!data.canceled)
-            this.events.publish('tabs:select', 0);      // switch to the Home Tab
+            this.events.publish(constants.EventTypes.authStateChange, constants.authStateChange.login);      // switch to the Home Tab
         });
         loginModal.present();
         break;
