@@ -133,7 +133,7 @@ export class OrgHomePage {
         } else {
           this.useOrgFavorites = this.navParams.get('useOrgFavorites') ? true : false;
           // this means we are part of a list of organization favorites with an index, as opposed to be being passed in an organization
-          
+
 
           this.setOrganization(this.orgIndex || 0);
           this.loading = false;
@@ -151,8 +151,8 @@ export class OrgHomePage {
 
   }
 
-  private determineIndex() : number {
-    let index: number = this.orgIndex; 
+  private determineIndex(): number {
+    let index: number = this.orgIndex;
     let requestedOrg = this.navParams.get('showOrg') || null;
     if (requestedOrg) {
       index = _.findIndex(this.organizationList, ['active', false]);
@@ -165,25 +165,26 @@ export class OrgHomePage {
     // a user may have added or removed favorite orgs, make sure we (the org displayed on this page) is still in the favorites, 
     // if not, take action to remove us from view
     // we need to see if our organization still is in the favorites list.
-    if (this.useOrgFavorites)
+    if (this.useOrgFavorites) {
       this.organizationList = this.userProvider.getFavoriteOrganizations();
 
-    if (this.organization && !_.find(this.organizationList, ['id', this.organization.id])) {
-      // the organization we are displaying was removed from the list, so:
-      if (this.orgIndex == 0) {
-        if (this.organizationList.length) {
-          // we are the root and there is at least one more, so change our identity
-          this.setOrganization(0);
-          this.content.scrollToTop(200);
-        } else {
-          // we are the last so just display the 'get more favorites message'
+      if (this.organization && !_.find(this.organizationList, ['id', this.org.getId(this.organization)])) {
+        // the organization we are displaying was removed from the list, so:
+        if (this.orgIndex == 0) {
+          if (this.organizationList.length) {
+            // we are the root and there is at least one more, so change our identity
+            this.setOrganization(0);
+            this.content.scrollToTop(200);
+          } else {
+            // we are the last so just display the 'get more favorites message'
 
-          this.setOrganization(0);
+            this.setOrganization(0);
+          }
         }
-      }
-      else {
-        // if we are up in the stack, just pop.
-        this.prev();
+        else {
+          // if we are up in the stack, just pop.
+          this.prev();
+        }
       }
     }
   }
@@ -194,7 +195,7 @@ export class OrgHomePage {
 
       if (this.useOrgFavorites)
         // userProvider downloads favorite organizations on setup
-        
+
         this.organizationList = this.userProvider.getFavoriteOrganizations();
 
       if (this.organizationList && this.organizationList.length) {
@@ -212,12 +213,12 @@ export class OrgHomePage {
       }
     } else {
       this.organization = this.navParams.get('organization') || null;
-      this.showAddToFavorites = this.organization && this.userProvider.userLikesOrganization(this.organization.id) ? false : true;
+      this.showAddToFavorites = this.organization && this.userProvider.userLikesOrganization(this.org.getId(this.organization)) ? false : true;
     }
 
     if (this.organization)
       this.showDonateButton = true;
-      this.orgMainImageUrl = this.org.getImageUrl(this.organization, constants.imageTypes.organizationImage, constants.imageSizes.reduced );
+    this.orgMainImageUrl = this.org.getImageUrl(this.organization, constants.imageTypes.organizationImage, constants.imageSizes.reduced);
     //this.testMe.testMe();  
     console.log('ionViewDidLoad OrgHomePage and showAddToFavorites is: ' + this.showAddToFavorites);
     this.isReady = true;
@@ -247,6 +248,7 @@ export class OrgHomePage {
   }
 
   public prev() {
+    console.log("org-home page about to pop in prev");
     this.navCtrl.pop();
   }
 
