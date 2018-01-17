@@ -133,7 +133,7 @@ export class OrgHomePage {
         } else {
           this.useOrgFavorites = this.navParams.get('useOrgFavorites') ? true : false;
           // this means we are part of a list of organization favorites with an index, as opposed to be being passed in an organization
-          
+
 
           this.setOrganization(this.orgIndex || 0);
           this.loading = false;
@@ -151,8 +151,8 @@ export class OrgHomePage {
 
   }
 
-  private determineIndex() : number {
-    let index: number = this.orgIndex; 
+  private determineIndex(): number {
+    let index: number = this.orgIndex;
     let requestedOrg = this.navParams.get('showOrg') || null;
     if (requestedOrg) {
       index = _.findIndex(this.organizationList, ['active', false]);
@@ -194,7 +194,7 @@ export class OrgHomePage {
 
       if (this.useOrgFavorites)
         // userProvider downloads favorite organizations on setup
-        
+
         this.organizationList = this.userProvider.getFavoriteOrganizations();
 
       if (this.organizationList && this.organizationList.length) {
@@ -215,9 +215,13 @@ export class OrgHomePage {
       this.showAddToFavorites = this.organization && this.userProvider.userLikesOrganization(this.organization.id) ? false : true;
     }
 
-    if (this.organization)
+    if (this.organization) {
       this.showDonateButton = true;
-      this.orgMainImageUrl = this.org.getImageUrl(this.organization, constants.imageTypes.organizationImage, constants.imageSizes.reduced );
+      this.orgMainImageUrl = this.org.getImageUrl(this.organization, constants.imageTypes.organizationImage, constants.imageSizes.reduced);
+    } else {
+      this.showDonateButton = false;
+      this.orgMainImageUrl = "";
+    }
     //this.testMe.testMe();  
     console.log('ionViewDidLoad OrgHomePage and showAddToFavorites is: ' + this.showAddToFavorites);
     this.isReady = true;
@@ -275,7 +279,7 @@ export class OrgHomePage {
           this.renderer.setStyle(this.navButtons.nativeElement, "top", -(data.scrollTop - buffer) / 2 + "px");
         }
 
-        this.showDonateButton = (data.scrollTop < this.activityListTop);
+        this.showDonateButton = this.organization && (data.scrollTop < this.activityListTop);
 
       })
 
