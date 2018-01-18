@@ -165,25 +165,26 @@ export class OrgHomePage {
     // a user may have added or removed favorite orgs, make sure we (the org displayed on this page) is still in the favorites, 
     // if not, take action to remove us from view
     // we need to see if our organization still is in the favorites list.
-    if (this.useOrgFavorites)
+    if (this.useOrgFavorites) {
       this.organizationList = this.userProvider.getFavoriteOrganizations();
 
-    if (this.organization && !_.find(this.organizationList, ['id', this.organization.id])) {
-      // the organization we are displaying was removed from the list, so:
-      if (this.orgIndex == 0) {
-        if (this.organizationList.length) {
-          // we are the root and there is at least one more, so change our identity
-          this.setOrganization(0);
-          this.content.scrollToTop(200);
-        } else {
-          // we are the last so just display the 'get more favorites message'
+      if (this.organization && !_.find(this.organizationList, ['id', this.org.getId(this.organization)])) {
+        // the organization we are displaying was removed from the list, so:
+        if (this.orgIndex == 0) {
+          if (this.organizationList.length) {
+            // we are the root and there is at least one more, so change our identity
+            this.setOrganization(0);
+            this.content.scrollToTop(200);
+          } else {
+            // we are the last so just display the 'get more favorites message'
 
-          this.setOrganization(0);
+            this.setOrganization(0);
+          }
         }
-      }
-      else {
-        // if we are up in the stack, just pop.
-        this.prev();
+        else {
+          // if we are up in the stack, just pop.
+          this.prev();
+        }
       }
     }
   }
@@ -212,7 +213,7 @@ export class OrgHomePage {
       }
     } else {
       this.organization = this.navParams.get('organization') || null;
-      this.showAddToFavorites = this.organization && this.userProvider.userLikesOrganization(this.organization.id) ? false : true;
+      this.showAddToFavorites = this.organization && this.userProvider.userLikesOrganization(this.org.getId(this.organization)) ? false : true;
     }
 
     if (this.organization) {
@@ -251,6 +252,7 @@ export class OrgHomePage {
   }
 
   public prev() {
+    console.log("org-home page about to pop in prev");
     this.navCtrl.pop();
   }
 
