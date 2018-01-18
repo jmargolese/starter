@@ -216,9 +216,13 @@ export class OrgHomePage {
       this.showAddToFavorites = this.organization && this.userProvider.userLikesOrganization(this.org.getId(this.organization)) ? false : true;
     }
 
-    if (this.organization)
+    if (this.organization) {
       this.showDonateButton = true;
-    this.orgMainImageUrl = this.org.getImageUrl(this.organization, constants.imageTypes.organizationImage, constants.imageSizes.reduced);
+      this.orgMainImageUrl = this.org.getImageUrl(this.organization, constants.imageTypes.organizationImage, constants.imageSizes.reduced);
+    } else {
+      this.showDonateButton = false;
+      this.orgMainImageUrl = "";
+    }
     //this.testMe.testMe();  
     console.log('ionViewDidLoad OrgHomePage and showAddToFavorites is: ' + this.showAddToFavorites);
     this.isReady = true;
@@ -277,7 +281,7 @@ export class OrgHomePage {
           this.renderer.setStyle(this.navButtons.nativeElement, "top", -(data.scrollTop - buffer) / 2 + "px");
         }
 
-        this.showDonateButton = (data.scrollTop < this.activityListTop);
+        this.showDonateButton = this.organization && (data.scrollTop < this.activityListTop);
 
       })
 

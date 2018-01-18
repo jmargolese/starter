@@ -13,13 +13,6 @@ import * as shareTypes from '../../share-common/interfaces/interfaces';
 
 import { ENV } from '@app/env';
 
-/**
- * Generated class for the AddStripeCcPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 
 
 @IonicPage()
@@ -167,6 +160,11 @@ export class AddStripeCcPage {
       .catch(() => { });
   }
 
+  public updateAndDismiss() {
+    // we are called by any provider service to ensure there is valid PayMethod data when we return
+    this.userProvider.updateUserInfo
+    this.viewCtrl.dismiss({ error: false, canceled: false });
+  }
   public submit() {
 
     this.submitAttempt = true;
@@ -213,7 +211,7 @@ export class AddStripeCcPage {
                   this.alert.confirm({ title: "Success", message: "Your credit card has been added", buttons: { ok: true, cancel: false } })
                     .then(() => {
                       // this.viewCtrl.dismiss({  error: false, canceled: false, newPaymethod: newPaymethod });
-                      this.viewCtrl.dismiss({ error: false, canceled: false });
+                      this.updateAndDismiss();
                     });
                 }).catch(error => {
                   console.error(`stripeProvider.submitStripeToken rejected with error: ${error}`);
