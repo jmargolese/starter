@@ -11,14 +11,6 @@ import * as constants from '../../share-common/config/constants';
 
 
 
-
-/**
- * Generated class for the SettingsPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-settings',
@@ -98,12 +90,13 @@ export class SettingsPage {
         'title': 'Environment: ' + ENV.mode,
         'textOnly': true,
       });
-    entries.push(
+
+   /*  entries.push(
       {
         'title': 'View tutorial',
         'callback': 'tutorial',
       }
-    )
+    ) */
     this.config.push({
       'sectionTitle': 'About',
       'entries': entries,
