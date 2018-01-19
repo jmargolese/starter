@@ -40,6 +40,7 @@ import { NotificationsProvider } from '../share-common/providers/notifications/n
 import { CloudFunctionProvider } from '../share-common/providers/cloud-function/cloud-function';
 import { SocialShareProvider } from '../share-common/providers/social-share/social-share';
 import { Push } from '@ionic-native/push';
+import { ErrorReporterProvider } from '../share-common/providers/error-reporter/error-reporter';
 
 
 @NgModule({
@@ -83,6 +84,7 @@ import { Push } from '@ionic-native/push';
     StripeProvider,
     CloudFunctionProvider,
     SocialShareProvider,
+    ErrorReporterProvider,
   ]
 })
 export class AppModule {}

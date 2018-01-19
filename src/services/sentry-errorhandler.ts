@@ -11,6 +11,7 @@ import Raven from 'raven-js';
 
 import { ENV } from '@app/env';
 
+
 if (ENV.mode == envMode.production)
     Raven
         .config(ENV.raven.appKey,
