@@ -75,7 +75,7 @@ export class PaymethodsPage {
 
         this.paymethodProvider.addPaymethod(
           {
-            vendor: shareTypes.payMethodVendors.PayPal,
+            vendor: 'paypal',  // shareTypes.payMethodVendors.PayPal,  
             isPreferred: true,
             kind: 'paypal',
             displayName: email,
