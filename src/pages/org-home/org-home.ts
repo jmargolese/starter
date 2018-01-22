@@ -12,6 +12,7 @@ import { UserProvider } from '../../share-common/providers/user/user';
 import * as _ from 'lodash';
 import * as constants from '../../share-common/config/constants';
 import { OrganizationProvider } from '../../share-common/providers/organization/organization';
+import { ErrorReporterProvider } from '../../share-common/providers/error-reporter/error-reporter';
 
 @IonicPage()
 @Component({
@@ -46,7 +47,7 @@ export class OrgHomePage {
   public loading: boolean = true;
 
   public isReady: boolean = false;       // don't show anything while loading
-
+  private setOrganizationHasBeenCalled: boolean = false;       // flag so we know when things are setup
 
   public engageOptions: shareTypes.engageOptions = {
     buttonsToDisplay: {
@@ -57,7 +58,8 @@ export class OrgHomePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public activitiesProvider: ActivitiesProvider,
     public events: Events, public analytics: AnalyticsProvider, public userProvider: UserProvider, public zone: NgZone,
-    public element: ElementRef, public renderer: Renderer2, private org: OrganizationProvider) {
+    public element: ElementRef, public renderer: Renderer2, private org: OrganizationProvider,
+    private errorReporter: ErrorReporterProvider) {
 
 
     this.featuredMode = navParams.get('featured') || false;
@@ -101,7 +103,7 @@ export class OrgHomePage {
   ionViewWillEnter() {
 
     this.loading = true;
-
+    this.errorReporter.recordBreadcrumb({ message: 'Entering page org-home' });
 
     this.isVisible = true;
     this.analytics.setCurrentScreen('org-Home');
@@ -123,6 +125,10 @@ export class OrgHomePage {
               this.organizationList = featuredOrgs;
               this.setOrganization(this.orgIndex || 0);
               this.loading = false;
+              this.errorReporter.recordBreadcrumb({
+                message: `org-home FeaturedMode page with  ${this.organizationList ? this.organizationList.length : 'no'} featuredOrgs:`,
+                category: 'enterPage', data: { organizationList: this.organizationList || 'orgList is null', orgIndex: this.orgIndex || 0 }
+              })
             }, error => {
               console.error("Error in org-home calling getFeaturedOrganizations: " + error.message);
               this.organizationList = [];
@@ -137,6 +143,10 @@ export class OrgHomePage {
 
           this.setOrganization(this.orgIndex || 0);
           this.loading = false;
+          this.errorReporter.recordBreadcrumb({
+            message: `org-home NOT FeaturedMode page and useOrgFavorites is ${JSON.stringify(this.useOrgFavorites)}`,
+            category: 'enterPage', data: { orgIndex: this.orgIndex || 0 }
+          });
         }
 
 
@@ -165,10 +175,18 @@ export class OrgHomePage {
     // a user may have added or removed favorite orgs, make sure we (the org displayed on this page) is still in the favorites, 
     // if not, take action to remove us from view
     // we need to see if our organization still is in the favorites list.
+
+    // due to async calls, we can get called before things have been setup, just return in that case
+    // TODO: need a better fix. this is a hack
+    if (!this.setOrganizationHasBeenCalled)
+      return;
+
     if (this.useOrgFavorites) {
       this.organizationList = this.userProvider.getFavoriteOrganizations();
+      this.orgIndex = this.navParams.get('orgIndex') || 0;   // ensure this isn't undefined
 
-      if (this.organization && !_.find(this.organizationList, ['id', this.org.getId(this.organization)])) {
+      // either no current org (so get one) or we have an org but it's no longer in the list
+      if (!this.organization || ( this.organization && !_.find(this.organizationList, ['id', this.org.getId(this.organization)]))) {
         // the organization we are displaying was removed from the list, so:
         if (this.orgIndex == 0) {
           if (this.organizationList.length) {
@@ -191,6 +209,8 @@ export class OrgHomePage {
 
   public setOrganization(orgIndex: number) {
 
+    this.setOrganizationHasBeenCalled = true;
+    
     if (this.useOrgFavorites || this.featuredMode) {
 
       if (this.useOrgFavorites)
@@ -225,6 +245,10 @@ export class OrgHomePage {
     }
     //this.testMe.testMe();  
     console.log('ionViewDidLoad OrgHomePage and showAddToFavorites is: ' + this.showAddToFavorites);
+    this.errorReporter.recordBreadcrumb({
+      message: `org-home setOrganization done orgIndex: ${orgIndex}`,
+      category: 'enterPage', data: { organizationList: this.organizationList || 'is null', orgIndex: this.orgIndex || 0 }
+    });
     this.isReady = true;
   }
 
@@ -232,6 +256,7 @@ export class OrgHomePage {
 
   public swipeEvent(event) {
 
+    this.errorReporter.recordBreadcrumb({message: `org-home swipeEvent direction: ${event.direction}`, category: 'navigation'});
     switch (event.direction) {
       case 2:
         this.next();
@@ -246,13 +271,23 @@ export class OrgHomePage {
   }
 
   public next() {
-    if (this.orgIndex < this.organizationList.length - 1) {
+    if (this.organizationList && this.orgIndex < this.organizationList.length - 1) {
       this.navCtrl.push('OrgHomePage', { useOrgFavorites: true, orgIndex: this.orgIndex + 1, featured: this.featuredMode })
+    } else {
+      if (!this.organizationList) {
+
+        try {
+          throw new Error(`In pages orgHome next called with null organizationList and orgIndex = ${this.orgIndex}`);
+        } catch (error) {
+          console.error(error.message);
+          this.errorReporter.captureException(error);
+        }
+      }
     }
   }
 
   public prev() {
-    console.log("org-home page about to pop in prev");
+    console.log(`org-home page about to pop in prev with orgIndex: ${this.orgIndex} `);
     this.navCtrl.pop();
   }
 
@@ -276,12 +311,12 @@ export class OrgHomePage {
       this.zone.run(() => {
         // since scrollAmount is data-binded,
         // the update needs to happen in zone
-        if (data.scrollTop > buffer && this.navButtons) {
+        if (data && data.scrollTop && data.scrollTop > buffer && this.navButtons) {
           // as the user scrolls up, the nav buttons disappear, slowly
           this.renderer.setStyle(this.navButtons.nativeElement, "top", -(data.scrollTop - buffer) / 2 + "px");
         }
 
-        this.showDonateButton = this.organization && (data.scrollTop < this.activityListTop);
+        this.showDonateButton = data ?  this.organization && (data.scrollTop < this.activityListTop) : false;
 
       })
 

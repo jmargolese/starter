@@ -42,7 +42,7 @@ export class AddStripeCcPage {
 
     this.ccForm = formBuilder.group({
       cardholder: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
-      nickname: ['', Validators.compose([Validators.maxLength(20),Validators.pattern("[a-zA-Z0-9 ']*")])],
+      nickname: ['', Validators.compose([Validators.maxLength(20)])],
       cardnumber: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
       expirationDate: ['', Validators.compose([Validators.maxLength(5), Validators.required])],
       cvc: ['', Validators.compose([Validators.maxLength(this.cvcLength), Validators.required])],
@@ -214,14 +214,14 @@ export class AddStripeCcPage {
                       this.updateAndDismiss();
                     });
                 }).catch(error => {
-                  console.error(`stripeProvider.submitStripeToken rejected with error: ${error}`);
+                  console.error(`stripeProvider.submitStripeToken rejected with error: ${error.message}`);
                   if (this.loading ) { this.loading.dismiss().catch(); this.loading = null; }
-                  this.alert.confirm({ title: "Error", message: error, buttons: { ok: true, cancel: false } });
+                  this.alert.confirm({ title: "Error", message: error.message, buttons: { ok: true, cancel: false } });
                 });
             }).catch(error => {
               if (this.loading ) { this.loading.dismiss().catch(); this.loading = null; }
               console.error("Stripe token rejected with error: " + JSON.stringify(error));
-              this.alert.confirm({ title: "Error", message: error, buttons: { ok: true, cancel: false } });
+              this.alert.confirm({ title: "Error", message: error.message, buttons: { ok: true, cancel: false } });
             });
         });
     }
