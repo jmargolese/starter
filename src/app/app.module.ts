@@ -84,7 +84,7 @@ import { ErrorReporterProvider } from '../share-common/providers/error-reporter/
     StripeProvider,
     CloudFunctionProvider,
     SocialShareProvider,
-    ErrorReporterProvider,
+    ErrorReporterProvider
   ]
 })
 export class AppModule {}
