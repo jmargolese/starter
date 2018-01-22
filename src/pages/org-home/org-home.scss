@@ -1,7 +1,15 @@
 page-org-home {
     .org-home-css {}
-   
-   
+    .org-nav-buttons {
+        //constant(safe-area-inset-top)
+        position: relative;
+        margin-top: constant(safe-area-inset-top);
+        margin-top: env(safe-area-inset-top);
+        top: 0;
+        width: 100vw;
+        height: 34vh;
+        z-index: 998
+    }
     /*  .toolbar-background-ios {
         background-color: transparent;
     } */
@@ -26,18 +34,16 @@ page-org-home {
         // background-image: url(https://ununsplash.imgix.net/photo-1421091242698-34f6ad7fc088?fit=crop&fm=jpg&h=650&q=75&w=950);
         height: 60vh;
     }
-
     .header-image-hidden {
         // when there is no org and no header image to display
         height: 0 !important;
         width: 0 !important;
     }
-
     .infoCard {
         position: absolute;
         top: 30vh;
         background-color: $faded-primary;
-        width:85vw;
+        width: 85vw;
         left: 7.5vw;
     }
     .main-content {
