@@ -138,12 +138,26 @@
       "cordova-ios-export-compliance": {},
       "cordova-plugin-firebase-analytics": {},
       "cordova-plugin-stripe": {},
-      "phonegap-plugin-push": {},
       "ionic-plugin-deeplinks": {
         "URL_SCHEME": "getshare",
         "DEEPLINK_SCHEME": "https",
         "DEEPLINK_HOST": "g453t.app.goo.gl",
-        "ANDROID_PATH_PREFIX": "/"
+        "ANDROID_PATH_PREFIX": "/",
+        "ANDROID_2_PATH_PREFIX": "/",
+        "ANDROID_3_PATH_PREFIX": "/",
+        "ANDROID_4_PATH_PREFIX": "/",
+        "ANDROID_5_PATH_PREFIX": "/",
+        "DEEPLINK_2_SCHEME": " ",
+        "DEEPLINK_2_HOST": " ",
+        "DEEPLINK_3_SCHEME": " ",
+        "DEEPLINK_3_HOST": " ",
+        "DEEPLINK_4_SCHEME": " ",
+        "DEEPLINK_4_HOST": " ",
+        "DEEPLINK_5_SCHEME": " ",
+        "DEEPLINK_5_HOST": " "
+      },
+      "phonegap-plugin-push": {
+        "FCM_VERSION": "11.0.1"
       }
     },
     "platforms": [
