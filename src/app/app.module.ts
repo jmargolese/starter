@@ -12,6 +12,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { AppVersion } from '@ionic-native/app-version';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { FirebaseAnalytics } from '@ionic-native/firebase-analytics';
+import { Facebook } from '@ionic-native/facebook';
 
 
 
@@ -84,7 +85,8 @@ import { ErrorReporterProvider } from '../share-common/providers/error-reporter/
     StripeProvider,
     CloudFunctionProvider,
     SocialShareProvider,
-    ErrorReporterProvider
+    ErrorReporterProvider,
+    Facebook
   ]
 })
 export class AppModule {}
