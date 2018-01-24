@@ -1,7 +1,6 @@
 import { AnalyticsProvider } from '../../share-common/providers/analytics/analytics';
 import { ActivitiesProvider } from '../../share-common/providers/activities/activities';
 
-//import { ActivitiesProvider } from '../../../../common/src/share-common/providers/activities';
 import { Component, ViewChild, NgZone, ElementRef, Renderer2 } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, Content } from 'ionic-angular';
 
@@ -56,7 +55,7 @@ export class OrgHomePage {
     }
   }
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public activitiesProvider: ActivitiesProvider,
+  constructor(public navCtrl: NavController, public navParams: NavParams,
     public events: Events, public analytics: AnalyticsProvider, public userProvider: UserProvider, public zone: NgZone,
     public element: ElementRef, public renderer: Renderer2, private org: OrganizationProvider,
     private errorReporter: ErrorReporterProvider) {
