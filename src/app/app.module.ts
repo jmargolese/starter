@@ -42,6 +42,7 @@ import { CloudFunctionProvider } from '../share-common/providers/cloud-function/
 import { SocialShareProvider } from '../share-common/providers/social-share/social-share';
 import { Push } from '@ionic-native/push';
 import { ErrorReporterProvider } from '../share-common/providers/error-reporter/error-reporter';
+import { FacebookProvider } from '../share-common/providers/facebook/facebook';
 
 
 @NgModule({
@@ -86,7 +87,8 @@ import { ErrorReporterProvider } from '../share-common/providers/error-reporter/
     CloudFunctionProvider,
     SocialShareProvider,
     ErrorReporterProvider,
-    Facebook
+    Facebook,
+    FacebookProvider
   ]
 })
 export class AppModule {}
