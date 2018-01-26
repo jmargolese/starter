@@ -1,7 +1,6 @@
 import { AnalyticsProvider } from '../../share-common/providers/analytics/analytics';
 import { ActivitiesProvider } from '../../share-common/providers/activities/activities';
 
-//import { ActivitiesProvider } from '../../../../common/src/share-common/providers/activities';
 import { Component, ViewChild, NgZone, ElementRef, Renderer2 } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, Content } from 'ionic-angular';
 
@@ -56,7 +55,7 @@ export class OrgHomePage {
     }
   }
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public activitiesProvider: ActivitiesProvider,
+  constructor(public navCtrl: NavController, public navParams: NavParams,
     public events: Events, public analytics: AnalyticsProvider, public userProvider: UserProvider, public zone: NgZone,
     public element: ElementRef, public renderer: Renderer2, private org: OrganizationProvider,
     private errorReporter: ErrorReporterProvider) {
@@ -86,7 +85,7 @@ export class OrgHomePage {
 
       // if we are displayed in featured view, then we don't worry about changes to favorites
       if (!this.featuredMode && data.type == "addToFavorites" && this.isVisible) {       // only do this check if we are visible rather than cached
-        this.recheckOrganizationList();
+    //    this.recheckOrganizationList();
       }
 
     })
@@ -108,8 +107,8 @@ export class OrgHomePage {
     this.isVisible = true;
     this.analytics.setCurrentScreen('org-Home');
 
-    this.userProvider.isAuthenticated()
-      .then(() => {
+    //this.userProvider.isAuthenticated()
+    //  .then(() => {
         // this page is used in multiple ways
         // 1- From Discover page, just display a single organiziation passed in navParams (and set in this.setOrganization())
         // 2- We are part of a sequence of 'favorites' where we get an index into the organizationFavorites array
@@ -151,11 +150,11 @@ export class OrgHomePage {
 
 
 
-      })
+    /*   })
       .catch(error => {
         console.error("org-homePage ionViewWillEnter error from isAuthenticated(): " + error.message);
         this.loading = false;
-      })
+      }) */
 
 
 
