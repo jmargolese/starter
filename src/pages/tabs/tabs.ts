@@ -204,7 +204,7 @@ export class TabsPage {
 
   private subscribeToEvents() {
     // part of the init process
-    this.events.subscribe(constants.EventTypes.authStateChange, (newState: constants.authStateChange) => {
+    this.events.subscribe(constants.EventTypes.loginStateChange, (newState: constants.authStateChange) => {
       switch (newState) {
         case constants.authStateChange.logout:
           this.tabRef.select(0);

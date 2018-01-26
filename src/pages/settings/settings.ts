@@ -50,7 +50,7 @@ export class SettingsPage {
       case 'logout':
         this.userProvider.logout()
           .then(() => {
-            this.events.publish(constants.EventTypes.authStateChange, constants.authStateChange.logout);      // switch to the Browse Tab
+            this.events.publish(constants.EventTypes.loginStateChange, constants.authStateChange.logout);      // switch to the Browse Tab
           })
           .catch(error => {
             console.error(`Error calling logout in Settings: ${error.message}`);
@@ -61,7 +61,7 @@ export class SettingsPage {
         const loginModal = this.modalCtrl.create('LoginPage');
         loginModal.onDidDismiss(data => {
           if (!data.canceled)
-            this.events.publish(constants.EventTypes.authStateChange, constants.authStateChange.login);      // switch to the Home Tab
+            this.events.publish(constants.EventTypes.loginStateChange, constants.authStateChange.login);      // switch to the Home Tab
         });
         loginModal.present();
         break;
