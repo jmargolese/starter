@@ -47,6 +47,8 @@ export class OrgHomePage {
 
   public isReady: boolean = false;       // don't show anything while loading
   private setOrganizationHasBeenCalled: boolean = false;       // flag so we know when things are setup
+  private notificationRequest: shareTypes.notificationRequestInfo = null;
+
 
   public engageOptions: shareTypes.engageOptions = {
     buttonsToDisplay: {
@@ -65,6 +67,7 @@ export class OrgHomePage {
 
     this.hideHeader = navParams.get('showHeader') ? false : true;
     this.useOrgFavorites = navParams.get('useOrgFavorites') || false;
+
 
     this.events.subscribe("activity:homeCurrentActivity", (activity) => {
       // let other parts of the app tell us when a new tab is needed   
@@ -85,7 +88,7 @@ export class OrgHomePage {
 
       // if we are displayed in featured view, then we don't worry about changes to favorites
       if (!this.featuredMode && data.type == "addToFavorites" && this.isVisible) {       // only do this check if we are visible rather than cached
-    //    this.recheckOrganizationList();
+        //    this.recheckOrganizationList();
       }
 
     })
@@ -109,44 +112,46 @@ export class OrgHomePage {
 
     //this.userProvider.isAuthenticated()
     //  .then(() => {
-        // this page is used in multiple ways
-        // 1- From Discover page, just display a single organiziation passed in navParams (and set in this.setOrganization())
-        // 2- We are part of a sequence of 'favorites' where we get an index into the organizationFavorites array
-        // 3- We are part of a sequence of 'featured' organizations where we get an index into the featuredOrganizations array
+    // this page is used in multiple ways
+    // 1- From Discover page, just display a single organiziation passed in navParams (and set in this.setOrganization())
+    // 2- We are part of a sequence of 'favorites' where we get an index into the organizationFavorites array
+    // 3- We are part of a sequence of 'featured' organizations where we get an index into the featuredOrganizations array
 
-        // if we are part of the favorites display, we are passed an index and just grab the organization in the index
-        if (this.useOrgFavorites || this.featuredMode)
-          this.orgIndex = this.navParams.get('orgIndex') || 0;
+    // if we are part of the favorites display, we are passed an index and just grab the organization in the index
+    if (this.useOrgFavorites || this.featuredMode)
+      this.orgIndex = this.navParams.get('orgIndex') || 0;
 
-        if (this.featuredMode) {
-          this.org.getFeaturedOrganizations()
-            .subscribe(featuredOrgs => {
-              this.organizationList = featuredOrgs;
-              this.setOrganization(this.orgIndex || 0);
-              this.loading = false;
-              this.errorReporter.recordBreadcrumb({
-                message: `org-home FeaturedMode page with  ${this.organizationList ? this.organizationList.length : 'no'} featuredOrgs:`,
-                category: 'enterPage', data: { organizationList: this.organizationList || 'orgList is null', orgIndex: this.orgIndex || 0 }
-              })
-            }, error => {
-              console.error("Error in org-home calling getFeaturedOrganizations: " + error.message);
-              this.organizationList = [];
-              this.setOrganization(this.orgIndex || 0);
-              this.loading = false;
-            });
+    this.notificationRequest = this.navParams.get('notification') || null;
 
-        } else {
-          this.useOrgFavorites = this.navParams.get('useOrgFavorites') ? true : false;
-          // this means we are part of a list of organization favorites with an index, as opposed to be being passed in an organization
-
-
+    if (this.featuredMode) {
+      this.org.getFeaturedOrganizations(this.notificationRequest ? this.notificationRequest.targetId : null)
+        .subscribe(featuredOrgs => {
+          this.organizationList = featuredOrgs;
           this.setOrganization(this.orgIndex || 0);
           this.loading = false;
           this.errorReporter.recordBreadcrumb({
-            message: `org-home NOT FeaturedMode page and useOrgFavorites is ${JSON.stringify(this.useOrgFavorites)}`,
-            category: 'enterPage', data: { orgIndex: this.orgIndex || 0 }
-          });
-        }
+            message: `org-home FeaturedMode page with  ${this.organizationList ? this.organizationList.length : 'no'} featuredOrgs:`,
+            category: 'enterPage', data: { organizationList: this.organizationList || 'orgList is null', orgIndex: this.orgIndex || 0 }
+          })
+        }, error => {
+          console.error("Error in org-home calling getFeaturedOrganizations: " + error.message);
+          this.organizationList = [];
+          this.setOrganization(this.orgIndex || 0);
+          this.loading = false;
+        });
+
+    } else {
+      this.useOrgFavorites = this.navParams.get('useOrgFavorites') ? true : false;
+      // this means we are part of a list of organization favorites with an index, as opposed to be being passed in an organization
+
+
+      this.setOrganization(this.orgIndex || 0);
+      this.loading = false;
+      this.errorReporter.recordBreadcrumb({
+        message: `org-home NOT FeaturedMode page and useOrgFavorites is ${JSON.stringify(this.useOrgFavorites)}`,
+        category: 'enterPage', data: { orgIndex: this.orgIndex || 0 }
+      });
+    }
 
 
 
@@ -185,7 +190,7 @@ export class OrgHomePage {
       this.orgIndex = this.navParams.get('orgIndex') || 0;   // ensure this isn't undefined
 
       // either no current org (so get one) or we have an org but it's no longer in the list
-      if (!this.organization || ( this.organization && !_.find(this.organizationList, ['id', this.org.getId(this.organization)]))) {
+      if (!this.organization || (this.organization && !_.find(this.organizationList, ['id', this.org.getId(this.organization)]))) {
         // the organization we are displaying was removed from the list, so:
         if (this.orgIndex == 0) {
           if (this.organizationList.length) {
@@ -209,13 +214,14 @@ export class OrgHomePage {
   public setOrganization(orgIndex: number) {
 
     this.setOrganizationHasBeenCalled = true;
-    
+
     if (this.useOrgFavorites || this.featuredMode) {
 
-      if (this.useOrgFavorites)
+      if (this.useOrgFavorites) {
         // userProvider downloads favorite organizations on setup
 
         this.organizationList = this.userProvider.getFavoriteOrganizations();
+      }
 
       if (this.organizationList && this.organizationList.length) {
         orgIndex = this.determineIndex();        // we may have been told to go a specific org and we can't check the list until now
@@ -255,7 +261,7 @@ export class OrgHomePage {
 
   public swipeEvent(event) {
 
-    this.errorReporter.recordBreadcrumb({message: `org-home swipeEvent direction: ${event.direction}`, category: 'navigation'});
+    this.errorReporter.recordBreadcrumb({ message: `org-home swipeEvent direction: ${event.direction}`, category: 'navigation' });
     switch (event.direction) {
       case 2:
         this.next();
@@ -315,7 +321,7 @@ export class OrgHomePage {
           this.renderer.setStyle(this.navButtons.nativeElement, "top", -(data.scrollTop - buffer) / 2 + "px");
         }
 
-        this.showDonateButton = data ?  this.organization && (data.scrollTop < this.activityListTop) : false;
+        this.showDonateButton = data ? this.organization && (data.scrollTop < this.activityListTop) : false;
 
       })
 

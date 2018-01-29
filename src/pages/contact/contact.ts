@@ -5,12 +5,14 @@ import { donationSeeds } from './../../seeds/seedDonations';
 
 
 import { Component } from '@angular/core';
-import { NavController , ModalController, IonicPage} from 'ionic-angular';
+import { NavController , ModalController, IonicPage, Events} from 'ionic-angular';
 
 import { orgSeeds, testStripeAcct } from '../../seeds/seedOrganizations';
 
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { ENV } from '@app/env';
+import * as shareTypes from '../../share-common/interfaces/interfaces';
+import * as constants from '../../share-common/config/constants';
 
 // providers
 import { AuthProvider } from './../../share-common/providers/auth/auth';
@@ -26,7 +28,8 @@ export class ContactPage {
   private stripeAccountsCollection: AngularFirestoreCollection<any>;
   public projectId : string = "";
 
-  constructor(public navCtrl: NavController, private readonly afs: AngularFirestore, private myAuth: AuthProvider, public modalCtrl: ModalController) {
+  constructor(public navCtrl: NavController, private readonly afs: AngularFirestore, private myAuth: AuthProvider, 
+    public modalCtrl: ModalController, private events: Events) {
     this.organizationsCollection = afs.collection<any>('organizations');
     this.stripeAccountsCollection = afs.collection<any>('stripeAccountObjects');
     this.projectId = ENV.firebase.projectId
@@ -127,4 +130,31 @@ export class ContactPage {
     console.log("Are we authenticated? " + this.myAuth.isAuthenticated());
   }
 
+  public testNotification() {
+    let notification : shareTypes.notificationRequestInfo = {
+      type: constants.notificationTypes.showOrg,
+      targetId: 'orgDesireStreet',
+      foreground: false,
+      title: "Special event from ChadTough",
+      message: "Come join us for the special event",
+      data : null
+    }
+
+    
+    // add in custom data and actions per event
+    switch (notification.type) {
+      case constants.notificationTypes.showOrg:
+        notification.data = {
+          activityID: "",
+          campaignCode: '122"'
+        }
+        // publish that this exists.  It's not guaranteed that our recipients will exist when we push this, so 
+        // they are responsible for checking when they get created, just in case
+        this.events.publish(constants.EventTypes.pushNotification, notification);
+        break;
+
+      default:
+        break;
+    }
+  }
 }

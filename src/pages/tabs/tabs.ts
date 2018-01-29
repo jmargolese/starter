@@ -1,3 +1,5 @@
+import { ErrorReporterProvider, logTypes, logLevels } from './../../share-common/providers/error-reporter/error-reporter';
+import { notificationRequestInfo } from './../../share-common/interfaces/interfaces.d';
 import { UserProvider } from './../../share-common/providers/user/user';
 import { ActivitiesProvider } from './../../share-common/providers/activities/activities';
 import { Observable } from 'rxjs/Observable';
@@ -34,7 +36,10 @@ export class TabsPage {
   tab3Root = 'DiscoverPage';
   tab4Root = 'ImpactPage';
   tab5Root = 'SettingsPage';
-  
+
+  public notificationParams: shareTypes.notificationRequestInfo;
+  public featuredTabParams: any;
+  public favoritesTabParams: any;
 
 
   constructor(public events: Events, public deeplinks: Deeplinks, public notifications: NotificationsProvider,
@@ -42,9 +47,10 @@ export class TabsPage {
     private alertCtrl: AlertController, private socialShare: SocialShareProvider,
     private org: OrganizationProvider, private activitiesProvider: ActivitiesProvider,
     private toastCtrl: ToastController, private userProvider: UserProvider,
-    private auth: AuthProvider) {
+    private auth: AuthProvider, private err: ErrorReporterProvider) {
 
-
+    this.featuredTabParams = { featured: true, orgIndex: 0, notification: null };
+    this.favoritesTabParams = { useOrgFavorites: true, orgIndex: 0, notification: null };
 
 
     this.subscribeToEvents();
@@ -242,6 +248,59 @@ export class TabsPage {
       this.events.publish(constants.EventTypes.resumeEvent);
     });
 
+
+    this.events.subscribe(constants.EventTypes.pushNotification, notification => {
+      this.err.log(`tabs:subscribe to pushNotification got a push, about to process ${JSON.stringify(notification)} `);
+      this.processNotification(notification);
+    });
+
+  }
+
+  private processNotification(notification: shareTypes.notificationRequestInfo): void {
+
+    this.err.log(`tabs:ProcessNotification starting with ${JSON.stringify(notification)}`);
+
+    try {
+      switch (notification.type) {
+        case constants.notificationTypes.showOrg:
+        case constants.notificationTypes.showActivity:
+          // go to the featured Tab
+          this.featuredTabParams.notification = notification;
+          this.err.log(`About to select featured tab for notifiation`);
+        
+          const curTab = this.tabRef.getSelected();
+          if (curTab.index == 0) {
+            this.tabRef.select(1, {animate : false, duration: 0})
+            .then(() => {
+              this.tabRef.select(0, {animate: true})
+              .then(() => {
+                this.featuredTabParams.notification = null;         // clear this out so it only gets signaled once
+              })
+              .catch(error => {
+                this.err.error(`Error calling tabSelect in tabs:processNotification: ${error.message}`);
+              })
+            })
+          } else {
+            this.tabRef.select(0, {animate: true})
+            .then(() => {
+              this.featuredTabParams.notification = null;         // clear this out so it only gets signaled once
+            })
+            .catch(error => {
+              this.err.error(`Error calling tabSelect in tabs:processNotification: ${error.message}`);
+            })
+          }
+          
+          break;
+  
+        default:
+          this.err.log(`Tabs:processNotification got a notification of a type we don't recognize, ${JSON.stringify(notification)}`, logTypes.report, logLevels.normal, { "notification": notification });
+          break;
+      }
+    } catch (error) {
+      this.err.log(`processing a notification in tabs: ${error.message}`, logTypes.error, logLevels.normal, notification );
+    } 
+
+    
   }
 
   /*
