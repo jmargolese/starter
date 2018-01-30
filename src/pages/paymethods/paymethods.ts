@@ -7,6 +7,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, PopoverController, LoadingController } from 'ionic-angular';
 
 import * as shareTypes from '../../share-common/interfaces/interfaces';
+import * as shareConstants from '../../share-common/config/constants';
 
 
 @IonicPage()
@@ -75,7 +76,7 @@ export class PaymethodsPage {
 
         this.paymethodProvider.addPaymethod(
           {
-            vendor: 'paypal',  // shareTypes.payMethodVendors.PayPal,  
+            vendor: shareConstants.payMethodVendors.paypal,  
             isPreferred: true,
             kind: 'paypal',
             displayName: email,
