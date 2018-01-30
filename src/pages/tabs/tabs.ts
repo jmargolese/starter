@@ -178,7 +178,7 @@ export class TabsPage {
           title: data.title || null,
           message: data.message || null,
           //source: "link",
-          source: data['+is_first_session'] ? shareTypes.notificationSources.linkFirstInstall : shareTypes.notificationSources.linkNotFirstTime,
+          source: data['+is_first_session'] ? constants.notificationSources.linkFirstInstall : constants.notificationSources.linkNotFirstTime,
           data: {
             campaignCode: data.campaignCode || "",
             channel: data.channel || ""
