@@ -134,7 +134,7 @@ export class ContactPage {
     let notification : shareTypes.notificationRequestInfo = {
       type: constants.notificationTypes.showOrg,
       targetId: 'orgDesireStreet',
-      foreground: false,
+      source:  'notificationBackround', // shareTypes.notificationSources.notificationBackground,
       title: "Special event from ChadTough",
       message: "Come join us for the special event",
       data : null

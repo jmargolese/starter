@@ -8,7 +8,6 @@ import { Subscription } from 'rxjs/Subscription';
 import { SocialShareProvider } from './../../share-common/providers/social-share/social-share';
 import { NotificationsProvider } from './../../share-common/providers/notifications/notifications';
 import { Component, ViewChild } from '@angular/core';
-import { Deeplinks } from '@ionic-native/deeplinks';
 import { ENV } from '@app/env';
 import * as constants from '../../share-common/config/constants'
 import { ModalController, AlertController, ToastController } from 'ionic-angular';
@@ -42,7 +41,7 @@ export class TabsPage {
   public favoritesTabParams: any;
 
 
-  constructor(public events: Events, public deeplinks: Deeplinks, public notifications: NotificationsProvider,
+  constructor(public events: Events, public notifications: NotificationsProvider,
     public navCtrl: NavController, public platform: Platform, public modalCtrl: ModalController,
     private alertCtrl: AlertController, private socialShare: SocialShareProvider,
     private org: OrganizationProvider, private activitiesProvider: ActivitiesProvider,
@@ -81,6 +80,7 @@ export class TabsPage {
       this.auth.init();
       this.userProvider.init();            // ensure this get enstantiated  (after a login redirect we'll end up back here)
 
+      this.branchInit();
       /*
             this.deeplinks.route({
               '/settings': 'SettingsPage',
@@ -104,6 +104,11 @@ export class TabsPage {
       
       */
       // Convenience to route with a given nav
+
+
+
+      // Real code
+      /*
       this.deeplinks.routeWithNavController(this.navCtrl, {
         '/settings': 'SettingsPage',
         //'/universal-links-test': DiscoverPage,
@@ -135,10 +140,55 @@ export class TabsPage {
         console.warn('Unmatched Route', JSON.stringify(nomatch));
       });
 
-
+  */
 
 
     }) // end platform ready
+  }
+
+  private branchInit(): void {
+    // only on devices
+    if (!this.platform.is('cordova')) { return }
+
+    const Branch = window['Branch'];
+    Branch.setDebug(true);
+    Branch.initSession(data => {
+      if (data['+clicked_branch_link']) {
+        // read deep link data on click
+
+        /*
+        {  
+   "+is_first_session":true,
+   "+clicked_branch_link":true,
+   "~marketing":true,
+   "+match_guaranteed":false,
+   "~id":"486922811043245584",
+   "+click_timestamp":1517336872,
+   "$one_time_use":false,
+   "~referring_link":"https://sharemobile.app.link/cFb3cj5g8J",
+   "$__is_onboarding_link":true,
+   "$ios_passive_deepview":"branch_passive_default",
+   "$marketing_title":"My First Link"
+}*/
+        this.err.log('Deep Link Data: ' + JSON.stringify(data));
+
+        const notification: shareTypes.notificationRequestInfo = {
+          type: data.type || null,
+          targetId: data.targetId || null,
+          title: data.title || null,
+          message: data.message || null,
+          //source: "link",
+          source: data['+is_first_session'] ? shareTypes.notificationSources.linkFirstInstall : shareTypes.notificationSources.linkNotFirstTime,
+          data: {
+            campaignCode: data.campaignCode || "",
+            channel: data.channel || ""
+          }
+        }
+
+        this.err.log(`tabs: Deeplink about to publish notification: ${JSON.stringify(notification)}`);
+        this.events.publish(constants.EventTypes.pushNotification, notification);
+      }
+    });
   }
 
 
@@ -244,6 +294,7 @@ export class TabsPage {
 
     this.platform.resume.subscribe(() => {
       console.log("Resume event");
+      this.branchInit();
       //this.notifications.getCurrentToken();
       this.events.publish(constants.EventTypes.resumeEvent);
     });
@@ -267,40 +318,40 @@ export class TabsPage {
           // go to the featured Tab
           this.featuredTabParams.notification = notification;
           this.err.log(`About to select featured tab for notifiation`);
-        
+
           const curTab = this.tabRef.getSelected();
           if (curTab.index == 0) {
-            this.tabRef.select(1, {animate : false, duration: 0})
-            .then(() => {
-              this.tabRef.select(0, {animate: true})
+            this.tabRef.select(1, { animate: false, duration: 0 })
+              .then(() => {
+                this.tabRef.select(0, { animate: true })
+                  .then(() => {
+                    this.featuredTabParams.notification = null;         // clear this out so it only gets signaled once
+                  })
+                  .catch(error => {
+                    this.err.error(`Error calling tabSelect in tabs:processNotification: ${error.message}`);
+                  })
+              })
+          } else {
+            this.tabRef.select(0, { animate: true })
               .then(() => {
                 this.featuredTabParams.notification = null;         // clear this out so it only gets signaled once
               })
               .catch(error => {
                 this.err.error(`Error calling tabSelect in tabs:processNotification: ${error.message}`);
               })
-            })
-          } else {
-            this.tabRef.select(0, {animate: true})
-            .then(() => {
-              this.featuredTabParams.notification = null;         // clear this out so it only gets signaled once
-            })
-            .catch(error => {
-              this.err.error(`Error calling tabSelect in tabs:processNotification: ${error.message}`);
-            })
           }
-          
+
           break;
-  
+
         default:
           this.err.log(`Tabs:processNotification got a notification of a type we don't recognize, ${JSON.stringify(notification)}`, logTypes.report, logLevels.normal, { "notification": notification });
           break;
       }
     } catch (error) {
-      this.err.log(`processing a notification in tabs: ${error.message}`, logTypes.error, logLevels.normal, notification );
-    } 
+      this.err.log(`processing a notification in tabs: ${error.message}`, logTypes.error, logLevels.normal, notification);
+    }
 
-    
+
   }
 
   /*

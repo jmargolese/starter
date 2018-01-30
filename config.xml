@@ -93,24 +93,6 @@
     <plugin name="cordova-ios-export-compliance" spec="^1.0.2" />
     <plugin name="cordova-plugin-firebase-analytics" spec="^0.12.1" />
     <plugin name="cordova-plugin-stripe" spec="^1.5.3" />
-    <plugin name="ionic-plugin-deeplinks" spec="^1.0.15">
-        <variable name="URL_SCHEME" value="getshare" />
-        <variable name="DEEPLINK_SCHEME" value="https" />
-        <variable name="DEEPLINK_HOST" value="g453t.app.goo.gl" />
-        <variable name="ANDROID_PATH_PREFIX" value="/" />
-        <variable name="ANDROID_2_PATH_PREFIX" value="/" />
-        <variable name="ANDROID_3_PATH_PREFIX" value="/" />
-        <variable name="ANDROID_4_PATH_PREFIX" value="/" />
-        <variable name="ANDROID_5_PATH_PREFIX" value="/" />
-        <variable name="DEEPLINK_2_SCHEME" value=" " />
-        <variable name="DEEPLINK_2_HOST" value=" " />
-        <variable name="DEEPLINK_3_SCHEME" value=" " />
-        <variable name="DEEPLINK_3_HOST" value=" " />
-        <variable name="DEEPLINK_4_SCHEME" value=" " />
-        <variable name="DEEPLINK_4_HOST" value=" " />
-        <variable name="DEEPLINK_5_SCHEME" value=" " />
-        <variable name="DEEPLINK_5_HOST" value=" " />
-    </plugin>
     <plugin name="phonegap-plugin-push" spec="^2.1.2">
         <variable name="FCM_VERSION" value="11.0.1" />
     </plugin>
@@ -118,6 +100,13 @@
         <variable name="APP_ID" value="1603897069676752" />
         <variable name="APP_NAME" value="“��" />
     </plugin>
+    <branch-config>
+        <branch-key value="key_live_mjDI2fbCZKxECbcIomW63pemDxeWTvBK" />
+        <uri-scheme value="myapp" />
+        <link-domain value="sharemobile.app.link" />
+        <ios-team-release value="839H5HRS3X" />
+    </branch-config>
+    <plugin name="branch-cordova-sdk" spec="^2.6.23" />
     <engine name="browser" spec="5.0.3" />
     <engine name="android" spec="7.0.0" />
     <engine name="ios" spec="4.5.4" />

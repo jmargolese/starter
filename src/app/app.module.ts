@@ -1,4 +1,3 @@
-import { Deeplinks } from '@ionic-native/deeplinks';
 import { Stripe } from '@ionic-native/stripe';
 import { HttpModule } from '@angular/http';
 import { NgModule, ErrorHandler } from '@angular/core';
@@ -79,7 +78,6 @@ import { FacebookProvider } from '../share-common/providers/facebook/facebook';
     AnalyticsProvider,
     InAppBrowser,
     FirebaseAnalytics,
-    Deeplinks,
     Stripe,
     Push,
     NotificationsProvider,
