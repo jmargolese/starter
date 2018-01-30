@@ -1,3 +1,5 @@
+import { UserProvider } from './../../share-common/providers/user/user';
+import { UserProfile } from './../../share-common/interfaces/interfaces.d';
 import { EventTypes } from './../../share-common/config/constants';
 import { envMode } from './../../environments/environment.model';
 import { AnalyticsProvider } from '../../share-common/providers/analytics/analytics';
@@ -27,7 +29,7 @@ export class SettingsPage {
 
   constructor(public platform: Platform, public navCtrl: NavController, public modalCtrl: ModalController, public analytics: AnalyticsProvider,
     public navParams: NavParams, public auth: AuthProvider, public toastCtrl: ToastController, public appVersion: AppVersion,
-    public events: Events) {
+    public events: Events, private userProvider: UserProvider) {
     if (platform.is('cordova')) {
       this.appVersion.getAppName().then(appName => this.appName = appName);
       this.appVersion.getPackageName().then(packageName => this.packageName = packageName);
@@ -46,9 +48,12 @@ export class SettingsPage {
     // general callback available to settings buttons
     switch (action) {
       case 'logout':
-        this.auth.logout()
+        this.userProvider.logout()
           .then(() => {
             this.events.publish(constants.EventTypes.authStateChange, constants.authStateChange.logout);      // switch to the Browse Tab
+          })
+          .catch(error => {
+            console.error(`Error calling logout in Settings: ${error.message}`);
           })
 
         break;

@@ -12,6 +12,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { AppVersion } from '@ionic-native/app-version';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { FirebaseAnalytics } from '@ionic-native/firebase-analytics';
+import { Facebook } from '@ionic-native/facebook';
 
 
 
@@ -41,7 +42,12 @@ import { NotificationsProvider } from '../share-common/providers/notifications/n
 import { CloudFunctionProvider } from '../share-common/providers/cloud-function/cloud-function';
 import { SocialShareProvider } from '../share-common/providers/social-share/social-share';
 import { Push } from '@ionic-native/push';
+<<<<<<< HEAD
 
+=======
+import { ErrorReporterProvider } from '../share-common/providers/error-reporter/error-reporter';
+import { FacebookProvider } from '../share-common/providers/facebook/facebook';
+>>>>>>> a424a030e4294fd8b5a7fdac399b5007e5079d25
 
 
 @NgModule({
@@ -85,7 +91,9 @@ import { Push } from '@ionic-native/push';
     StripeProvider,
     CloudFunctionProvider,
     SocialShareProvider,
-    ErrorReporterProvider
+    ErrorReporterProvider,
+    Facebook,
+    FacebookProvider
   ]
 })
 export class AppModule {}

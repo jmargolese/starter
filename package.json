@@ -50,6 +50,7 @@
     "@ionic-native/app-version": "^4.5.2",
     "@ionic-native/core": "^4.5.2",
     "@ionic-native/deeplinks": "^4.5.2",
+    "@ionic-native/facebook": "^4.5.2",
     "@ionic-native/firebase-analytics": "^4.5.2",
     "@ionic-native/in-app-browser": "^4.5.2",
     "@ionic-native/push": "^4.5.2",
@@ -66,6 +67,7 @@
     "cordova-ios-export-compliance": "^1.0.2",
     "cordova-plugin-app-version": "^0.1.9",
     "cordova-plugin-device": "^1.1.7",
+    "cordova-plugin-facebook4": "^1.9.1",
     "cordova-plugin-firebase-analytics": "^0.12.1",
     "cordova-plugin-inappbrowser": "^1.7.2",
     "cordova-plugin-ionic-webview": "^1.1.16",
@@ -140,12 +142,30 @@
       "cordova-ios-export-compliance": {},
       "cordova-plugin-firebase-analytics": {},
       "cordova-plugin-stripe": {},
-      "phonegap-plugin-push": {},
       "ionic-plugin-deeplinks": {
         "URL_SCHEME": "getshare",
         "DEEPLINK_SCHEME": "https",
         "DEEPLINK_HOST": "g453t.app.goo.gl",
-        "ANDROID_PATH_PREFIX": "/"
+        "ANDROID_PATH_PREFIX": "/",
+        "ANDROID_2_PATH_PREFIX": "/",
+        "ANDROID_3_PATH_PREFIX": "/",
+        "ANDROID_4_PATH_PREFIX": "/",
+        "ANDROID_5_PATH_PREFIX": "/",
+        "DEEPLINK_2_SCHEME": " ",
+        "DEEPLINK_2_HOST": " ",
+        "DEEPLINK_3_SCHEME": " ",
+        "DEEPLINK_3_HOST": " ",
+        "DEEPLINK_4_SCHEME": " ",
+        "DEEPLINK_4_HOST": " ",
+        "DEEPLINK_5_SCHEME": " ",
+        "DEEPLINK_5_HOST": " "
+      },
+      "phonegap-plugin-push": {
+        "FCM_VERSION": "11.0.1"
+      },
+      "cordova-plugin-facebook4": {
+        "APP_ID": "1603897069676752",
+        "APP_NAME": "“��"
       }
     },
     "platforms": [
