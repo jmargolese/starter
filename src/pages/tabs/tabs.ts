@@ -158,17 +158,17 @@ export class TabsPage {
 
         /*
         {  
-   "+is_first_session":true,
-   "+clicked_branch_link":true,
-   "~marketing":true,
-   "+match_guaranteed":false,
-   "~id":"486922811043245584",
-   "+click_timestamp":1517336872,
-   "$one_time_use":false,
-   "~referring_link":"https://sharemobile.app.link/cFb3cj5g8J",
-   "$__is_onboarding_link":true,
-   "$ios_passive_deepview":"branch_passive_default",
-   "$marketing_title":"My First Link"
+  "+is_first_session":true,
+  "+clicked_branch_link":true,
+  "~marketing":true,
+  "+match_guaranteed":false,
+  "~id":"486922811043245584",
+  "+click_timestamp":1517336872,
+  "$one_time_use":false,
+  "~referring_link":"https://sharemobile.app.link/cFb3cj5g8J",
+  "$__is_onboarding_link":true,
+  "$ios_passive_deepview":"branch_passive_default",
+  "$marketing_title":"My First Link"
 }*/
         this.err.log('Deep Link Data: ' + JSON.stringify(data));
 
@@ -187,6 +187,15 @@ export class TabsPage {
 
         this.err.log(`tabs: Deeplink about to publish notification: ${JSON.stringify(notification)}`);
         this.events.publish(constants.EventTypes.pushNotification, notification);
+      }
+
+      else {
+        // non Branch link is probably a return from webcheckout 
+        // data['+non_branch_link']
+        // "https://sharemobile.app.link/return?version=1&status=donated&recipientId=orgDesireStreet&activityId=&amount=10.5&displayName=Desire%20Street%20Ministries&errorMessage="
+        let result: any = this.parseUri(data['+non_branch_link']);
+        this.err.log(`Got a non-branch link which resulted in: ${JSON.stringify(result)}`);
+        this.handleDonationReturn(result.queryParams);
       }
     });
   }
@@ -310,45 +319,48 @@ export class TabsPage {
   private processNotification(notification: shareTypes.notificationRequestInfo): void {
 
     this.err.log(`tabs:ProcessNotification starting with ${JSON.stringify(notification)}`);
+    if (!notification && notification.type) {
+      this.err.error(`tabs: processNotification call with null type`);
+    } else {
+      try {
+        switch (notification.type) {
+          case constants.notificationTypes.showOrg:
+          case constants.notificationTypes.showActivity:
+            // go to the featured Tab
+            this.featuredTabParams.notification = notification;
+            this.err.log(`About to select featured tab for notifiation`);
 
-    try {
-      switch (notification.type) {
-        case constants.notificationTypes.showOrg:
-        case constants.notificationTypes.showActivity:
-          // go to the featured Tab
-          this.featuredTabParams.notification = notification;
-          this.err.log(`About to select featured tab for notifiation`);
+            const curTab = this.tabRef.getSelected();
+            if (curTab.index == 0) {
+              this.tabRef.select(1, { animate: false, duration: 0 })
+                .then(() => {
+                  this.tabRef.select(0, { animate: true })
+                    .then(() => {
+                      this.featuredTabParams.notification = null;         // clear this out so it only gets signaled once
+                    })
+                    .catch(error => {
+                      this.err.error(`Error calling tabSelect in tabs:processNotification: ${error.message}`);
+                    })
+                })
+            } else {
+              this.tabRef.select(0, { animate: true })
+                .then(() => {
+                  this.featuredTabParams.notification = null;         // clear this out so it only gets signaled once
+                })
+                .catch(error => {
+                  this.err.error(`Error calling tabSelect in tabs:processNotification: ${error.message}`);
+                })
+            }
 
-          const curTab = this.tabRef.getSelected();
-          if (curTab.index == 0) {
-            this.tabRef.select(1, { animate: false, duration: 0 })
-              .then(() => {
-                this.tabRef.select(0, { animate: true })
-                  .then(() => {
-                    this.featuredTabParams.notification = null;         // clear this out so it only gets signaled once
-                  })
-                  .catch(error => {
-                    this.err.error(`Error calling tabSelect in tabs:processNotification: ${error.message}`);
-                  })
-              })
-          } else {
-            this.tabRef.select(0, { animate: true })
-              .then(() => {
-                this.featuredTabParams.notification = null;         // clear this out so it only gets signaled once
-              })
-              .catch(error => {
-                this.err.error(`Error calling tabSelect in tabs:processNotification: ${error.message}`);
-              })
-          }
+            break;
 
-          break;
-
-        default:
-          this.err.log(`Tabs:processNotification got a notification of a type we don't recognize, ${JSON.stringify(notification)}`, logTypes.report, logLevels.normal, { "notification": notification });
-          break;
+          default:
+            this.err.log(`Tabs:processNotification got a notification of a type we don't recognize, ${JSON.stringify(notification)}`, logTypes.report, logLevels.normal, { "notification": notification });
+            break;
+        }
+      } catch (error) {
+        this.err.log(`processing a notification in tabs: ${error.message}`, logTypes.error, logLevels.normal, notification);
       }
-    } catch (error) {
-      this.err.log(`processing a notification in tabs: ${error.message}`, logTypes.error, logLevels.normal, notification);
     }
 
 

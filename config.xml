@@ -93,9 +93,6 @@
     <plugin name="cordova-ios-export-compliance" spec="^1.0.2" />
     <plugin name="cordova-plugin-firebase-analytics" spec="^0.12.1" />
     <plugin name="cordova-plugin-stripe" spec="^1.5.3" />
-    <plugin name="phonegap-plugin-push" spec="^2.1.2">
-        <variable name="FCM_VERSION" value="11.0.1" />
-    </plugin>
     <plugin name="cordova-plugin-facebook4" spec="^1.9.1">
         <variable name="APP_ID" value="1603897069676752" />
         <variable name="APP_NAME" value="“��" />
@@ -107,7 +104,10 @@
         <ios-team-release value="839H5HRS3X" />
     </branch-config>
     <plugin name="branch-cordova-sdk" spec="^2.6.23" />
+    <plugin name="phonegap-plugin-push" spec="^2.1.2">
+        <variable name="FCM_VERSION" value="11.0.1" />
+    </plugin>
     <engine name="browser" spec="5.0.3" />
     <engine name="android" spec="7.0.0" />
-    <engine name="ios" spec="4.5.4" />
+    <engine name="ios" spec="~4.5.4" />
 </widget>
