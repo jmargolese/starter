@@ -42,12 +42,8 @@ import { NotificationsProvider } from '../share-common/providers/notifications/n
 import { CloudFunctionProvider } from '../share-common/providers/cloud-function/cloud-function';
 import { SocialShareProvider } from '../share-common/providers/social-share/social-share';
 import { Push } from '@ionic-native/push';
-<<<<<<< HEAD
-
-=======
-import { ErrorReporterProvider } from '../share-common/providers/error-reporter/error-reporter';
 import { FacebookProvider } from '../share-common/providers/facebook/facebook';
->>>>>>> a424a030e4294fd8b5a7fdac399b5007e5079d25
+import { ProfilingProvider } from '../share-common/providers/profiling/profiling';
 
 
 @NgModule({
@@ -93,7 +89,8 @@ import { FacebookProvider } from '../share-common/providers/facebook/facebook';
     SocialShareProvider,
     ErrorReporterProvider,
     Facebook,
-    FacebookProvider
+    FacebookProvider,
+    ProfilingProvider
   ]
 })
 export class AppModule {}
