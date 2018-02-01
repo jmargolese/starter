@@ -60,7 +60,7 @@ export class OrgHomePage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public events: Events, public analytics: AnalyticsProvider, public userProvider: UserProvider, public zone: NgZone,
     public element: ElementRef, public renderer: Renderer2, private org: OrganizationProvider,
-    private errorReporter: ErrorReporterProvider) {
+    private err: ErrorReporterProvider) {
 
 
     this.featuredMode = navParams.get('featured') || false;
@@ -105,7 +105,7 @@ export class OrgHomePage {
   ionViewWillEnter() {
 
     this.loading = true;
-    this.errorReporter.recordBreadcrumb({ message: 'Entering page org-home' });
+    this.err.recordBreadcrumb({ message: 'Entering page org-home' });
 
     this.isVisible = true;
     this.analytics.setCurrentScreen('org-Home');
@@ -124,12 +124,14 @@ export class OrgHomePage {
     this.notificationRequest = this.navParams.get('notification') || null;
 
     if (this.featuredMode) {
+      this.err.log(`orgHomePage: featuredMode with notificationRequest: ${this.notificationRequest ? JSON.stringify(this.notificationRequest) : "is null"}`)
       this.org.getFeaturedOrganizations(this.notificationRequest ? this.notificationRequest.targetId : null)
         .subscribe(featuredOrgs => {
           this.organizationList = featuredOrgs;
+          this.err.log(`orgHomePage: got Featured Org: ${featuredOrgs.length ? featuredOrgs[0].metadata.id : 'no org'}`);
           this.setOrganization(this.orgIndex || 0);
           this.loading = false;
-          this.errorReporter.recordBreadcrumb({
+          this.err.recordBreadcrumb({
             message: `org-home FeaturedMode page with  ${this.organizationList ? this.organizationList.length : 'no'} featuredOrgs:`,
             category: 'enterPage', data: { organizationList: this.organizationList || 'orgList is null', orgIndex: this.orgIndex || 0 }
           })
@@ -147,7 +149,7 @@ export class OrgHomePage {
 
       this.setOrganization(this.orgIndex || 0);
       this.loading = false;
-      this.errorReporter.recordBreadcrumb({
+      this.err.recordBreadcrumb({
         message: `org-home NOT FeaturedMode page and useOrgFavorites is ${JSON.stringify(this.useOrgFavorites)}`,
         category: 'enterPage', data: { orgIndex: this.orgIndex || 0 }
       });
@@ -250,7 +252,7 @@ export class OrgHomePage {
     }
     //this.testMe.testMe();  
     console.log('ionViewDidLoad OrgHomePage and showAddToFavorites is: ' + this.showAddToFavorites);
-    this.errorReporter.recordBreadcrumb({
+    this.err.recordBreadcrumb({
       message: `org-home setOrganization done orgIndex: ${orgIndex}`,
       category: 'enterPage', data: { organizationList: this.organizationList || 'is null', orgIndex: this.orgIndex || 0 }
     });
@@ -261,7 +263,7 @@ export class OrgHomePage {
 
   public swipeEvent(event) {
 
-    this.errorReporter.recordBreadcrumb({ message: `org-home swipeEvent direction: ${event.direction}`, category: 'navigation' });
+    this.err.recordBreadcrumb({ message: `org-home swipeEvent direction: ${event.direction}`, category: 'navigation' });
     switch (event.direction) {
       case 2:
         this.next();
@@ -285,7 +287,7 @@ export class OrgHomePage {
           throw new Error(`In pages orgHome next called with null organizationList and orgIndex = ${this.orgIndex}`);
         } catch (error) {
           console.error(error.message);
-          this.errorReporter.captureException(error);
+          this.err.captureException(error);
         }
       }
     }

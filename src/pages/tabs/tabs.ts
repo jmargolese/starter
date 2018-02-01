@@ -151,7 +151,7 @@ export class TabsPage {
     if (!this.platform.is('cordova')) { return }
 
     const Branch = window['Branch'];
-    Branch.setDebug(true);
+   // Branch.setDebug(true);
     Branch.initSession(data => {
       if (data['+clicked_branch_link']) {
         // read deep link data on click

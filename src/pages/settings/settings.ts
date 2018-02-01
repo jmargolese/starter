@@ -112,7 +112,8 @@ export class SettingsPage {
     // only displayed in dev and for admins  
     let entries = [];
 
-    if (ENV.mode != envMode.production) {
+    // show debug if not production, but always show on browser
+    if (ENV.mode != envMode.production ||  !this.platform.is('cordova')) {
       entries.push(
         {
           title: 'Debug',
