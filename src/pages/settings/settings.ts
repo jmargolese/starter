@@ -1,6 +1,4 @@
 import { UserProvider } from './../../share-common/providers/user/user';
-import { UserProfile } from './../../share-common/interfaces/interfaces.d';
-import { EventTypes } from './../../share-common/config/constants';
 import { envMode } from './../../environments/environment.model';
 import { AnalyticsProvider } from '../../share-common/providers/analytics/analytics';
 import { AuthProvider } from '../../share-common/providers/auth/auth';
@@ -112,7 +110,8 @@ export class SettingsPage {
     // only displayed in dev and for admins  
     let entries = [];
 
-    if (ENV.mode != envMode.production) {
+    // show debug if not production, but always show on browser
+    if (ENV.mode != envMode.production ||  !this.platform.is('cordova')) {
       entries.push(
         {
           title: 'Debug',

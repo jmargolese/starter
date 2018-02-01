@@ -131,15 +131,17 @@ export class ContactPage {
   }
 
   public testNotification() {
-    let notification : shareTypes.notificationRequestInfo = {
+   /*  let notification : shareTypes.notificationRequestInfo = {
       type: constants.notificationTypes.showOrg,
       targetId: 'orgDesireStreet',
       source:  'notificationBackround', // shareTypes.notificationSources.notificationBackground,
       title: "Special event from ChadTough",
       message: "Come join us for the special event",
       data : null
-    }
+    } */
 
+    let notification : shareTypes.notificationRequestInfo =
+    {"type":"showOrg","targetId":"orgDesireStreet","title":null,"message":null,"source":"linkFirstInstall","data":{"campaignCode":"123","channel":""}}
     
     // add in custom data and actions per event
     switch (notification.type) {
