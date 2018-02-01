@@ -1,8 +1,6 @@
 import { ErrorReporterProvider, logTypes, logLevels } from './../../share-common/providers/error-reporter/error-reporter';
-import { notificationRequestInfo } from './../../share-common/interfaces/interfaces.d';
 import { UserProvider } from './../../share-common/providers/user/user';
 import { ActivitiesProvider } from './../../share-common/providers/activities/activities';
-import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
 import { SocialShareProvider } from './../../share-common/providers/social-share/social-share';
@@ -19,7 +17,6 @@ import { IonicPage, Tabs, Events, NavController, Platform } from 'ionic-angular'
 import * as shareTypes from '../../share-common/interfaces/interfaces';
 
 import { OrganizationProvider } from '../../share-common/providers/organization/organization';
-import { constructDependencies } from '@angular/core/src/di/reflective_provider';
 import { AuthProvider } from '../../share-common/providers/auth/auth';
 
 @IonicPage()
@@ -220,7 +217,7 @@ export class TabsPage {
             text: 'Share with friends',
             cssClass: 'share-alert-button',
             handler: () => {
-              let organization: shareTypes.Organization;
+             // let organization: shareTypes.Organization;
               let orgSubscription: Subscription = this.org.getOrganization(params.recipientId)
                 .subscribe(org => {
                   orgSubscription.unsubscribe();
