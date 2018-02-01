@@ -162,7 +162,7 @@ export class AddStripeCcPage {
 
   public updateAndDismiss() {
     // we are called by any provider service to ensure there is valid PayMethod data when we return
-    this.userProvider.updateUserInfo
+    //this.userProvider.updateUserInfo
     this.viewCtrl.dismiss({ error: false, canceled: false });
   }
   public submit() {

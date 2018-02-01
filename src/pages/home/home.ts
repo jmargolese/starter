@@ -100,19 +100,7 @@ export class HomePage {
     this.loading = this.loadingCtrl.create({
       content: ''
     });
-   /*  this.loading.present()
-      .then(() => {
-        this.currentOrganization = null;
-        this.orgsAreValid = false;
 
-        // ensure we've completed our login check before trying to load anything
-        this.userProvider.isAuthenticated()
-          .then((isAuthenticated) => {
-            console.log("in home.ts ionViewWillEnter are we authenticated? " + isAuthenticated);
-            this.getFavoriteOrganizations();
-
-          })
-      }) */
 
 
   }
