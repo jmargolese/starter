@@ -103,11 +103,13 @@
         <link-domain value="sharemobile.app.link" />
         <ios-team-release value="839H5HRS3X" />
     </branch-config>
-    <plugin name="branch-cordova-sdk" spec="^2.6.23" />
+    <plugin name="branch-cordova-sdk" spec="^2.6.23">
+        <variable name="BRANCH_KEY" value="key_live_mjDI2fbCZKxECbcIomW63pemDxeWTvBK" />
+        <variable name="URI_SCHEME" value="myapp" />
+    </plugin>
+    <engine name="android" spec="7.0.0" />
+    <engine name="ios" spec="4.5.4" />
     <plugin name="phonegap-plugin-push" spec="^2.1.2">
         <variable name="FCM_VERSION" value="11.0.1" />
     </plugin>
-    <engine name="browser" spec="5.0.3" />
-    <engine name="android" spec="7.0.0" />
-    <engine name="ios" spec="4.5.4" />
 </widget>
