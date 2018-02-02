@@ -91,6 +91,8 @@
         <link-domain value="sharemobile.app.link" />
         <ios-team-release value="839H5HRS3X" />
     </branch-config>
+    <engine name="browser" spec="5.0.3" />
+    <engine name="android" spec="7.0.0" />
     <plugin name="cordova-plugin-x-socialsharing" spec="^5.2.1" />
     <plugin name="cordova-plugin-device" spec="^1.1.7" />
     <plugin name="cordova-plugin-ionic-webview" spec="^1.1.16" />
@@ -104,14 +106,13 @@
     <plugin name="cordova-plugin-firebase-analytics" spec="^0.12.1" />
     <plugin name="cordova-plugin-stripe" spec="^1.5.3" />
     <plugin name="branch-cordova-sdk" spec="^2.6.23" />
-    <plugin name="phonegap-plugin-push" spec="^2.1.2">
+    <plugin name="phonegap-plugin-push" spec="^2.1.3">
         <variable name="FCM_VERSION" value="11.0.1" />
     </plugin>
     <plugin name="cordova-plugin-facebook4" spec="^1.9.1">
         <variable name="APP_ID" value="1603897069676752" />
         <variable name="APP_NAME" value="“��" />
     </plugin>
-    <engine name="browser" spec="5.0.3" />
-    <engine name="ios" spec="4.5.4" />
-    <engine name="android" spec="^7.0.0" />
+    <plugin name="cordova-plugin-qrscanner" spec="^2.5.0" />
+    <engine name="ios" spec="~4.5.4" />
 </widget>

@@ -3,6 +3,11 @@
   
     <ion-navbar>
       <ion-title>{{title}}</ion-title>
+      <ion-buttons end>
+      <button (click)="startScanner()" ion-button color="white" clear>
+        Scan QR Code
+      </button>
+    </ion-buttons>
     </ion-navbar>
    
   </ion-header>

@@ -12,7 +12,7 @@ import { AppVersion } from '@ionic-native/app-version';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { FirebaseAnalytics } from '@ionic-native/firebase-analytics';
 import { Facebook } from '@ionic-native/facebook';
-
+import { QRScanner } from '@ionic-native/qr-scanner';
 
 
 import { AngularFireModule } from 'angularfire2';
@@ -27,6 +27,7 @@ import { UserProvider } from '../share-common/providers/user/user';
 import { ActivitiesProvider } from '../share-common/providers/activities/activities';
 import { AnalyticsProvider } from '../share-common/providers/analytics/analytics';
 import { StripeProvider } from '../share-common/providers/stripe/stripe';
+import { QrScannerProvider } from './../share-common/providers/qr-scanner/qr-scanner';
 
 
 import { SocialSharing } from '@ionic-native/social-sharing';
@@ -86,7 +87,9 @@ import { FacebookProvider } from '../share-common/providers/facebook/facebook';
     SocialShareProvider,
     ErrorReporterProvider,
     Facebook,
-    FacebookProvider
+    FacebookProvider,
+    QRScanner,
+    QrScannerProvider
   ]
 })
 export class AppModule {}
