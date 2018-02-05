@@ -64,6 +64,7 @@
     "cordova-browser": "5.0.3",
     "cordova-ios": "4.5.4",
     "cordova-ios-export-compliance": "^1.0.2",
+    "cordova-plugin-add-swift-support": "^1.7.1",
     "cordova-plugin-app-version": "^0.1.9",
     "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-device": "^1.1.7",
@@ -71,7 +72,6 @@
     "cordova-plugin-firebase-analytics": "^0.12.1",
     "cordova-plugin-inappbrowser": "^1.7.2",
     "cordova-plugin-ionic-webview": "^1.1.16",
-    "cordova-plugin-qrscanner": "^2.5.0",
     "cordova-plugin-splashscreen": "^4.1.0",
     "cordova-plugin-statusbar": "git+https://github.com/apache/cordova-plugin-statusbar.git",
     "cordova-plugin-stripe": "^1.5.3",
@@ -137,7 +137,6 @@
       "cordova-plugin-ionic-webview": {},
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-statusbar": {},
-      "cordova-plugin-whitelist": {},
       "ionic-plugin-keyboard": {},
       "cordova-plugin-app-version": {},
       "cordova-plugin-inappbrowser": {},
@@ -152,7 +151,8 @@
         "APP_ID": "1603897069676752",
         "APP_NAME": "“��"
       },
-      "cordova-plugin-qrscanner": {}
+      "cordova-plugin-add-swift-support": {},
+      "cordova-plugin-whitelist": {}
     },
     "platforms": [
       "browser",
