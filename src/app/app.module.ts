@@ -26,6 +26,7 @@ import { UserProvider } from '../share-common/providers/user/user';
 import { ActivitiesProvider } from '../share-common/providers/activities/activities';
 import { AnalyticsProvider } from '../share-common/providers/analytics/analytics';
 import { StripeProvider } from '../share-common/providers/stripe/stripe';
+import { ErrorReporterProvider } from '../share-common/providers/error-reporter/error-reporter';
 
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { PaymethodsProvider } from '../share-common/providers/paymethods/paymethods';
@@ -38,8 +39,8 @@ import { NotificationsProvider } from '../share-common/providers/notifications/n
 import { CloudFunctionProvider } from '../share-common/providers/cloud-function/cloud-function';
 import { SocialShareProvider } from '../share-common/providers/social-share/social-share';
 import { Push } from '@ionic-native/push';
-import { ErrorReporterProvider } from '../share-common/providers/error-reporter/error-reporter';
 import { FacebookProvider } from '../share-common/providers/facebook/facebook';
+import { ProfilingProvider } from '../share-common/providers/profiling/profiling';
 
 
 @NgModule({
@@ -85,6 +86,7 @@ import { FacebookProvider } from '../share-common/providers/facebook/facebook';
     ErrorReporterProvider,
     Facebook,
     FacebookProvider,
+    ProfilingProvider
   ]
 })
 export class AppModule {}

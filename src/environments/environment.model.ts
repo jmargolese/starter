@@ -3,6 +3,9 @@ export interface Environment {
   mode: envMode;
   release: string;
   type: envType;
+  debug: {
+    profiling: boolean;
+  },
   firebase: {
       apiKey: string;
       authDomain: string;
