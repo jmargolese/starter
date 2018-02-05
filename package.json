@@ -144,7 +144,10 @@
       "cordova-ios-export-compliance": {},
       "cordova-plugin-firebase-analytics": {},
       "cordova-plugin-stripe": {},
-      "branch-cordova-sdk": {},
+      "branch-cordova-sdk": {
+        "BRANCH_KEY": "key_live_mjDI2fbCZKxECbcIomW63pemDxeWTvBK",
+        "URI_SCHEME": "myapp"
+      },
       "phonegap-plugin-push": {
         "FCM_VERSION": "11.0.1"
       },
@@ -153,11 +156,7 @@
         "APP_NAME": "“��"
       },
       "cordova-plugin-add-swift-support": {},
-      "cordova-plugin-whitelist": {},
-      "branch-cordova-sdk": {
-        "BRANCH_KEY": "key_live_mjDI2fbCZKxECbcIomW63pemDxeWTvBK",
-        "URI_SCHEME": "myapp"
-      }
+      "cordova-plugin-whitelist": {}
     },
     "platforms": [
       "android",
