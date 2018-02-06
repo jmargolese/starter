@@ -111,7 +111,6 @@
     </plugin>
     <plugin name="cordova-plugin-add-swift-support" spec="^1.7.1" />
     <plugin name="cordova-plugin-whitelist" spec="^1.3.3" />
-    <engine name="browser" spec="5.0.3" />
     <branch-config>
         <branch-key value="key_live_mjDI2fbCZKxECbcIomW63pemDxeWTvBK" />
         <uri-scheme value="myapp" />
@@ -124,4 +123,5 @@
     </plugin>
     <engine name="android" spec="7.0.0" />
     <engine name="ios" spec="4.5.4" />
+    <engine name="browser" spec="5.0.3" />
 </widget>

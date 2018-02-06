@@ -32,19 +32,6 @@
     <div *ngIf="isReady && !organization">
       <div>
         <img src="assets/img/images/discover-background.jpg ">
-        <!-- <div class="infoCard">
-          <ion-card>
-            <ion-card-header>
-              <img class="logoImage" src="assets/img/share/Share_ICON-192x192px.png" style="width:1px; height:1px;" /> Discover!
-
-            </ion-card-header>
-            <ion-card-content>
-              Tap the
-              <b>Discover</b> tab below to find your interests. Then
-              <i>Add to home</i> to see your favorite organization's news, events and updates right here.
-            </ion-card-content>
-          </ion-card>
-        </div>-->
       </div>
     </div>
     <org-home *ngIf="isReady && organization" [organization]='organization' [options]="{hideImage: true}"> </org-home>
@@ -52,10 +39,6 @@
 
 </ion-content>
 
-<!-- <action-button *ngIf="showAddToHomeButton" class="orgAddToFavoritesButton" [organization]="organization" [activity]="currentActivity"
-  [options]="{buttonToDisplay : 'donateButtonStdButton', changeTab: false}"> </action-button>
-<action-button *ngIf="showDonateButton" class="fixedButton" [organization]="organization" [activity]="currentActivity" [options]="{buttonToDisplay : 'roundDonate', changeTab: false}">
-</action-button> -->
 <actions-bar *ngIf="showDonateButton" class="orgShowActionBar" [organization]="organization" [activity]="currentActivity"
   [options]="{buttonsToDisplay : ['largeDonateButton', 'largeEngageButton'], changeTab: false, engageOptions: engageOptions}"></actions-bar>
 
