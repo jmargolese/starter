@@ -1,6 +1,4 @@
 import { UserProvider } from './../../share-common/providers/user/user';
-import { UserProfile } from './../../share-common/interfaces/interfaces.d';
-import { EventTypes } from './../../share-common/config/constants';
 import { envMode } from './../../environments/environment.model';
 import { AnalyticsProvider } from '../../share-common/providers/analytics/analytics';
 import { AuthProvider } from '../../share-common/providers/auth/auth';

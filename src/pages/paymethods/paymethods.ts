@@ -4,7 +4,7 @@ import { PaymethodsProvider } from '../../share-common/providers/paymethods/paym
 import { UserProvider } from './../../share-common/providers/user/user';
 import { AlertProvider } from './../../share-common/providers/alert/alert';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, PopoverController, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 
 import * as shareTypes from '../../share-common/interfaces/interfaces';
 import * as shareConstants from '../../share-common/config/constants';
@@ -21,7 +21,7 @@ export class PaymethodsPage {
   private loading;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public userProvider: UserProvider,
-    public analytics: AnalyticsProvider, public paymethodProvider: PaymethodsProvider, private popoverCtrl: PopoverController,
+    public analytics: AnalyticsProvider, public paymethodProvider: PaymethodsProvider,
     private alert: AlertProvider, private loadingCtrl: LoadingController) {
   }
 
@@ -46,7 +46,7 @@ export class PaymethodsPage {
 
     ];
 
-  private setPaymethodChoices(): any {
+  /* private setPaymethodChoices(): any {
     let pmChoices: shareTypes.paymethodChoices[] = [];
 
     for (let choice of this.paymethodChoices) {
@@ -58,7 +58,7 @@ export class PaymethodsPage {
       }
     }
     return (pmChoices != [] ? pmChoices : this.setPaymethodChoices);
-  }
+  } */
 
   private newPaymethod(kind: string) {
     this.paymethods = this.paymethodProvider.getPaymethods(); // refresh

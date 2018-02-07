@@ -11,6 +11,7 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 import * as shareTypes from '../../share-common/interfaces/interfaces';
 import * as constants from '../../share-common/config/constants';
+import { ErrorReporterProvider } from '../../share-common/providers/error-reporter/error-reporter';
 
 //import { ENV } from '@app/env';
 
@@ -29,7 +30,8 @@ export class DiscoverPage {
   public showSearchBar: boolean = false;         // we can turn it back on when we support it
 
   constructor(private navCtrl: NavController, private navParams: NavParams,
-    private orgProvider: OrganizationProvider, private analytics: AnalyticsProvider, private events: Events) {
+    private orgProvider: OrganizationProvider, private analytics: AnalyticsProvider, private events: Events,
+   private err: ErrorReporterProvider) {
 
     // console.log("In discover.ts env: " + ENV.mode);
     this.events.subscribe(constants.EventTypes.pushNotification, data => {

@@ -14,7 +14,6 @@ import { FirebaseAnalytics } from '@ionic-native/firebase-analytics';
 import { Facebook } from '@ionic-native/facebook';
 
 
-
 import { AngularFireModule } from 'angularfire2';
 import { ENV } from '@app/env';
 
@@ -28,7 +27,6 @@ import { ActivitiesProvider } from '../share-common/providers/activities/activit
 import { AnalyticsProvider } from '../share-common/providers/analytics/analytics';
 import { StripeProvider } from '../share-common/providers/stripe/stripe';
 import { ErrorReporterProvider } from '../share-common/providers/error-reporter/error-reporter';
-
 
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { PaymethodsProvider } from '../share-common/providers/paymethods/paymethods';
