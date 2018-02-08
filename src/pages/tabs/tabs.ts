@@ -8,7 +8,7 @@ import { NotificationsProvider } from './../../share-common/providers/notificati
 import { Component, ViewChild } from '@angular/core';
 import { ENV } from '@app/env';
 import * as constants from '../../share-common/config/constants'
-import { ModalController, AlertController, ToastController } from 'ionic-angular';
+import { ModalController, AlertController } from 'ionic-angular';
 
 
 
@@ -18,6 +18,7 @@ import * as shareTypes from '../../share-common/interfaces/interfaces';
 
 import { OrganizationProvider } from '../../share-common/providers/organization/organization';
 import { AuthProvider } from '../../share-common/providers/auth/auth';
+import { AlertProvider } from '../../share-common/providers/alert/alert';
 
 @IonicPage()
 @Component({
@@ -42,8 +43,9 @@ export class TabsPage {
     public navCtrl: NavController, public platform: Platform, public modalCtrl: ModalController,
     private alertCtrl: AlertController, private socialShare: SocialShareProvider,
     private org: OrganizationProvider, private activitiesProvider: ActivitiesProvider,
-    private toastCtrl: ToastController, private userProvider: UserProvider,
-    private auth: AuthProvider, private err: ErrorReporterProvider) {
+    private userProvider: UserProvider,
+    private auth: AuthProvider, private err: ErrorReporterProvider,
+    private alert : AlertProvider) {
 
     this.featuredTabParams = { featured: true, orgIndex: 0, notification: null };
     this.favoritesTabParams = { useOrgFavorites: true, orgIndex: 0, notification: null };
@@ -249,17 +251,9 @@ export class TabsPage {
       alert.present();
 
     } else { // donation failed. reiterate.
-      let toast = this.toastCtrl.create({
-        message: `Unable to complete donation to ${params.displayName}\n${params.errorMessage}`,
-        duration: 5000,
-        position: 'top'
-      });
-
-      toast.onDidDismiss(() => {
-        console.log('Dismissed toast - donation failed.');
-      });
-
-      toast.present();
+      this.alert.confirm({title: "Something went wrong", message:`<p>Unable to complete donation to ${params.displayName}.</p><p>${params.errorMessage}</p>`,
+        buttons  : { ok: true, cancel: false} });
+      
     }
 
   }
