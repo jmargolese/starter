@@ -13,7 +13,8 @@ import { ENV } from '@app/env';
 export class Share {
   rootPage:any = 'TabsPage';
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,
+    private cloudfunctionProvider: CloudFunctionProvider) {
     platform.ready().then(() => {
       console.log(`Shareapp is ready.  Mode: ${ENV.mode} Release: ${ENV.release}`);
       // Okay, so the platform is ready and our plugins are available.
