@@ -2,9 +2,9 @@ import { Environment } from './environment.model';
 export interface Environment {
   mode: envMode;
   release: string;
-  type: envType;
+  type: envType,
   debug: {
-    profiling: boolean;
+    profiling: boolean
   },
   firebase: {
       apiKey: string;
@@ -20,13 +20,11 @@ export interface Environment {
     privateKey: string;
     clientId: string;
   },
-    paypal: {
-      baseUrl: string;
-      clientId: string;
-      secret: string;
-      payerId: string;
-      BNCode: string;
-      accessToken: string;
+  paypal: {
+    baseUrl: string;
+    clientId: string;
+    payerId: string;
+    BNCode: string;
   },
   raven: {
     appKey: string;
