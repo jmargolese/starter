@@ -1,5 +1,4 @@
 import { AnalyticsProvider } from '../../share-common/providers/analytics/analytics';
-import { ActivitiesProvider } from '../../share-common/providers/activities/activities';
 
 import { Component, ViewChild, NgZone, ElementRef, Renderer2 } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, Content } from 'ionic-angular';

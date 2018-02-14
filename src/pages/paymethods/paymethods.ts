@@ -17,7 +17,7 @@ import * as shareConstants from '../../share-common/config/constants';
 })
 export class PaymethodsPage {
 
-  private paymethods: shareTypes.PayMethod[];
+  public paymethods: shareTypes.PayMethod[];
   private loading;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public userProvider: UserProvider,
@@ -60,7 +60,7 @@ export class PaymethodsPage {
     return (pmChoices != [] ? pmChoices : this.setPaymethodChoices);
   } */
 
-  private newPaymethod(kind: string) {
+  public newPaymethod(kind: string) {
     this.paymethods = this.paymethodProvider.getPaymethods(); // refresh
     switch (kind) {
       case 'stripe':

@@ -20,7 +20,7 @@ export class PaymethodChoicesPage {
     console.log('ionViewDidLoad PaymethodChoicesPage');
   }
 
-  private dismiss(kind){
+  public dismiss(kind){
     this.viewCtrl.dismiss(kind);
   }
 

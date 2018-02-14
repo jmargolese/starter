@@ -1,16 +1,12 @@
-import { notificationRequestInfo } from './../../share-common/interfaces/interfaces.d';
 import { AnalyticsProvider } from '../../share-common/providers/analytics/analytics';
 
 import { OrganizationProvider } from '../../share-common/providers/organization/organization';
 
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
+import { IonicPage } from 'ionic-angular';
 
 import { Observable } from 'rxjs/Observable';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
-import * as shareTypes from '../../share-common/interfaces/interfaces';
-import * as constants from '../../share-common/config/constants';
 import { ErrorReporterProvider } from '../../share-common/providers/error-reporter/error-reporter';
 
 //import { ENV } from '@app/env';
@@ -29,14 +25,13 @@ export class DiscoverPage {
   public title: string = "Discover";
   public showSearchBar: boolean = false;         // we can turn it back on when we support it
 
-  constructor(private navCtrl: NavController, private navParams: NavParams,
-    private orgProvider: OrganizationProvider, private analytics: AnalyticsProvider, private events: Events,
+  constructor( private orgProvider: OrganizationProvider, private analytics: AnalyticsProvider,
    private err: ErrorReporterProvider) {
 
     // console.log("In discover.ts env: " + ENV.mode);
-    this.events.subscribe(constants.EventTypes.pushNotification, data => {
-      const notification: shareTypes.notificationRequestInfo = data;
-    })
+    //this.events.subscribe(constants.EventTypes.pushNotification, data => {
+     // const notification: shareTypes.notificationRequestInfo = data;
+    //})
 
   }
 
@@ -48,7 +43,7 @@ export class DiscoverPage {
 
     let val = event.target.value;
 
-    console.log("onSearchInput called with:  " + val);
+    this.err.log("onSearchInput called with:  " + val);
   }
 
   ionViewWillEnter() {
