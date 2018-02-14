@@ -38,7 +38,7 @@ export class HomePage {
   public orgsAreValid: boolean = false;
 
 
-  private loading;
+  public loading;
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public userProvider: UserProvider,

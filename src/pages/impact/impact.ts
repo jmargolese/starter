@@ -4,7 +4,6 @@ import { UserProvider } from '../../share-common/providers/user/user';
 import { DataProvider } from '../../share-common/providers/data/data';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Observable } from 'rxjs/Observable';
 
 import * as shareTypes from "../../share-common/interfaces/interfaces";
 
