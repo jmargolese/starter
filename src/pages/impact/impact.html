@@ -22,7 +22,7 @@
   <ion-list>
     <ion-item *ngFor="let donation of donations"  class="donationTable">
         <ion-thumbnail item-start>
-            <img src="{{donation.recipient.icon}}">
+            <img class="thumbnail" src="{{donation.recipient.icon}}">
           </ion-thumbnail>
           <h2>{{donation.recipient.name}}</h2>
           <p> <span>$hared {{ donation.amount | currency:'USD':'symbol':'1.2-2'}}</span><span class="donation-date"> {{donation.time | date:'MMM dd yyyy' }}</span></p>

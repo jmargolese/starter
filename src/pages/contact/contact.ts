@@ -118,11 +118,13 @@ export class ContactPage {
         },
         donor: {
           id: "oJKMGPstPlgp1kkSIcCD17TfXtp2",
-          name: "Fred Flintstone"
+          name: "Fred Flintstone",
+          email: "fred.ipwm+20@gmail.com"
         },
         payMethod: {
           description: "visa",
-          referenceId: "refID"
+          referenceId: "refID",
+          type: "visa"
         },
         recipient: {
           ein: "47-4041494",
