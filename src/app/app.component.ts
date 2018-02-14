@@ -15,7 +15,7 @@ export class Share {
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {
-      console.log(`Shareapp is ready.  Mode: ${ENV.mode} Release: ${ENV.release}`);
+      console.log(`Shareapp is ready.  ProjectId: ${ENV.firebase.projectId}, Mode: ${ENV.mode} Release: ${ENV.release}`);
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
