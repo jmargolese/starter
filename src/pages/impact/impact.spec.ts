@@ -4,6 +4,7 @@ import { AnalyticsProvider } from '../../share-common/providers/analytics/analyt
 import { AuthProvider } from '../../share-common/providers/auth/auth';
 import { DataProvider } from '../../share-common/providers/data/data';
 import { UserProvider } from '../../share-common/providers/user/user';
+import { OrganizationProvider } from './../../share-common/providers/organization/organization';
 
 import { NavParams } from 'ionic-angular';
 import { AppVersion } from '@ionic-native/app-version';
@@ -13,7 +14,7 @@ import { DebugElement } from '@angular/core';
 import { IonicModule, Platform, NavController} from 'ionic-angular/index';
 
 import { PlatformMock, NavParamsMock, AppVersionMock } from '../../../test-config/mocks-ionic';
-import { AnalyticsProviderMock, AuthProviderMock, DataProviderMock, UserProviderMock } from '../../../test-config/mocks-ionic';
+import { AnalyticsProviderMock, AuthProviderMock, DataProviderMock, UserProviderMock, OrganizationProviderMock } from '../../../test-config/mocks-ionic';
 
 describe('ImpactPage', () => {
   let comp: ImpactPage;
@@ -35,6 +36,7 @@ describe('ImpactPage', () => {
         { provide: UserProvider, useClass: UserProviderMock },
         { provide: NavParams, useClass: NavParamsMock },
         { provide: AppVersion, useClass: AppVersionMock },
+        { provide: OrganizationProvider, useClass: OrganizationProviderMock}
       ]
     });
   }));
@@ -65,9 +67,18 @@ describe('ImpactPage', () => {
   });
 
   it('test ionViewWillEnter: expect userHasOrganization to be true and donations set', () => {
+    comp.userProvider.currentUser.organization = "orgID";
     comp.ionViewWillEnter();
+    
     expect(comp.userHasOrganization).toBeTruthy();
     expect(comp.donations).toBeDefined();
+  });
+
+  it('test ionViewWillEnter: expect userHasOrganization to be false ', () => {
+    comp.userProvider.currentUser.organization = "";
+    comp.ionViewWillEnter();
+    
+    expect(comp.userHasOrganization).toBeFalsy();
   });
 
   it('test selectionChanged: expect donations set', () => {
