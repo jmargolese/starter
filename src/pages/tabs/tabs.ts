@@ -75,7 +75,7 @@ export class TabsPage {
       /*
       Successfully routed {"$link":{"path":"/crwp","queryString":"","fragment":"","host":"nn4wp.app.goo.gl","url":"https://nn4wp.app.goo.gl/crwp","scheme":"https"}}
       */
-      console.log("Environment is: " + ENV.mode);
+
       this.auth.init();
       this.userProvider.init();            // ensure this get enstantiated  (after a login redirect we'll end up back here)
 
