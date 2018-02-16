@@ -111,6 +111,8 @@ export class ContactPage {
         baseAmount: baseAmount,
         currency: "USD",
         donorPaidFees: assumeFees,
+        type: "donation",
+        isDemo: false,
         time: this.randomDate(new Date(2018, 0, 9), new Date()),
         directed: {
           percent: 0,
@@ -131,6 +133,9 @@ export class ContactPage {
           icon: "",
           id: "orgChadTough",
           name: "ChadTough"
+        },
+        receipt : { 
+          id : null
         }
         
       }
