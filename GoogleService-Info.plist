@@ -7,7 +7,6 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-<<<<<<< HEAD
 	<string>500682232012-0s8457nal3paqdtcd996cn6iloendvmc.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
 	<string>com.googleusercontent.apps.500682232012-0s8457nal3paqdtcd996cn6iloendvmc</string>
@@ -15,31 +14,14 @@
 	<string>AIzaSyCBROWgHWyHM8wdsbqymnBJNi52ewCw7Ug</string>
 	<key>GCM_SENDER_ID</key>
 	<string>500682232012</string>
-=======
-	<string>895621837575-dfjmsiquosb7a2cdvlhbq759ji82h1aa.apps.googleusercontent.com</string>
-	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.895621837575-dfjmsiquosb7a2cdvlhbq759ji82h1aa</string>
-	<key>ANDROID_CLIENT_ID</key>
-	<string>895621837575-hatnvrkfh0mkm5qvrl9so1m43nuruacm.apps.googleusercontent.com</string>
-	<key>API_KEY</key>
-	<string>AIzaSyC7vHf0fIdlWVwe2H9MT1R7F13DD5XcSp0</string>
-	<key>GCM_SENDER_ID</key>
-	<string>895621837575</string>
->>>>>>> f2db62a9b9df4801c7e3350a00610b895699de6f
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.ipaymyway.share</string>
 	<key>PROJECT_ID</key>
-<<<<<<< HEAD
 	<string>share-75e74</string>
 	<key>STORAGE_BUCKET</key>
 	<string>share-75e74.appspot.com</string>
-=======
-	<string>share-acec9</string>
-	<key>STORAGE_BUCKET</key>
-	<string>share-acec9.appspot.com</string>
->>>>>>> f2db62a9b9df4801c7e3350a00610b895699de6f
 	<key>IS_ADS_ENABLED</key>
 	<true></true>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -51,14 +33,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-<<<<<<< HEAD
 	<string>1:500682232012:ios:73cfba64784336a4</string>
 	<key>DATABASE_URL</key>
 	<string>https://share-75e74.firebaseio.com</string>
-=======
-	<string>1:895621837575:ios:73cfba64784336a4</string>
-	<key>DATABASE_URL</key>
-	<string>https://share-acec9.firebaseio.com</string>
->>>>>>> f2db62a9b9df4801c7e3350a00610b895699de6f
 </dict>
 </plist>
