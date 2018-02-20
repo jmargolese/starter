@@ -6,7 +6,6 @@ import { Subscription } from 'rxjs/Subscription';
 import { SocialShareProvider } from './../../share-common/providers/social-share/social-share';
 import { NotificationsProvider } from './../../share-common/providers/notifications/notifications';
 import { Component, ViewChild } from '@angular/core';
-import { ENV } from '@app/env';
 import * as constants from '../../share-common/config/constants'
 import { ModalController, AlertController } from 'ionic-angular';
 
