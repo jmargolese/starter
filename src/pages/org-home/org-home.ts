@@ -51,6 +51,7 @@ export class OrgHomePage {
 
   public engageOptions: shareTypes.engageOptions = {
     buttonsToDisplay: {
+      volunteer: true,
       socialShare: true,
       addToFavorites: true
     }

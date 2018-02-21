@@ -14,7 +14,7 @@ import * as shareTypes from "../../share-common/interfaces/interfaces";
 })
 export class ImpactPage {
 
-  public donations: shareTypes.Donation[];
+  public donations: shareTypes.Impact[];
 
   public userHasOrganization: boolean = false;
   public showWhichDonations = "donations";
@@ -26,7 +26,7 @@ export class ImpactPage {
 
   public updateDonations() {
     if (this.showWhichDonations == 'donations')
-      this.db.getDonationRecords("donations", true, this.userProvider.getUserId())
+      this.db.getDonationRecords("impact", true, this.userProvider.getUserId())
       .subscribe(donations => {
         this.donations = donations;
         this.donations.forEach(donation  => {
@@ -37,7 +37,7 @@ export class ImpactPage {
         })
       })
     else {
-      this.db.getDonationRecords("donations", false, this.userProvider.getOrganizationId())
+      this.db.getDonationRecords("impact", false, this.userProvider.getOrganizationId())
       .subscribe(donations => {
         this.donations = donations;
        

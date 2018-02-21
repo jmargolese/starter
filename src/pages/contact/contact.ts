@@ -99,7 +99,7 @@ export class ContactPage {
   }
 
   public createDonations(): void {
-    let newDonation: shareTypes.Donation;
+   /* let newDonation: shareTypes.Donation;
 
 
     let baseAmount: number = this.getRandomInt(5, 25);
@@ -147,6 +147,7 @@ export class ContactPage {
         console.error("Contact: Error creating donation document: " + JSON.stringify(error));
       })
     }
+    */
 
   }
 
