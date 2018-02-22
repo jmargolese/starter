@@ -1,4 +1,4 @@
-
+import { UserProvider } from './../../share-common/providers/user/user';
 import { SettingsPage } from './settings';
 
 import { AnalyticsProvider } from '../../share-common/providers/analytics/analytics';
@@ -13,7 +13,8 @@ import { IonicModule, Platform, NavController} from 'ionic-angular/index';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { PlatformMock, StatusBarMock, SplashScreenMock, AnalyticsProviderMock, AuthProviderMock, NavParamsMock, AppVersionMock } from '../../../test-config/mocks-ionic';
+import { PlatformMock, StatusBarMock, SplashScreenMock, AnalyticsProviderMock, AuthProviderMock, 
+  NavParamsMock, AppVersionMock, UserProviderMock } from '../../../test-config/mocks-ionic';
 
 describe('SettingsPage', () => {
   let comp: SettingsPage;
@@ -35,6 +36,7 @@ describe('SettingsPage', () => {
         { provide: AuthProvider, useClass: AuthProviderMock },
         { provide: NavParams, useClass: NavParamsMock },
         { provide: AppVersion, useClass: AppVersionMock },
+        { provide: UserProvider, useClass: UserProviderMock },
       ]
     });
   }));

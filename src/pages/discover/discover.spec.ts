@@ -1,3 +1,4 @@
+import { ErrorReporterProvider } from './../../share-common/providers/error-reporter/error-reporter';
 import { DiscoverPage } from './discover';
 
 import { AnalyticsProvider } from '../../share-common/providers/analytics/analytics';
@@ -11,7 +12,7 @@ import { DebugElement } from '@angular/core';
 import { IonicModule, Platform, NavController} from 'ionic-angular/index';
 
 import { PlatformMock, NavParamsMock } from '../../../test-config/mocks-ionic';
-import { AnalyticsProviderMock, OrganizationProviderMock } from '../../../test-config/mocks-ionic';
+import { AnalyticsProviderMock, OrganizationProviderMock, ErrorReporterProviderMock} from '../../../test-config/mocks-ionic';
 
 describe('DiscoverPage', () => {
 
@@ -31,7 +32,8 @@ describe('DiscoverPage', () => {
         { provide: Platform, useClass: PlatformMock},
         { provide: AnalyticsProvider, useClass: AnalyticsProviderMock },
         { provide: OrganizationProvider, useClass: OrganizationProviderMock },
-        { provide: NavParams, useClass: NavParamsMock }
+        { provide: NavParams, useClass: NavParamsMock },
+        { provide: ErrorReporterProvider, useClass: ErrorReporterProviderMock }
       ]
     });
   }));

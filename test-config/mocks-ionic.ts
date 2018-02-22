@@ -2,6 +2,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import * as shareTypes from '../src/share-common/interfaces/interfaces';
+import { Observable } from 'rxjs/Observable';
 
 export class PlatformMock {
   public ready(): Promise<string> {
@@ -11,8 +12,8 @@ export class PlatformMock {
   }
 
   public resume: any = {
-    emit(): void {},
-    subscribe(): any {}
+    emit(): void { },
+    subscribe(): any { }
   };
 
   public getQueryParam() {
@@ -86,19 +87,19 @@ export class SplashScreenMock extends SplashScreen {
 }
 
 export class NavMock {
- 
+
   public pop(): any {
-    return new Promise(function(resolve: Function): void {
+    return new Promise(function (resolve: Function): void {
       resolve();
     });
   }
- 
+
   public push(): any {
-    return new Promise(function(resolve: Function): void {
+    return new Promise(function (resolve: Function): void {
       resolve();
     });
   }
- 
+
   public getActive(): any {
     return {
       'instance': {
@@ -106,78 +107,78 @@ export class NavMock {
       },
     };
   }
- 
+
   public setRoot(): any {
     return true;
   }
 
   public registerChildNav(nav: any): void {
-    return ;
+    return;
   }
 
   public unregisterChildNav(nav: any) {
-    return ;
+    return;
   }
 
 }
 
 export class ViewControllerMock {
-  
+
   public readReady: any = {
-    emit(): void {},
-    subscribe(): any {}
+    emit(): void { },
+    subscribe(): any { }
   };
 
   public writeReady: any = {
-    emit(): void {},
-    subscribe(): any {}
+    emit(): void { },
+    subscribe(): any { }
   };
 
   public contentRef(): any {
     return new Promise(function (resolve: Function): void {
-        resolve();
+      resolve();
     });
   }
 
   public didEnter(): any {
     return new Promise(function (resolve: Function): void {
-        resolve();
+      resolve();
     });
   }
 
   public didLeave(): any {
     return new Promise(function (resolve: Function): void {
-        resolve();
+      resolve();
     });
   }
 
   public onDidDismiss(): any {
     return new Promise(function (resolve: Function): void {
-        resolve();
+      resolve();
     });
   }
 
   public onWillDismiss(): any {
     return new Promise(function (resolve: Function): void {
-        resolve();
+      resolve();
     });
   }
 
   public willEnter(): any {
     return new Promise(function (resolve: Function): void {
-        resolve();
+      resolve();
     });
   }
 
   public willLeave(): any {
     return new Promise(function (resolve: Function): void {
-        resolve();
+      resolve();
     });
   }
 
   public willUnload(): any {
     return new Promise(function (resolve: Function): void {
-        resolve();
+      resolve();
     });
   }
 
@@ -252,39 +253,39 @@ export class ViewControllerMock {
 
 export class StripeMock {
   public setPublishableKey() {
-    return new Promise( (resolve, reject) => { 
+    return new Promise((resolve, reject) => {
       resolve();
     })
   }
 }
 
-export class AlertProviderMock {}
-export class AnalyticsProviderMock {}
-export class PaymethodsProviderMock {}
-export class ActivitiesProviderMock {}
-export class SocialSharingMock {}
-export class StripeProviderMock {}
+export class AlertProviderMock { }
+export class AnalyticsProviderMock { }
+export class PaymethodsProviderMock { }
+export class ActivitiesProviderMock { }
+export class SocialSharingMock { }
+export class StripeProviderMock { }
 
 export class SlidesMock {
   public slideTo(): any {
-    return 0; 
+    return 0;
   }
 }
 
 export class ShareProviderMock {
   public donate() {
-    return new Promise( (resolve, reject) => { 
+    return new Promise((resolve, reject) => {
       resolve();
     })
-  } 
+  }
 }
 
 export class AuthProviderMock {
   public getAuthenticatedUser() {
-    return new Promise( (resolve, reject) => { 
+    return new Promise((resolve, reject) => {
       resolve(true);
     })
-  }  
+  }
 }
 
 export class DataProviderMock {
@@ -292,24 +293,23 @@ export class DataProviderMock {
   donation = null;
   organization = null;
   public getActivitiesForOrg() {
-    return new Promise( (resolve, reject) => { 
+    return new Promise((resolve, reject) => {
       resolve(this.activity);
     })
   }
   public getDonationRecords() {
-    return new Promise( (resolve, reject) => { 
-      resolve(this.donation);
-    })
-  }   
+    return Observable.of([]);
+
+  }
   public getAllOrganizations() {
-    return new Promise( (resolve, reject) => { 
+    return new Promise((resolve, reject) => {
       resolve(this.organization);
     })
-  }  
+  }
 }
 
 export class SocialShareProviderMock {
-  public startSocialShare(organization?: shareTypes.Organization, activity?: shareTypes.Activity){
+  public startSocialShare(organization?: shareTypes.Organization, activity?: shareTypes.Activity) {
     return new Promise((resolve, reject) => {
       resolve();
     });
@@ -317,31 +317,83 @@ export class SocialShareProviderMock {
 }
 
 export class UserProviderMock {
-  currentUser: shareTypes.UserProfile = {
-    name: {
-      first: 'MockFirstName',
-      last: 'MockLastName'
+  currentUser: shareTypes.User = {
+    profile: {
+      name: {
+        first: "firstName",
+        last: "lastName",
+        displayName: "first LastName"
+      },
+      email: "user@email.com",
+      phoneNumber: "",
+      provider: {
+        id: "",
+        token: ""
+      }
+
     },
-    email: 'MockEmail',
-    phoneNumber: '123-456-7890'
+    info: {
+
+      isDemo: false,
+      isAdmin: false,
+      isEnabled: true,
+      notificationToken: "notificationToken",
+      lastActiveTime: new Date()
+    },
+    organization: "",
+    favorites: {
+      activities: {},
+      organizations: {}
+    },
+    paymethods: [],
+    contactPrefs: {
+
+      emailForLikes: true,
+      emailForGeneral: false
+    },
+    metadata: {
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      id: "userID",
+      misc: null
+    }
   };
+
   currentAuthUser = 'mockAuthUser';
-  mockUserHasOrganization = true;
+
   public getUserProfile() {
-    return (this.currentUser);
+    return (this.currentUser.profile);
   };
   public getUserId() {
-    return (this.currentAuthUser);
+    return (this.currentUser.metadata.id);
   };
-   public userHasOrganization() {
-    return (this.mockUserHasOrganization);
+  public userHasOrganization() {
+    return (this.currentUser.organization);
   };
   public isUserFavorite(type, id) {
     return (false);
   };
-  public userLikesOrganization(id) : boolean {
-    return (id ? true : false);
+  public userLikesOrganization(orgId: string): boolean {
+    let result: boolean = false;
+    if (this.currentUser && this.currentUser.favorites && this.currentUser.favorites.organizations &&
+      this.currentUser.favorites.organizations.hasOwnProperty(orgId)) {
+      result = true;
+    }
+
+    return result;
   };
+
+  // set loginType to control isLoginPassword()
+  public loginType: string = "password";
+  public isLoginPassword(): boolean {
+    return  this.loginType === 'password' ? true : false;
+    //return  !this.currentUser.profile.provider || !this.currentUser.profile.provider == 
+
+  }
+
+  public getEmail(): String {
+    return this.currentUser ? this.currentUser.profile.email : "";
+  }
 }
 
 export class NavParamsMock {
@@ -359,7 +411,7 @@ export class NavParamsMock {
     "images": {
       "image": null,
       "logo": null,
-       "mainImage" : null
+      "mainImage": null
     },
     "messages": {
       "headline": "mockHeadline",
@@ -368,8 +420,8 @@ export class NavParamsMock {
       "motd": null
     },
     "dates": {
-      "startDate": "2017-10-25",
-      "endDate": "2017-11-15",
+      "startDate": new Date(),
+      "endDate": new Date(),
       "activityDate": null,
       "activeDateStart": null,
       "activeDateEnd": null,
@@ -378,7 +430,12 @@ export class NavParamsMock {
     "social": null,
     "parent": null,
     "children": null,
-    "metadata" : null
+    "metadata": {
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      id: "idString",
+      misc: null
+    }
   }
 
   stripeaccountInfo: shareTypes.stripeAccountInfo = {
@@ -386,12 +443,17 @@ export class NavParamsMock {
     "stripeConnectToken": null,
     "stripeState": null,
     "account": null,
-    "creditCardFee": 0  
+    "creditCardFee": 0
   }
 
   paypalaccountInfo: shareTypes.paypalAccountInfo = {
-      "type": null,
-      "data": null
+    type: "paypal",
+    optInOut: true,
+    status: 'connected', // 'pending', 'connected, '
+    emailConfirmed: true,
+    referralUrl: "",
+    account: "",
+    creditCardFee: 0.029
   }
 
   documentmetadata: shareTypes.documentMetadata = {
@@ -406,15 +468,22 @@ export class NavParamsMock {
     "reduced": null
   }
 
+
   organization: shareTypes.Organization = {
     "id": 'mockId',
     "companyName": 'mockcompanyName',
     "ein": 'mockein',
     "shareuid": 'mockshareuid',
     "images": {
-        "image": 'mockimage',
-        "mainImage" : this.imagesizes,
-        "logo": this.imagesizes
+      "image": 'mockimage',
+      "mainImage": this.imagesizes,
+      "logo": this.imagesizes
+    },
+    messages: {
+      howHelp: {
+        whatHelps: "what helps string",
+        whatItDoes: "What it does string"
+      }
     },
     "social": {
       "message": null,
@@ -422,43 +491,43 @@ export class NavParamsMock {
       "subject": null
     },
     "info": {
-        "coreMessage": 'mockcoreMessage',
-        "isDemo": true,
-        "description": 'mockdescription',
-        "enabled": true,
-        "featured": true
+      "coreMessage": 'mockcoreMessage',
+      "isDemo": true,
+      "description": 'mockdescription',
+      "enabled": true,
+      "featured": true
     },
     "donationPrefs": [100],
-    "accounts": [this.stripeaccountInfo],
+    "account": { applicationFee: 0.29 },
     "metadata": this.documentmetadata
   };
 
-  paymethodChoices: shareTypes.paymethodChoices[] = 
-  [
-    {
-      kind: 'stripe',
-      iconType: 'icon',
-      imgUrl: '',
-      description: 'Add credit card',
-      canHaveMany: true
-    },
-    {
-      kind: 'paypal',
-      iconType: 'image',
-      imgUrl: './assets/img/ccIcons/paypal.png',
-      description: 'Checkout with PayPal',
-      canHaveMany: false
-    }
-  ];
+  paymethodChoices: shareTypes.paymethodChoices[] =
+    [
+      {
+        kind: 'stripe',
+        iconType: 'icon',
+        imgUrl: '',
+        description: 'Add credit card',
+        canHaveMany: true
+      },
+      {
+        kind: 'paypal',
+        iconType: 'image',
+        imgUrl: './assets/img/ccIcons/paypal.png',
+        description: 'Checkout with PayPal',
+        canHaveMany: false
+      }
+    ];
 
   public get(key): any {
     switch (key) {
       case 'activity':
-        return(this.activity);
+        return (this.activity);
       case 'organization':
-        return(this.organization);
+        return (this.organization);
       case 'paymethodChoices':
-        return(this.paymethodChoices);
+        return (this.paymethodChoices);
     }
     return String(key) + 'Output';
   }
@@ -467,7 +536,7 @@ export class NavParamsMock {
 export class AngularFirestoreMock {
   b = 0;
   public collection() {
-    return new Promise( (resolve, reject) => { 
+    return new Promise((resolve, reject) => {
       resolve(this.b)
     })
   }
@@ -476,19 +545,32 @@ export class AngularFirestoreMock {
 export class OrganizationProviderMock {
   organizations = null;
   public getAllOrganizations() {
-    return new Promise( (resolve, reject) => {
-     resolve(this.organizations)
+    return new Promise((resolve, reject) => {
+      resolve(this.organizations)
     })
-  }  
+  }
+
+  public getId(organization: shareTypes.Organization): string {
+    return organization.metadata.id;
+  }
+}
+
+export class ErrorReporterProviderMock {
+  public log(message) {
+    return;
+  }
+  public error(message) {
+    return;
+  }
 }
 
 export class NotificationsProviderMock {
   b = 0;
   public init() {
-    return new Promise( (resolve, reject) => {
+    return new Promise((resolve, reject) => {
       resolve(this.b)
     })
-  }   
+  }
 }
 
 export class AppVersionMock {
@@ -498,23 +580,23 @@ export class AppVersionMock {
   code = 20;
 
   public getVersionNumber() {
-    return new Promise( (resolve, reject) => {
+    return new Promise((resolve, reject) => {
       resolve(this.version)
     })
   }
   public getAppName() {
-    return new Promise( (resolve, reject) => {
+    return new Promise((resolve, reject) => {
       resolve(this.name)
     })
   }
   public getPackageName() {
-    return new Promise( (resolve, reject) => {
+    return new Promise((resolve, reject) => {
       resolve(this.package)
     })
   }
 
   public getVersionCode() {
-    return new Promise( (resolve, reject) => {
+    return new Promise((resolve, reject) => {
       resolve(this.code)
     })
   }

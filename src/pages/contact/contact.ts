@@ -131,6 +131,8 @@ export class ContactPage {
         baseAmount: baseAmount,
         currency: "USD",
         donorPaidFees: assumeFees,
+        type: "donation",
+        isDemo: false,
         time: this.randomDate(new Date(2018, 0, 9), new Date()),
         directed: {
           percent: 0,
@@ -146,6 +148,7 @@ export class ContactPage {
           referenceId: "refID",
           type: "visa"
         },
+<<<<<<< HEAD
         recipient: this.getRandomRecipient(),
         // {
         //   ein: "47-4041494",
@@ -155,6 +158,16 @@ export class ContactPage {
         // }
         receipt: {
           id: ""
+=======
+        recipient: {
+          ein: "47-4041494",
+          icon: "",
+          id: "orgChadTough",
+          name: "ChadTough"
+        },
+        receipt : { 
+          id : null
+>>>>>>> be2985e8b7ef4caa39e2633a55980443a5cb71cb
         }
       }
       this.db.createDocument('donations', null, newDonation)
