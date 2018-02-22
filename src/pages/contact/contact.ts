@@ -49,6 +49,14 @@ export class ContactPage {
     this.myAuth.logout();
 
   }
+
+  private orgRecipientList: {
+          ein: string,
+          icon: string,
+          id: string,
+          name: string
+        }[] = [];
+
   public seedOrgs(): void {
     console.log("seedOrgs called");
 
@@ -57,7 +65,10 @@ export class ContactPage {
 
       this.organizationsCollection.doc(org.key).set(org.data)
         .then(() => {
-          console.log("Wrote document for:" + org.key)
+          console.log("Wrote document for:" + org.key);
+
+          this.orgRecipientList.push({ein: org.data.ein, icon: "", id: org.key, name: org.data.companyName});
+
           console.log("Adding Stripe Account for:" + org.key);
 
           this.stripeAccountsCollection.doc(org.key).set(testStripeAcct)
@@ -98,15 +109,24 @@ export class ContactPage {
     return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
   }
 
+  private randomBool(){
+    return this.getRandomInt(1,2) == 1 ? true : false;
+  }
+
+  private getRandomRecipient(){
+    return this.orgRecipientList[this.getRandomInt(0,this.orgRecipientList.length-1)];
+  }
+
   public createDonations(): void {
-    let newDonation: shareTypes.Donation;
-
-
-    let baseAmount: number = this.getRandomInt(5, 25);
-    let assumeFees = this.getRandomInt(1, 2) == 1 ? true : false;
 
     for (let i = 0; i < 3; i++) {
-      newDonation = {
+      const baseAmount: number = this.getRandomInt(5, 100);
+      const assumeFees = this.randomBool();
+      const isDemo = this.randomBool();
+
+      const newDonation: shareTypes.Donation = {
+        type: constants.impactTypes.donation,
+        isDemo: isDemo,
         amount: assumeFees ? baseAmount * (1.029) : baseAmount,
         baseAmount: baseAmount,
         currency: "USD",
@@ -126,13 +146,16 @@ export class ContactPage {
           referenceId: "refID",
           type: "visa"
         },
-        recipient: {
-          ein: "47-4041494",
-          icon: "",
-          id: "orgChadTough",
-          name: "ChadTough"
+        recipient: this.getRandomRecipient(),
+        // {
+        //   ein: "47-4041494",
+        //   icon: "",
+        //   id: "orgChadTough",
+        //   name: "ChadTough "
+        // }
+        receipt: {
+          id: ""
         }
-        
       }
       this.db.createDocument('donations', null, newDonation)
       .then(doc => {
