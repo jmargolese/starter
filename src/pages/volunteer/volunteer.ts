@@ -1,4 +1,3 @@
-import { impactTypes } from './../../share-common/config/constants';
 import { SocialShareProvider } from './../../share-common/providers/social-share/social-share';
 import { AlertProvider } from './../../share-common/providers/alert/alert';
 import { UserProvider } from './../../share-common/providers/user/user';
