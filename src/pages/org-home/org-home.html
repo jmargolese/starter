@@ -26,7 +26,7 @@
 
 <ion-content #content class="org-home-css" parallax-header [showImage]="organization ? true : false" (swipe)="swipeEvent($event)">
   <ion-spinner class="centerSpinner" *ngIf="loading"></ion-spinner>
-  <div class="header-image" [ngClass]="!organization ? 'header-image-hidden' : ''" [ngStyle]="{'background-image': 'url(' +  (orgMainImageUrl) + ')'}"></div>
+  <div class="header-image " [ngClass]="!organization ? 'header-image-hidden' : ''" [ngStyle]="{'background-image': 'url(' +  (orgMainImageUrl) + ')'}"></div>
   <div class="main-content">
 
     <div *ngIf="isReady && !organization">
@@ -40,7 +40,7 @@
 </ion-content>
 
 <actions-bar *ngIf="showDonateButton" class="orgShowActionBar" [organization]="organization" [activity]="currentActivity"
-  [options]="{buttonsToDisplay : ['largeDonateButton', 'largeEngageButton'], changeTab: false, engageOptions: engageOptions}"></actions-bar>
+  [options]="{buttonsToDisplay : actionsBarButtonsToDisplay, changeTab: false, engageOptions: engageOptions}"></actions-bar>
 
 <div style="height: 150px">
   <!-- just to give us room to scroll everything up -->

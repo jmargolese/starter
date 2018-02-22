@@ -14,7 +14,7 @@ import * as shareTypes from "../../share-common/interfaces/interfaces";
 })
 export class ImpactPage {
 
-  public donations: shareTypes.Donation[];
+  public donations: shareTypes.Impact[];
 
   public userHasOrganization: boolean = false;
   public showWhichDonations = "donations";
@@ -24,18 +24,18 @@ export class ImpactPage {
     
   }
 
-  private sortDonations(a: shareTypes.Donation, b: shareTypes.Donation){
+  /* private sortDonations(a: shareTypes.Impact, b: shareTypes.Impact){
     const c = a.time.getTime();
     const d = b.time.getTime();
     return c < d ? 1 : -1;
-  }
+  } */
 
   public updateDonations() {
     if (this.showWhichDonations == 'donations')
-      this.db.getDonationRecords("donations", true, this.userProvider.getUserId())
+      this.db.getDonationRecords("impact", true, this.userProvider.getUserId())
       .subscribe(donationsAry => {
-        const theDonations = donationsAry as shareTypes.Donation[];
-        this.donations = theDonations.sort(this.sortDonations);
+        this.donations = donationsAry as shareTypes.Impact[];
+       // this.donations = theDonations.sort(this.sortDonations);
         this.donations.forEach(donation  => {
             this.org.getOrganizationLogoUrl(donation.recipient.id)
             .then(url => {
@@ -44,10 +44,10 @@ export class ImpactPage {
         })
       })
     else {
-      this.db.getDonationRecords("donations", false, this.userProvider.getOrganizationId())
+      this.db.getDonationRecords("impact", false, this.userProvider.getOrganizationId())
       .subscribe(donationsAry => {
-        const theDonations = donationsAry as shareTypes.Donation[];
-        this.donations = theDonations.sort(this.sortDonations);      
+        this.donations = donationsAry as shareTypes.Impact[];
+       // this.donations = theDonations.sort(this.sortDonations);      
       })
     }
   }

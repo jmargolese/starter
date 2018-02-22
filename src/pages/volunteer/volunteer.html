@@ -1,0 +1,88 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Volunteer</ion-title>
+    <ion-buttons end>
+      <button (click)="cancel()" ion-button color="white" clear>
+        Cancel
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding class="volunteer-css">
+
+  <ion-grid no-padding>
+    <ion-row style="padding-top: 30px">
+
+    </ion-row>
+    <ion-row>
+      <div class="volunteer-text">
+        I'd like to volunteer and help {{organization.companyName}}
+      </div>
+    </ion-row>
+    <ion-row no-padding>
+      <div class="help-text">
+        I can help:
+      </div>
+    </ion-row>
+    <ion-row>
+
+      <ion-list no-lines style="padding-left: 15px; margin-bottom:0px;">
+        <ion-item class="help-options">
+          <ion-label>Before the event</ion-label>
+          <ion-checkbox color="primary" [(ngModel)]="volunteer.before"></ion-checkbox>
+        </ion-item>
+
+        <ion-item class="help-options">
+          <ion-label>During the event</ion-label>
+          <ion-checkbox color="primary" [(ngModel)]="volunteer.during"></ion-checkbox>
+        </ion-item>
+        <ion-item class="help-options">
+          <ion-label>After the event</ion-label>
+          <ion-checkbox color="primary" [(ngModel)]="volunteer.after"></ion-checkbox>
+        </ion-item>
+      </ion-list>
+    </ion-row>
+    <ion-row no-padding>
+      <ion-col col-1></ion-col>
+      <ion-col>
+        <form (ngSubmit)="submit()" [formGroup]="curForm">
+          <ion-list no-lines>
+            <ion-label >
+              <span class="invalidFormText" *ngIf="!curForm.controls.message.valid  && (curForm.controls.message.dirty || submitAttempt)">
+                The message is too long
+              </span>
+            </ion-label>
+            <ion-item style="padding:0;">
+               
+              <ion-textarea class="volunteer-input" formControlName="message" [(ngModel)]="volunteerMessage" rows=5 type="textarea" clearInput=true
+                placeholder="I can help by..." [class.invalid]="!curForm.controls.message.valid && (curForm.controls.message.dirty || submitAttempt)"></ion-textarea>
+            </ion-item>
+
+          </ion-list>
+        </form>
+      </ion-col>
+      <ion-col col-1></ion-col>
+    </ion-row>
+    <ion-row no-padding>
+      <ion-col col-1></ion-col>
+      <ion-col>
+      <div class="volunteer-mouse-text">
+        We will send you name, email and the information on this form to {{this.organization.companyName}}, only.  Your information will not be sold, rented or otherwise used in any way.
+      </div>
+    </ion-col>
+    <ion-col col-1></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div text-center>
+          <button [disabled]="!curForm.dirty || !curForm.valid" ion-button color="primary" large (click)="submit()">Submit</button>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

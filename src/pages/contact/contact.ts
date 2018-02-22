@@ -118,7 +118,7 @@ export class ContactPage {
   }
 
   public createDonations(): void {
-
+/*
     for (let i = 0; i < 3; i++) {
       const baseAmount: number = this.getRandomInt(5, 100);
       const assumeFees = this.randomBool();
@@ -148,7 +148,6 @@ export class ContactPage {
           referenceId: "refID",
           type: "visa"
         },
-<<<<<<< HEAD
         recipient: this.getRandomRecipient(),
         // {
         //   ein: "47-4041494",
@@ -158,16 +157,6 @@ export class ContactPage {
         // }
         receipt: {
           id: ""
-=======
-        recipient: {
-          ein: "47-4041494",
-          icon: "",
-          id: "orgChadTough",
-          name: "ChadTough"
-        },
-        receipt : { 
-          id : null
->>>>>>> be2985e8b7ef4caa39e2633a55980443a5cb71cb
         }
       }
       this.db.createDocument('donations', null, newDonation)
@@ -178,6 +167,7 @@ export class ContactPage {
         console.error("Contact: Error creating donation document: " + JSON.stringify(error));
       })
     }
+    */
 
   }
 
