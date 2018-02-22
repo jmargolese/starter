@@ -24,11 +24,18 @@ export class ImpactPage {
     
   }
 
+  private sortDonations(a: shareTypes.Donation, b: shareTypes.Donation){
+    const c = a.time.getTime();
+    const d = b.time.getTime();
+    return c < d ? 1 : -1;
+  }
+
   public updateDonations() {
     if (this.showWhichDonations == 'donations')
       this.db.getDonationRecords("donations", true, this.userProvider.getUserId())
-      .subscribe(donations => {
-        this.donations = donations;
+      .subscribe(donationsAry => {
+        const theDonations = donationsAry as shareTypes.Donation[];
+        this.donations = theDonations.sort(this.sortDonations);
         this.donations.forEach(donation  => {
             this.org.getOrganizationLogoUrl(donation.recipient.id)
             .then(url => {
@@ -38,9 +45,9 @@ export class ImpactPage {
       })
     else {
       this.db.getDonationRecords("donations", false, this.userProvider.getOrganizationId())
-      .subscribe(donations => {
-        this.donations = donations;
-       
+      .subscribe(donationsAry => {
+        const theDonations = donationsAry as shareTypes.Donation[];
+        this.donations = theDonations.sort(this.sortDonations);      
       })
     }
   }
