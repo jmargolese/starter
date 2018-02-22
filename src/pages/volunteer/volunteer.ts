@@ -36,7 +36,7 @@ export class VolunteerPage {
     this.err.log(`volunteer: constructor got activity: ${this.activity} and org: ${this.organization}`);
 
     this.curForm = formBuilder.group({
-      message: ['', Validators.compose([Validators.maxLength(50), Validators.required])]
+      message: ['', Validators.compose([Validators.maxLength(350), Validators.required])]
     });
   }
 
@@ -64,11 +64,13 @@ export class VolunteerPage {
           recipient:   {
             ein:  this.organization.ein || "",
             id: this.organization.metadata.id,
-            name: this.organization.companyName
+            name: this.organization.companyName,
+            email: this.organization.communications.email
         },
           time : new Date(),
-          volunteer: {
+          data: {
             activityId: this.activity ? this.activity.metadata.id : null,
+            activityHeadline: this.activity ? this.activity.messages.headline : "unidentified activity",
             organizationId: this.organization ? this.organization.metadata.id : null,
             when: this.volunteer,
             message: this.curForm.controls.message.value,

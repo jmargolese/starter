@@ -51,13 +51,13 @@
       <ion-col>
         <form (ngSubmit)="submit()" [formGroup]="curForm">
           <ion-list no-lines>
-
+            <ion-label >
+              <span class="invalidFormText" *ngIf="!curForm.controls.message.valid  && (curForm.controls.message.dirty || submitAttempt)">
+                The message is too long
+              </span>
+            </ion-label>
             <ion-item style="padding:0;">
-                <ion-label >
-                    <span class="invalidFormText" *ngIf="!curForm.controls.message.valid  && (curForm.controls.message.dirty || submitAttempt)">
-                      The message is too long
-                    </span>
-                  </ion-label>
+               
               <ion-textarea class="volunteer-input" formControlName="message" [(ngModel)]="volunteerMessage" rows=5 type="textarea" clearInput=true
                 placeholder="I can help by..." [class.invalid]="!curForm.controls.message.valid && (curForm.controls.message.dirty || submitAttempt)"></ion-textarea>
             </ion-item>
