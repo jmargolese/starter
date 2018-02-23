@@ -19,6 +19,10 @@ import { OrganizationProvider } from '../../share-common/providers/organization/
 import { AuthProvider } from '../../share-common/providers/auth/auth';
 import { AlertProvider } from '../../share-common/providers/alert/alert';
 
+import { ENV } from '@app/env';
+import { envApp } from './../../environments/environment.model';
+
+
 @IonicPage()
 @Component({
   templateUrl: 'tabs.html'
@@ -27,7 +31,8 @@ export class TabsPage {
 
   @ViewChild('shareTabs') tabRef: Tabs;
 
-  tab1Root = "OrgHomePage";
+
+  tab1Root = 'MarchPage';
   tab2Root = 'OrgHomePage';
   tab3Root = 'DiscoverPage';
   tab4Root = 'ImpactPage';
@@ -36,7 +41,10 @@ export class TabsPage {
   public notificationParams: shareTypes.notificationRequestInfo;
   public featuredTabParams: any;
   public favoritesTabParams: any;
+  public application: string = "";
 
+  public tab1Title: string = "";
+  public tab1Icon: string = "";
 
   constructor(public events: Events, public notifications: NotificationsProvider,
     public navCtrl: NavController, public platform: Platform, public modalCtrl: ModalController,
@@ -44,7 +52,26 @@ export class TabsPage {
     private org: OrganizationProvider, private activitiesProvider: ActivitiesProvider,
     private userProvider: UserProvider,
     private auth: AuthProvider, private err: ErrorReporterProvider,
-    private alert : AlertProvider) {
+    private alert: AlertProvider) {
+
+    this.application = ENV.app;
+    switch (this.application) {
+      case envApp.share:
+        this.tab1Root = "OrgHomePage";
+        this.tab1Title = "Featured";
+        this.tab1Icon = "bulb"
+        break;
+
+      case envApp.MFOL:
+      this.tab1Root = "MarchPage";
+      this.tab1Title = "March";
+      this.tab1Icon = "walk"
+        break;
+      default:
+        break;
+    }
+
+    this.err.log(`Tabs: constuctor tab1Root = ${this.tab1Root} and this.application: ${this.application}`);
 
     this.featuredTabParams = { featured: true, orgIndex: 0, notification: null };
     this.favoritesTabParams = { useOrgFavorites: true, orgIndex: 0, notification: null };
@@ -149,7 +176,7 @@ export class TabsPage {
     if (!this.platform.is('cordova')) { return }
 
     const Branch = window['Branch'];
-   // Branch.setDebug(true);
+    // Branch.setDebug(true);
     Branch.initSession(data => {
       if (data['+clicked_branch_link']) {
         // read deep link data on click
@@ -218,7 +245,7 @@ export class TabsPage {
             text: 'Share with friends',
             cssClass: 'share-alert-button',
             handler: () => {
-             // let organization: shareTypes.Organization;
+              // let organization: shareTypes.Organization;
               let orgSubscription: Subscription = this.org.getOrganization(params.recipientId)
                 .subscribe(org => {
                   orgSubscription.unsubscribe();
@@ -250,9 +277,11 @@ export class TabsPage {
       alert.present();
 
     } else { // donation failed. reiterate.
-      this.alert.confirm({title: "Something went wrong", message:`<p>Unable to complete donation to ${params.displayName}.</p><p>${params.errorMessage}</p>`,
-        buttons  : { ok: true, cancel: false} });
-      
+      this.alert.confirm({
+        title: "Something went wrong", message: `<p>Unable to complete donation to ${params.displayName}.</p><p>${params.errorMessage}</p>`,
+        buttons: { ok: true, cancel: false }
+      });
+
     }
 
   }

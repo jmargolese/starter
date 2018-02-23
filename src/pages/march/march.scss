@@ -1,0 +1,98 @@
+page-march {
+    .march-css {
+        font-size: 16px;
+        .main-image {
+            max-height: 35vh;
+        }
+        .intro-text {
+            margin-top: -35px;
+            font-size: 85%;
+            max-width: 90%;
+            white-space: normal;
+            margin: auto;
+            text-align: left;
+        }
+        .call-to-action-text {
+            padding-top: 15px;
+            padding-bottom: 10px;
+            font-style: italic;
+        }
+        
+        ion-card-header {
+            white-space: normal !important;
+            background-color: lightgray !important;
+        }
+
+        .date-text {
+            font-weight: 600;
+        }
+    }
+    .orgShowActionBar {
+        position: absolute;
+        height: 20px;
+        left: 00%;
+        width: 100vw;
+        padding-left: 5%;
+        padding-right: 5%;
+        bottom: 100px;
+        bottom: calc(100px + env(safe-area-inset-bottom));
+        z-index: 999;
+    }
+    .orgAddToFavoritesButton {
+        position: absolute;
+        height: 20px;
+        left: 50%;
+        margin-left: -25%;
+        top: 83vh;
+        z-index: 999;
+    }
+    .header-image {
+        // background-image: url(https://ununsplash.imgix.net/photo-1421091242698-34f6ad7fc088?fit=crop&fm=jpg&h=650&q=75&w=950);
+        height: 60vh;
+    }
+    .header-image-hidden {
+        // when there is no org and no header image to display
+        height: 0 !important;
+        width: 0 !important;
+    }
+    .infoCard {
+        position: absolute;
+        top: 30vh;
+        background-color: $faded-primary;
+        width: 85vw;
+        left: 7.5vw;
+    }
+    .main-content {
+        background-color: white;
+    }
+    .navButton {
+        position: absolute;
+        top: 0vh;
+        z-index: 999;
+        font-size: 175%;
+        font-weight: bold;
+    }
+    .nextButton {
+        right: 0vw;
+        ;
+    }
+    ion-icon {
+        font-size: 200%;
+        font-weight: bold;
+        color: white;
+    }
+    .prevButton {
+        left: 3vw;
+        ;
+    }
+    .navButtonOverlay {
+        color: white;
+        position: absolute;
+        /* background-color: rgba(255,255,255,0.3); */
+        top: 0;
+        z-index: 1000;
+        position: absolute;
+        height: 30px;
+        font-size: 2.5em;
+    }
+}

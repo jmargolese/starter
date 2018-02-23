@@ -1,5 +1,6 @@
 <ion-tabs #shareTabs>
-  <ion-tab [root]="tab1Root" [rootParams]="featuredTabParams" tabTitle="Featured" tabIcon="bulb"></ion-tab>
+  <!-- <ion-tab *ngIf="application == 'share'" [root]="tab1Root" [rootParams]="featuredTabParams" tabTitle="Featured" tabIcon="bulb"></ion-tab> -->
+  <ion-tab [root]="tab1Root" [rootParams]="featuredTabParams" [tabTitle]="tab1Title" [tabIcon]="tab1Icon"></ion-tab>
   <ion-tab [root]="tab2Root" [rootParams]="favoritesTabParams" tabTitle="Favorites" tabIcon="star"></ion-tab>
   <ion-tab [root]="tab3Root" tabTitle="Discover" tabIcon="browsers"></ion-tab>
   <ion-tab [root]="tab4Root" tabTitle="Impact" tabIcon="information-circle"></ion-tab>

@@ -121,7 +121,9 @@
         <variable name="BRANCH_KEY" value="key_live_mjDI2fbCZKxECbcIomW63pemDxeWTvBK" />
         <variable name="URI_SCHEME" value="myapp" />
     </plugin>
+    <plugin name="cordova-plugin-advanced-http" spec="^1.10.1" />
     <engine name="ios" spec="4.5.4" />
     <engine name="browser" spec="5.0.3" />
     <engine name="android" spec="7.0.0" />
+    <allow-navigation href="http://10.0.1.14:8100" />
 </widget>

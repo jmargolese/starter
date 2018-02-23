@@ -1,3 +1,5 @@
+import { MarchProvider } from './../../share-common/providers/march/march';
+
 import { ActivitiesProvider } from './../../share-common/providers/activities/activities';
 import { AnalyticsProvider } from '../../share-common/providers/analytics/analytics';
 
@@ -48,8 +50,8 @@ export class OrgHomePage {
   public isReady: boolean = false;       // don't show anything while loading
   private setOrganizationHasBeenCalled: boolean = false;       // flag so we know when things are setup
   private notificationRequest: shareTypes.notificationRequestInfo = null;
-  public actionsBarButtonsToDisplay = [ ];
-
+  public actionsBarButtonsToDisplay = [];
+  public marchInfo : string;
 
   public engageOptions: shareTypes.engageOptions = {
     buttonsToDisplay: {
@@ -62,7 +64,7 @@ export class OrgHomePage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public events: Events, public analytics: AnalyticsProvider, public userProvider: UserProvider, public zone: NgZone,
     public element: ElementRef, public renderer: Renderer2, private org: OrganizationProvider,
-    private err: ErrorReporterProvider, private activitiesProvider: ActivitiesProvider) {
+    private err: ErrorReporterProvider, private activitiesProvider: ActivitiesProvider, public march: MarchProvider) {
 
 
     this.featuredMode = navParams.get('featured') || false;
@@ -74,7 +76,7 @@ export class OrgHomePage {
     this.events.subscribe("activity:homeCurrentActivity", (activity) => {
       // let other parts of the app tell us when a new tab is needed   
       this.currentActivity = activity;
-      this.engageOptions.buttonsToDisplay.volunteer = this.activitiesProvider.showVolunteer( this.currentActivity);
+      this.engageOptions.buttonsToDisplay.volunteer = this.activitiesProvider.showVolunteer(this.currentActivity);
     });
 
     this.events.subscribe(constants.EventTypes.userUpdated, user => {
@@ -334,5 +336,7 @@ export class OrgHomePage {
     })
 
   }
+
+  
 
 }

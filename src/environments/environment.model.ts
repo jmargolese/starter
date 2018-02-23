@@ -1,5 +1,6 @@
 import { Environment } from './environment.model';
 export interface Environment {
+  app: envApp,     // what app are we?
   mode: envMode;
   release: string;
   type: envType,
@@ -42,5 +43,12 @@ export enum envMode {
 export enum  envType {
   console = "console",
   app = "app"
+}
+
+export enum envApp {
+  // What app are we
+  unknown = "unknown",
+  share = "share",
+  MFOL = 'MarchForOurLives'
 }
 

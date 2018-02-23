@@ -4,6 +4,7 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule } from 'ionic-angular';
 import { Share } from './app.component';
+import { HTTP } from '@ionic-native/http';
 
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -41,6 +42,7 @@ import { SocialShareProvider } from '../share-common/providers/social-share/soci
 import { Push } from '@ionic-native/push';
 import { FacebookProvider } from '../share-common/providers/facebook/facebook';
 import { ProfilingProvider } from '../share-common/providers/profiling/profiling';
+import { MarchProvider } from '../share-common/providers/march/march';
 
 
 @NgModule({
@@ -86,7 +88,9 @@ import { ProfilingProvider } from '../share-common/providers/profiling/profiling
     ErrorReporterProvider,
     Facebook,
     FacebookProvider,
-    ProfilingProvider
+    ProfilingProvider,
+    HTTP,
+    MarchProvider
   ]
 })
 export class AppModule {}
