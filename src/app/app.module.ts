@@ -13,7 +13,9 @@ import { AppVersion } from '@ionic-native/app-version';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { FirebaseAnalytics } from '@ionic-native/firebase-analytics';
 import { Facebook } from '@ionic-native/facebook';
-
+import { NativeGeocoder } from '@ionic-native/native-geocoder';
+import { Geolocation } from '@ionic-native/geolocation';
+import { NativeStorage } from '@ionic-native/native-storage';
 
 import { AngularFireModule } from 'angularfire2';
 import { ENV } from '@app/env';
@@ -90,7 +92,10 @@ import { MarchProvider } from '../share-common/providers/march/march';
     FacebookProvider,
     ProfilingProvider,
     HTTP,
-    MarchProvider
+    MarchProvider,
+    NativeGeocoder,
+    Geolocation,
+    NativeStorage
   ]
 })
 export class AppModule {}

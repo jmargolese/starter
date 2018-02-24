@@ -34,14 +34,23 @@ export class MarchPage {
 
     this.analytics.setCurrentScreen('march');
 
-    this.march.getMarchInfo()
-      .then((eventList) => {
-        this.eventList = eventList;
+    
+        //this.eventList = eventList;
         this.loading = false;
 
         this.isReady = true;
-      })
+     
 
+  }
+
+  public changeLocation() {
+    //this.march.askForPostalCode(true)
+    //.then(postalCode => {
+      this.march.getAllPages()
+      .then((eventList) => {
+        this.err.log('marchPage: getAllPages resolved');
+      });
+   // })
   }
 
 }

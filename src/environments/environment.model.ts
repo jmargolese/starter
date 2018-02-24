@@ -8,7 +8,7 @@ export interface Environment {
     profiling: boolean
   },
   firebase: {
-      apiKey: string;
+    apiKey: string;
       authDomain: string;
       databaseURL: string;
       projectId: string;
@@ -49,6 +49,6 @@ export enum envApp {
   // What app are we
   unknown = "unknown",
   share = "share",
-  MFOL = 'MarchForOurLives'
+  MFOL = 'march'
 }
 
