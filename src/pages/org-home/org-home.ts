@@ -54,6 +54,7 @@ export class OrgHomePage {
   public engageOptions: shareTypes.engageOptions = {
     buttonsToDisplay: {
       volunteer: false,
+      communicate: false,
       socialShare: true,
       addToFavorites: true
     }
@@ -75,6 +76,7 @@ export class OrgHomePage {
       // let other parts of the app tell us when a new tab is needed   
       this.currentActivity = activity;
       this.engageOptions.buttonsToDisplay.volunteer = this.activitiesProvider.showVolunteer( this.currentActivity);
+      this.engageOptions.buttonsToDisplay.communicate = this.activitiesProvider.showCommunicate( this.currentActivity);
     });
 
     this.events.subscribe(constants.EventTypes.userUpdated, user => {

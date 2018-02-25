@@ -1,4 +1,6 @@
 export const testStripeAcct = { "id": "acct_1Ai6pMHMFCaEtegi" };
+export const testPayPalAcct = { "merchant_id": "EZS4BLLXXMAJU"};
+
 export const orgSeeds = [
     {
         "key": "orgHumane",

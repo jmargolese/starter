@@ -4,7 +4,9 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule } from 'ionic-angular';
 import { Share } from './app.component';
-
+import { HTTP } from '@ionic-native/http';
+import { CallNumber } from '@ionic-native/call-number';
+import { Keyboard } from '@ionic-native/keyboard';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -86,7 +88,10 @@ import { ProfilingProvider } from '../share-common/providers/profiling/profiling
     ErrorReporterProvider,
     Facebook,
     FacebookProvider,
-    ProfilingProvider
+    ProfilingProvider,
+    HTTP,
+    CallNumber,
+    Keyboard
   ]
 })
 export class AppModule {}
