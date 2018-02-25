@@ -40,7 +40,7 @@ export class OrgHomePage {
 
   public currentActivity: shareTypes.Activity = null;
   //public activities: Observable<any> = null;
-  private useOrgFavorites: boolean = false;       // should we use a passed in org or get the list of favorites?
+  private useOrgFavorites: boolean = false;       // should we use a passed in org or get the list of favorites? 
 
   public hideHeader: boolean = true;
   private isVisible: boolean = false;
