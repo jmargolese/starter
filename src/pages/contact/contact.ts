@@ -1,4 +1,3 @@
-import { DataProvider } from './../../share-common/providers/data/data';
 import { LoginPage } from './../../share-common/pages/login/login';
 import { activitySeeds } from './../../seeds/seedActivities';
 import { userDataSeeds } from './../../seeds/seedUserData';
@@ -30,7 +29,7 @@ export class ContactPage {
   public projectId: string = "";
 
   constructor(public navCtrl: NavController, private readonly afs: AngularFirestore, private myAuth: AuthProvider,
-    public modalCtrl: ModalController, private events: Events, private db: DataProvider) {
+    public modalCtrl: ModalController, private events: Events) {
     this.organizationsCollection = afs.collection<any>('organizations');
     this.stripeAccountsCollection = afs.collection<any>('stripeAccountObjects');
     this.projectId = ENV.firebase.projectId
@@ -101,7 +100,7 @@ export class ContactPage {
     })
   }
 
-  private getRandomInt(min, max) {
+ /*  private getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
@@ -115,7 +114,7 @@ export class ContactPage {
 
   private getRandomRecipient(){
     return this.orgRecipientList[this.getRandomInt(0,this.orgRecipientList.length-1)];
-  }
+  } */
 
   public createDonations(): void {
 /*
