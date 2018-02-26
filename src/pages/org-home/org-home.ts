@@ -1,3 +1,4 @@
+import { envApp } from './../../environments/environment.model';
 import { MarchProvider } from './../../share-common/providers/march/march';
 
 import { ActivitiesProvider } from './../../share-common/providers/activities/activities';
@@ -14,6 +15,7 @@ import * as _ from 'lodash';
 import * as constants from '../../share-common/config/constants';
 import { OrganizationProvider } from '../../share-common/providers/organization/organization';
 import { ErrorReporterProvider } from '../../share-common/providers/error-reporter/error-reporter';
+import { ENV } from '@app/env';
 
 @IonicPage()
 @Component({
@@ -52,6 +54,7 @@ export class OrgHomePage {
   private notificationRequest: shareTypes.notificationRequestInfo = null;
   public actionsBarButtonsToDisplay = [];
   public marchInfo : string;
+  public discoverImage: string;
 
   public engageOptions: shareTypes.engageOptions = {
     buttonsToDisplay: {
@@ -67,11 +70,12 @@ export class OrgHomePage {
     private err: ErrorReporterProvider, private activitiesProvider: ActivitiesProvider, public march: MarchProvider) {
 
 
-    this.featuredMode = navParams.get('featured') || false;
+    this.featuredMode = navParams.get('featured') || false; 
 
     this.hideHeader = navParams.get('showHeader') ? false : true;
-    this.useOrgFavorites = navParams.get('useOrgFavorites') || false;
+    this.useOrgFavorites = navParams.get('useOrgFavorites') || false;  
 
+    this.discoverImage = ENV.app == envApp.share ? 'assets/img/images/discover-background.jpg ' : 'assets/img/images/discover-background-mfol.png'
 
     this.events.subscribe("activity:homeCurrentActivity", (activity) => {
       // let other parts of the app tell us when a new tab is needed   
@@ -167,7 +171,7 @@ export class OrgHomePage {
         console.error("org-homePage ionViewWillEnter error from isAuthenticated(): " + error.message);
         this.loading = false;
       }) */
-
+ 
 
 
   }

@@ -54,7 +54,13 @@ ion-header {
 .popover-content {
     max-width: 165px;
 }
-
+.yellow-highlight {
+    text-shadow: 
+      -3px 0px 3px yellow,
+       3px 0px 3px yellow,
+       6px 0px 6px yellow,
+      -6px 0px 6px yellow;
+  }
 
 /* copied from yummly
 background-image: linear-gradient(0deg, rgba(0, 0, 0, .9) 15%, transparent 50%);
@@ -136,4 +142,7 @@ $BAR_TRANSPARENCY: rgba(255, 255, 255, 0.6);
     .label-ios[floating], .label-md[floating] {
         margin-left: 0px;
     }
+
+     //https://stackoverflow.com/questions/33451683/pen-highlighter-effect-in-css
+    
 }

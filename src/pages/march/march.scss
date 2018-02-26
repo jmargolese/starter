@@ -1,5 +1,12 @@
 page-march {
     .march-css {
+        ion-card-header {
+            padding: 5px !important;
+            padding-left: 10px !important;
+            white-space: normal !important;
+            background-color: lightgray !important;
+        }
+
         font-size: 16px;
         .main-image {
             max-height: 35vh;
@@ -18,13 +25,23 @@ page-march {
             font-style: italic;
         }
         
-        ion-card-header {
-            white-space: normal !important;
-            background-color: lightgray !important;
-        }
+       
 
         .date-text {
-            font-weight: 600;
+            padding-top: 5px;
+            font-weight: 500;
+            font-size: 90%;
+            white-space: normal;
+        }
+        .address-text{
+            padding-top: 5px;
+            font-size: 90%;
+            white-space: normal;
+        }
+        .header-state{
+            font-size: 80%;
+            font-variant-caps: all-small-caps;
+            padding-bottom: 2px;
         }
     }
     .orgShowActionBar {

@@ -1,12 +1,8 @@
-<ion-header [hidden]="false">
+<ion-header [hidden]="true">
 
   <ion-navbar swipeBackEnabled="true">
     <ion-title>{{organization && organization.companyName.substring(0,50)}}</ion-title>
-    <ion-buttons end>
-        <button (click)="changeLocation()" ion-button color="white" clear>
-          Change Location
-        </button>
-      </ion-buttons>
+    
   </ion-navbar>
 
 </ion-header>
@@ -15,6 +11,7 @@
 
 <ion-content #content class="march-css" parallax-header [showImage]="organization ? true : false">
   <ion-spinner class="centerSpinner" *ngIf="loading"></ion-spinner>
+ 
   <div class="header-image " [ngClass]="!organization ? 'header-image-hidden' : ''" [ngStyle]="{'background-image': 'url(' +  (orgMainImageUrl) + ')'}"></div>
   <div class="main-content">
 
@@ -28,28 +25,30 @@
     </div>
     <div text-center>
     <div class="intro-text ">
-        On March 24, the kids and families of March For Our Lives will take to the streets of Washington DC to demand that their lives and safety become a priority and that we end gun violence and mass shootings in our schools today.
-
-        March with us in Washington DC or march in your own community. On March 24, the collective voices of the March For Our Lives movement will be heard.
+        On March 24, the kids and families of March For Our Lives will take to the streets of YOUR city to demand that their lives and safety become a priority and that we end gun violence and mass shootings in our schools today.
+        <p></p>
+        March with us in Washington DC or march in your own community. 
     </div>
     <div text-center>
-      <div class="call-to-action-text">
+      <div class="call-to-action-text yellow-highlight">
         Select the march that you want to attend
       </div>
     </div>
   </div>
     <ion-list no-lines>
       <ion-item *ngFor="let event of eventList">
-          <ion-card>
-              <ion-card-header>
-                  {{event.title}}
+          <ion-card (click)="showEvent(event)">
+              <ion-card-header style="white-space:normal;">
+                <div class="header-state">{{event.additionalData.state}}</div>
+                
+                  {{event.companyName}}
               </ion-card-header>
               <ion-card-content>
                 <div class="date-text">
-                    {{event.whenString}}
+                    {{event.additionalData.whenString + " " + event.additionalData.timeString}}
                 </div>
-                <div>
-                    <div *ngFor="let line of event.address">
+                <div class="address-text">
+                    <div *ngFor="let line of event.additionalData.address">
                         <div>{{line}} </div>
                       </div>
                 </div>
@@ -67,3 +66,6 @@
 <div style="height: 150px">
   <!-- just to give us room to scroll everything up -->
 </div>
+<ion-footer style="border-top: 1px solid black;">
+    <ion-searchbar (ionInput)="filterList($event)" placeholder="Search by State" showCancelButton="true"></ion-searchbar>
+</ion-footer>

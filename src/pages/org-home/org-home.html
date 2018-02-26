@@ -31,7 +31,7 @@
 
     <div *ngIf="isReady && !organization">
       <div>
-        <img src="assets/img/images/discover-background.jpg ">
+        <img [src]="discoverImage">
       </div>
     </div>
     <org-home *ngIf="isReady && organization" [organization]='organization' [options]="{hideImage: true}"> </org-home>

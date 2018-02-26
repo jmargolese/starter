@@ -1,3 +1,6 @@
+import { NavController } from 'ionic-angular/index';
+import { Organization } from './../home/home';
+import { OrganizationProvider } from './../../share-common/providers/organization/organization';
 import { MarchProvider } from './../../share-common/providers/march/march';
 import { AnalyticsProvider } from './../../share-common/providers/analytics/analytics';
 import { Component } from '@angular/core';
@@ -18,9 +21,12 @@ export class MarchPage {
   public loading: boolean = true;
   public isReady: boolean = false;
   public showDonateButton: boolean = false;
-  public eventList: shareTypes.marchEvent[];
+  public completeEventList: shareTypes.Organization[];
+  public eventList: shareTypes.Organization[];
 
-  constructor(private err: ErrorReporterProvider, private analytics: AnalyticsProvider, private march: MarchProvider) {
+  constructor(private err: ErrorReporterProvider,
+    private analytics: AnalyticsProvider, private march: MarchProvider, private org: OrganizationProvider,
+    private navCtrl: NavController) {
   }
 
   ionViewDidLoad() {
@@ -34,23 +40,41 @@ export class MarchPage {
 
     this.analytics.setCurrentScreen('march');
 
-    
-        //this.eventList = eventList;
-        this.loading = false;
+    this.org.getAllOrganizations(true)
+      .subscribe(organizations => {
+        this.completeEventList = organizations.filter(org => org.companyName.toLowerCase().indexOf('march') >= 0);
+        this.eventList = this.completeEventList;
+      })
 
-        this.isReady = true;
-     
+    //this.eventList = eventList;
+    this.loading = false;
 
+    this.isReady = true;
+
+
+  }
+
+  public filterList(event: any) {
+    let val = event.target.value ? event.target.value.toLowerCase() : null;
+
+    if (!val)
+      this.eventList = this.completeEventList
+    else
+      this.eventList = this.completeEventList.filter(event => { return event.additionalData.state.toLowerCase().indexOf(val) >= 0 })
+  }
+
+  public showEvent(organization: shareTypes.Organization) {
+    this.navCtrl.push('OrgHomePage', { organization: organization, showHeader: true })
   }
 
   public changeLocation() {
     //this.march.askForPostalCode(true)
     //.then(postalCode => {
-      this.march.getAllPages()
+    this.march.getAllPages()
       .then((eventList) => {
         this.err.log('marchPage: getAllPages resolved');
       });
-   // })
+    // })
   }
 
 }
