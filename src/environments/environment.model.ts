@@ -30,6 +30,7 @@ export interface Environment {
   raven: {
     appKey: string;
     appKeyConsole: string;
+    marchAppKey ?: string;
   }
 }
 

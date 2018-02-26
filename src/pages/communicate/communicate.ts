@@ -140,24 +140,37 @@ export class CommunicatePage {
     })
   }
 
+	public callInProgress: boolean = false;
+
   public phoneOfficial(which, index){
+		if (this.callInProgress) return;
+		this.callInProgress = true;
+
   	const phoneNumber=this.officialsList[which][index].data.phones[0];
   	const phoneName=this.officialsList[which][index].data.name;
   	this.call.isCallSupported()
   		.then(()=>{ 			
 			this.call.callNumber(phoneNumber, true)
 			  .then(() =>{
-			  	console.log('Launched dialer');
+					console.log('Launched dialer');
+					// delay to debounce the call button this part happens really fast
+					setTimeout(() => {
+						this.callInProgress = false;
+					}, 2000);
+
 			  	setTimeout(()=>{
 				  	this.recordImpact(phoneName)
 				  		.then(()=>{
-				  			console.log('Communicate: impact recorded');
-				  		}).catch(error=>{});
-			  		},3000)			  	
+								console.log('Communicate: impact recorded');
+								
+				  		}).catch(error=>{ this.err.error(`commuincatePage: calling recordImpact error: ${error.message}`); this.callInProgress = false;});
+			  		},6000)			  	
 			  }).catch(() => {
-			  	this.err.error('Error launching dialer');
+					this.err.error('Error launching dialer');
+					this.callInProgress = false;
 			  })			  		
 		}).catch(()=>{
+			this.callInProgress = false;
 			this.alert.confirm({
 				title: 'Not available',
 				message: 'Sorry, you can\'t call from this device.',

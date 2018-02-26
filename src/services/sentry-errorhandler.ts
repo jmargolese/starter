@@ -1,4 +1,4 @@
-import { envMode } from './../environments/environment.model';
+import { envMode, envApp } from './../environments/environment.model';
 // From: https://gonehybrid.com/how-to-log-errors-in-your-ionic-2-app-with-sentry/
 
 // create release: sentry-cli releases -o "ipaymyway" -p "share" new 1.3.0
@@ -14,7 +14,7 @@ import { ENV } from '@app/env';
 
 if (ENV.mode == envMode.production)
     Raven
-        .config(ENV.raven.appKey,
+        .config(ENV.app == envApp.share ? ENV.raven.appKey : ENV.raven.marchAppKey,
         {
             release: ENV.release,
             dataCallback: data => {
