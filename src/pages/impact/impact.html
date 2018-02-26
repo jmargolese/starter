@@ -37,7 +37,13 @@
           <span class="donation-date"> {{donation.time | date:'MMM dd yyyy' }}</span>
         </p>
       </div>
-
+      <div *ngIf="donation.type == 'communicate'">
+        <p>
+          <span>Phoned </span>
+          <span class="donation-date"> {{donation.time | date: 'MMM dd yyyy' }}</span>
+          <span>{{donation.data.callee}}</span>
+        </p>
+      </div>
     </ion-item>
   </ion-list>
 
