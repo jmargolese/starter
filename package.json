@@ -12,6 +12,7 @@
     "build": "ionic-app-scripts build",
     "build:dev": "cross-env MY_ENV=dev ionic-app-scripts build",
     "build:dev2": "cross-env MY_ENV=dev2 ionic-app-scripts build",
+    "build:marchdev": "cross-env MY_ENV=marchdev ionic-app-scripts build",
     "build:prod-debug": "cross-env MY_ENV=prod-debug ionic-app-scripts build",
     "build:local": "cross-env MY_ENV=local ionic-app-scripts build",
     "build:local2": "cross-env MY_ENV=local2 ionic-app-scripts build",
