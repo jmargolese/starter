@@ -7,21 +7,21 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>1058828542589-m437p0chgb5c5vfqu97811f68q82pf5e.apps.googleusercontent.com</string>
+	<string>339127740401-lhg2c3go8440jnnagdpb07alr56490aa.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.1058828542589-m437p0chgb5c5vfqu97811f68q82pf5e</string>
+	<string>com.googleusercontent.apps.339127740401-lhg2c3go8440jnnagdpb07alr56490aa</string>
 	<key>API_KEY</key>
-	<string>AIzaSyC1UbAzn7Q5EBEmhemVZqCePFNjixCAt2w</string>
+	<string>AIzaSyCzj7uf6JNmoNQlVEVHEuuf68vxtjWSmA0</string>
 	<key>GCM_SENDER_ID</key>
-	<string>1058828542589</string>
+	<string>339127740401</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.ipaymyway.march</string>
 	<key>PROJECT_ID</key>
-	<string>share-dev2</string>
+	<string>march-dev-70558</string>
 	<key>STORAGE_BUCKET</key>
-	<string>share-dev2.appspot.com</string>
+	<string>march-dev-70558.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<true></true>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -33,8 +33,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1058828542589:ios:e0326f8d98c713b6</string>
+	<string>1:339127740401:ios:e0326f8d98c713b6</string>
 	<key>DATABASE_URL</key>
-	<string>https://share-dev2.firebaseio.com</string>
+	<string>https://march-dev-70558.firebaseio.com</string>
 </dict>
 </plist>

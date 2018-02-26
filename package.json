@@ -56,9 +56,9 @@
     "@ionic-native/geolocation": "^4.5.3",
     "@ionic-native/http": "^4.5.3",
     "@ionic-native/in-app-browser": "^4.5.3",
+    "@ionic-native/keyboard": "^4.5.3",
     "@ionic-native/native-geocoder": "^4.5.3",
     "@ionic-native/native-storage": "^4.5.3",
-    "@ionic-native/keyboard": "^4.5.3",
     "@ionic-native/push": "^4.5.3",
     "@ionic-native/qr-scanner": "^4.5.3",
     "@ionic-native/social-sharing": "^4.5.3",
@@ -164,9 +164,6 @@
         "BRANCH_KEY": "key_live_mjDI2fbCZKxECbcIomW63pemDxeWTvBK",
         "URI_SCHEME": "myapp"
       },
-      "phonegap-plugin-push": {
-        "FCM_VERSION": "11.0.1"
-      },
       "cordova-plugin-add-swift-support": {},
       "cordova-plugin-whitelist": {},
       "cordova-plugin-advanced-http": {},
@@ -177,11 +174,12 @@
         "GEOLOCATION_USAGE_DESCRIPTION": "To locate marches nearest you.  We never track or store your location.  No battery drain."
       },
       "cordova-plugin-nativestorage": {},
+      "call-number": {},
       "cordova-plugin-facebook4": {
-        "APP_ID": "1603897069676752",
-        "APP_NAME": "“��"
+        "APP_ID": "218114635596945",
+        "APP_NAME": "March For Our Lives"
       },
-      "call-number": {}
+      "phonegap-plugin-push": {}
     },
     "platforms": [
       "browser",

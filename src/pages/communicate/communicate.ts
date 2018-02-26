@@ -5,7 +5,6 @@ import { HTTP } from '@ionic-native/http';
 import { CallNumber } from '@ionic-native/call-number';
 import { Keyboard } from '@ionic-native/keyboard';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
-import { ActivitiesProvider } from '../../share-common/providers/activities/activities';
 import { OrganizationProvider } from '../../share-common/providers/organization/organization';
 import { ErrorReporterProvider, logTypes, logLevels } from '../../share-common/providers/error-reporter/error-reporter';
 import { DataProvider } from '../../share-common/providers/data/data';
@@ -38,7 +37,7 @@ export class CommunicatePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
   	private http: HTTP, private viewCtrl: ViewController, 
-  	private org: OrganizationProvider, private activities: ActivitiesProvider,private err: ErrorReporterProvider,
+  	private org: OrganizationProvider,private err: ErrorReporterProvider,
   	private call: CallNumber, private db: DataProvider, private user: UserProvider,
   	private socialShare: SocialShareProvider, private alert: AlertProvider, private alertCtrl: AlertController,
   	private keyboard: Keyboard, private platform: Platform, private iab: InAppBrowser) {

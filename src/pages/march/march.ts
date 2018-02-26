@@ -1,5 +1,4 @@
 import { NavController } from 'ionic-angular/index';
-import { Organization } from './../home/home';
 import { OrganizationProvider } from './../../share-common/providers/organization/organization';
 import { MarchProvider } from './../../share-common/providers/march/march';
 import { AnalyticsProvider } from './../../share-common/providers/analytics/analytics';
