@@ -39,7 +39,7 @@
       </div>
       <div *ngIf="donation.type == 'communicate'">
         <p>
-          <span>Phoned </span>
+          <span>{{donation.data.action}} </span>
           <span class="donation-date"> {{donation.time | date: 'MMM dd yyyy' }}</span>
           <span>{{donation.data.callee}}</span>
         </p>

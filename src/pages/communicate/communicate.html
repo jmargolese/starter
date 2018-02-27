@@ -16,14 +16,9 @@
 </ion-header>
 
 <ion-content padding class="page-communicate-css">
-	<ion-grid>
-		<ion-row justify-content-center>
-			<ion-item>
-				<ion-label floating>Enter Your Zip Code</ion-label>
-				<ion-input type="text" [(ngModel)]="zipCode" (ionChange)="updateSearch()"></ion-input>
-			</ion-item>
-		</ion-row>
-	</ion-grid>
+	<ion-searchbar type="tel" placeholder="Find your elected officials by zip" [(ngModel)]="zipCode" (ionInput)="updateSearch($event)"></ion-searchbar>
+	<ion-item>Not registered to vote? <button ion-button icon-start color="primary" (click)="registerToVote()"><img src="./assets/img/icons/us_flag_small.png">  Register here</button>
+	</ion-item>
 	<ion-list>
 		<div class="center-div">{{zipAddress}}</div>
 		<ion-grid>
@@ -35,13 +30,14 @@
 				<ion-col col-auto>
 					<img class='fit-thumbnail' src="{{senator.data.photoUrl || './assets/img/icons/avatar_placeholder_small.png'}}">
 				</ion-col>
-				<ion-col col-6 class="address-list">
+				<ion-col col-3 class="address-list">
 					<div>{{senator.data.name}}</div>
 					<div>{{senator.data.party}}</div>
 					<div>{{senator.data.phones[0]}}</div>
 				</ion-col>
 				<ion-col col-auto>
 					<ion-icon name="call" class="phone-icon" (click)="phoneOfficial('senate', i)"></ion-icon>
+					<ion-icon name="mail" class="email-icon" (click)="contactOfficial('senate', i)"></ion-icon>
 					<ion-icon name="help-circle" class="info-icon" (click)="showHelp()"></ion-icon>
 				</ion-col>
 			</ion-row>
@@ -55,19 +51,17 @@
 				<ion-col col-auto>
 					<img class="fit-thumbnail" src="{{rep.data.photoUrl || './assets/img/icons/avatar_placeholder_small.png'}}">
 				</ion-col>
-				<ion-col col-6 class="address-list">
+				<ion-col col-3 class="address-list">
 					<div>{{rep.data.name}}</div>
 					<div>{{rep.data.party}}</div>
 					<div>{{rep.data.phones[0]}}</div>
 				</ion-col>
 				<ion-col col-auto>
 					<ion-icon name="call" class="phone-icon" (click)="phoneOfficial('house', j)"></ion-icon>
+					<ion-icon name="mail" class="email-icon" (click)="contactOfficial('house', j)"></ion-icon>
 					<ion-icon name="help-circle" class="info-icon" (click)="showHelp()"></ion-icon>
+
 				</ion-col>
-			</ion-row>
-			<ion-row justify-content-center>
-				<button ion-button [color]="primary" clear (click)="registerToVote()">Register to Vote
-				</button>
 			</ion-row>
 		</ion-grid>
 	</ion-list>
