@@ -1,0 +1,29 @@
+<ion-header id="introHeader" [hidden]=true>
+
+  <ion-navbar>
+    <ion-title></ion-title>
+    <ion-buttons end>
+      <button (click)="next()" ion-button clear color="primary" clear>
+        {{buttonText}}
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content no-padding>
+  <button class="next-button" ion-button clear color="white" (click)="next()">{{buttonText}}</button>
+  <ion-slides pager (ionSlideDidChange)="slideChanged()">
+    <ion-slide>
+      <img src="assets/img/intro/slide1.png">
+    </ion-slide>
+    <ion-slide>
+      <img src="assets/img/intro/slide2.png">
+    </ion-slide>
+    <ion-slide>
+      <img src="assets/img/intro/slide3.png">
+    </ion-slide>
+  </ion-slides>
+ <button *ngIf="showDoneButton" class="done-button" ion-button color="light" medium (click)="next()">Done</button>
+</ion-content>

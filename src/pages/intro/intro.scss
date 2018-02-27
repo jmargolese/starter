@@ -1,0 +1,25 @@
+page-intro {
+
+    .toolbar-background {
+        background-color: white !important;
+    }
+    .toolbar-background-md {
+        background-color: white !important;
+    }
+
+    .next-button {
+        position: absolute;
+        top : 30px;
+        right: 10px;
+        z-index: 1001;
+        color: black;
+    }
+    .done-button {
+        position: absolute;
+        bottom : 40px;
+        right: 40%;
+        left: 40%;
+        z-index: 1001;
+        color: black;
+    }
+}

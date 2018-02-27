@@ -1,3 +1,4 @@
+import { NativeStorage } from '@ionic-native/native-storage';
 import { ErrorReporterProvider, logTypes, logLevels } from './../../share-common/providers/error-reporter/error-reporter';
 import { UserProvider } from './../../share-common/providers/user/user';
 import { ActivitiesProvider } from './../../share-common/providers/activities/activities';
@@ -50,7 +51,7 @@ export class TabsPage {
     public navCtrl: NavController, public platform: Platform, public modalCtrl: ModalController,
     private alertCtrl: AlertController, private socialShare: SocialShareProvider,
     private org: OrganizationProvider, private activitiesProvider: ActivitiesProvider,
-    private userProvider: UserProvider,
+    private userProvider: UserProvider, private nativeStorage: NativeStorage,
     private auth: AuthProvider, private err: ErrorReporterProvider,
     private alert: AlertProvider) {
 
@@ -63,9 +64,9 @@ export class TabsPage {
         break;
 
       case envApp.MFOL:
-      this.tab1Root = "MarchPage";
-      this.tab1Title = "March";
-      this.tab1Icon = "walk"
+        this.tab1Root = "MarchPage";
+        this.tab1Title = "March";
+        this.tab1Icon = "walk"
         break;
       default:
         break;
@@ -170,6 +171,7 @@ export class TabsPage {
 
     }) // end platform ready
   }
+
 
   private branchInit(): void {
     // only on devices
@@ -458,7 +460,34 @@ export class TabsPage {
     //this.tabRef.select(1);
   }
 
-  ionViewDidLoad() {
+  private showTutorial() {
+    const introModal = this.modalCtrl.create('IntroPage');
+    introModal.onDidDismiss(data => {
+      this.nativeStorage.setItem('didShowIntro', true)
+    });
+    introModal.present();
+
+  }
+  
+  ionViewWillLoad() {
+
+    this.platform.ready()
+      .then(() => {
+        this.err.log("about to check cordova for didShowIntro");
+        if (this.platform.is('cordova')) {
+          this.err.log("about to check NativeStorage for didShowIntro");
+          this.nativeStorage.getItem('didShowIntro')
+            .then(didShowIntro => {
+              if (!didShowIntro) this.showTutorial();
+            })
+            .catch(error => {
+              if (error.code == 2) {
+                this.showTutorial();
+              } else
+                this.err.error(`tabs: nativeStorage getting didShowIntro error: ${JSON.stringify(error)}`);
+            })
+        }
+      })
 
   }
 }
