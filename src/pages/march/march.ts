@@ -58,8 +58,13 @@ export class MarchPage {
 
     if (!val)
       this.eventList = this.completeEventList
-    else
-      this.eventList = this.completeEventList.filter(event => { return event.additionalData.state.toLowerCase().indexOf(val) >= 0 })
+    else {
+     
+        this.eventList = this.completeEventList
+          .filter(event => { 
+            return event.additionalData && event.additionalData.state ? (event.additionalData.state.toLowerCase().indexOf(val) >= 0) : false })
+    
+    }
   }
 
   public showEvent(organization: shareTypes.Organization) {

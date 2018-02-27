@@ -58,7 +58,7 @@ export class SettingsPage {
       case 'login':
         const loginModal = this.modalCtrl.create('LoginPage');
         loginModal.onDidDismiss(data => {
-          if (!data.canceled)
+          if (data && !data.canceled)
             this.events.publish(constants.EventTypes.loginStateChange, constants.authStateChange.login);      // switch to the Home Tab
         });
         loginModal.present();
@@ -172,7 +172,7 @@ export class SettingsPage {
 
   }
   public ionViewDidLoad(): void {
-    console.log('ionViewDidLoad Page4Page');
+    console.log('ionViewDidLoad Settings');
   }
 
   public presentToast(message: string): void {
