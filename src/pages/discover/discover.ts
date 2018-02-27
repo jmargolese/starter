@@ -47,7 +47,7 @@ export class DiscoverPage {
   }
 
   ionViewWillEnter() {
-    this.organizations = this.orgProvider.getAllOrganizations();
+    this.organizations = this.orgProvider.getAllOrganizations(true, true);
 
   }
   ionViewDidLoad() {
