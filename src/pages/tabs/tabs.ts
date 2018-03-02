@@ -474,7 +474,7 @@ export class TabsPage {
     this.platform.ready()
       .then(() => {
         this.err.log("about to check cordova for didShowIntro");
-        if (this.platform.is('cordova')) {
+        if (this.platform.is('cordova') && !this.platform.is('tablet')) {
           this.err.log("about to check NativeStorage for didShowIntro");
           this.nativeStorage.getItem('didShowIntro')
             .then(didShowIntro => {

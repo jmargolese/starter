@@ -8,8 +8,14 @@
 
 
 <ion-content no-padding class="impact-css">
+  <div *ngIf="!donations || !donations.length">
+    <div style="margin-top:15vh; width:60vw; margin-left:20vw;" class="text-center">
+      <h5>Your impact events will show up here as you <b>Enagage</b> such as Volunteer, Social sharing or contacting your representatives.</h5>
+    </div>
+
+  </div>
   <div *ngIf="userHasOrganization">
-    <ion-segment style="padding-left: 10%; padding-right: 10%;" [(ngModel)]="showWhichDonations" (ionChange)="selectionChanged($event)">
+    <ion-segment style="padding-left: 10%; padding-right: 10%; margin-left:40%" [(ngModel)]="showWhichDonations" (ionChange)="selectionChanged($event)">
       <ion-segment-button value="donations">My Donations
       </ion-segment-button>
       <ion-segment-button value="received">Received

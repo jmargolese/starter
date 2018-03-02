@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "339127740401",
-    "firebase_url": "https://march-dev-70558.firebaseio.com",
-    "project_id": "march-dev-70558",
-    "storage_bucket": "march-dev-70558.appspot.com"
+    "project_number": "1058828542589",
+    "firebase_url": "https://share-dev2.firebaseio.com",
+    "project_id": "share-dev2",
+    "storage_bucket": "share-dev2.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:339127740401:android:e0326f8d98c713b6",
+        "mobilesdk_app_id": "1:1058828542589:android:73cfba64784336a4",
         "android_client_info": {
-          "package_name": "com.ipaymyway.march"
+          "package_name": "com.ipaymyway.share"
         }
       },
       "oauth_client": [
         {
-          "client_id": "339127740401-gu5ovun7b90vk7l6mpij7gl633vqigqi.apps.googleusercontent.com",
+          "client_id": "1058828542589-mpvuaei3coe50r28us2bvkgk71fu1c47.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAWkp9agYJ5ph9eITvnsF0dwJfbm2_81OQ"
+          "current_key": "AIzaSyDjuv3eUvj37UMI7j8IKaauIreKLnk_jds"
         }
       ],
       "services": {
