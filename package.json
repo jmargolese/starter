@@ -160,7 +160,6 @@
       "cordova-plugin-app-version": {},
       "cordova-plugin-inappbrowser": {},
       "cordova-ios-export-compliance": {},
-      "cordova-plugin-firebase-analytics": {},
       "cordova-plugin-stripe": {},
       "branch-cordova-sdk": {
         "BRANCH_KEY": "key_live_mjDI2fbCZKxECbcIomW63pemDxeWTvBK",
@@ -181,7 +180,10 @@
         "APP_ID": "218114635596945",
         "APP_NAME": "March For Our Lives"
       },
-      "phonegap-plugin-push": {}
+      "phonegap-plugin-push": {},
+      "cordova-plugin-firebase-analytics": {
+        "FIREBASE_VERSION": "11.0.+"
+      }
     },
     "platforms": [
       "browser",

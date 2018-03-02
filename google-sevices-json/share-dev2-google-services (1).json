@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1058828542589",
+    "firebase_url": "https://share-dev2.firebaseio.com",
+    "project_id": "share-dev2",
+    "storage_bucket": "share-dev2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1058828542589:android:73cfba64784336a4",
+        "android_client_info": {
+          "package_name": "com.ipaymyway.share"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1058828542589-mpvuaei3coe50r28us2bvkgk71fu1c47.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjuv3eUvj37UMI7j8IKaauIreKLnk_jds"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
