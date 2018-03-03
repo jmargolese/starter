@@ -1,9 +1,11 @@
-<ion-header [hidden]="true">
+<ion-header [hidden]="false">
 
   <ion-navbar swipeBackEnabled="true">
-    <ion-title>{{organization && organization.companyName.substring(0,50)}}</ion-title>
+    <ion-title>Find your March</ion-title>
     
   </ion-navbar>
+  
+    <ion-searchbar style="border-bottom: 1px solid black;" (ionInput)="filterList($event)" placeholder="Search by State" showCancelButton="true"></ion-searchbar>
 
 </ion-header>
 
@@ -66,6 +68,3 @@
 <div style="height: 150px">
   <!-- just to give us room to scroll everything up -->
 </div>
-<ion-footer style="border-top: 1px solid black;">
-    <ion-searchbar (ionInput)="filterList($event)" placeholder="Search by State" showCancelButton="true"></ion-searchbar>
-</ion-footer>

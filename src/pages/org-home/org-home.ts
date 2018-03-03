@@ -38,13 +38,13 @@ export class OrgHomePage {
 
   public showDonateButton: boolean = false;
   public showAddToFavorites: boolean = false;
-  public orgMainImageUrl: string = "";
+  public orgMainImageUrl: string = ""; 
 
   public currentActivity: shareTypes.Activity = null;
   //public activities: Observable<any> = null;
   private useOrgFavorites: boolean = false;       // should we use a passed in org or get the list of favorites? 
 
-  public hideHeader: boolean = true;
+  public hideHeader: boolean = false;  
   private isVisible: boolean = false;
   private activityListTop: number = null;    // where the activityList will be displayed so we can watch scrolling and know when it's visible
   public loading: boolean = true;
@@ -73,7 +73,7 @@ export class OrgHomePage {
 
     this.featuredMode = navParams.get('featured') || false; 
 
-    this.hideHeader = navParams.get('showHeader') ? false : true;
+    //this.hideHeader = navParams.get('showHeader') ? false : true;
     this.useOrgFavorites = navParams.get('useOrgFavorites') || false;  
 
     this.discoverImage = ENV.app == envApp.share ? 'assets/img/images/discover-background.jpg ' : 'assets/img/images/discover-background-mfol.png'
@@ -238,7 +238,7 @@ export class OrgHomePage {
 
       if (this.organizationList && this.organizationList.length) {
         orgIndex = this.determineIndex();        // we may have been told to go a specific org and we can't check the list until now
-        this.hideHeader = true;
+        //this.hideHeader = true;
         this.showNavButtons = true;
         this.showAddToFavorites = false;
 

@@ -7,6 +7,7 @@ import { IonicPage } from 'ionic-angular';
 
 import * as shareTypes from './../../share-common/interfaces/interfaces';
 import { ErrorReporterProvider } from './../../share-common/providers/error-reporter/error-reporter';
+import * as _ from 'lodash';
 
 @IonicPage()
 @Component({
@@ -42,6 +43,7 @@ export class MarchPage {
     this.org.getAllOrganizations(true)
       .subscribe(organizations => {
         this.completeEventList = organizations.filter(org => org.companyName.toLowerCase().indexOf('march') >= 0);
+        this.completeEventList = _.sortBy(this.completeEventList, ['additionalData.state']);
         this.eventList = this.completeEventList;
       })
 
