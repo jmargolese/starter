@@ -1,4 +1,4 @@
-<ion-tabs #shareTabs>
+<ion-tabs #shareTabs (ionChange)="tabChanged($event)">
   <!-- <ion-tab *ngIf="application == 'share'" [root]="tab1Root" [rootParams]="featuredTabParams" tabTitle="Featured" tabIcon="bulb"></ion-tab> -->
   <ion-tab [root]="tab1Root" [rootParams]="featuredTabParams" [tabTitle]="tab1Title" [tabIcon]="tab1Icon"></ion-tab>
   <ion-tab [root]="tab2Root" [rootParams]="favoritesTabParams" tabTitle="Favorites" tabIcon="star"></ion-tab>

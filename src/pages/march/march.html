@@ -11,7 +11,7 @@
 
 
 
-<ion-content #content class="march-css" parallax-header [showImage]="organization ? true : false">
+<ion-content id="content" #content class="march-css" parallax-header [showImage]="organization ? true : false">
   <ion-spinner class="centerSpinner" *ngIf="loading"></ion-spinner>
  
   <div class="header-image " [ngClass]="!organization ? 'header-image-hidden' : ''" [ngStyle]="{'background-image': 'url(' +  (orgMainImageUrl) + ')'}"></div>
@@ -38,7 +38,7 @@
     </div>
   </div>
     <ion-list no-lines>
-      <ion-item *ngFor="let event of eventList">
+      <ion-item *ngFor="let event of eventList" [id]="event.metadata.id || ''">
           <ion-card (click)="showEvent(event)">
               <ion-card-header style="white-space:normal;">
                 <div class="header-state">{{event.additionalData.state}}</div>

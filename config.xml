@@ -126,7 +126,7 @@
         <variable name="APP_NAME" value="March For Our Lives" />
     </plugin>
     <plugin name="phonegap-plugin-push" spec="^2.2.1" />
+    <allow-navigation href="http://10.0.1.14:8101" />
     <engine name="browser" spec="5.0.3" />
     <engine name="ios" spec="4.5.4" />
-    <allow-navigation href="http://10.0.1.14:8101" />
 </widget>

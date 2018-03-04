@@ -120,6 +120,7 @@ export class OrgHomePage {
 
     this.isVisible = true;
     this.analytics.setCurrentScreen('org-Home');
+    
 
     //this.userProvider.isAuthenticated()
     //  .then(() => {
@@ -142,10 +143,11 @@ export class OrgHomePage {
           this.err.log(`orgHomePage: got Featured Org: ${featuredOrgs.length ? featuredOrgs[0].metadata.id : 'no org'}`);
           this.setOrganization(this.orgIndex || 0);
           this.loading = false;
-          this.err.recordBreadcrumb({
+          this.err.recordBreadcrumb({ 
             message: `org-home FeaturedMode page with  ${this.organizationList ? this.organizationList.length : 'no'} featuredOrgs:`,
             category: 'enterPage', data: { organizationList: this.organizationList || 'orgList is null', orgIndex: this.orgIndex || 0 }
           })
+          this.analytics.logEvent('org-home', {organizationName: this.organization ? this.organization.companyName : "no org", organizationId: this.organization ? this.organization.metadata.id : 'no org'});
         }, error => {
           console.error("Error in org-home calling getFeaturedOrganizations: " + error.message);
           this.organizationList = [];
@@ -164,6 +166,7 @@ export class OrgHomePage {
         message: `org-home NOT FeaturedMode page and useOrgFavorites is ${JSON.stringify(this.useOrgFavorites)}`,
         category: 'enterPage', data: { orgIndex: this.orgIndex || 0 }
       });
+      
     }
 
 
