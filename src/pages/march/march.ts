@@ -3,10 +3,10 @@ import { OrganizationProvider } from './../../share-common/providers/organizatio
 import { MarchProvider } from './../../share-common/providers/march/march';
 import { AnalyticsProvider } from './../../share-common/providers/analytics/analytics';
 import { Component } from '@angular/core';
-import { IonicPage } from 'ionic-angular';
+import { IonicPage, NavParams } from 'ionic-angular';
 
 import * as shareTypes from './../../share-common/interfaces/interfaces';
-import { ErrorReporterProvider } from './../../share-common/providers/error-reporter/error-reporter';
+import { ErrorReporterProvider, logTypes, logLevels } from './../../share-common/providers/error-reporter/error-reporter';
 import * as _ from 'lodash';
 
 @IonicPage()
@@ -24,9 +24,11 @@ export class MarchPage {
   public completeEventList: shareTypes.Organization[];
   public eventList: shareTypes.Organization[];
 
+  private notificationRequest: shareTypes.notificationRequestInfo = null;
+
   constructor(private err: ErrorReporterProvider,
     private analytics: AnalyticsProvider, private march: MarchProvider, private org: OrganizationProvider,
-    private navCtrl: NavController) {
+    private navCtrl: NavController, private navParams: NavParams) {
   }
 
   ionViewDidLoad() {
@@ -39,6 +41,23 @@ export class MarchPage {
     this.err.recordBreadcrumb({ message: 'Entering page March' });
 
     this.analytics.setCurrentScreen('march');
+    
+   
+      this.notificationRequest = this.navParams.get('notification') || null;
+      if (this.notificationRequest) {
+        this.err.log(`MarchPage: ionViewwillenter got a notification request: ${JSON.stringify(this.notificationRequest)}`);
+        if (this.notificationRequest.targetId) {
+          this.org.getOrganizationAsPromise(this.notificationRequest.targetId)
+          .then(org => {
+            this.showEvent(org);
+          })
+          .catch(error => {
+            this.err.log(`MarchPage: ionviewWillEnter error getting org for notification: ${error.message}`, logTypes.report, logLevels.normal,{error: error, notification: this.notificationRequest});
+
+          })
+        }
+      }
+    
 
     this.org.getAllOrganizations(true)
       .subscribe(organizations => {

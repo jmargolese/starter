@@ -87,7 +87,7 @@ export class OrgHomePage {
 
     this.events.subscribe(constants.EventTypes.userUpdated, user => {
       // if we are displayed in featured view, then we don't worry about changes to favorites
-      console.log("User status updated in org-home page");
+      console.log("org-homePage: Constructor User status updated in org-home page");
       if (this.isVisible) {       // only do this check if we are visible rather than cached
         this.recheckOrganizationList();
       }
@@ -198,7 +198,11 @@ export class OrgHomePage {
     if (!this.setOrganizationHasBeenCalled)
       return;
 
+    
+      this.err.recordBreadcrumb({message: `org-homePage: recheckOrganizationList is starting with this.useOrgFavorites: ${this.useOrgFavorites}`});
+
     if (this.useOrgFavorites) {
+      
       this.organizationList = this.userProvider.getFavoriteOrganizations();
       this.orgIndex = this.navParams.get('orgIndex') || 0;   // ensure this isn't undefined
 
@@ -227,6 +231,8 @@ export class OrgHomePage {
   public setOrganization(orgIndex: number) {
 
     this.setOrganizationHasBeenCalled = true;
+    this.err.recordBreadcrumb({message:`Org-homePage: setOrganization called with orgIndex: ${orgIndex}`});
+
 
     if (this.useOrgFavorites || this.featuredMode) {
 
