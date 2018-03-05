@@ -60,10 +60,11 @@ export class MarchPage {
       }
     }
 
-
     this.org.getAllOrganizations(true)
       .subscribe(organizations => {
-        this.completeEventList = organizations.filter(org => org.companyName.toLowerCase().indexOf('march') >= 0);
+        this.completeEventList = organizations.filter(org => {
+          return org.companyName.toLowerCase().indexOf('march') >= 0 || org.info.march;
+        });
         this.completeEventList = _.sortBy(this.completeEventList, ['additionalData.state']);
         this.eventList = this.completeEventList;
       })

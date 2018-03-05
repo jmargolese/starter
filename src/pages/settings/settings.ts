@@ -1,3 +1,4 @@
+import { AlertProvider } from './../../share-common/providers/alert/alert';
 import { UserProvider } from './../../share-common/providers/user/user';
 import { envMode } from './../../environments/environment.model';
 import { AnalyticsProvider } from '../../share-common/providers/analytics/analytics';
@@ -27,7 +28,7 @@ export class SettingsPage {
 
   constructor(public platform: Platform, public navCtrl: NavController, public modalCtrl: ModalController, public analytics: AnalyticsProvider,
     public navParams: NavParams, public auth: AuthProvider, public toastCtrl: ToastController, public appVersion: AppVersion,
-    public events: Events, private userProvider: UserProvider) {
+    public events: Events, private userProvider: UserProvider, private alert: AlertProvider) {
     if (platform.is('cordova')) {
       this.appVersion.getAppName().then(appName => this.appName = appName);
       this.appVersion.getPackageName().then(packageName => this.packageName = packageName);
@@ -78,6 +79,9 @@ export class SettingsPage {
       
         break;
 
+        case 'aboutus':
+        this.alert.confirm({title: "About Us", message: "iPayMyWay develops apps for non-profits.<br> We created and donated this app, pro-bono, to support the March For Our Lives movement.<br> Your privacy and personal information are protected and won't be shared. <br><br> Thank you for being part of this great event", buttons: {ok: true, cancel: false}});
+        break;
       case 'debug':
         this.navCtrl.push("ContactPage");
         break;
@@ -176,6 +180,10 @@ export class SettingsPage {
         {
           title: 'Show Tutorial',
           callback: 'tutorial'
+        },
+        {
+          title: 'About Us',
+          callback: 'aboutus'
         }
 
       );

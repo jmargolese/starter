@@ -55,6 +55,7 @@ export class OrgHomePage {
   public actionsBarButtonsToDisplay = [];
   public marchInfo : string;
   public discoverImage: string;
+  public applicationIsMFOL: boolean = false;
 
   public engageOptions: shareTypes.engageOptions = {
     buttonsToDisplay: {
@@ -71,6 +72,8 @@ export class OrgHomePage {
     private err: ErrorReporterProvider, private activitiesProvider: ActivitiesProvider, public march: MarchProvider) {
 
 
+      this.applicationIsMFOL = ENV.app == envApp.MFOL ? true: false;
+
     this.featuredMode = navParams.get('featured') || false; 
 
     //this.hideHeader = navParams.get('showHeader') ? false : true;
@@ -82,7 +85,7 @@ export class OrgHomePage {
       // let other parts of the app tell us when a new tab is needed   
       this.currentActivity = activity;
       this.engageOptions.buttonsToDisplay.volunteer = this.activitiesProvider.showVolunteer( this.currentActivity);
-      this.engageOptions.buttonsToDisplay.communicate = this.activitiesProvider.showCommunicate( this.currentActivity);
+      this.engageOptions.buttonsToDisplay.communicate = this.activitiesProvider.showCommunicate( this.currentActivity) || (this.organization && this.organization.info.march);
     });
 
     this.events.subscribe(constants.EventTypes.userUpdated, user => {
@@ -104,7 +107,7 @@ export class OrgHomePage {
 
     })
 
-    this.showDonateButton = false;
+    this.showDonateButton = false; 
 
     this.events.subscribe(constants.EventTypes.orgHomeActivityListPosition, data => {
       this.activityListTop = data.position;
@@ -266,10 +269,13 @@ export class OrgHomePage {
     if (this.organization) {
       this.showDonateButton = true;
       this.actionsBarButtonsToDisplay = [this.org.hasPayMethod(this.organization) ? 'largeDonateButton' : '', 'largeEngageButton'];
-      this.orgMainImageUrl = this.org.getImageUrl(this.organization, constants.imageTypes.organizationImage, constants.imageSizes.reduced);
+      setTimeout(() => {
+        this.orgMainImageUrl = this.org.getImageUrl(this.organization, constants.imageTypes.organizationImage, constants.imageSizes.reduced);
+      }, 20);
+     
     } else {
-      this.showDonateButton = false;
-      this.orgMainImageUrl = "";
+      this.showDonateButton = false; 
+      this.orgMainImageUrl = ""; 
     }
     //this.testMe.testMe();  
     console.log('ionViewDidLoad OrgHomePage and showAddToFavorites is: ' + this.showAddToFavorites);
