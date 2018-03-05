@@ -70,7 +70,12 @@ export class SettingsPage {
         this.navCtrl.push('PaymethodsPage');
         break;
       case 'tutorial':
-        //tutorial();
+      
+        const introModal = this.modalCtrl.create('IntroPage', {userRequested: true});
+
+        introModal.present();
+    
+      
         break;
 
       case 'debug':
@@ -161,10 +166,31 @@ export class SettingsPage {
       'entries': entries
     })
   }
+
+  private setHelpInfo() {
+
+    let entries = [];
+
+   
+      entries.push(
+        {
+          title: 'Show Tutorial',
+          callback: 'tutorial'
+        }
+
+      );
+    
+    
+
+    this.config.push({
+      'sectionTitle': 'Help',
+      'entries': entries
+    })
+  }
   public ionViewWillEnter() {
 
     this.config = [];
-
+    this.setHelpInfo();
     this.setAccountInfo();
     this.setEnvInfo();
     this.setAdminOptions();

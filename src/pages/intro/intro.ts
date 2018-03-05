@@ -1,3 +1,5 @@
+import { ErrorReporterProvider } from './../../share-common/providers/error-reporter/error-reporter';
+import { AnalyticsProvider } from './../../share-common/providers/analytics/analytics';
 import { NativeStorage } from '@ionic-native/native-storage';
 import { ViewController } from 'ionic-angular/navigation/view-controller';
 import { Component } from '@angular/core';
@@ -17,12 +19,17 @@ export class IntroPage {
 
   @ViewChild(Slides) slides: Slides;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
-    private viewCtrl: ViewController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private err: ErrorReporterProvider,
+    private viewCtrl: ViewController, private analytics: AnalyticsProvider) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad IntroPage');
+    if ( this.navParams.get('userRequested')) {
+      this.err.log(`IntroPage: User requested to view tutorial`);
+      this.analytics.setCurrentScreen('intro')
+      this.analytics.logEvent('intro', {userRequested: true})
+    }
   }
 
   next() {
