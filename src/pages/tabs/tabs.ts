@@ -179,6 +179,8 @@ export class TabsPage {
 
     const Branch = window['Branch'];
     // Branch.setDebug(true);
+    this.err.log(`tabsPage: about to init Branch`);
+
     Branch.initSession(data => {
       if (data['+clicked_branch_link']) {
         // read deep link data on click
@@ -201,7 +203,7 @@ export class TabsPage {
 
         const notification: shareTypes.notificationRequestInfo = {
           type: data.type || null,
-          targetId: data.targetId || null,
+          targetId: data.targetId || data.targetID || null,
           title: data.title || null,
           message: data.message || null,
           //source: "link",
@@ -347,30 +349,35 @@ export class TabsPage {
         switch (notification.type) {
           case constants.notificationTypes.showOrg:
           case constants.notificationTypes.showActivity:
-            // go to the featured Tab
-            this.featuredTabParams.notification = notification;
-            this.err.log(`About to select featured tab for notifiation`);
+          case constants.notificationTypes.displayMessage:
+            // go to the featured/March Tab
 
-            const curTab = this.tabRef.getSelected();
-            if (curTab.index == 0) {
-              this.tabRef.select(1, { animate: false, duration: 0 })
-                .then(() => {
-                  this.tabRef.select(0, { animate: true })
-                    .then(() => {
-                      this.featuredTabParams.notification = null;         // clear this out so it only gets signaled once
-                    })
-                    .catch(error => {
-                      this.err.error(`Error calling tabSelect in tabs:processNotification: ${error.message}`);
-                    })
-                })
-            } else {
-              this.tabRef.select(0, { animate: true })
-                .then(() => {
-                  this.featuredTabParams.notification = null;         // clear this out so it only gets signaled once
-                })
-                .catch(error => {
-                  this.err.error(`Error calling tabSelect in tabs:processNotification: ${error.message}`);
-                })
+            if (notification.targetId) {        // make sure we got a targetId, else nothing to do
+              this.featuredTabParams.notification = notification;
+              this.err.log(`About to select featured tab for notification`);
+
+              const curTab = this.tabRef.getSelected();
+              // were we already on tab0?   then need to go elsewhere and come back to force a reload, yeah, it's ugly
+              if (curTab.index == 0) {
+                this.tabRef.select(1, { animate: false, duration: 0 })
+                  .then(() => {
+                    this.tabRef.select(0, { animate: true })
+                      .then(() => {
+                        this.featuredTabParams.notification = null;         // clear this out so it only gets signaled once
+                      })
+                      .catch(error => {
+                        this.err.error(`Error calling tabSelect in tabs:processNotification: ${error.message}`);
+                      })
+                  })
+              } else {
+                this.tabRef.select(0, { animate: true })
+                  .then(() => {
+                    this.featuredTabParams.notification = null;         // clear this out so it only gets signaled once
+                  })
+                  .catch(error => {
+                    this.err.error(`Error calling tabSelect in tabs:processNotification: ${error.message}`);
+                  })
+              }
             }
 
             break;
@@ -468,7 +475,7 @@ export class TabsPage {
     introModal.present();
 
   }
-  
+
   ionViewWillLoad() {
 
     this.platform.ready()
@@ -489,5 +496,9 @@ export class TabsPage {
         }
       })
 
+  }
+
+  public tabChanged(event) {
+    this.err.log(`Tabs page: tabsChanged ${event.value}`);
   }
 }

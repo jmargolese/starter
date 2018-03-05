@@ -2,11 +2,12 @@ import { NavController } from 'ionic-angular/index';
 import { OrganizationProvider } from './../../share-common/providers/organization/organization';
 import { MarchProvider } from './../../share-common/providers/march/march';
 import { AnalyticsProvider } from './../../share-common/providers/analytics/analytics';
-import { Component } from '@angular/core';
-import { IonicPage } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavParams, Content } from 'ionic-angular';
 
 import * as shareTypes from './../../share-common/interfaces/interfaces';
-import { ErrorReporterProvider } from './../../share-common/providers/error-reporter/error-reporter';
+import { ErrorReporterProvider, logTypes, logLevels } from './../../share-common/providers/error-reporter/error-reporter';
+import * as _ from 'lodash';
 
 @IonicPage()
 @Component({
@@ -14,6 +15,8 @@ import { ErrorReporterProvider } from './../../share-common/providers/error-repo
   templateUrl: 'march.html',
 })
 export class MarchPage {
+
+  @ViewChild('content') content: Content;
 
   public organization: shareTypes.Organization = null;     // if there is a selected march
   public useSelectedMarch: boolean = false;
@@ -23,9 +26,11 @@ export class MarchPage {
   public completeEventList: shareTypes.Organization[];
   public eventList: shareTypes.Organization[];
 
+  private notificationRequest: shareTypes.notificationRequestInfo = null;
+
   constructor(private err: ErrorReporterProvider,
     private analytics: AnalyticsProvider, private march: MarchProvider, private org: OrganizationProvider,
-    private navCtrl: NavController) {
+    private navCtrl: NavController, private navParams: NavParams) {
   }
 
   ionViewDidLoad() {
@@ -39,9 +44,28 @@ export class MarchPage {
 
     this.analytics.setCurrentScreen('march');
 
+
+    this.notificationRequest = this.navParams.get('notification') || null;
+    if (this.notificationRequest) {
+      this.err.log(`MarchPage: ionViewwillenter got a notification request: ${JSON.stringify(this.notificationRequest)}`);
+      if (this.notificationRequest.targetId) {
+        this.org.getOrganizationAsPromise(this.notificationRequest.targetId)
+          .then(org => {
+            this.showEvent(org);
+          })
+          .catch(error => {
+            this.err.log(`MarchPage: ionviewWillEnter error getting org for notification: ${error.message}`, logTypes.report, logLevels.normal, { error: error, notification: this.notificationRequest });
+
+          })
+      }
+    }
+
     this.org.getAllOrganizations(true)
       .subscribe(organizations => {
-        this.completeEventList = organizations.filter(org => org.companyName.toLowerCase().indexOf('march') >= 0);
+        this.completeEventList = organizations.filter(org => {
+          return org.companyName.toLowerCase().indexOf('march') >= 0 || org.info.march;
+        });
+        this.completeEventList = _.sortBy(this.completeEventList, ['additionalData.state']);
         this.eventList = this.completeEventList;
       })
 
@@ -53,21 +77,38 @@ export class MarchPage {
 
   }
 
+  private scrollTo(element: string) {
+    let target: number = 20;
+    const domElement = document.getElementById(element);
+    if (domElement) {
+      let yOffset = document.getElementById(element).offsetTop;
+      this.content.scrollTo(0, yOffset, target)
+    }
+  }
+
   public filterList(event: any) {
     let val = event.target.value ? event.target.value.toLowerCase() : null;
 
-    if (!val)
-      this.eventList = this.completeEventList
+    if (!val) {
+      this.eventList = this.completeEventList;
+
+      this.scrollTo('content');
+    }
     else {
-     
-        this.eventList = this.completeEventList
-          .filter(event => { 
-            return event.additionalData && event.additionalData.state ? (event.additionalData.state.toLowerCase().indexOf(val) >= 0) : false })
-    
+
+      this.eventList = this.completeEventList
+        .filter(event => {
+          return event.additionalData && event.additionalData.state ? (event.additionalData.state.toLowerCase().indexOf(val) >= 0) : false
+        })
+      if (this.eventList.length)
+        this.scrollTo(this.eventList[0].metadata.id)
+      else
+        this.scrollTo('content');
     }
   }
 
   public showEvent(organization: shareTypes.Organization) {
+    this.analytics.logEvent('select_march', { companyName: organization.companyName, id: organization.metadata.id });
     this.navCtrl.push('OrgHomePage', { organization: organization, showHeader: true })
   }
 

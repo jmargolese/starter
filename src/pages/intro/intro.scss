@@ -16,10 +16,17 @@ page-intro {
     }
     .done-button {
         position: absolute;
-        bottom : 40px;
-        right: 40%;
+        bottom : 30px;
+        right: 80%;
         left: 40%;
         z-index: 1001;
         color: black;
+    }
+
+    .emailus-button {
+      
+        position: relative;
+        bottom: 14vh;
+        z-index: 1001;
     }
 }

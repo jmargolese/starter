@@ -44,7 +44,7 @@ ion-header {
 
 
 
-.action-choice-popover .popover-ios {
+.action-choice-popover .popover-ios .popover-md {
     width: 80%;
     top: 70px;
     left: 30px;
@@ -52,8 +52,10 @@ ion-header {
 }
 
 .popover-content {
-    max-width: 165px;
+    width: 240px !important;
 }
+
+
 .yellow-highlight {
     text-shadow: 
       -3px 0px 3px yellow,

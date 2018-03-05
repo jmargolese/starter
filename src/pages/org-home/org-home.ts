@@ -38,13 +38,13 @@ export class OrgHomePage {
 
   public showDonateButton: boolean = false;
   public showAddToFavorites: boolean = false;
-  public orgMainImageUrl: string = "";
+  public orgMainImageUrl: string = ""; 
 
   public currentActivity: shareTypes.Activity = null;
   //public activities: Observable<any> = null;
   private useOrgFavorites: boolean = false;       // should we use a passed in org or get the list of favorites? 
 
-  public hideHeader: boolean = true;
+  public hideHeader: boolean = false;  
   private isVisible: boolean = false;
   private activityListTop: number = null;    // where the activityList will be displayed so we can watch scrolling and know when it's visible
   public loading: boolean = true;
@@ -55,6 +55,7 @@ export class OrgHomePage {
   public actionsBarButtonsToDisplay = [];
   public marchInfo : string;
   public discoverImage: string;
+  public applicationIsMFOL: boolean = false;
 
   public engageOptions: shareTypes.engageOptions = {
     buttonsToDisplay: {
@@ -71,9 +72,11 @@ export class OrgHomePage {
     private err: ErrorReporterProvider, private activitiesProvider: ActivitiesProvider, public march: MarchProvider) {
 
 
+      this.applicationIsMFOL = ENV.app == envApp.MFOL ? true: false;
+
     this.featuredMode = navParams.get('featured') || false; 
 
-    this.hideHeader = navParams.get('showHeader') ? false : true;
+    //this.hideHeader = navParams.get('showHeader') ? false : true;
     this.useOrgFavorites = navParams.get('useOrgFavorites') || false;  
 
     this.discoverImage = ENV.app == envApp.share ? 'assets/img/images/discover-background.jpg ' : 'assets/img/images/discover-background-mfol.png'
@@ -82,12 +85,12 @@ export class OrgHomePage {
       // let other parts of the app tell us when a new tab is needed   
       this.currentActivity = activity;
       this.engageOptions.buttonsToDisplay.volunteer = this.activitiesProvider.showVolunteer( this.currentActivity);
-      this.engageOptions.buttonsToDisplay.communicate = this.activitiesProvider.showCommunicate( this.currentActivity);
+      this.engageOptions.buttonsToDisplay.communicate = this.activitiesProvider.showCommunicate( this.currentActivity) || (this.organization && this.organization.info.march);
     });
 
     this.events.subscribe(constants.EventTypes.userUpdated, user => {
       // if we are displayed in featured view, then we don't worry about changes to favorites
-      console.log("User status updated in org-home page");
+      console.log("org-homePage: Constructor User status updated in org-home page");
       if (this.isVisible) {       // only do this check if we are visible rather than cached
         this.recheckOrganizationList();
       }
@@ -104,7 +107,7 @@ export class OrgHomePage {
 
     })
 
-    this.showDonateButton = false;
+    this.showDonateButton = false; 
 
     this.events.subscribe(constants.EventTypes.orgHomeActivityListPosition, data => {
       this.activityListTop = data.position;
@@ -120,6 +123,7 @@ export class OrgHomePage {
 
     this.isVisible = true;
     this.analytics.setCurrentScreen('org-Home');
+    
 
     //this.userProvider.isAuthenticated()
     //  .then(() => {
@@ -142,10 +146,11 @@ export class OrgHomePage {
           this.err.log(`orgHomePage: got Featured Org: ${featuredOrgs.length ? featuredOrgs[0].metadata.id : 'no org'}`);
           this.setOrganization(this.orgIndex || 0);
           this.loading = false;
-          this.err.recordBreadcrumb({
+          this.err.recordBreadcrumb({ 
             message: `org-home FeaturedMode page with  ${this.organizationList ? this.organizationList.length : 'no'} featuredOrgs:`,
             category: 'enterPage', data: { organizationList: this.organizationList || 'orgList is null', orgIndex: this.orgIndex || 0 }
           })
+          this.analytics.logEvent('org-home', {organizationName: this.organization ? this.organization.companyName : "no org", organizationId: this.organization ? this.organization.metadata.id : 'no org'});
         }, error => {
           console.error("Error in org-home calling getFeaturedOrganizations: " + error.message);
           this.organizationList = [];
@@ -164,6 +169,7 @@ export class OrgHomePage {
         message: `org-home NOT FeaturedMode page and useOrgFavorites is ${JSON.stringify(this.useOrgFavorites)}`,
         category: 'enterPage', data: { orgIndex: this.orgIndex || 0 }
       });
+      
     }
 
 
@@ -198,7 +204,11 @@ export class OrgHomePage {
     if (!this.setOrganizationHasBeenCalled)
       return;
 
+    
+      this.err.recordBreadcrumb({message: `org-homePage: recheckOrganizationList is starting with this.useOrgFavorites: ${this.useOrgFavorites}`});
+
     if (this.useOrgFavorites) {
+      
       this.organizationList = this.userProvider.getFavoriteOrganizations();
       this.orgIndex = this.navParams.get('orgIndex') || 0;   // ensure this isn't undefined
 
@@ -227,6 +237,8 @@ export class OrgHomePage {
   public setOrganization(orgIndex: number) {
 
     this.setOrganizationHasBeenCalled = true;
+    this.err.recordBreadcrumb({message:`Org-homePage: setOrganization called with orgIndex: ${orgIndex}`});
+
 
     if (this.useOrgFavorites || this.featuredMode) {
 
@@ -238,7 +250,7 @@ export class OrgHomePage {
 
       if (this.organizationList && this.organizationList.length) {
         orgIndex = this.determineIndex();        // we may have been told to go a specific org and we can't check the list until now
-        this.hideHeader = true;
+        //this.hideHeader = true;
         this.showNavButtons = true;
         this.showAddToFavorites = false;
 
@@ -257,10 +269,13 @@ export class OrgHomePage {
     if (this.organization) {
       this.showDonateButton = true;
       this.actionsBarButtonsToDisplay = [this.org.hasPayMethod(this.organization) ? 'largeDonateButton' : '', 'largeEngageButton'];
-      this.orgMainImageUrl = this.org.getImageUrl(this.organization, constants.imageTypes.organizationImage, constants.imageSizes.reduced);
+      setTimeout(() => {
+        this.orgMainImageUrl = this.org.getImageUrl(this.organization, constants.imageTypes.organizationImage, constants.imageSizes.reduced);
+      }, 20);
+     
     } else {
-      this.showDonateButton = false;
-      this.orgMainImageUrl = "";
+      this.showDonateButton = false; 
+      this.orgMainImageUrl = ""; 
     }
     //this.testMe.testMe();  
     console.log('ionViewDidLoad OrgHomePage and showAddToFavorites is: ' + this.showAddToFavorites);
