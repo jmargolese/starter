@@ -8,6 +8,7 @@ import { IonicPage } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 
 import { ErrorReporterProvider } from '../../share-common/providers/error-reporter/error-reporter';
+import { UserProvider } from '../../share-common/providers/user/user';
 
 //import { ENV } from '@app/env';
 
@@ -26,7 +27,7 @@ export class DiscoverPage {
   public showSearchBar: boolean = false;         // we can turn it back on when we support it
 
   constructor( private orgProvider: OrganizationProvider, private analytics: AnalyticsProvider,
-   private err: ErrorReporterProvider) {
+   private err: ErrorReporterProvider, private user: UserProvider) {
 
     // console.log("In discover.ts env: " + ENV.mode);
     //this.events.subscribe(constants.EventTypes.pushNotification, data => {
@@ -46,10 +47,21 @@ export class DiscoverPage {
     this.err.log("onSearchInput called with:  " + val);
   }
 
-  ionViewWillEnter() {
+ /*  ionViewWillEnter() {
     this.organizations = this.orgProvider.getAllOrganizations(true, true);
 
+  } */
+
+  ionViewWillEnter() {
+    // show test orgs if our user is a tester.
+    const testMode = this.user.isRoleTester();
+    // we don't enable test orgs.
+    const enabledOnly = testMode ? false : true;
+
+    this.organizations = this.orgProvider.getAllOrganizations(enabledOnly, true, true, testMode);
+
   }
+
   ionViewDidLoad() {
 
     console.log('ionViewDidLoad discoverPage');

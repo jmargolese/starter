@@ -39,6 +39,8 @@ export class MarchPage {
 
   ionViewWillEnter() {
 
+    this.scrollTo('content');
+    
     this.loading = true;
     this.err.recordBreadcrumb({ message: 'Entering page March' });
 
@@ -60,7 +62,7 @@ export class MarchPage {
       }
     }
 
-    this.org.getAllOrganizations(true)
+    this.org.getAllOrganizations(true, false, true, false)
       .subscribe(organizations => {
         this.completeEventList = organizations.filter(org => {
           return org.companyName.toLowerCase().indexOf('march') >= 0 || org.info.march;

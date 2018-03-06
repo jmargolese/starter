@@ -143,12 +143,12 @@ export class SettingsPage {
       entries.push(
         {
           title: 'Profile',
-          callback: 'profile'
+          callback: 'profile' 
         },
-        {
+         {
           title: 'Payment Methods',
           callback: 'paymethods'
-        },
+        }, 
         {
           title: "Sign-out",
           callbackNoArrow: 'logout'
@@ -174,7 +174,7 @@ export class SettingsPage {
   private setHelpInfo() {
 
     let entries = [];
-
+ 
    
       entries.push(
         {
