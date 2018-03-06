@@ -12,8 +12,7 @@
 
 <ion-content padding class="page-communicate-css">
 	<ion-searchbar type="tel" placeholder="Find your elected officials by zip" [(ngModel)]="zipCode" (ionInput)="updateSearch($event)"></ion-searchbar>
-	<ion-item>Not registered to vote? <button ion-button icon-start color="primary" (click)="registerToVote()"><img src="./assets/img/icons/us_flag_small.png">  Register here</button>
-	</ion-item>
+	
 	<ion-list>
 		<div class="center-div">{{zipAddress}}</div>
 		<ion-grid>
@@ -65,4 +64,18 @@
 <!-- 	<div text-center >
 		<button ion-button color="primary" large [disabled]="!somethingSelected()">Send</button>
 	</div> -->
+	<ion-footer>
+		<ion-grid no-padding>
+			<ion-row no-padding justify-content: center style="background-color: darkgray;">
+				<ion-col align-self-center col-7 style="padding-left: 8px; color: white; font-weight: 500; font-size: 110%;">
+						Not registered to vote?
+				</ion-col>
+				<ion-col>
+						<button ion-button icon-start color="primary" (click)="registerToVote()"><img src="./assets/img/icons/us_flag_small.png">  Register here</button>
+				</ion-col>
+			</ion-row>
+			<ion-row style="height:20px;"></ion-row>
+		</ion-grid>
+			
+	</ion-footer>
 </ion-content>

@@ -311,7 +311,7 @@ export class OrgHomePage {
       if (!this.organizationList) {
 
         try {
-          throw new Error(`In pages orgHome next called with null organizationList and orgIndex = ${this.orgIndex}`);
+          throw new Error(`In pages orgHome next called with null organizationList and orgIndex = ${this.orgIndex} (Error caught, no crash)`);
         } catch (error) {
           console.error(error.message);
           this.err.captureException(error);
