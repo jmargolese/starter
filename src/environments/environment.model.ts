@@ -31,6 +31,10 @@ export interface Environment {
     appKey: string;
     appKeyConsole: string;
     marchAppKey ?: string;
+  },
+  branch: {
+    march : string,
+    share : string,
   }
 }
 

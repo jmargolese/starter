@@ -17,7 +17,6 @@ import { Facebook } from '@ionic-native/facebook';
 import { NativeGeocoder } from '@ionic-native/native-geocoder';
 import { Geolocation } from '@ionic-native/geolocation';
 import { NativeStorage } from '@ionic-native/native-storage';
-
 import { AngularFireModule } from 'angularfire2';
 import { ENV } from '@app/env';
 

@@ -3,7 +3,7 @@
     <name>MFOL</name>
     <description>Join the March for our Lives</description>
     <author email="support@ipaymyway.com" href="http://getshare.mobi">IPayMyWay Team</author>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://10.0.1.14:8100" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />

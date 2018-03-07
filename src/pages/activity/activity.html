@@ -1,0 +1,18 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{title}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content no-padding class="activity-page-css"  >
+
+  <div *ngIf="activity.info.type == 'map'">
+      <share-map class="map" [options]="mapOptions"></share-map>
+    
+  </div>
+
+</ion-content>
