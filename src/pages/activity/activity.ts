@@ -1,6 +1,7 @@
 import { MapOptions } from './../../share-common/components/share-map/share-map';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
 
 import * as shareTypes from '../../share-common/interfaces/interfaces';
 
@@ -17,7 +18,7 @@ export class ActivityPage {
   public title: string = "";
   public mapOptions: MapOptions;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private launchNavigator: LaunchNavigator) {
 
     this.activity = navParams.get('activity') || {};
     if (this.activity) {
@@ -30,7 +31,7 @@ export class ActivityPage {
   public setupActivity(): void {
     switch (this.activity.info.type) {
       case 'map':
-        this.mapOptions = this.activity.activityData;
+        this.mapOptions = this.activity.activityData.mapOptions;
         
         break;
     
@@ -43,4 +44,16 @@ export class ActivityPage {
     console.log('ionViewDidLoad ActivityPage');
   }
 
+  public directions():void {
+    let options: LaunchNavigatorOptions = { 
+      //start: 'London, ON',  
+      //app: LaunchNavigatorO.APPS.UBER
+    };
+    
+    this.launchNavigator.navigate('Toronto, ON', options)
+      .then(
+        success => console.log('Launched navigator'),
+        error => console.log('Error launching navigator', error)
+      );
+  }
 }

@@ -58,6 +58,7 @@
     "@ionic-native/http": "^4.5.3",
     "@ionic-native/in-app-browser": "^4.5.3",
     "@ionic-native/keyboard": "^4.5.3",
+    "@ionic-native/launch-navigator": "^4.5.3",
     "@ionic-native/native-geocoder": "^4.5.3",
     "@ionic-native/native-storage": "^4.5.3",
     "@ionic-native/push": "^4.5.3",
@@ -77,11 +78,13 @@
     "cordova-browser": "5.0.3",
     "cordova-ios": "4.5.4",
     "cordova-ios-export-compliance": "^1.0.2",
+    "cordova-plugin-actionsheet": "^2.3.3",
     "cordova-plugin-add-swift-support": "^1.7.1",
     "cordova-plugin-advanced-http": "^1.10.1",
     "cordova-plugin-app-version": "^0.1.9",
     "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-device": "^1.1.7",
+    "cordova-plugin-dialogs": "^2.0.1",
     "cordova-plugin-facebook4": "^1.9.1",
     "cordova-plugin-file": "^6.0.1",
     "cordova-plugin-firebase-analytics": "^0.12.1",
@@ -116,6 +119,7 @@
     "rxjs": "^5.5.6",
     "save-dev": "^2.0.0",
     "sw-toolbox": "3.6.0",
+    "uk.co.workingedge.phonegap.plugin.launchnavigator": "^4.1.5",
     "zone.js": "^0.8.20"
   },
   "devDependencies": {
@@ -185,7 +189,10 @@
         "APP_ID": "218114635596945",
         "APP_NAME": "March For Our Lives"
       },
-      "phonegap-plugin-push": {}
+      "phonegap-plugin-push": {},
+      "uk.co.workingedge.phonegap.plugin.launchnavigator": {
+        "LOCATION_USAGE_DESCRIPTION": "This app requires access to your location for navigation purposes"
+      }
     },
     "platforms": [
       "browser",

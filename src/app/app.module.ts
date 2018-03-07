@@ -7,6 +7,7 @@ import { Share } from './app.component';
 import { HTTP } from '@ionic-native/http';
 import { CallNumber } from '@ionic-native/call-number';
 import { Keyboard } from '@ionic-native/keyboard';
+import { LaunchNavigator } from '@ionic-native/launch-navigator';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -97,7 +98,8 @@ import { MarchProvider } from '../share-common/providers/march/march';
     Geolocation,
     NativeStorage,
     CallNumber,
-    Keyboard
+    Keyboard,
+    LaunchNavigator
   ]
 })
 export class AppModule {}
