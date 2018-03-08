@@ -12,7 +12,9 @@
 
   <div *ngIf="activity.info.type == 'map'">
       <share-map class="map" [options]="mapOptions"></share-map>
-    
+      <div *ngIf="mapOptions" class="map-explain-text">
+        {{mapOptions.explainText}}
+      </div>
   </div>
   <ion-grid style="margin-top: 20px;">
     <ion-row justify-content-center>

@@ -49,7 +49,7 @@ export class VolunteerPage {
     this.err.log('ionViewDidLoad VolunteerPage');
     if (!this.organization.communications.email) {
       if (!(this.organization.additionalData && this.organization.additionalData.website)) {
-        this.alert.confirm({ title: 'Something went wrong', message: "Sorry, we can't connect with this organization right now", buttons: { ok: true, cancel: false } })
+        this.alert.confirm({ title: 'Not yet setup', message: "Sorry, this organization is not yet setup for volunteers from this app.", buttons: { ok: true, cancel: false } })
           .then(() => {
             this.viewCtrl.dismiss({ error: false, canceled: true });
           })
@@ -75,7 +75,7 @@ export class VolunteerPage {
         })
 
 
-      }
+      } 
     }
   }
 

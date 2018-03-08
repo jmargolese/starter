@@ -2,7 +2,7 @@
 <widget id="com.ipaymyway.march" version="1.3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>MFOL</name>
     <description>Join the March for our Lives</description>
-    <author email="support@ipaymyway.com" href="http://getshare.mobi">IPayMyWay Team</author>
+    <author email="support@ipaymyway.com" href="http://marchforourlivesapp.com">IPayMyWay Team</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
