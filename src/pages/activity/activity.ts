@@ -13,7 +13,6 @@ import { ENV } from '@app/env';
   templateUrl: 'activity.html',
 })
 export class ActivityPage { 
-  public options : shareTypes.ActivityOptions;
   public activity: shareTypes.Activity;
   public title: string = "";
   public mapOptions: MapOptions;

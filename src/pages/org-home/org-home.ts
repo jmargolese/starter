@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs';
 import { envApp } from './../../environments/environment.model';
 import { MarchProvider } from './../../share-common/providers/march/march';
 
@@ -5,7 +6,7 @@ import { ActivitiesProvider } from './../../share-common/providers/activities/ac
 import { AnalyticsProvider } from '../../share-common/providers/analytics/analytics';
 
 import { Component, ViewChild, NgZone, ElementRef, Renderer2 } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events, Content } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events, Content, AlertController } from 'ionic-angular';
 
 
 import * as shareTypes from '../../share-common/interfaces/interfaces';
@@ -14,7 +15,7 @@ import { UserProvider } from '../../share-common/providers/user/user';
 import * as _ from 'lodash';
 import * as constants from '../../share-common/config/constants';
 import { OrganizationProvider } from '../../share-common/providers/organization/organization';
-import { ErrorReporterProvider } from '../../share-common/providers/error-reporter/error-reporter';
+import { ErrorReporterProvider, logTypes, logLevels } from '../../share-common/providers/error-reporter/error-reporter';
 import { ENV } from '@app/env';
 
 @IonicPage()
@@ -40,6 +41,7 @@ export class OrgHomePage {
   public showAddToFavorites: boolean = false;
   public orgMainImageUrl: string = ""; 
 
+  public isOrgOwner: boolean = false;
   public currentActivity: shareTypes.Activity = null;
   //public activities: Observable<any> = null;
   private useOrgFavorites: boolean = false;       // should we use a passed in org or get the list of favorites? 
@@ -56,6 +58,7 @@ export class OrgHomePage {
   public marchInfo : string;
   public discoverImage: string;
   public applicationIsMFOL: boolean = false;
+  public orgSubscription: Subscription = null;
 
   public engageOptions: shareTypes.engageOptions = {
     buttonsToDisplay: {
@@ -68,10 +71,11 @@ export class OrgHomePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public events: Events, public analytics: AnalyticsProvider, public userProvider: UserProvider, public zone: NgZone,
-    public element: ElementRef, public renderer: Renderer2, private org: OrganizationProvider,
+    public element: ElementRef, public renderer: Renderer2, private org: OrganizationProvider,private alertCtrl: AlertController,
     private err: ErrorReporterProvider, private activitiesProvider: ActivitiesProvider, public march: MarchProvider) {
 
 
+      
       this.applicationIsMFOL = ENV.app == envApp.MFOL ? true: false;
 
     this.featuredMode = navParams.get('featured') || false; 
@@ -262,11 +266,34 @@ export class OrgHomePage {
         this.showNextButton = this.showPrevButton = false;
       }
     } else {
-      this.organization = this.navParams.get('organization') || null;
+      //this.organization = this.navParams.get('organization') || null;
+      const orgId =  this.org.getId( this.navParams.get('organization') || null) ;
+      this.orgSubscription = this.org.getOrganization(orgId)
+        .subscribe(org => {
+          this.organization = org;
+          this.orgWasUpdated();
+        }, error => {
+          this.err.log(`org-homePage: Error getting organization subscription: ${error.message} for orgId: ${orgId ? orgId : 'hmm, no id'}`, 
+            logTypes.report, logLevels.normal, { error: error, orgId: orgId});
+            this.organization = null;
+        })
       this.showAddToFavorites = this.organization && this.userProvider.userLikesOrganization(this.org.getId(this.organization)) ? false : true;
     }
+ 
+    this.orgWasUpdated();
+    
+    //this.testMe.testMe();  
+    console.log('ionViewDidLoad OrgHomePage and showAddToFavorites is: ' + this.showAddToFavorites);
+    this.err.recordBreadcrumb({
+      message: `org-home setOrganization done orgIndex: ${orgIndex}`,
+      category: 'enterPage', data: { organizationList: this.organizationList || 'is null', orgIndex: this.orgIndex || 0 }
+    });
+    this.isReady = true;
+  }
 
+  public orgWasUpdated() : void {
     if (this.organization) {
+
       this.showDonateButton = true;
       this.actionsBarButtonsToDisplay = [this.org.hasPayMethod(this.organization) ? 'largeDonateButton' : '', 'largeEngageButton'];
       setTimeout(() => {
@@ -277,15 +304,10 @@ export class OrgHomePage {
       this.showDonateButton = false; 
       this.orgMainImageUrl = ""; 
     }
-    //this.testMe.testMe();  
-    console.log('ionViewDidLoad OrgHomePage and showAddToFavorites is: ' + this.showAddToFavorites);
-    this.err.recordBreadcrumb({
-      message: `org-home setOrganization done orgIndex: ${orgIndex}`,
-      category: 'enterPage', data: { organizationList: this.organizationList || 'is null', orgIndex: this.orgIndex || 0 }
-    });
-    this.isReady = true;
-  }
 
+    this.isOrgOwner = this.organization && (this.userProvider.getOrganizationId() ==  this.organization.metadata.id);
+
+  }
 
 
   public swipeEvent(event) {
@@ -334,16 +356,24 @@ export class OrgHomePage {
     this.isVisible = false;
     this.showDonateButton = false;
     this.showAddToFavorites = false;
+    if (this.orgSubscription) {
+      try {
+        this.orgSubscription.unsubscribe();
+      } catch (error) {
+        // in case this fails for some reason...
+      }
+     
+      this.orgSubscription = null;
+    }
   }
 
   ionViewDidLoad() {
-
+   
     this.content.ionScroll.subscribe((data) => {
       // console.log('Scroll event: ' + data.scrollTop + " and activityListTop: " + this.activityListTop);
-      const buffer = 70;
-
+      const buffer = 70;   
       this.zone.run(() => {
-        // since scrollAmount is data-binded,
+        // since scrollAmount is data-binded, 
         // the update needs to happen in zone
         if (data && data.scrollTop && data.scrollTop > buffer && this.navButtons) {
           // as the user scrolls up, the nav buttons disappear, slowly
@@ -358,6 +388,5 @@ export class OrgHomePage {
 
   }
 
-  
-
+ 
 }
