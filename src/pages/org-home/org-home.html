@@ -1,6 +1,6 @@
 <ion-header >
 
-  <ion-navbar swipeBackEnabled="true" hideBackButton="true">
+  <ion-navbar swipeBackEnabled="true" [hideBackButton]='hideBackButton'>
     <ion-title>{{organization && organization.companyName.substring(0,50)}}</ion-title>
   </ion-navbar>
 

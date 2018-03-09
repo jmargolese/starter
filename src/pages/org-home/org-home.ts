@@ -40,6 +40,7 @@ export class OrgHomePage {
   public showDonateButton: boolean = false;
   public showAddToFavorites: boolean = false;
   public orgMainImageUrl: string = ""; 
+  public hideBackButton: boolean = true;
 
   public isOrgOwner: boolean = false;
   public currentActivity: shareTypes.Activity = null;
@@ -143,6 +144,7 @@ export class OrgHomePage {
     this.notificationRequest = this.navParams.get('notification') || null;
 
     if (this.featuredMode) {
+      this.hideBackButton = false;
       this.err.log(`orgHomePage: featuredMode with notificationRequest: ${this.notificationRequest ? JSON.stringify(this.notificationRequest) : "is null"}`)
       this.org.getFeaturedOrganizations(this.notificationRequest ? this.notificationRequest.targetId : null)
         .subscribe(featuredOrgs => {
@@ -163,6 +165,7 @@ export class OrgHomePage {
         });
 
     } else {
+      this.hideBackButton = true;
       this.useOrgFavorites = this.navParams.get('useOrgFavorites') ? true : false;
       // this means we are part of a list of organization favorites with an index, as opposed to be being passed in an organization
 
