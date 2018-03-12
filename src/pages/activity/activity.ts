@@ -5,7 +5,6 @@ import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-na
 
 import * as shareTypes from '../../share-common/interfaces/interfaces';
 
-import { ENV } from '@app/env';
 
 @IonicPage()
 @Component({
@@ -49,7 +48,7 @@ export class ActivityPage {
       //app: LaunchNavigatorO.APPS.UBER
     };
     
-    this.launchNavigator.navigate('Toronto, ON', options)
+    this.launchNavigator.navigate(this.mapOptions.center.address[0], options)
       .then(
         success => console.log('Launched navigator'),
         error => console.log('Error launching navigator', error)

@@ -6,7 +6,7 @@ import { ActivitiesProvider } from './../../share-common/providers/activities/ac
 import { AnalyticsProvider } from '../../share-common/providers/analytics/analytics';
 
 import { Component, ViewChild, NgZone, ElementRef, Renderer2 } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events, Content, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events, Content } from 'ionic-angular';
 
 
 import * as shareTypes from '../../share-common/interfaces/interfaces';
@@ -72,7 +72,7 @@ export class OrgHomePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public events: Events, public analytics: AnalyticsProvider, public userProvider: UserProvider, public zone: NgZone,
-    public element: ElementRef, public renderer: Renderer2, private org: OrganizationProvider,private alertCtrl: AlertController,
+    public element: ElementRef, public renderer: Renderer2, private org: OrganizationProvider,
     private err: ErrorReporterProvider, private activitiesProvider: ActivitiesProvider, public march: MarchProvider) {
 
 
@@ -165,10 +165,10 @@ export class OrgHomePage {
         });
 
     } else {
-      this.hideBackButton = true;
+      
       this.useOrgFavorites = this.navParams.get('useOrgFavorites') ? true : false;
       // this means we are part of a list of organization favorites with an index, as opposed to be being passed in an organization
-
+      this.hideBackButton = this.useOrgFavorites;  
 
       this.setOrganization(this.orgIndex || 0);
       this.loading = false;

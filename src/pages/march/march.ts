@@ -100,8 +100,12 @@ export class MarchPage {
 
       this.eventList = this.completeEventList
         .filter(event => {
-          return event.additionalData && event.additionalData.state ? (event.additionalData.state.toLowerCase().indexOf(val) >= 0) : false
+          const state: string = (event.additionalData && event.additionalData.state) ? event.additionalData.state.toLowerCase() : "";
+          const city: string = event.companyName.toLowerCase().replace('march for our lives','').replace('mfol','');
+
+          return (state.indexOf(val) >= 0) || (city.indexOf(val)) >= 0 ? true : false
         })
+        
       if (this.eventList.length)
         this.scrollTo(this.eventList[0].metadata.id)
       else

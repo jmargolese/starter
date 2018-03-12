@@ -2,7 +2,6 @@ import { UserProvider } from './../../share-common/providers/user/user';
 import { DataProvider } from './../../share-common/providers/data/data';
 import { Subscription } from 'rxjs/Subscription';
 import { ErrorReporterProvider, logTypes, logLevels } from './../../share-common/providers/error-reporter/error-reporter';
-import { Observable } from 'rxjs/Observable';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ItemSliding } from 'ionic-angular';
 

@@ -1,3 +1,4 @@
+import { Volunteer } from './../../share-common/interfaces/interfaces.d';
 import { AnalyticsProvider } from './../../share-common/providers/analytics/analytics';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { SocialShareProvider } from './../../share-common/providers/social-share/social-share';
@@ -11,7 +12,6 @@ import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angu
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as shareTypes from '../../share-common/interfaces/interfaces';
 import * as constants from '../../share-common/config/constants';
-import { AUTH_PROVIDERS } from 'angularfire2/auth';
 
 @IonicPage()
 @Component({
@@ -83,6 +83,7 @@ export class VolunteerPage {
     return {
       type: constants.impactTypes.volunteer,
       isDemo: false,
+      mode: "inApp",
       donor: {
         id: this.user.getUserId(),
         name: this.user.getDisplayName(),
@@ -102,7 +103,7 @@ export class VolunteerPage {
         when: this.volunteer,
         message: this.curForm.controls.message.value,
         date: null
-      }
+      } as Volunteer
     }
   }
 

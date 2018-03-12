@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.ipaymyway.march" version="1.3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>MFOL</name>
+<widget id="com.ipaymyway.march" version="1.31" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>March</name>
     <description>Join the March for our Lives</description>
     <author email="support@ipaymyway.com" href="http://marchforourlivesapp.com">IPayMyWay Team</author>
     <content src="index.html" />
@@ -125,12 +125,15 @@
         <variable name="APP_ID" value="218114635596945" />
         <variable name="APP_NAME" value="March For Our Lives" />
     </plugin>
-    <plugin name="phonegap-plugin-push" spec="^2.2.1" />
     <allow-navigation href="http://10.0.1.14:8101" />
-    <engine name="browser" spec="5.0.3" />
-    <engine name="ios" spec="4.5.4" />
-    <engine name="android" spec="^7.1.0" />
     <plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" spec="^4.1.5">
         <variable name="LOCATION_USAGE_DESCRIPTION" value="This app requires access to your location for navigation purposes" />
     </plugin>
+    <plugin name="phonegap-plugin-push" spec="^2.2.2">
+        <variable name="ANDROID_SUPPORT_V13_VERSION" value="27.+" />
+        <variable name="FCM_VERSION" value="11.6.2" />
+    </plugin>
+    <engine name="browser" spec="5.0.3" />
+    <engine name="ios" spec="4.5.4" />
+    <engine name="android" spec="^7.1.0" />
 </widget>

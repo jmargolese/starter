@@ -1,27 +1,35 @@
 {
   "project_info": {
-    "project_number": "339127740401",
-    "firebase_url": "https://march-dev-70558.firebaseio.com",
-    "project_id": "march-dev-70558",
-    "storage_bucket": "march-dev-70558.appspot.com"
+    "project_number": "375045539987",
+    "firebase_url": "https://march-prod.firebaseio.com",
+    "project_id": "march-prod",
+    "storage_bucket": "march-prod.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:339127740401:android:e0326f8d98c713b6",
+        "mobilesdk_app_id": "1:375045539987:android:e0326f8d98c713b6",
         "android_client_info": {
           "package_name": "com.ipaymyway.march"
         }
       },
       "oauth_client": [
         {
-          "client_id": "339127740401-gu5ovun7b90vk7l6mpij7gl633vqigqi.apps.googleusercontent.com",
+          "client_id": "375045539987-re4qtnrsnjmassum3t12l76m458urbk2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ipaymyway.march",
+            "certificate_hash": "bf5ed28e49847e1b010f16bf0e30eb3a19754a20"
+          }
+        },
+        {
+          "client_id": "375045539987-kck0u0rlsk1psre3sbs6gee05sr667qv.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAWkp9agYJ5ph9eITvnsF0dwJfbm2_81OQ"
+          "current_key": "AIzaSyB3bfnHNafaZv8Y-KHDQnXR18RVsG9oIe8"
         }
       ],
       "services": {
@@ -29,8 +37,20 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "375045539987-kck0u0rlsk1psre3sbs6gee05sr667qv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "375045539987-utfrh4lul42jvo8tkp8rb0ch0tm3165q.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ipaymyway.march"
+              }
+            }
+          ]
         },
         "ads_service": {
           "status": 2

@@ -1,6 +1,5 @@
 import { ErrorReporterProvider } from './../../share-common/providers/error-reporter/error-reporter';
 import { AnalyticsProvider } from './../../share-common/providers/analytics/analytics';
-import { NativeStorage } from '@ionic-native/native-storage';
 import { ViewController } from 'ionic-angular/navigation/view-controller';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';

@@ -5,7 +5,6 @@ import { HTTP } from '@ionic-native/http';
 import { CallNumber } from '@ionic-native/call-number';
 import { Keyboard } from '@ionic-native/keyboard';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
-import { OrganizationProvider } from '../../share-common/providers/organization/organization';
 import { ErrorReporterProvider, logTypes, logLevels } from '../../share-common/providers/error-reporter/error-reporter';
 import { DataProvider } from '../../share-common/providers/data/data';
 import { UserProvider } from '../../share-common/providers/user/user';
@@ -38,8 +37,7 @@ export class CommunicatePage {
   public callInProgress: boolean=false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
-    private http: HTTP, private viewCtrl: ViewController, 
-    private org: OrganizationProvider,private err: ErrorReporterProvider,
+    private http: HTTP, private viewCtrl: ViewController,private err: ErrorReporterProvider,
     private call: CallNumber, private db: DataProvider, private user: UserProvider,
     private socialShare: SocialShareProvider, private alert: AlertProvider, private alertCtrl: AlertController,
     private keyboard: Keyboard, private platform: Platform, private iab: InAppBrowser) {
@@ -64,7 +62,7 @@ export class CommunicatePage {
       title: "Help",
       message: "Click the phone button to be connected to your elected official, or the email button to \
       be transferred to their contact page on the web.  \
-      Calling them is the most effective way to let your voice be heard.",
+      <br> <b>Calling them is the most effective way to let your voice be heard.</b>",
       buttons: {ok: true}
     });
   }
@@ -89,6 +87,7 @@ export class CommunicatePage {
         {
           type: shareConstants.impactTypes.communicate,
           isDemo: false,
+          mode: 'inApp',
           donor: { id :this.user.getUserId(),
             name: this.user.getDisplayName(),
             email: this.user.getEmail()
