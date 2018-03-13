@@ -2,7 +2,7 @@
 
   <ion-navbar swipeBackEnabled="true" [hideBackButton]='hideBackButton'>
       
-    <ion-title>{{organization && organization.companyName.substring(0,50)}}</ion-title>
+    <ion-title>{{organization && organization.companyName.substring(0,50) || "Favorites"}}</ion-title>
     <ion-buttons end>
       <button *ngIf="showNextButton" (click)="next()" ion-button color="white" clear>
         <span style="padding-right:3px;">Next</span>

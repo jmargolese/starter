@@ -1,7 +1,7 @@
 <ion-header [hidden]="false">
 
   <ion-navbar swipeBackEnabled="true">
-    <ion-title>Find your March</ion-title>
+    <ion-title>Be Heard!</ion-title>
     
   </ion-navbar>
   
@@ -22,25 +22,27 @@
   </div>
 
   <div *ngIf="!useSelectedMarch">
-    <div text-center>
-      <img src="assets/MFOL/img/MFOL 1024.png" class="main-image ">
+    <div text-center class="main-image-backer">
+      <img src="assets/beheard/Be-Heard-LOGO full width.png" class="main-image ">
     </div>
     <div text-center>
+    <div class="march-header">
+      Featured Events: March For Our Lives
+    </div>
     <div class="intro-text ">
-        On March 24, the kids and families of March For Our Lives will take to the streets of YOUR city to demand that their lives and safety become a priority and that we end gun violence and mass shootings in our schools today.
-        <p></p>
-        March with us in Washington DC or march in your own community. 
+        Help us to support the March for Our Lives Movement.  On March 24th, students accross the US and around the world are leading marches to demand that their lives and safety become a priority and that we end gun violence and mass shootings in school today.
+        
     </div>
     <div text-center>
       <div class="call-to-action-text yellow-highlight">
-        Select the march that you want to attend
+        Select the event that you want to attend and <span color-text>Favorite</span> it to get notifications of important  updates.
       </div>
     </div>
   </div>
     <ion-list no-lines>
       <ion-item *ngFor="let event of eventList" [id]="event.metadata.id || ''">
           <ion-card (click)="showEvent(event)">
-              <ion-card-header style="white-space:normal;">
+              <ion-card-header class="card-header" style="white-space:normal;">
                 <div class="header-state">{{event.additionalData.state}}</div>
                 
                   {{event.companyName}}

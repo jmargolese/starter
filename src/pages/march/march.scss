@@ -4,27 +4,44 @@ page-march {
             padding: 5px !important;
             padding-left: 10px !important;
             white-space: normal !important;
-            background-color: lightgray !important;
+           // background-color: lightgray !important;
+         
+            background-color: color($colors, primary);
+            color: white;
         }
 
         font-size: 16px;
         .main-image {
-            max-height: 35vh;
+            padding-top: 10px;
+            max-width: 85%;
+        }
+        .main-image-backer {
+           // background-color: color($colors, primary);
+        }
+        .march-header {
+            padding: 12px 5% 8px 5%;
+            text-align: center;
+            font-size: 110%;
+            font-weight: 580;
+            color: color($colors, primary);
         }
         .intro-text {
             margin-top: -35px;
-            font-size: 85%;
+            font-size: 75%;
             max-width: 90%;
             white-space: normal;
             margin: auto;
             text-align: left;
+            padding: 8px 5% 8px 5%;
         }
         .call-to-action-text {
-            padding-top: 15px;
-            padding-bottom: 10px;
+            padding: 15px 5% 10px 5%;
             font-style: italic;
+            font-size: 90%
         }
-        
+        .color-text {
+            color: color($colors, primary);
+        }
        
 
         .date-text {
@@ -43,6 +60,7 @@ page-march {
             font-variant-caps: all-small-caps;
             padding-bottom: 2px;
         }
+       
     }
     .orgShowActionBar {
         position: absolute;

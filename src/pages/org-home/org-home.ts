@@ -81,11 +81,11 @@ export class OrgHomePage {
       this.applicationIsMFOL = ENV.app == envApp.MFOL ? true: false;
 
     this.featuredMode = navParams.get('featured') || false; 
-
+ 
     //this.hideHeader = navParams.get('showHeader') ? false : true;
     this.useOrgFavorites = navParams.get('useOrgFavorites') || false;  
 
-    this.discoverImage = ENV.app == envApp.share ? 'assets/img/images/discover-background.jpg ' : 'assets/img/images/discover-background-mfol.png'
+    this.discoverImage = ENV.app == envApp.share ? 'assets/img/images/discover-background.jpg ' : 'assets/img/images/discover-background-be-heard.jpg'
 
     this.events.subscribe("activity:homeCurrentActivity", (activity) => {
       // let other parts of the app tell us when a new tab is needed   

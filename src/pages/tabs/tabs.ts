@@ -65,7 +65,7 @@ export class TabsPage {
 
       case envApp.MFOL:
         this.tab1Root = "MarchPage";
-        this.tab1Title = "March";
+        this.tab1Title = "Events";
         this.tab1Icon = "walk"
         break;
       default:

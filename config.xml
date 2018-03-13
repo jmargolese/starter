@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.ipaymyway.march" version="1.31" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>March</name>
-    <description>Join the March for our Lives</description>
+    <name>Be Heard</name>
+    <description>Be Heard -- Get involved with your rally</description>
     <author email="support@ipaymyway.com" href="http://marchforourlivesapp.com">IPayMyWay Team</author>
     <content src="index.html" />
     <access origin="*" />
@@ -134,6 +134,6 @@
         <variable name="FCM_VERSION" value="11.6.2" />
     </plugin>
     <engine name="browser" spec="5.0.3" />
-    <engine name="ios" spec="4.5.4" />
     <engine name="android" spec="^7.1.0" />
+    <engine name="ios" spec="^4.5.4" />
 </widget>
