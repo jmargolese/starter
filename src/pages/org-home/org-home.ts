@@ -40,7 +40,7 @@ export class OrgHomePage {
   public showDonateButton: boolean = false;
   public showAddToFavorites: boolean = false;
   public orgMainImageUrl: string = ""; 
-  public hideBackButton: boolean = true;
+  public hideBackButton: boolean = false;    
 
   public isOrgOwner: boolean = false;
   public currentActivity: shareTypes.Activity = null;
@@ -66,7 +66,8 @@ export class OrgHomePage {
       volunteer: false,
       communicate: false,
       socialShare: true,
-      addToFavorites: true
+      addToFavorites: true,
+      petition: false
     }
   }
 
@@ -89,8 +90,9 @@ export class OrgHomePage {
     this.events.subscribe("activity:homeCurrentActivity", (activity) => {
       // let other parts of the app tell us when a new tab is needed   
       this.currentActivity = activity;
-      this.engageOptions.buttonsToDisplay.volunteer = this.activitiesProvider.showVolunteer( this.currentActivity);
-      this.engageOptions.buttonsToDisplay.communicate = this.activitiesProvider.showCommunicate( this.currentActivity) || (this.organization && this.organization.info.march);
+      this.engageOptions.buttonsToDisplay.volunteer = this.activitiesProvider.showVolunteer( this.currentActivity) || this.org.organizationIsAMarch(this.organization);
+      this.engageOptions.buttonsToDisplay.petition = this.activitiesProvider.showPetition( this.currentActivity) || this.org.organizationIsAMarch(this.organization)
+      this.engageOptions.buttonsToDisplay.communicate = this.activitiesProvider.showCommunicate( this.currentActivity) || this.org.organizationIsAMarch(this.organization);
     });
 
     this.events.subscribe(constants.EventTypes.userUpdated, user => {
@@ -168,7 +170,7 @@ export class OrgHomePage {
       
       this.useOrgFavorites = this.navParams.get('useOrgFavorites') ? true : false;
       // this means we are part of a list of organization favorites with an index, as opposed to be being passed in an organization
-      this.hideBackButton = this.useOrgFavorites;  
+     //  this.hideBackButton = this.useOrgFavorites;  
 
       this.setOrganization(this.orgIndex || 0);
       this.loading = false;

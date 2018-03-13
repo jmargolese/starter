@@ -18,12 +18,19 @@ page-impact {
 
     .impact-text {
       font-size: 90% !important;
+      white-space: normal;
+    }
+    .impact-date {
+      font-size: 75% !important;
+      white-space: normal;
     }
 
-    .donation-date {
-      float: right;
-
+    .impact-headline {
+      font-size: 105%;
+      font-weight: 500;
     }
+
+   
 
     .donation-paid-fees {
       font-size: 80%;

@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Petition</ion-title>
+    <ion-buttons start>
+      <button (click)="dismiss()" ion-button color="white" clear>
+        Done
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding class="petition-page-css">
+
+  <ion-list no-padding>
+
+    <ion-card *ngFor="let petition of petitions" padding (click)="openPetition(petition)">
+      <div style="position:relative;">
+      <img class="petition-image center-text" *ngIf="petition.imageURL" [src]="petition.imageURL">
+    </div>
+      <ion-card-title>
+        <div class="petition-title">
+          {{petition.title}}
+        </div>
+        <div class="petition-sponsor">
+          {{petition.sponsor}}
+        </div>
+      </ion-card-title>
+      <div class="divider"></div>
+      <div class="petition-text" [innerHTML]="petition.intro"></div>
+
+    </ion-card>
+
+  </ion-list>
+</ion-content>

@@ -7,21 +7,25 @@
 </ion-header>
 
 
-<ion-content no-padding class="impact-css">
-  <div *ngIf="!donations || !donations.length">
-    <div style="margin-top:15vh; width:60vw; margin-left:20vw;" class="text-center">
-      <h5>Your impact events will show up here as you <b>Enagage</b> such as Volunteer, Social sharing or contacting your representatives.</h5>
-    </div>
 
-  </div>
+<ion-content no-padding class="impact-css">
   <div *ngIf="userHasOrganization">
-    <ion-segment style="padding-left: 10%; padding-right: 10%; margin-left:40%" [(ngModel)]="showWhichDonations" (ionChange)="selectionChanged($event)">
-      <ion-segment-button value="donations">My Donations
+    <ion-segment style="padding: 3vh 10% 3vh 10%" [(ngModel)]="showWhichDonations" (ionChange)="selectionChanged($event)">
+      <ion-segment-button value="donations">My Impact
       </ion-segment-button>
-      <ion-segment-button value="received">Received
+      <ion-segment-button value="received">Impact Received
       </ion-segment-button>
     </ion-segment>
   </div>
+
+  <div *ngIf="!donations || !donations.length">
+    <div style="margin-top:15vh; width:60vw; margin-left:20vw;" class="text-center">
+      <h5>Your impact events will show up here as you
+        <b>Enagage</b> such as Volunteer, Social sharing or contacting your representatives.</h5>
+    </div>
+
+  </div>
+
 
   <div style="margin-top: 15px;"></div>
   <ion-list>
@@ -29,27 +33,50 @@
       <ion-thumbnail item-start>
         <img class="thumbnail" src="{{donation.recipient.icon}}">
       </ion-thumbnail>
-      <h2>{{donation.recipient.name}}</h2>
-      <div *ngIf="donation.type == 'donation'">
-        <p>
-          <span>$hared {{ donation.data.amount | currency:'USD':'symbol':'1.2-2'}}</span>
-          <span class="donation-date"> {{donation.time | date:'MMM dd yyyy' }}</span>
-        </p>
-        <p class="donation-paid-fees">{{donation.data.donorPaidFees ? '(Includes processing fees)' : ''}}</p>
-      </div>
-      <div *ngIf="donation.type == 'volunteer'">
-        <p>
-          <span>Volunteered </span>
-          <span class="donation-date"> {{donation.time | date:'MMM dd yyyy' }}</span>
-        </p>
-      </div>
-      <div *ngIf="donation.type == 'communicate'">
-        <p>
-          <span>{{donation.data.action}} </span>
-          <span class="donation-date"> {{donation.time | date: 'MMM dd yyyy' }}</span>
-          <span>{{donation.data.callee}}</span>
-        </p>
-      </div>
+      <ion-grid no-padding>
+       
+        <ion-row no-padding>
+          <div class="impact-headline">{{donation.recipient.name}}</div>
+        </ion-row>
+        <ion-row no-padding *ngIf="donation.type == 'donation'">
+          <ion-col no-padding>
+            <span class="impact-text">$hared {{ donation.data.amount | currency:'USD':'symbol':'1.2-2'}}</span>
+          </ion-col>
+          <ion-col no-padding col-3>
+            <span class="impact-date"> {{donation.time | date:'MMM dd yyyy' }}</span>
+          </ion-col>
+        </ion-row>
+      
+
+        <ion-row no-padding *ngIf="donation.type == 'volunteer'">
+          <ion-col>
+            <span>Volunteered </span>
+          </ion-col>
+          <ion-col col-3>
+            <span class="impact-date"> {{donation.time | date:'MMM dd yyyy' }}</span>
+          </ion-col>
+        </ion-row>
+        <ion-row no-padding *ngIf="donation.type == 'communicate'">
+          <ion-col>
+            <span class="impact-text">{{donation.data.action}} {{donation.data.callee}} </span>
+          </ion-col>
+          <ion-col col-3>
+            <span class="impact-date"> {{donation.time | date:'MMM dd yyyy' }}</span>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="showWhichDonations == 'received'" style="padding-top: 4px;">
+          <ion-col col-12 class="impact-text selectable">
+          {{donation.donor.name}}
+        </ion-col>
+        <ion-col class="impact-text selectable" >
+          {{donation.donor.email}}
+        </ion-col>
+        </ion-row>
+      </ion-grid>
+
+
+
+
     </ion-item>
   </ion-list>
 

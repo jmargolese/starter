@@ -1,3 +1,4 @@
+import { DataProvider } from './../../share-common/providers/data/data';
 import { LoginPage } from './../../share-common/pages/login/login';
 import { activitySeeds } from './../../seeds/seedActivities';
 import { userDataSeeds } from './../../seeds/seedUserData';
@@ -29,7 +30,7 @@ export class ContactPage {
   public projectId: string = "";
 
   constructor(public navCtrl: NavController, private readonly afs: AngularFirestore, private myAuth: AuthProvider,
-    public modalCtrl: ModalController, private events: Events) {
+    public modalCtrl: ModalController, private events: Events, private db: DataProvider) {
     this.organizationsCollection = afs.collection<any>('organizations');
     this.stripeAccountsCollection = afs.collection<any>('stripeAccountObjects');
     this.projectId = ENV.firebase.projectId
@@ -79,6 +80,37 @@ export class ContactPage {
         }).catch(error => {
           console.error("Error writing Org document for " + org.key + " error: " + error.message);
         });
+    })
+  }
+
+  public seedPetitions(): void {
+    let petitions : shareTypes.Petition[] = [
+      {
+        title: "An Act to Protect & Save YOUR Children",
+        sponsor: `March For Our Lives`,
+        url: 'https://marchforourlivespetition.com',
+        intro: `We support the right of law-abiding Americans to keep and bear arms, as set forth in the United States Constitution.\
+           <br> <br>But with that right comes responsibility. \
+          <br> <br>We call on all the adults in Congress elected to represent us, to pass legislation that will protect and save children from gun violence.`,
+        imageURL: "https://can2-prod.s3.amazonaws.com/forms/photos/000/338/169/original/mfol_AN.png"
+      },
+      {
+      title: "Gun Control. Now.",
+      sponsor: `Mark Carmon via MoveOn.org`,
+      url: 'https://petitions.moveon.org/sign/gun-control-now-1',
+      intro: `How many more senseless and entirely preventable shootings have to occur before we do something about gun control? <br> As a citizen and constituent of this great country, I am asking that you take a firm stand and make a positive change by restricting access to guns and saving lives.`,
+      imageURL: "https://cdn.shopify.com/s/files/1/1062/9108/t/4/assets/logo.png?10717817189879972318"
+    }];
+
+    petitions.forEach(petition => {
+      console.log(`About to write Petition: ${petition.title}`);
+      this.db.createDocument('petitions', null, petition)
+      .then(newDoc => {
+        console.log('created new Petition');
+      })
+      .catch(error => {
+        console.error(`Error writing petition: ${error.message}  for Petition: ${petition.title}`);
+      })
     })
   }
 

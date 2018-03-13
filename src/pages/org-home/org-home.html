@@ -1,16 +1,23 @@
 <ion-header >
 
   <ion-navbar swipeBackEnabled="true" [hideBackButton]='hideBackButton'>
+      
     <ion-title>{{organization && organization.companyName.substring(0,50)}}</ion-title>
+    <ion-buttons end>
+      <button *ngIf="showNextButton" (click)="next()" ion-button color="white" clear>
+        <span style="padding-right:3px;">Next</span>
+        <ion-icon name="arrow-forward"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
 
-<div #navButtons *ngIf="showNavButtons && (showPrevButton || showNextButton)" id="navButtonsContainer" [ngClass]="applicationIsMFOL ? '' : 'imageOverlayGradient'" class=" org-nav-buttons">
+<!-- <div #navButtons *ngIf="showNavButtons && (showPrevButton || showNextButton)" id="navButtonsContainer" [ngClass]="applicationIsMFOL ? '' : 'imageOverlayGradient'" class=" org-nav-buttons">
 
-  <!-- <button  (click)="prev()" ion-button color="primary" clear> -->
+ 
   <button *ngIf="showPrevButton" (click)="prev()" ion-button color="white" clear class="prevButton navButton">
     <ion-icon name="arrow-back"></ion-icon>
   </button>
@@ -18,8 +25,8 @@
   <button *ngIf="showNextButton" (click)="next()" ion-button color="white" large clear class="nextButton navButton">
     <ion-icon name="arrow-forward"></ion-icon>
   </button>
-</div>
-<!-- <ion-content class="org-home-css" [style.background-color]="organization && organization.info && organization.info.backgroundColor || '#FFFFFF' "> -->
+</div> -->
+
 
 
 

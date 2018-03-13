@@ -104,6 +104,13 @@ $BAR_TRANSPARENCY: rgba(255, 255, 255, 0.6);
     font-weight: bold;
 }
 
+.selectable {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+  }
+  
 .share-form {
     p {
         font-size: 0.8em;
@@ -143,6 +150,10 @@ $BAR_TRANSPARENCY: rgba(255, 255, 255, 0.6);
 
     .label-ios[floating], .label-md[floating] {
         margin-left: 0px;
+    }
+
+    .explain-text {
+        font-size: 90%;
     }
 
      //https://stackoverflow.com/questions/33451683/pen-highlighter-effect-in-css

@@ -83,8 +83,8 @@ export class UpdateHistoryPage {
               }
               this.db.updateDocument('organizations', this.orgId, updateData)
                 .then(updatedOrg => {
-                  this.err.log(`updateHistory: successfully deleted document`);
-                  this.alert.confirm({ title: 'Success', message: 'The update was deleted' });
+                  this.err.log(`updateHistory: successfully deleted document and updatedOrg (update was current)`);
+                 // this.alert.confirm({ title: 'Success', message: 'The update was deleted' });
                 })
                 .catch(error => {
                   this.err.log(`UpdateHistory: Error clearing latest update from Organization: ${error.message} (org: ${this.orgId})`,
@@ -93,7 +93,7 @@ export class UpdateHistoryPage {
                 })
             } else {
               this.err.log(`updateHistory: successfully deleted document`);
-              this.alert.confirm({ title: 'Success', message: 'The update was deleted' });
+             // this.alert.confirm({ title: 'Success', message: 'The update was deleted' });
             }
 
 

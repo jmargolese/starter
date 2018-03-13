@@ -1,3 +1,4 @@
+import { Platform } from 'ionic-angular/index';
 import { Volunteer } from './../../share-common/interfaces/interfaces.d';
 import { AnalyticsProvider } from './../../share-common/providers/analytics/analytics';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
@@ -31,7 +32,7 @@ export class VolunteerPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private user: UserProvider, private alertCtrl: AlertController,
     private err: ErrorReporterProvider, public viewCtrl: ViewController, private data: DataProvider, private alert: AlertProvider,
     private socialShare: SocialShareProvider, public formBuilder: FormBuilder, private iab: InAppBrowser,
-    private analytics: AnalyticsProvider) {
+    private analytics: AnalyticsProvider, private platform: Platform) {
 
     this.activity = navParams.get('activity') || null;
     this.organization = navParams.get('organization') || null;
@@ -56,26 +57,31 @@ export class VolunteerPage {
 
       } else {
         // we have a website
+
         const browser = this.iab.create(this.organization.additionalData.website, '_blank',
           { location: 'no', closebuttoncaption: "Done", presentationstyle: 'pagesheet', toolbarposition: 'top', toolbar: 'yes' });
-
-        browser.on('exit').subscribe(() => {
-          this.data.createDocument('impact', null,
-        this.createDonateRecord() as shareTypes.Impact) 
-        .then(() => {
-          this.analytics.logEvent('volunteer', {website: true});
-          this.alert.confirm({ title: "Thank you!", message: "Thank you for volunteering", buttons: { ok: true, cancel: false } })
-          .then(() => {this.viewCtrl.dismiss({ error: false, canceled: true });})
-        })
-        .catch(error => {
-          this.err.error(`Volunteer: Error creating donateRecord: ${error.message}`);
-        })
         
-         
-        })
+          if (this.platform.is('cordova')) {
+
+            // browser iab doesn't support subscribe
+          browser.on('exit').subscribe(() => {
+            this.data.createDocument('impact', null,
+              this.createDonateRecord() as shareTypes.Impact)
+              .then(() => {
+                this.analytics.logEvent('volunteer', { website: true });
+                this.alert.confirm({ title: "Thank you!", message: "Thank you for volunteering", buttons: { ok: true, cancel: false } })
+                  .then(() => { this.viewCtrl.dismiss({ error: false, canceled: true }); })
+              })
+              .catch(error => {
+                this.err.error(`Volunteer: Error creating donateRecord: ${error.message}`);
+              })
 
 
-      } 
+          })
+        }
+
+
+      }
     }
   }
 
@@ -119,7 +125,7 @@ export class VolunteerPage {
       this.data.createDocument('impact', null,
         this.createDonateRecord() as shareTypes.Impact)
         .then(() => {
-          this.analytics.logEvent('volunteer', {website: false});
+          this.analytics.logEvent('volunteer', { website: false });
           let alert = this.alertCtrl.create({
             title: 'Thank you!',
             message: `${this.organization.companyName} will be notified immediately of your generous offer. <br><br> Want to invite friends to join you?`,
