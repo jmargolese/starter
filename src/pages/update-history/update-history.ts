@@ -70,7 +70,7 @@ export class UpdateHistoryPage {
         this.err.log(`UpdateHistory: About to delete update: ${update.metadata.id}`);
         let clearUpdateFromOrg: boolean = false;
 
-        clearUpdateFromOrg = this.organization.update && this.organization.update.time.valueOf() == update.update.time.valueOf() && this.organization.update.updateText == update.update.updateText;
+        clearUpdateFromOrg = this.organization.update && this.organization.update.time && this.organization.update.updateText && this.organization.update.time.valueOf() == update.update.time.valueOf() && this.organization.update.updateText == update.update.updateText;
 
         this.db.deleteDocument('updateMessages', update.metadata.id)
           .then(() => {
