@@ -93,8 +93,22 @@ export class ContactPage {
            <br> <br>But with that right comes responsibility. \
           <br> <br>We call on all the adults in Congress elected to represent us, to pass legislation that will protect and save children from gun violence.`,
         imageURL: "https://can2-prod.s3.amazonaws.com/forms/photos/000/338/169/original/mfol_AN.png"
-      },
+      }, //https://salsa3.salsalabs.com/o/51101/images/templates/donation/logo.png
       {
+      title: "Tell your governor: Pass Extreme Risk Protection Order Legislation now!",
+      sponsor: `Sandy Hook Promise`,
+      url: 'https://action.sandyhookpromise.org/p/dia/action4/common/public/index.sjs?action_KEY=21533',
+      intro: `Extreme risk protection orders (ERPOs) allow judges to temporarily keep guns away from people who show warning signs of violence. Had ERPOs been in place in Florida, the 17 students and teachers murdered at Marjory Stoneman Douglas High School might still be alive today because the shooter's firearms could have been temporarily taken away when someone reported his warning signs.`,
+      imageURL: "https://salsa3.salsalabs.com/o/51101/images/templates/donation/logo.png"
+    },
+    {
+      title: "Congress: Stop blocking gun violence research",
+      sponsor: `Sarah Clements via Change.org`,
+      url: 'https://www.change.org/p/congress-stop-blocking-gun-violence-research',
+      intro: `My mother taught second grade at Sandy Hook Elementary School in Newtown, Connecticut on December 14th, 2012. Six of her colleagues — all women — were killed, as were 20 first-graders, in a mass shooting at her school. My mother survived, though our lives will never be the same.`,
+      imageURL: "https://assets.change.org/photos/5/th/hm/CNthhmXAxiKyJLw-800x450-noPad.jpg?1444417421"
+    },
+    {
       title: "Gun Control. Now.",
       sponsor: `Mark Carmon via MoveOn.org`,
       url: 'https://petitions.moveon.org/sign/gun-control-now-1',
