@@ -25,7 +25,7 @@ export class UpdateHistoryPage {
     private err: ErrorReporterProvider, private db: DataProvider, private userProvider: UserProvider) {
 
     this.organization = this.navParams.get('organization');
-    this.orgId = this.organization.metadata.id;  
+    this.orgId = this.organization.metadata.id;
 
     this.isOrgOwner = this.orgId && (this.userProvider.getOrganizationId() == this.orgId);
   }
@@ -69,8 +69,12 @@ export class UpdateHistoryPage {
       .then(() => {
         this.err.log(`UpdateHistory: About to delete update: ${update.metadata.id}`);
         let clearUpdateFromOrg: boolean = false;
+        try {
+          clearUpdateFromOrg = this.organization.update && this.organization.update.time && this.organization.update.updateText && this.organization.update.time.valueOf() == update.update.time.valueOf() && this.organization.update.updateText == update.update.updateText;
+        } catch (error) {
+          this.err.log(`In update-history:delete Update error setting up ClearUpdateFromOrg: ${error.message}`, logTypes.report, logLevels.normal, { error: error, orgUpdate: this.organization.update || null, update: update });
+        }
 
-        clearUpdateFromOrg = this.organization.update && this.organization.update.time && this.organization.update.updateText && this.organization.update.time.valueOf() == update.update.time.valueOf() && this.organization.update.updateText == update.update.updateText;
 
         this.db.deleteDocument('updateMessages', update.metadata.id)
           .then(() => {
@@ -81,10 +85,11 @@ export class UpdateHistoryPage {
                     updateText: ""
                   }
               }
+              this.err.log(`Update History, deleted message about to clear update from ORganization after deleting updateMessage: ${this.orgId}  update: ${JSON.stringify(updateData)}`);
               this.db.updateDocument('organizations', this.orgId, updateData)
                 .then(updatedOrg => {
                   this.err.log(`updateHistory: successfully deleted document and updatedOrg (update was current)`);
-                 // this.alert.confirm({ title: 'Success', message: 'The update was deleted' });
+                  // this.alert.confirm({ title: 'Success', message: 'The update was deleted' });
                 })
                 .catch(error => {
                   this.err.log(`UpdateHistory: Error clearing latest update from Organization: ${error.message} (org: ${this.orgId})`,
@@ -93,7 +98,7 @@ export class UpdateHistoryPage {
                 })
             } else {
               this.err.log(`updateHistory: successfully deleted document`);
-             // this.alert.confirm({ title: 'Success', message: 'The update was deleted' });
+              // this.alert.confirm({ title: 'Success', message: 'The update was deleted' });
             }
 
 

@@ -1,13 +1,11 @@
 import { Subscription } from 'rxjs/Subscription';
 import { DataProvider } from './../../share-common/providers/data/data';
 import { ErrorReporterProvider } from './../../share-common/providers/error-reporter/error-reporter';
-import { Petition } from './../../share-common/interfaces/interfaces.d';
 import { Component } from '@angular/core';
 import { IonicPage, ViewController, Platform } from 'ionic-angular';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import * as shareTypes from '../../share-common/interfaces/interfaces';
-import { OrganizationProvider } from 'share-common/providers/organization/organization';
 
 
 

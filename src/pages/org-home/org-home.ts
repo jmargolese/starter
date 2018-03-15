@@ -63,11 +63,11 @@ export class OrgHomePage {
 
   public engageOptions: shareTypes.engageOptions = {
     buttonsToDisplay: {
-      volunteer: false,
-      communicate: false,
+      volunteer: true,
+      communicate: true,
       socialShare: true,
       addToFavorites: true,
-      petition: false
+      petition: true 
     }
   }
 
@@ -90,9 +90,9 @@ export class OrgHomePage {
     this.events.subscribe("activity:homeCurrentActivity", (activity) => {
       // let other parts of the app tell us when a new tab is needed   
       this.currentActivity = activity;
-      this.engageOptions.buttonsToDisplay.volunteer = this.activitiesProvider.showVolunteer( this.currentActivity) || this.org.organizationIsAMarch(this.organization);
-      this.engageOptions.buttonsToDisplay.petition = this.activitiesProvider.showPetition( this.currentActivity) || this.org.organizationIsAMarch(this.organization)
-      this.engageOptions.buttonsToDisplay.communicate = this.activitiesProvider.showCommunicate( this.currentActivity) || this.org.organizationIsAMarch(this.organization);
+      this.engageOptions.buttonsToDisplay.volunteer = true || this.activitiesProvider.showVolunteer( this.currentActivity) || this.org.organizationIsAMarch(this.organization);
+      this.engageOptions.buttonsToDisplay.petition = true || this.activitiesProvider.showPetition( this.currentActivity) || this.org.organizationIsAMarch(this.organization)
+      this.engageOptions.buttonsToDisplay.communicate = true || this.activitiesProvider.showCommunicate( this.currentActivity) || this.org.organizationIsAMarch(this.organization);
     });
 
     this.events.subscribe(constants.EventTypes.userUpdated, user => {
