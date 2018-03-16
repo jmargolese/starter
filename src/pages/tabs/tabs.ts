@@ -383,7 +383,10 @@ export class TabsPage {
             break;
 
           default:
-            this.err.log(`Tabs:processNotification got a notification of a type we don't recognize, ${JSON.stringify(notification)}`, logTypes.report, logLevels.normal, { "notification": notification });
+            if (notification.type) {
+              // a plain link gives us a null type,that's ok, we only want to flag strange types
+              this.err.log(`Tabs:processNotification got a notification of a type we don't recognize, ${JSON.stringify(notification)}`, logTypes.report, logLevels.normal, { "notification": notification });
+            }
             break;
         }
       } catch (error) {

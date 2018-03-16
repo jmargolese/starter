@@ -129,7 +129,16 @@
     <plugin name="cordova-plugin-app-version" spec="^0.1.9" />
     <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
     <plugin name="cordova-plugin-advanced-http" spec="^1.11.0" />
+    <plugin name="cordova-plugin-googlemaps" spec="https://github.com/mapsplugin/cordova-plugin-googlemaps.git#multiple_maps">
+        <variable name="API_KEY_FOR_ANDROID" value="AIzaSyAWkp9agYJ5ph9eITvnsF0dwJfbm2_81OQ" />
+        <variable name="API_KEY_FOR_IOS" value="AIzaSyCzj7uf6JNmoNQlVEVHEuuf68vxtjWSmA0" />
+        <variable name="PLAY_SERVICES_VERSION" value="11.8.0" />
+        <variable name="ANDROID_SUPPORT_V4_VERSION" value="24.1.0" />
+        <variable name="LOCATION_WHEN_IN_USE_DESCRIPTION" value="This app wants to get your location while this app runs only." />
+        <variable name="LOCATION_ALWAYS_USAGE_DESCRIPTION" value="This app wants to get your location always, even this app runs in background." />
+    </plugin>
     <engine name="browser" spec="5.0.3" />
     <engine name="ios" spec="4.5.4" />
     <engine name="android" spec="7.1.0" />
+    <allow-navigation href="http://10.0.1.46:8100" />
 </widget>
