@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs/Subscription';
 import { NavController } from 'ionic-angular/index';
 import { OrganizationProvider } from './../../share-common/providers/organization/organization';
 import { MarchProvider } from './../../share-common/providers/march/march';
@@ -25,6 +26,7 @@ export class MarchPage {
   public showDonateButton: boolean = false;
   public completeEventList: shareTypes.Organization[];
   public eventList: shareTypes.Organization[];
+  private allOrgSubscription: Subscription = null;
 
   private notificationRequest: shareTypes.notificationRequestInfo = null;
 
@@ -62,13 +64,18 @@ export class MarchPage {
       }
     }
 
-    this.org.getAllOrganizations(true, false, true, false)
+  
+    this.unsubscribeAllOrgSubscription();
+    this.allOrgSubscription = this.org.getAllOrganizations(true, false, true, false)
       .subscribe(organizations => {
         this.completeEventList = organizations.filter(org => {
           return org.companyName.toLowerCase().indexOf('march') >= 0 || org.info.march;
         });
         this.completeEventList = _.sortBy(this.completeEventList, ['additionalData.state']);
         this.eventList = this.completeEventList;
+      }, error => {
+        this.err.log(`MarchPage: Error subscribing to all organizations ${error.message}`, logTypes.report, logLevels.normal, {error: error, eventList: this.eventList});
+        
       })
 
     //this.eventList = eventList;
@@ -77,6 +84,20 @@ export class MarchPage {
     this.isReady = true;
 
 
+  }
+
+  ionViewWillUnload(){
+    this.unsubscribeAllOrgSubscription();
+  }
+
+  private unsubscribeAllOrgSubscription() {
+    try {
+      if (this.allOrgSubscription) {
+        this.allOrgSubscription.unsubscribe();
+      }
+    } catch (error) {
+      // just catch if there's an error
+    }
   }
 
   private scrollTo(element: string) {

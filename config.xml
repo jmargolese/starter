@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.ipaymyway.march" version="1.4" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget android-versionCode="14100" id="com.ipaymyway.march" ios-CFBundleVersion="1.4.2" version="1.4" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Be Heard!</name>
     <description>Be Heard -- Get involved with your rally</description>
     <author email="support@ipaymyway.com" href="http://marchforourlivesapp.com">IPayMyWay Team</author>
@@ -22,7 +22,7 @@
     <platform name="android">
         <config-file parent="/resources" target="./res/values/strings.xml">
             <string name="fb_app_id">218114635596945</string>
-            <string name="fb_app_name">March For Our Lives</string>
+            <string name="fb_app_name">Be Heard!</string>
         </config-file>
         <preference name="loadUrlTimeoutValue" value="700000" />
         <resource-file src="google-services.json" target="app/google-services.json" />
@@ -102,8 +102,6 @@
     <plugin name="cordova-plugin-geolocation" spec="^4.0.1">
         <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="To locate marches nearest you.  We never track or store your location.  No battery drain." />
     </plugin>
-    <plugin name="cordova-plugin-advanced-http" spec="^1.10.1" />
-    <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
     <plugin name="call-number" spec="https://github.com/Rohfosho/CordovaCallNumberPlugin.git" />
     <allow-navigation href="http://192.168.1.52:8100" />
     <plugin name="cordova-plugin-nativestorage" spec="^2.3.1" />
@@ -120,10 +118,6 @@
         <variable name="BRANCH_KEY" value="key_live_eoBQ5Pa6SKjpnNMToIbLWgdlCxeXQNtd" />
         <variable name="URI_SCHEME" value="myapp" />
     </plugin>
-    <plugin name="cordova-plugin-facebook4" spec="^1.9.1">
-        <variable name="APP_ID" value="218114635596945" />
-        <variable name="APP_NAME" value="March For Our Lives" />
-    </plugin>
     <allow-navigation href="http://10.0.1.14:8101" />
     <plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" spec="^4.1.5">
         <variable name="LOCATION_USAGE_DESCRIPTION" value="This app requires access to your location for navigation purposes" />
@@ -133,7 +127,9 @@
         <variable name="FCM_VERSION" value="11.6.2" />
     </plugin>
     <plugin name="cordova-plugin-app-version" spec="^0.1.9" />
+    <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
+    <plugin name="cordova-plugin-advanced-http" spec="^1.11.0" />
     <engine name="browser" spec="5.0.3" />
-    <engine name="android" spec="^7.1.0" />
     <engine name="ios" spec="4.5.4" />
+    <engine name="android" spec="7.1.0" />
 </widget>

@@ -499,6 +499,6 @@ export class TabsPage {
   }
 
   public tabChanged(event) {
-    this.err.log(`Tabs page: tabsChanged ${event.value}`);
+    this.err.log(`Tabs page: tabsChanged ${event.tabTitle}`);
   }
 }
