@@ -196,7 +196,11 @@
         "FCM_VERSION": "11.6.2"
       },
       "ionic-plugin-keyboard": {},
-      "cordova-plugin-advanced-http": {}
+      "cordova-plugin-advanced-http": {},
+      "cordova-plugin-facebook4": {
+        "APP_ID": "218114635596945",
+        "APP_NAME": "Be Heard"
+      }
     },
     "platforms": [
       "browser",
