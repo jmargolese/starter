@@ -5,10 +5,11 @@ import { AnalyticsProvider } from '../../share-common/providers/analytics/analyt
 import { UserProvider } from '../../share-common/providers/user/user';
 import { DataProvider } from '../../share-common/providers/data/data';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
 
 import * as shareTypes from "../../share-common/interfaces/interfaces";
 import { logTypes, logLevels } from '../../share-common/providers/error-reporter/error-reporter';
+import * as constants from '../../share-common/config/constants';
 
 @IonicPage()
 @Component({
@@ -25,7 +26,13 @@ export class ImpactPage {
   private impactSubscription: Subscription;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public db: DataProvider, private err: ErrorReporterProvider,
-    public userProvider: UserProvider, public analytics: AnalyticsProvider, public org: OrganizationProvider) {
+    public userProvider: UserProvider, public analytics: AnalyticsProvider, public org: OrganizationProvider,
+    private events: Events) {
+
+      this.events.subscribe(constants.EventTypes.userUpdated, user => {
+        // if the user logs out, our subscript is instantly invalid and will trigger an uncatchable error
+        this.unsubscribeImpactSubscription();
+      })
 
   }
 
@@ -91,6 +98,9 @@ export class ImpactPage {
             this.err.log(`ImpactPage: Error subscribing to Recipient ImpactRecords: ${error.message}`, logTypes.report, logLevels.normal, { error: error, userId: this.userProvider.getUserId() || 'No user Id' });
           })
       }
+    }
+    else {
+      this.donations = [];
     }
   }
 

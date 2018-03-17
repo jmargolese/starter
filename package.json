@@ -86,7 +86,7 @@
     "cordova-ios-export-compliance": "^1.0.2",
     "cordova-plugin-actionsheet": "^2.3.3",
     "cordova-plugin-add-swift-support": "^1.7.1",
-    "cordova-plugin-advanced-http": "^1.10.1",
+    "cordova-plugin-advanced-http": "^1.11.0",
     "cordova-plugin-app-version": "^0.1.9",
     "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-device": "^1.1.7",
@@ -167,14 +167,12 @@
       "cordova-plugin-ionic-webview": {},
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-statusbar": {},
-      "ionic-plugin-keyboard": {},
       "cordova-plugin-app-version": {},
       "cordova-plugin-inappbrowser": {},
       "cordova-ios-export-compliance": {},
       "cordova-plugin-stripe": {},
       "cordova-plugin-add-swift-support": {},
       "cordova-plugin-whitelist": {},
-      "cordova-plugin-advanced-http": {},
       "cordova-plugin-nativegeocoder": {
         "LOCATION_WHEN_IN_USE_DESCRIPTION": "Use geocoder service"
       },
@@ -190,22 +188,20 @@
         "BRANCH_KEY": "key_live_eoBQ5Pa6SKjpnNMToIbLWgdlCxeXQNtd",
         "URI_SCHEME": "myapp"
       },
-      "cordova-plugin-facebook4": {
-        "APP_ID": "218114635596945",
-        "APP_NAME": "March For Our Lives"
-      },
       "uk.co.workingedge.phonegap.plugin.launchnavigator": {
         "LOCATION_USAGE_DESCRIPTION": "This app requires access to your location for navigation purposes"
       },
       "phonegap-plugin-push": {
         "ANDROID_SUPPORT_V13_VERSION": "27.+",
         "FCM_VERSION": "11.6.2"
-      }
+      },
+      "ionic-plugin-keyboard": {},
+      "cordova-plugin-advanced-http": {}
     },
     "platforms": [
       "browser",
-      "android",
-      "ios"
+      "ios",
+      "android"
     ]
   }
 }
