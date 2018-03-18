@@ -331,6 +331,11 @@ export class TabsPage {
       this.events.publish(constants.EventTypes.resumeEvent);
     });
 
+    this.platform.pause.subscribe(() => {
+      this.err.log("Pause event");
+    
+    });
+
 
     this.events.subscribe(constants.EventTypes.pushNotification, notification => {
       this.err.log(`tabs:subscribe to pushNotification got a push, about to process ${JSON.stringify(notification)} `);

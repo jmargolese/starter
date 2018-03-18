@@ -63,6 +63,8 @@ export class PetitionPage {
 
       // browser iab doesn't support subscribe
       browser.on('exit').subscribe(() => {
+
+        this.viewCtrl.dismiss({ error: null, canceled: false , data: { action: 'petitioned', target: petition.title}});
         /* this.data.createDocument('impact', null,
           this.createDonateRecord() as shareTypes.Impact)
           .then(() => {

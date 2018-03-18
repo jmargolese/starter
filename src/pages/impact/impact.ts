@@ -1,3 +1,4 @@
+import { Device } from '@ionic-native/device';
 import { ErrorReporterProvider } from './../../share-common/providers/error-reporter/error-reporter';
 import { Subscription } from 'rxjs';
 import { OrganizationProvider } from './../../share-common/providers/organization/organization';
@@ -24,15 +25,16 @@ export class ImpactPage {
   public showWhichDonations = "donations";
 
   private impactSubscription: Subscription;
+  private impactDeviceIdSubscription: Subscription;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public db: DataProvider, private err: ErrorReporterProvider,
     public userProvider: UserProvider, public analytics: AnalyticsProvider, public org: OrganizationProvider,
-    private events: Events) {
+    private events: Events, private device: Device) {
 
-      this.events.subscribe(constants.EventTypes.userUpdated, user => {
-        // if the user logs out, our subscript is instantly invalid and will trigger an uncatchable error
-        this.unsubscribeImpactSubscription();
-      })
+    this.events.subscribe(constants.EventTypes.userUpdated, user => {
+      // if the user logs out, our subscript is instantly invalid and will trigger an uncatchable error
+      this.unsubscribeImpactSubscription();
+    })
 
   }
 
@@ -58,27 +60,38 @@ export class ImpactPage {
     this.unsubscribeImpactSubscription();
   }
 
+  public uCaseFirstChar(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1)
+  }
+
   private unsubscribeImpactSubscription() {
     try {
       if (this.impactSubscription) {
         this.impactSubscription.unsubscribe();
+      }
+
+      if (this.impactDeviceIdSubscription) {
+        this.impactDeviceIdSubscription.unsubscribe();
       }
     } catch (error) {
       // just in case there's an error
     }
   }
   public updateDonations() {
-    if (this.userProvider.getEmail()) {              // Do we have a logged in user?  Else firestore throws and uncatachable permissiosn violation
-      if (this.showWhichDonations == 'donations') {
-        this.unsubscribeImpactSubscription();
+    // if (this.userProvider.getEmail()) {              // Do we have a logged in user?  Else firestore throws and uncatachable permissiosn violation
+    if (this.showWhichDonations == 'donations') {
+      this.unsubscribeImpactSubscription();
+      this.donations = [];
+      if (this.userProvider.isLoggedIn()) {
         this.impactSubscription = this.db.getDonationRecords("impact", true, this.userProvider.getUserId())
           .subscribe(donationsAry => {
-            this.donations = donationsAry as shareTypes.Impact[];
+            const tempDonations: shareTypes.Impact[] = donationsAry as shareTypes.Impact[];
             // this.donations = theDonations.sort(this.sortDonations);
-            this.donations.forEach(donation => {
+            tempDonations.forEach(donation => {
               this.org.getOrganizationLogoUrl(donation.recipient.id)
                 .then(url => {
                   donation.recipient.icon = url;
+                  this.donations.push(donation);
                 })
                 .catch(error => {
                   this.err.log(`ImpactPage: Error Getting LogoOrg URL: ${error.message}`, logTypes.report, logLevels.normal, { error: error, recipientId: donation.recipient.id || 'no recipient id' });
@@ -89,19 +102,40 @@ export class ImpactPage {
           })
       }
       else {
-        this.unsubscribeImpactSubscription();
-        this.impactSubscription = this.db.getDonationRecords("impact", false, this.userProvider.getOrganizationId())
+
+        this.impactDeviceIdSubscription = this.db.getDonationRecords("impact", true, null, null, this.device.uuid)
           .subscribe(donationsAry => {
-            this.donations = donationsAry as shareTypes.Impact[];
-            // this.donations = theDonations.sort(this.sortDonations);      
-          }, error => {
-            this.err.log(`ImpactPage: Error subscribing to Recipient ImpactRecords: ${error.message}`, logTypes.report, logLevels.normal, { error: error, userId: this.userProvider.getUserId() || 'No user Id' });
+            const tempDonations: shareTypes.Impact[] = donationsAry as shareTypes.Impact[];
+            // this.donations = theDonations.sort(this.sortDonations);
+            tempDonations.forEach(donation => {
+              this.org.getOrganizationLogoUrl(donation.recipient.id)
+                .then(url => {
+                  donation.recipient.icon = url;
+                  this.donations.push(donation);
+                })
+                .catch(error => {
+                  this.err.log(`ImpactPage: Error Getting LogoOrg URL: ${error.message}`, logTypes.report, logLevels.normal, { error: error, recipientId: donation.recipient.id || 'no recipient id' });
+              })
+            }, error => {
+              this.err.log(`ImpactPage: Error subscribing to Donation ImpactRecords: ${error.message}`, logTypes.report, logLevels.normal, { error: error, userId: this.userProvider.getUserId() || 'No user Id' });
+            })
           })
       }
     }
-    else {
-      this.donations = [];
+    else { 
+      this.unsubscribeImpactSubscription();
+      this.impactSubscription = this.db.getDonationRecords("impact", false, this.userProvider.getOrganizationId())
+        .subscribe(donationsAry => {
+          this.donations = donationsAry as shareTypes.Impact[];
+          // this.donations = theDonations.sort(this.sortDonations);      
+        }, error => {
+          this.err.log(`ImpactPage: Error subscribing to Recipient ImpactRecords: ${error.message}`, logTypes.report, logLevels.normal, { error: error, userId: this.userProvider.getUserId() || 'No user Id' });
+        })
     }
+    /* }
+        else {
+         this.donations = [];
+       } */
   }
 
 

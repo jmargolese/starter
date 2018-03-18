@@ -5,11 +5,9 @@
     
   </ion-navbar>
   
-    <ion-searchbar style="border-bottom: 1px solid black;" (ionInput)="filterList($event)" placeholder="Search by City, State or Province" showCancelButton="true"></ion-searchbar>
+    <ion-searchbar #searchBar style="border-bottom: 1px solid black;" (ionInput)="filterList($event)" placeholder="Search by City, State or Province" showCancelButton="true"></ion-searchbar>
 
 </ion-header>
-
-
 
 <ion-content id="content" #content class="march-css" parallax-header [showImage]="organization ? true : false">
   <ion-spinner class="centerSpinner" *ngIf="loading"></ion-spinner>

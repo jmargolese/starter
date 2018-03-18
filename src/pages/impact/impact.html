@@ -21,7 +21,7 @@
   <div *ngIf="!donations || !donations.length">
     <div style="margin-top:15vh; width:60vw; margin-left:20vw;" class="text-center">
       <h5>Your impact events will show up here as you
-        <b>Enagage</b> such as Volunteer, Social sharing or contacting your representatives.</h5>
+        <b>Engage,</b> such as Volunteer, Social sharing, Petition or Advocate by contacting your representatives.</h5>
     </div>
 
   </div>
@@ -40,7 +40,7 @@
         </ion-row>
         <ion-row no-padding *ngIf="donation.type == 'donation'">
           <ion-col no-padding>
-            <span class="impact-text">$hared {{ donation.data.amount | currency:'USD':'symbol':'1.2-2'}}</span>
+            <span class="impact-text">Donated {{ donation.data.amount | currency:'USD':'symbol':'1.2-2'}}</span>
           </ion-col>
           <ion-col no-padding col-3>
             <span class="impact-date"> {{donation.time | date:'MMM dd yyyy' }}</span>
@@ -56,9 +56,28 @@
             <span class="impact-date"> {{donation.time | date:'MMM dd yyyy' }}</span>
           </ion-col>
         </ion-row>
+
+        <ion-row no-padding *ngIf="donation.type == 'share'">
+            <ion-col>
+              <span>Shared with friends </span>
+            </ion-col>
+            <ion-col col-3>
+              <span class="impact-date"> {{donation.time | date:'MMM dd yyyy' }}</span>
+            </ion-col>
+          </ion-row>
+
+        <ion-row no-padding *ngIf="donation.type == 'petition'">
+            <ion-col>
+              <span class="impact-text">{{uCaseFirstChar(donation.data.action)}}: {{donation.data.target}} </span>
+            </ion-col>
+            <ion-col col-3>
+              <span class="impact-date"> {{donation.time | date:'MMM dd yyyy' }}</span>
+            </ion-col>
+          </ion-row>
+
         <ion-row no-padding *ngIf="donation.type == 'communicate'">
           <ion-col>
-            <span class="impact-text">{{donation.data.action}} {{donation.data.callee}} </span>
+            <span class="impact-text">{{uCaseFirstChar(donation.data.action)}}: {{donation.data.target}} </span>
           </ion-col>
           <ion-col col-3>
             <span class="impact-date"> {{donation.time | date:'MMM dd yyyy' }}</span>

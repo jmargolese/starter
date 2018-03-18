@@ -1,5 +1,4 @@
 import { Platform } from 'ionic-angular/index';
-import { Volunteer } from './../../share-common/interfaces/interfaces.d';
 import { AnalyticsProvider } from './../../share-common/providers/analytics/analytics';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { SocialShareProvider } from './../../share-common/providers/social-share/social-share';
@@ -11,8 +10,8 @@ import { ErrorReporterProvider, logTypes, logLevels } from './../../share-common
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import * as shareTypes from '../../share-common/interfaces/interfaces';
 import * as constants from '../../share-common/config/constants';
+import * as shareTypes from '../../share-common/interfaces/interfaces';
 
 @IonicPage()
 @Component({
@@ -60,21 +59,24 @@ export class VolunteerPage {
 
         const browser = this.iab.create(this.organization.additionalData.website, '_blank',
           { location: 'no', closebuttoncaption: "Done", presentationstyle: 'pagesheet', toolbarposition: 'top', toolbar: 'yes' });
-        
-          if (this.platform.is('cordova')) {
 
-            // browser iab doesn't support subscribe
+        if (this.platform.is('cordova')) {
+
+          // browser iab doesn't support subscribe
           browser.on('exit').subscribe(() => {
-            this.data.createDocument('impact', null,
-              this.createDonateRecord() as shareTypes.Impact)
-              .then(() => {
-                this.analytics.logEvent('volunteer', { website: true });
-                this.alert.confirm({ title: "Thank you!", message: "Thank you for volunteering", buttons: { ok: true, cancel: false } })
-                  .then(() => { this.viewCtrl.dismiss({ error: false, canceled: true }); })
-              })
-              .catch(error => {
-                this.err.error(`Volunteer: Error creating donateRecord: ${error.message}`);
-              })
+            this.viewCtrl.dismiss({ error: null, canceled: false });
+            /*
+          this.data.createDocument('impact', null,
+            this.createDonateRecord() as shareTypes.Impact)
+            .then(() => {
+              this.analytics.logEvent('volunteer', { website: true });
+              this.alert.confirm({ title: "Thank you!", message: "Thank you for volunteering", buttons: { ok: true, cancel: false } })
+                .then(() => { this.viewCtrl.dismiss({ error: false, canceled: true }); })
+            })
+            .catch(error => {
+              this.err.error(`Volunteer: Error creating donateRecord: ${error.message}`);
+            })
+            */
 
 
           })
@@ -88,8 +90,11 @@ export class VolunteerPage {
   private createDonateRecord(): shareTypes.Impact {
     return {
       type: constants.impactTypes.volunteer,
-      isDemo: false,
-      mode: "inApp",
+      info: {
+        mode: "inApp",
+        result: "didComplete",
+        isDemo: false
+      },
       donor: {
         id: this.user.getUserId(),
         name: this.user.getDisplayName(),
@@ -109,7 +114,7 @@ export class VolunteerPage {
         when: this.volunteer,
         message: this.curForm.controls.message.value,
         date: null
-      } as Volunteer
+      }
     }
   }
 

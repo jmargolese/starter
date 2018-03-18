@@ -86,7 +86,6 @@
     <allow-navigation href="*" />
     <allow-navigation href="http://10.0.1.28:8100" />
     <plugin name="cordova-plugin-x-socialsharing" spec="^5.2.1" />
-    <plugin name="cordova-plugin-device" spec="^1.1.7" />
     <plugin name="cordova-plugin-ionic-webview" spec="^1.1.16" />
     <plugin name="cordova-plugin-splashscreen" spec="^4.1.0" />
     <plugin name="cordova-plugin-statusbar" spec="git+https://github.com/apache/cordova-plugin-statusbar.git" />
@@ -137,8 +136,12 @@
         <variable name="LOCATION_WHEN_IN_USE_DESCRIPTION" value="This app wants to get your location while this app runs only." />
         <variable name="LOCATION_ALWAYS_USAGE_DESCRIPTION" value="This app wants to get your location always, even this app runs in background." />
     </plugin>
-    <engine name="browser" spec="5.0.3" />
+    <allow-navigation href="http://10.0.1.46:8100" />
+    <plugin name="cordova-plugin-facebook4" spec="^1.9.1">
+        <variable name="APP_ID" value="218114635596945" />
+        <variable name="APP_NAME" value="March For Our Lives" />
+    </plugin>
+    <plugin name="cordova-plugin-device" spec="^1.1.7" />
     <engine name="ios" spec="4.5.4" />
     <engine name="android" spec="7.1.0" />
-    <allow-navigation href="http://10.0.1.46:8100" />
 </widget>

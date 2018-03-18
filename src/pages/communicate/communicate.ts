@@ -1,17 +1,13 @@
-import { Component, ErrorHandler } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ViewController, Platform } from 'ionic-angular';
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams, ViewController, Platform } from 'ionic-angular';
 import { ENV } from '@app/env';
 import { HTTP } from '@ionic-native/http';
 import { CallNumber } from '@ionic-native/call-number';
 import { Keyboard } from '@ionic-native/keyboard';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
-import { ErrorReporterProvider, logTypes, logLevels } from '../../share-common/providers/error-reporter/error-reporter';
-import { DataProvider } from '../../share-common/providers/data/data';
-import { UserProvider } from '../../share-common/providers/user/user';
-import { SocialShareProvider } from '../../share-common/providers/social-share/social-share';
+import { ErrorReporterProvider } from '../../share-common/providers/error-reporter/error-reporter';
 import { AlertProvider } from '../../share-common/providers/alert/alert';
 import * as shareTypes from '../../share-common/interfaces/interfaces';
-import * as shareConstants from '../../share-common/config/constants';
 
 interface officalsListIf { potus: any[], vPotus: any[], house: any[], senate: any[] };
 
@@ -38,8 +34,8 @@ export class CommunicatePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private http: HTTP, private viewCtrl: ViewController, private err: ErrorReporterProvider,
-    private call: CallNumber, private db: DataProvider, private user: UserProvider,
-    private socialShare: SocialShareProvider, private alert: AlertProvider, private alertCtrl: AlertController,
+    private call: CallNumber,
+    private alert: AlertProvider,
     private keyboard: Keyboard, private platform: Platform, private iab: InAppBrowser) {
 
     console.log('hello CommunicatePage');
@@ -73,7 +69,7 @@ export class CommunicatePage {
     browser.show();
   }
  
-  public recordImpact(recipientName: string, action): Promise<any> {
+  /* public recordImpact(recipientName: string, action): Promise<any> {
     return new Promise((resolve, reject) => {
 
       if (!this.user.getEmail()) {
@@ -146,7 +142,7 @@ export class CommunicatePage {
           })
       }
     })
-  }
+  } */
 
   public contactOfficial(which, index) {
     const url = this.officialsList[which][index].data.urls[0];
@@ -163,12 +159,15 @@ export class CommunicatePage {
       const browser = this.iab.create(url + '/contact', '_blank',
         { location: 'no', closebuttoncaption: "Done", presentationstyle: 'pagesheet', toolbarposition: 'top', toolbar: 'yes' });
       browser.on('exit').subscribe(() => {
-        this.err.log('contactOfficial returning from website, recording impact');
         browser.close();
-        this.recordImpact(emailName, 'emailed')
+        this.viewCtrl.dismiss({ error: null, canceled: false , data: { action: 'emailed',target: emailName}});
+        
+        this.err.log('contactOfficial returning from website, recording impact');
+       
+       /*  this.recordImpact(emailName, 'emailed')
           .then(() => {
             console.log('Communicate: impact recorded');
-          }).catch(error => { this.err.error(`communicatePage: calling recordImpact error: ${error.message}`); this.callInProgress = false; });
+          }).catch(error => { this.err.error(`communicatePage: calling recordImpact error: ${error.message}`); this.callInProgress = false; }); */
       })
     }
   }
@@ -190,10 +189,11 @@ export class CommunicatePage {
             }, 2000);
 
             setTimeout(() => {
-              this.recordImpact(phoneName, 'called')
+              this.viewCtrl.dismiss({ error: null, canceled: false , data: { action: 'called', target: phoneName}});
+              /* this.recordImpact(phoneName, 'called')
                 .then(() => {
                   console.log('Communicate: impact recorded');
-                }).catch(error => { this.err.error(`communicatePage: calling recordImpact error: ${error.message}`); this.callInProgress = false; });
+                }).catch(error => { this.err.error(`communicatePage: calling recordImpact error: ${error.message}`); this.callInProgress = false; }); */
             }, 6000)
           }).catch(() => {
             this.err.error('Error launching dialer');
@@ -210,7 +210,7 @@ export class CommunicatePage {
   }
 
   public dismiss() {
-    this.viewCtrl.dismiss();
+    this.viewCtrl.dismiss({ error: null, canceled: false , data: { }});
   }
 
   public toggleItem(which, index) {

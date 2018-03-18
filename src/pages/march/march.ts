@@ -1,5 +1,5 @@
 import { Subscription } from 'rxjs/Subscription';
-import { NavController } from 'ionic-angular/index';
+import { NavController, Searchbar } from 'ionic-angular/index';
 import { OrganizationProvider } from './../../share-common/providers/organization/organization';
 import { MarchProvider } from './../../share-common/providers/march/march';
 import { AnalyticsProvider } from './../../share-common/providers/analytics/analytics';
@@ -18,6 +18,7 @@ import * as _ from 'lodash';
 export class MarchPage {
 
   @ViewChild('content') content: Content;
+  @ViewChild('searchBar') searchBar: Searchbar;
 
   public organization: shareTypes.Organization = null;     // if there is a selected march
   public useSelectedMarch: boolean = false;
@@ -37,11 +38,14 @@ export class MarchPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MarchPage');
+   
   }
 
   ionViewWillEnter() {
 
     this.scrollTo('content');
+    this.searchBar.clearInput(null);
+    this.filterList(null);
     
     this.loading = true;
     this.err.recordBreadcrumb({ message: 'Entering page March' });
@@ -110,7 +114,7 @@ export class MarchPage {
   }
 
   public filterList(event: any) {
-    let val = event.target.value ? event.target.value.toLowerCase() : null;
+    let val = event && event.target.value ? event.target.value.toLowerCase() : null;
 
     if (!val) {
       this.eventList = this.completeEventList;
