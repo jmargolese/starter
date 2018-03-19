@@ -7,6 +7,7 @@ import { IonicPage, NavController, NavParams, ItemSliding } from 'ionic-angular'
 
 import * as shareTypes from '../../share-common/interfaces/interfaces';
 import { AlertProvider } from '../../share-common/providers/alert/alert';
+import { AnalyticsProvider } from '../../share-common/providers/analytics/analytics';
 
 @IonicPage()
 @Component({
@@ -21,7 +22,7 @@ export class UpdateHistoryPage {
   public updateListSubscription: Subscription = null;
   public isOrgOwner: boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private alert: AlertProvider,
+  constructor(public navCtrl: NavController, public navParams: NavParams, private alert: AlertProvider,private analytics: AnalyticsProvider,
     private err: ErrorReporterProvider, private db: DataProvider, private userProvider: UserProvider) {
 
     this.organization = this.navParams.get('organization');
@@ -86,6 +87,7 @@ export class UpdateHistoryPage {
                   }
               }
               this.err.log(`Update History, deleted message about to clear update from ORganization after deleting updateMessage: ${this.orgId}  update: ${JSON.stringify(updateData)}`);
+              this.analytics.logEvent('updateDeleted', {orgId: this.orgId, wasCurrent: clearUpdateFromOrg});
               this.db.updateDocument('organizations', this.orgId, updateData)
                 .then(updatedOrg => {
                   this.err.log(`updateHistory: successfully deleted document and updatedOrg (update was current)`);
