@@ -103,10 +103,12 @@ export class ImpactPage {
       }
       else {
 
+        this.err.log(`impact: about to get impact for non-logged in with uuid: ${this.device.uuid}`)
         this.impactDeviceIdSubscription = this.db.getDonationRecords("impact", true, null, null, this.device.uuid)
           .subscribe(donationsAry => {
             const tempDonations: shareTypes.Impact[] = donationsAry as shareTypes.Impact[];
             // this.donations = theDonations.sort(this.sortDonations);
+            this.err.log(`impact: returned ${tempDonations ? tempDonations.length: "nothing"} items`);
             tempDonations.forEach(donation => {
               this.org.getOrganizationLogoUrl(donation.recipient.id)
                 .then(url => {

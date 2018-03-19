@@ -100,17 +100,22 @@ export class MarchPage {
         this.allOrgSubscription.unsubscribe();
       }
     } catch (error) {
-      // just catch if there's an error
+      // just catch if there's an error   
     }
   }
 
   private scrollTo(element: string) {
-    let target: number = 20;
-    const domElement = document.getElementById(element);
-    if (domElement) {
-      let yOffset = document.getElementById(element).offsetTop;
-      this.content.scrollTo(0, yOffset, target)
-    }
+    
+    // we're called right after the list of elements has changed, give it time to be redraw so we scroll to the elements current position, not where it was
+    setTimeout(() => {
+      let target: number = 20;
+      const domElement = document.getElementById(element);
+      if (domElement) {
+        let yOffset = document.getElementById(element).offsetTop;
+        this.content.scrollTo(0, yOffset, target)
+      }
+    }, 40);
+   
   }
 
   public filterList(event: any) {

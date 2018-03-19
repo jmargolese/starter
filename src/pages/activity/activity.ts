@@ -20,11 +20,15 @@ export class ActivityPage {
 
     this.activity = navParams.get('activity') || {};
     if (this.activity) {
-      this.title = this.activity.info.type || "Activity";
+      this.title = this.uCaseFirstChar(this.activity.info.type) || "Activity";
     }
     this.setupActivity();
 
   }
+
+  public uCaseFirstChar(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1)
+    }
 
   public setupActivity(): void {
     switch (this.activity.info.type) {

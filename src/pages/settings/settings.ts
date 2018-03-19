@@ -80,7 +80,7 @@ export class SettingsPage {
         break;
 
         case 'aboutus':
-        this.alert.confirm({title: "About Us", message: "iPayMyWay develops apps for non-profits.<br> We created and donated this app, pro-bono, to support the March For Our Lives movement.<br> Your privacy and personal information are protected and won't be shared. <br><br> Thank you for being part of this great event", buttons: {ok: true, cancel: false}});
+        this.alert.confirm({title: "About Us", message: "iPayMyWay develops apps for non-profits.<br> We created and donated this app, pro-bono, to support events, marches and protests such as the March For Our Lives movement.<br> Your privacy and personal information are protected and won't be shared. <br><br> Thank you for being part of this great event", buttons: {ok: true, cancel: false}});
         break;
       case 'debug':
         this.navCtrl.push("ContactPage");
