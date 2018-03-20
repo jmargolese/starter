@@ -142,6 +142,6 @@
         <variable name="FCM_VERSION" value="11.6.2" />
     </plugin>
     <allow-navigation href="http://10.0.1.46:8101" />
-    <engine name="ios" spec="^4.5.4" />
     <engine name="android" spec="7.0.0" />
+    <engine name="ios" spec="4.5.4" />
 </widget>
