@@ -210,7 +210,7 @@ export class CommunicatePage {
   }
 
   public dismiss() {
-    this.viewCtrl.dismiss({ error: null, canceled: false , data: { }});
+    this.viewCtrl.dismiss({ error: null, canceled: true , data: { action: 'none' }});
   }
 
   public toggleItem(which, index) {

@@ -18,6 +18,10 @@ import { OrganizationProvider } from '../../share-common/providers/organization/
 import { ErrorReporterProvider, logTypes, logLevels } from '../../share-common/providers/error-reporter/error-reporter';
 import { ENV } from '@app/env';
 
+declare var window: any;
+declare var cordova: any;
+
+
 @IonicPage()
 @Component({
   selector: 'page-org-home',
@@ -77,7 +81,11 @@ export class OrgHomePage {
     private err: ErrorReporterProvider, private activitiesProvider: ActivitiesProvider, public march: MarchProvider) {
 
 
-      
+      window.open = (url) => {
+        this.err.log(`windows open called with url ${url}`);
+        
+      }
+
       this.applicationIsMFOL = ENV.app == envApp.MFOL ? true: false;
 
     this.featuredMode = navParams.get('featured') || false; 

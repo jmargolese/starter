@@ -48,7 +48,7 @@ export class PetitionPage {
   }
 
   public dismiss() {
-    let data = { canceled: true };
+    let data = { canceled: true, action: 'petitioned' };
     this.viewCtrl.dismiss(data)
       .catch(() => { });
   }
