@@ -38,7 +38,7 @@ export class MarchPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MarchPage');
-   
+
   }
 
   ionViewWillEnter() {
@@ -46,7 +46,7 @@ export class MarchPage {
     this.scrollTo('content');
     this.searchBar.clearInput(null);
     this.filterList(null);
-    
+
     this.loading = true;
     this.err.recordBreadcrumb({ message: 'Entering page March' });
 
@@ -68,18 +68,20 @@ export class MarchPage {
       }
     }
 
-  
+
     this.unsubscribeAllOrgSubscription();
     this.allOrgSubscription = this.org.getAllOrganizations(true, false, true, false)
       .subscribe(organizations => {
-        this.completeEventList = organizations.filter(org => {
-          return org.companyName.toLowerCase().indexOf('march') >= 0 || org.info.march;
-        });
-        this.completeEventList = _.sortBy(this.completeEventList, ['additionalData.state']);
-        this.eventList = this.completeEventList;
+        if (organizations) {
+          this.completeEventList = organizations.filter(org => {
+            return  org && org.companyName ?  (org.companyName.toLowerCase().indexOf('march') >= 0 || org.info.march) : false;
+          });
+          this.completeEventList = _.sortBy(this.completeEventList, ['additionalData.state']);
+          this.eventList = this.completeEventList;
+        }
       }, error => {
-        this.err.log(`MarchPage: Error subscribing to all organizations ${error.message}`, logTypes.report, logLevels.normal, {error: error, eventList: this.eventList});
-        
+        this.err.log(`MarchPage: Error subscribing to all organizations ${error.message}`, logTypes.report, logLevels.normal, { error: error, eventList: this.eventList });
+
       })
 
     //this.eventList = eventList;
@@ -90,7 +92,7 @@ export class MarchPage {
 
   }
 
-  ionViewWillUnload(){
+  ionViewWillUnload() {
     this.unsubscribeAllOrgSubscription();
   }
 
@@ -105,7 +107,7 @@ export class MarchPage {
   }
 
   private scrollTo(element: string) {
-    
+
     // we're called right after the list of elements has changed, give it time to be redraw so we scroll to the elements current position, not where it was
     setTimeout(() => {
       let target: number = 20;
@@ -115,7 +117,7 @@ export class MarchPage {
         this.content.scrollTo(0, yOffset, target)
       }
     }, 40);
-   
+
   }
 
   public filterList(event: any) {
@@ -131,11 +133,11 @@ export class MarchPage {
       this.eventList = this.completeEventList
         .filter(event => {
           const state: string = (event.additionalData && event.additionalData.state) ? event.additionalData.state.toLowerCase() : "";
-          const city: string = event.companyName.toLowerCase().replace('march for our lives','').replace('mfol','');
+          const city: string = event.companyName.toLowerCase().replace('march for our lives', '').replace('mfol', '');
 
           return (state.indexOf(val) >= 0) || (city.indexOf(val)) >= 0 ? true : false
         })
-        
+
       if (this.eventList.length)
         this.scrollTo(this.eventList[0].metadata.id)
       else

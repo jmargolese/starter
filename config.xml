@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="15101" id="com.ipaymyway.march" ios-CFBundleVersion="1.500.2" version="1.520" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget android-versionCode="15410" id="com.ipaymyway.march" ios-CFBundleVersion="1.500.4" version="1.540" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Be Heard!</name>
     <description>Be Heard -- Get involved with your rally</description>
     <author email="support@ipaymyway.com" href="https://www.beheardforrallies.com">IPayMyWay Team</author>
