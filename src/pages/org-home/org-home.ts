@@ -1,3 +1,4 @@
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { Subscription } from 'rxjs';
 import { envApp } from './../../environments/environment.model';
 import { MarchProvider } from './../../share-common/providers/march/march';
@@ -77,14 +78,13 @@ export class OrgHomePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public events: Events, public analytics: AnalyticsProvider, public userProvider: UserProvider, public zone: NgZone,
-    public element: ElementRef, public renderer: Renderer2, private org: OrganizationProvider,
+    public element: ElementRef, public renderer: Renderer2, private org: OrganizationProvider, private iab: InAppBrowser,
     private err: ErrorReporterProvider, private activitiesProvider: ActivitiesProvider, public march: MarchProvider) {
 
 
-      window.open = (url) => {
-        this.err.log(`windows open called with url ${url}`);
-        
-      }
+      //window.open = (url, target?) =>  this.iab.create(url, "_blank",   { location: 'no', closebuttoncaption: "Done", presentationstyle: 'pagesheet', toolbarposition: 'top', toolbar: 'yes' });
+
+
 
       this.applicationIsMFOL = ENV.app == envApp.MFOL ? true: false;
 

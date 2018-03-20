@@ -35,14 +35,11 @@ ion-header {
         -webkit-justify-content: center;
         justify-content: center;
     }
-
     .toolbar-title {
         text-overflow: unset;
         white-space: unset;
-     }
+    }
 }
-
-
 
 .action-choice-popover .popover-ios .popover-md {
     width: 80%;
@@ -55,21 +52,17 @@ ion-header {
     width: 240px !important;
 }
 
-
 .yellow-highlight {
-    text-shadow: 
-      -3px 0px 3px yellow,
-       3px 0px 3px yellow,
-       6px 0px 6px yellow,
-      -6px 0px 6px yellow;
-  }
+    text-shadow: -3px 0px 3px yellow, 3px 0px 3px yellow, 6px 0px 6px yellow, -6px 0px 6px yellow;
+}
+
 
 /* copied from yummly
 background-image: linear-gradient(0deg, rgba(0, 0, 0, .9) 15%, transparent 50%);
 */
 
 // to create the gradient
-$BAR_TOP : rgba(128, 128, 128, 0.45);
+$BAR_TOP: rgba(128, 128, 128, 0.45);
 $BAR_BOTTOM:rgba(128, 128, 128, 0.00);
 $BAR_TRANSPARENCY: rgba(255, 255, 255, 0.6);
 .imageOverlayGradient {
@@ -109,8 +102,12 @@ $BAR_TRANSPARENCY: rgba(255, 255, 255, 0.6);
     -moz-user-select: text;
     -ms-user-select: text;
     user-select: text;
-  }
-  
+}
+
+.line-breaks {
+    white-space: pre-line !important;
+}
+
 .share-form {
     p {
         font-size: 0.8em;
@@ -147,15 +144,12 @@ $BAR_TRANSPARENCY: rgba(255, 255, 255, 0.6);
         object-fit: cover;
         margin-top: 100px;
     }
-
-    .label-ios[floating], .label-md[floating] {
+    .label-ios[floating],
+    .label-md[floating] {
         margin-left: 0px;
     }
-
     .explain-text {
         font-size: 90%;
-    }
-
-     //https://stackoverflow.com/questions/33451683/pen-highlighter-effect-in-css
-    
+        white-space: pre-wrap !important;
+    } //https://stackoverflow.com/questions/33451683/pen-highlighter-effect-in-css
 }

@@ -5,7 +5,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { ENV } from '@app/env';
 
 
-
+declare var window: any;
+declare var cordova: any;
 
 @Component({
   templateUrl: 'app.html'
@@ -20,6 +21,8 @@ export class Share {
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
+
+     // window.open = (url, target?) =>  this.iab.create(url, "_blank",   { location: 'no', closebuttoncaption: "Done", presentationstyle: 'pagesheet', toolbarposition: 'top', toolbar: 'yes' });
     });
   }
 }
