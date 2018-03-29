@@ -1,6 +1,7 @@
+import { NativeStorage } from '@ionic-native/native-storage';
 import { AlertProvider } from './../../share-common/providers/alert/alert';
 import { ErrorReporterProvider } from './../../share-common/providers/error-reporter/error-reporter';
-import { AuthProviderMock, ErrorReporterProviderMock, AlertProviderMock } from './../../../test-config/mocks-ionic';
+import { AuthProviderMock, ErrorReporterProviderMock, AlertProviderMock, NativeStorageMock } from './../../../test-config/mocks-ionic';
 import { AuthProvider } from './../../share-common/providers/auth/auth';
 import { UserProvider } from './../../share-common/providers/user/user';
 import { OrganizationProvider } from './../../share-common/providers/organization/organization';
@@ -8,7 +9,7 @@ import { TabsPage } from './tabs';
 
 import { NotificationsProvider } from './../../share-common/providers/notifications/notifications';
 
-import { NavParams } from 'ionic-angular';
+import { NavParams, Events } from 'ionic-angular';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By }           from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
@@ -21,10 +22,14 @@ import { NavMock } from '../../../test-config/mocks-ionic';
 import { SocialShareProvider } from '../../share-common/providers/social-share/social-share';
 import { ActivitiesProvider } from '../../share-common/providers/activities/activities';
 
+import {EventsMock} from 'ionic-mocks';
+
 describe('TabsPage', () => {
 
   let comp: TabsPage;
   let fixture: ComponentFixture<TabsPage>;
+  let events: Events;
+  
 
    beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -44,12 +49,15 @@ describe('TabsPage', () => {
         { provide: UserProvider, useClass: UserProviderMock },
         { provide: AuthProvider, useClass: AuthProviderMock},
         { provide: ErrorReporterProvider, useClass: ErrorReporterProviderMock},
-        { provide: AlertProvider, useClass: AlertProviderMock}
+        { provide: AlertProvider, useClass: AlertProviderMock},
+        { provide: NativeStorage, useClass: NativeStorageMock},
+        { provide: Events, useFactory: () => EventsMock.instance() }
       ]
     });
   }));
   
   beforeEach(() => {
+    events = EventsMock.instance();
     fixture = TestBed.createComponent(TabsPage);
     comp = fixture.componentInstance;
   });
@@ -62,4 +70,9 @@ describe('TabsPage', () => {
   it('test page creation: TabsPage', () => {
     expect(comp).toBeDefined();
   }); 
+
+  /* it('should subscribe to events', () => {
+    expect(events.subscribe).toHaveBeenCalled();
+  }); */
+
 })

@@ -373,6 +373,15 @@ export class UserProviderMock {
   public isUserFavorite(type, id) {
     return (false);
   };
+
+  public isRoleTester() :boolean {
+
+    return false;
+  }
+
+  public isLoggedIn(): boolean {
+    return true;
+  }
   public userLikesOrganization(orgId: string): boolean {
     let result: boolean = false;
     if (this.currentUser && this.currentUser.favorites && this.currentUser.favorites.organizations &&
@@ -573,6 +582,32 @@ export class NotificationsProviderMock {
   }
 }
 
+export class DeviceMock {
+  public device: string = "uniqueDeviceString";
+}
+
+export class InAppBrowserMock {
+  public create(url: string, system: string, options: any) {
+    return true;
+  }
+}
+
+export class MarchProviderMock {
+  
+}
+
+export class NativeStorageMock {
+  public setItem(reference: string, value:any): void {
+      return ;
+  }
+
+  public getItem(reference: string): Promise<any> {
+   return new Promise((resolve, reject) => {
+     resolve();
+   })
+}
+}
+
 export class AppVersionMock {
   version = 20;
   name = 'mockedAppName';
@@ -600,4 +635,5 @@ export class AppVersionMock {
       resolve(this.code)
     })
   }
+
 }

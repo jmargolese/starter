@@ -1,7 +1,6 @@
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { Subscription } from 'rxjs';
 import { envApp } from './../../environments/environment.model';
-import { MarchProvider } from './../../share-common/providers/march/march';
 
 import { ActivitiesProvider } from './../../share-common/providers/activities/activities';
 import { AnalyticsProvider } from '../../share-common/providers/analytics/analytics';
@@ -79,7 +78,7 @@ export class OrgHomePage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public events: Events, public analytics: AnalyticsProvider, public userProvider: UserProvider, public zone: NgZone,
     public element: ElementRef, public renderer: Renderer2, private org: OrganizationProvider, private iab: InAppBrowser,
-    private err: ErrorReporterProvider, private activitiesProvider: ActivitiesProvider, public march: MarchProvider) {
+    private err: ErrorReporterProvider, private activitiesProvider: ActivitiesProvider) {
 
 
       //window.open = (url, target?) =>  this.iab.create(url, "_blank",   { location: 'no', closebuttoncaption: "Done", presentationstyle: 'pagesheet', toolbarposition: 'top', toolbar: 'yes' });

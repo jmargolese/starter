@@ -1,3 +1,6 @@
+import { MarchProvider } from './../../share-common/providers/march/march';
+import { InAppBrowserMock } from './../../../test-config/mocks-ionic';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { OrganizationProvider } from './../../share-common/providers/organization/organization';
 import { OrgHomePage } from './org-home';
 
@@ -41,7 +44,8 @@ describe('OrgHomePage', () => {
         { provide: OrganizationProvider, useClass: OrganizationProviderMock },
         { provide: UserProvider, useClass: UserProviderMock },
         { provide: NavParams, useClass: NavParamsMock },
-        { provide: ErrorReporterProvider, useClass: ErrorReporterProviderMock }
+        { provide: ErrorReporterProvider, useClass: ErrorReporterProviderMock },
+        { provide: InAppBrowser, useClass: InAppBrowserMock}
       ]
     });
   }));

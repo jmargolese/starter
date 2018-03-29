@@ -1,3 +1,5 @@
+import { AlertProviderMock } from './../../../test-config/mocks-ionic';
+import { AlertProvider } from './../../share-common/providers/alert/alert';
 import { UserProvider } from './../../share-common/providers/user/user';
 import { SettingsPage } from './settings';
 
@@ -37,6 +39,7 @@ describe('SettingsPage', () => {
         { provide: NavParams, useClass: NavParamsMock },
         { provide: AppVersion, useClass: AppVersionMock },
         { provide: UserProvider, useClass: UserProviderMock },
+        {provide: AlertProvider, useClass: AlertProviderMock}
       ]
     });
   }));

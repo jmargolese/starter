@@ -1,3 +1,6 @@
+import { Device } from '@ionic-native/device';
+import { ErrorReporterProviderMock, DeviceMock } from './../../../test-config/mocks-ionic';
+import { ErrorReporterProvider } from './../../share-common/providers/error-reporter/error-reporter';
 import { ImpactPage } from './impact';
 
 import { AnalyticsProvider } from '../../share-common/providers/analytics/analytics';
@@ -36,7 +39,9 @@ describe('ImpactPage', () => {
         { provide: UserProvider, useClass: UserProviderMock },
         { provide: NavParams, useClass: NavParamsMock },
         { provide: AppVersion, useClass: AppVersionMock },
-        { provide: OrganizationProvider, useClass: OrganizationProviderMock}
+        { provide: OrganizationProvider, useClass: OrganizationProviderMock},
+        { provide: ErrorReporterProvider, useClass: ErrorReporterProviderMock},
+        { provide: Device, useClass: DeviceMock}
       ]
     });
   }));

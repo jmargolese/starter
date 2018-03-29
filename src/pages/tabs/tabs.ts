@@ -290,7 +290,7 @@ export class TabsPage {
 
   }
 
-  private subscribeToEvents() {
+  public subscribeToEvents() {
     // part of the init process
     this.events.subscribe(constants.EventTypes.loginStateChange, (newState: constants.authStateChange) => {
       switch (newState) {

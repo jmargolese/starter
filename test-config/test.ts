@@ -10,8 +10,8 @@ import 'zone.js/dist/fake-async-test';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
-import { App, Config, Form, IonicModule, Keyboard, DomController, MenuController, NavController, Platform } from 'ionic-angular';
-import { ConfigMock, PlatformMock } from 'ionic-mocks';
+import { App, Config, Form, IonicModule, Keyboard, DomController, MenuController, NavController, Platform, Events } from 'ionic-angular';
+import { ConfigMock, PlatformMock, EventsMock } from 'ionic-mocks';
 import { ActionButtonMock } from './actionbutton.mock';
 //import { ActionButtonComponent } from '../share-common/components/action-button';
 //import { ClickersService } from './services';
@@ -59,6 +59,7 @@ export class TestUtils {
         App, Form, Keyboard, DomController, MenuController, NavController,
         {provide: Platform, useFactory: () => PlatformMock.instance()},
         {provide: Config, useFactory: () => ConfigMock.instance()},
+        { provide: Events, useFactory: () => EventsMock.instance() }
   //      {provide: ClickersService, useClass: ClickersServiceMock},
       ],
       imports: [
