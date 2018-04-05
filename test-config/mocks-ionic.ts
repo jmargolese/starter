@@ -5,6 +5,7 @@ import * as shareTypes from '../src/share-common/interfaces/interfaces';
 import { Observable } from 'rxjs/Observable';
 
 export class PlatformMock {
+
   public ready(): Promise<string> {
     return new Promise((resolve) => {
       resolve('READY');
@@ -12,6 +13,11 @@ export class PlatformMock {
   }
 
   public resume: any = {
+    emit(): void { },
+    subscribe(): any { }
+  };
+
+  public pause: any = {
     emit(): void { },
     subscribe(): any { }
   };

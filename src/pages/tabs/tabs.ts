@@ -318,11 +318,7 @@ export class TabsPage {
 
     });
 
-    /*  this.events.subscribe('user:updated', () => {
-       
-       
    
-     }); */
 
     this.platform.resume.subscribe(() => {
       console.log("Resume event");
