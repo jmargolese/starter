@@ -1,3 +1,4 @@
+import { ActivityTypes } from './../src/share-common/interfaces/interfaces.d';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
@@ -380,7 +381,7 @@ export class UserProviderMock {
     return (false);
   };
 
-  public isRoleTester() :boolean {
+  public isRoleTester(): boolean {
 
     return false;
   }
@@ -401,7 +402,7 @@ export class UserProviderMock {
   // set loginType to control isLoginPassword()
   public loginType: string = "password";
   public isLoginPassword(): boolean {
-    return  this.loginType === 'password' ? true : false;
+    return this.loginType === 'password' ? true : false;
     //return  !this.currentUser.profile.provider || !this.currentUser.profile.provider == 
 
   }
@@ -411,12 +412,13 @@ export class UserProviderMock {
   }
 }
 
+
 export class NavParamsMock {
   activity: shareTypes.Activity = {
     "id": "mock",
     "organization": "orgAlive",
     "info": {
-      "type": "Campaign",
+      "type": 'standard',
       "featured": false,
       "promoted": false,
       "displayOrder": 0,
@@ -441,6 +443,12 @@ export class NavParamsMock {
       "activeDateStart": null,
       "activeDateEnd": null,
       "activeDateTimer": null
+    },
+    engagement: {
+      showVolunteer: true,
+      showInterested: true,
+      showCommunicate: true,
+      showPetition: true
     },
     "social": null,
     "parent": null,
@@ -494,11 +502,13 @@ export class NavParamsMock {
       "mainImage": this.imagesizes,
       "logo": this.imagesizes
     },
-    messages: {
-      howHelp: {
-        whatHelps: "what helps string",
-        whatItDoes: "What it does string"
-      }
+    "messages": {
+      "howHelp": {
+        "whatHelps": "what helps string",
+        "whatItDoes": "What it does string"
+      },
+      "whatWeAreDoing": "This is what we are doing",
+      "getInvolved": "This is how to get involved"
     },
     "social": {
       "message": null,
@@ -510,10 +520,16 @@ export class NavParamsMock {
       "isDemo": true,
       "description": 'mockdescription',
       "enabled": true,
-      "featured": true
+      "featured": true,
+      "hidden": false,
+      "march": false
+    },
+    "communications": {
+      "email": "contactme@here.org"
     },
     "donationPrefs": [100],
     "account": { applicationFee: 0.29 },
+    "additionalData": {},
     "metadata": this.documentmetadata
   };
 
@@ -599,19 +615,19 @@ export class InAppBrowserMock {
 }
 
 export class MarchProviderMock {
-  
+
 }
 
 export class NativeStorageMock {
-  public setItem(reference: string, value:any): void {
-      return ;
+  public setItem(reference: string, value: any): void {
+    return;
   }
 
   public getItem(reference: string): Promise<any> {
-   return new Promise((resolve, reject) => {
-     resolve();
-   })
-}
+    return new Promise((resolve, reject) => {
+      resolve();
+    })
+  }
 }
 
 export class AppVersionMock {
