@@ -267,11 +267,17 @@ export class StripeMock {
 }
 
 export class AlertProviderMock { }
-export class AnalyticsProviderMock { }
+
 export class PaymethodsProviderMock { }
 export class ActivitiesProviderMock { }
 export class SocialSharingMock { }
 export class StripeProviderMock { }
+
+export class AnalyticsProviderMock { 
+  public logEvent(name: string, data: {}): Promise<any> {
+    return Promise.resolve("");
+  }
+}
 
 export class SlidesMock {
   public slideTo(): any {
